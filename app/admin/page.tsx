@@ -9,6 +9,12 @@ import {
   MessageSquare,
   ArrowRight,
   TrendingUp,
+  Plus,
+  Package as PackageIcon,
+  Compass,
+  Image as ImageIcon,
+  HelpCircle,
+  MapPin,
 } from "lucide-react";
 import { getBookings, getAllReviews, getPackages } from "@/lib/data/store";
 import { formatDate } from "@/lib/utils";
@@ -32,14 +38,51 @@ export default async function AdminDashboardPage() {
 
   return (
     <div className="space-y-8 max-w-7xl mx-auto">
-      {/* Title & Welcome */}
-      <div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-          Safari Operations Overview
-        </h1>
-        <p className="text-xs sm:text-sm text-slate-500 mt-1">
-          Real-time summary of booking inquiries, customer reviews, and safari schedules.
-        </p>
+      {/* Title & Quick Add Bar */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+            Safari Operations Overview
+          </h1>
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+            Real-time management portal for packages, bookings, activities, and safari content.
+          </p>
+        </div>
+
+        {/* Quick Add Buttons */}
+        <div className="flex flex-wrap items-center gap-2">
+          <Link
+            href="/admin/packages"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold uppercase tracking-wider shadow-sm transition-all"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            <span>Add Package</span>
+          </Link>
+
+          <Link
+            href="/admin/activities"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 text-xs font-semibold shadow-sm transition-all"
+          >
+            <Compass className="w-3.5 h-3.5 text-amber-500" />
+            <span>Add Activity</span>
+          </Link>
+
+          <Link
+            href="/admin/gallery"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 text-xs font-semibold shadow-sm transition-all"
+          >
+            <ImageIcon className="w-3.5 h-3.5 text-amber-500" />
+            <span>Add Photo</span>
+          </Link>
+
+          <Link
+            href="/admin/faqs"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 text-xs font-semibold shadow-sm transition-all"
+          >
+            <HelpCircle className="w-3.5 h-3.5 text-amber-500" />
+            <span>Add FAQ</span>
+          </Link>
+        </div>
       </div>
 
       {/* KPI Stat Cards */}

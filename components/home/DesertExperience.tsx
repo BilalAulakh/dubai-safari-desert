@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Check, Compass, MessageCircle } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config/site";
 import { createWhatsAppUrl } from "@/lib/utils";
@@ -17,39 +16,35 @@ export default function DesertExperience() {
           {/* Visual Collage */}
           <div className="grid grid-cols-2 gap-4 relative">
             <div className="relative h-64 sm:h-80 rounded-2xl overflow-hidden shadow-2xl border border-amber-500/20">
-              <Image
+              <img
                 src="https://images.unsplash.com/photo-1547234935-80c7145ec969?q=80&w=800&auto=format&fit=crop"
                 alt="Dubai 4x4 dune bashing"
-                fill
-                sizes="(max-width: 768px) 50vw, 25vw"
-                className="object-cover"
+                loading="lazy"
+                className="w-full h-full object-cover"
               />
             </div>
             <div className="relative h-64 sm:h-80 rounded-2xl overflow-hidden shadow-2xl border border-amber-500/20 mt-8">
-              <Image
+              <img
                 src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=800&auto=format&fit=crop"
                 alt="Arabian desert camp at dusk"
-                fill
-                sizes="(max-width: 768px) 50vw, 25vw"
-                className="object-cover"
+                loading="lazy"
+                className="w-full h-full object-cover"
               />
             </div>
             <div className="relative h-64 sm:h-80 rounded-2xl overflow-hidden shadow-2xl border border-amber-500/20 -mt-8">
-              <Image
+              <img
                 src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=800&auto=format&fit=crop"
                 alt="Desert camel trek at sunset"
-                fill
-                sizes="(max-width: 768px) 50vw, 25vw"
-                className="object-cover"
+                loading="lazy"
+                className="w-full h-full object-cover"
               />
             </div>
             <div className="relative h-64 sm:h-80 rounded-2xl overflow-hidden shadow-2xl border border-amber-500/20">
-              <Image
+              <img
                 src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop"
                 alt="Spectacular live fire dance in Dubai desert"
-                fill
-                sizes="(max-width: 768px) 50vw, 25vw"
-                className="object-cover"
+                loading="lazy"
+                className="w-full h-full object-cover"
               />
             </div>
           </div>

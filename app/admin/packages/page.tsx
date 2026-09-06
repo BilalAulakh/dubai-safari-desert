@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { initialPackages } from "@/lib/data/packages";
 import { Package } from "@/types";
@@ -223,12 +222,11 @@ export default function AdminPackagesPage() {
           >
             <div>
               <div className="relative h-44 w-full bg-slate-900">
-                <Image
+                <img
                   src={pkg.main_image}
                   alt={pkg.name}
-                  fill
-                  sizes="33vw"
-                  className="object-cover"
+                  loading="lazy"
+                  className="w-full h-full object-cover"
                 />
                 <div className="absolute top-3 right-3 flex items-center gap-1.5">
                   <span

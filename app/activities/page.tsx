@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { Sparkles, CheckCircle2, ArrowRight } from "lucide-react";
 import { getActivities } from "@/lib/data/store";
@@ -44,12 +43,11 @@ export default async function ActivitiesPage() {
               className="group bg-white rounded-2xl overflow-hidden border border-amber-900/10 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col"
             >
               <div className="relative h-60 w-full overflow-hidden bg-slate-900">
-                <Image
+                <img
                   src={activity.image}
                   alt={activity.name}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
 

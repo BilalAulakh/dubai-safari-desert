@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { Compass, ShieldCheck, HeartHandshake, Sparkles, MapPin, Users, Check } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config/site";
@@ -71,12 +70,11 @@ export default function AboutPage() {
           </div>
 
           <div className="relative h-96 sm:h-[450px] rounded-3xl overflow-hidden shadow-2xl border border-slate-200">
-            <Image
+            <img
               src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1200&auto=format&fit=crop"
               alt="Dubai desert safari guide with camel"
-              fill
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover"
+              loading="lazy"
+              className="w-full h-full object-cover"
             />
           </div>
         </div>

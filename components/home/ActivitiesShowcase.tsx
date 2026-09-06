@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { Activity } from "@/types";
 
@@ -41,12 +40,11 @@ export default function ActivitiesShowcase({ activities }: ActivitiesShowcasePro
               key={act.id}
               className="group relative rounded-2xl overflow-hidden shadow-md bg-slate-900 h-72 flex flex-col justify-end p-6 border border-amber-900/10"
             >
-              <Image
+              <img
                 src={act.image}
                 alt={act.name}
-                fill
-                sizes="(max-width: 768px) 100vw, 33vw"
-                className="object-cover object-center group-hover:scale-110 transition-transform duration-500 opacity-70 group-hover:opacity-60"
+                loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500 opacity-70 group-hover:opacity-60"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
 

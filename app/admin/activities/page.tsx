@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { initialActivities } from "@/lib/data/activities";
 import { Activity } from "@/types";
 import { Plus, Edit2, Trash2, X } from "lucide-react";
@@ -129,12 +128,11 @@ export default function AdminActivitiesPage() {
           >
             <div>
               <div className="relative h-44 w-full bg-slate-900">
-                <Image
+                <img
                   src={act.image}
                   alt={act.name}
-                  fill
-                  sizes="33vw"
-                  className="object-cover"
+                  loading="lazy"
+                  className="w-full h-full object-cover"
                 />
                 <div className="absolute top-3 right-3">
                   <span

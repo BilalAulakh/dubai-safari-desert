@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import { Calendar, Clock, ArrowLeft, Share2, Compass } from "lucide-react";
@@ -95,13 +94,10 @@ export default async function SingleBlogPostPage({ params }: BlogPostPageProps) 
 
         {/* Featured Image */}
         <div className="relative h-80 sm:h-[450px] w-full rounded-3xl overflow-hidden shadow-xl mb-12 border border-slate-200 bg-slate-900">
-          <Image
+          <img
             src={post.featured_image}
             alt={post.title}
-            fill
-            priority
-            sizes="(max-width: 1024px) 100vw, 896px"
-            className="object-cover"
+            className="w-full h-full object-cover"
           />
         </div>
 

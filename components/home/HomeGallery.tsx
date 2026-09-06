@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight, Camera } from "lucide-react";
 import { GalleryItem } from "@/types";
 
@@ -42,12 +41,11 @@ export default function HomeGallery({ items }: HomeGalleryProps) {
               key={item.id}
               className="group relative h-48 sm:h-64 rounded-xl overflow-hidden shadow-sm bg-slate-900"
             >
-              <Image
+              <img
                 src={item.image_url}
                 alt={item.title}
-                fill
-                sizes="(max-width: 768px) 50vw, 33vw"
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
                 <p className="text-xs font-semibold text-white truncate">{item.title}</p>

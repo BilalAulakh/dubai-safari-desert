@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Clock, CheckCircle2, ArrowRight } from "lucide-react";
 import { Package } from "@/types";
 import { formatPrice } from "@/lib/utils";
@@ -14,12 +13,11 @@ export default function PackageCard({ pkg }: PackageCardProps) {
     <div className="group flex flex-col rounded-2xl bg-white border border-amber-900/10 shadow-md hover:shadow-xl hover:border-amber-500/30 transition-all duration-300 overflow-hidden">
       {/* Image Container */}
       <div className="relative h-56 w-full overflow-hidden bg-slate-900">
-        <Image
+        <img
           src={pkg.main_image}
           alt={pkg.name}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+          loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
 

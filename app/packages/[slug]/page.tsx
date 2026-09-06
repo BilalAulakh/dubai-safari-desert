@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import {
@@ -87,13 +86,11 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
       {/* Top Hero Banner */}
       <section className="relative min-h-[50vh] flex items-end bg-[#0B0F17] py-16">
         <div className="absolute inset-0 z-0">
-          <Image
+          <img
             src={pkg.main_image}
             alt={pkg.name}
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-center opacity-40"
+            className="w-full h-full object-cover object-center opacity-40"
+            loading="eager"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F17] via-[#0B0F17]/70 to-transparent" />
         </div>
@@ -144,12 +141,11 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
                       key={i}
                       className="relative h-28 rounded-xl overflow-hidden shadow-sm bg-slate-900 border border-slate-200"
                     >
-                      <Image
+                      <img
                         src={img}
                         alt={`${pkg.name} preview ${i + 1}`}
-                        fill
-                        sizes="(max-width: 768px) 50vw, 25vw"
-                        className="object-cover hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
                       />
                     </div>
                   ))}

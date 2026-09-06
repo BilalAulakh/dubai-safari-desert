@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { initialGalleryItems } from "@/lib/data/gallery";
 import { GalleryItem } from "@/types";
 import { Plus, Trash2, X } from "lucide-react";
@@ -76,12 +75,11 @@ export default function AdminGalleryPage() {
           >
             <div>
               <div className="relative h-44 w-full bg-slate-900">
-                <Image
+                <img
                   src={item.image_url}
                   alt={item.title}
-                  fill
-                  sizes="25vw"
-                  className="object-cover"
+                  loading="lazy"
+                  className="w-full h-full object-cover"
                 />
                 <span className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/70 backdrop-blur-sm text-[10px] font-semibold text-amber-300 uppercase">
                   {item.category}

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { X, ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
 import { GalleryItem } from "@/types";
 
@@ -78,12 +77,11 @@ export default function GalleryGrid({ items }: GalleryGridProps) {
             onClick={() => openLightbox(index)}
             className="group relative h-64 sm:h-72 rounded-2xl overflow-hidden shadow-md bg-slate-900 cursor-pointer border border-slate-200"
           >
-            <Image
+            <img
               src={item.image_url}
               alt={item.title}
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="object-cover group-hover:scale-105 transition-transform duration-500"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-between p-5">
               <span className="text-sm font-semibold text-white truncate max-w-[80%]">
@@ -136,12 +134,12 @@ export default function GalleryGrid({ items }: GalleryGridProps) {
 
           {/* Current image and title */}
           <div className="relative max-w-4xl max-h-[80vh] w-full h-[70vh] flex flex-col items-center justify-center">
-            <div className="relative w-full h-full">
-              <Image
+            <div className="relative w-full h-full flex items-center justify-center">
+              <img
                 src={filteredItems[lightboxIndex].image_url}
                 alt={filteredItems[lightboxIndex].title}
-                fill
-                className="object-contain"
+                className="max-w-full max-h-full object-contain"
+                loading="eager"
               />
             </div>
             <p className="mt-4 text-white text-sm font-medium">

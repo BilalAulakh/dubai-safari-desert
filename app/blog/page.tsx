@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { BookOpen, Calendar, Clock, ArrowRight } from "lucide-react";
 import { getBlogPosts } from "@/lib/data/store";
@@ -46,12 +45,11 @@ export default async function BlogPage() {
             >
               <div>
                 <div className="relative h-64 w-full overflow-hidden bg-slate-900">
-                  <Image
+                  <img
                     src={post.featured_image}
                     alt={post.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
 
