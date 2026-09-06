@@ -15,6 +15,7 @@ import {
   Image as ImageIcon,
   HelpCircle,
   MapPin,
+  Sparkles,
 } from "lucide-react";
 import { getBookings, getAllReviews, getPackages } from "@/lib/data/store";
 import { formatDate } from "@/lib/utils";
@@ -52,11 +53,12 @@ export default async function AdminDashboardPage() {
         {/* Quick Add Buttons */}
         <div className="flex flex-wrap items-center gap-2">
           <Link
-            href="/admin/packages"
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold uppercase tracking-wider shadow-sm transition-all"
+            href="/admin/packages/new"
+            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 text-xs font-extrabold uppercase tracking-wider shadow-md transition-all"
+            id="admin-overview-add-package-btn"
           >
-            <Plus className="w-3.5 h-3.5" />
-            <span>Add Package</span>
+            <Plus className="w-4 h-4" />
+            <span>+ Create New Package</span>
           </Link>
 
           <Link
@@ -141,6 +143,103 @@ export default async function AdminDashboardPage() {
           <span className="text-[10px] text-purple-700">
             {pendingReviews} pending moderation
           </span>
+        </div>
+      </div>
+
+      {/* Content Management Quick Hub */}
+      <div className="bg-white dark:bg-[#0F1624] p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-amber-500" />
+              <span>Add & Manage Website Content</span>
+            </h2>
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              Direct routes to create new safari packages, activities, gallery photos, and FAQs
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <Link
+            href="/admin/packages/new"
+            className="group p-4 rounded-2xl bg-amber-50/70 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800/60 hover:border-amber-400 dark:hover:border-amber-500 transition-all shadow-sm hover:shadow-md flex flex-col justify-between"
+          >
+            <div>
+              <div className="w-10 h-10 rounded-xl bg-amber-500 text-slate-950 flex items-center justify-center font-bold mb-3 shadow">
+                <Plus className="w-5 h-5" />
+              </div>
+              <h3 className="text-sm font-bold text-slate-950 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                + Add Safari Package
+              </h3>
+              <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
+                Add new tour title, price (AED), duration, photos & inclusions.
+              </p>
+            </div>
+            <span className="mt-4 text-xs font-bold text-amber-700 dark:text-amber-400 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+              Open Form &rarr;
+            </span>
+          </Link>
+
+          <Link
+            href="/admin/activities"
+            className="group p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-amber-400 dark:hover:border-amber-500 transition-all shadow-sm hover:shadow-md flex flex-col justify-between"
+          >
+            <div>
+              <div className="w-10 h-10 rounded-xl bg-slate-200 dark:bg-slate-800 text-amber-600 dark:text-amber-400 flex items-center justify-center font-bold mb-3">
+                <Compass className="w-5 h-5" />
+              </div>
+              <h3 className="text-sm font-bold text-slate-950 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                + Add Desert Activity
+              </h3>
+              <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
+                Add Quad bikes, buggies, camel rides, sandboarding or stage shows.
+              </p>
+            </div>
+            <span className="mt-4 text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+              Manage Activities &rarr;
+            </span>
+          </Link>
+
+          <Link
+            href="/admin/gallery"
+            className="group p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-amber-400 dark:hover:border-amber-500 transition-all shadow-sm hover:shadow-md flex flex-col justify-between"
+          >
+            <div>
+              <div className="w-10 h-10 rounded-xl bg-slate-200 dark:bg-slate-800 text-amber-600 dark:text-amber-400 flex items-center justify-center font-bold mb-3">
+                <ImageIcon className="w-5 h-5" />
+              </div>
+              <h3 className="text-sm font-bold text-slate-950 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                + Add Gallery Photo
+              </h3>
+              <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
+                Add guest photos, dunes shots, camps and safari highlights.
+              </p>
+            </div>
+            <span className="mt-4 text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+              Upload Photos &rarr;
+            </span>
+          </Link>
+
+          <Link
+            href="/admin/faqs"
+            className="group p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-amber-400 dark:hover:border-amber-500 transition-all shadow-sm hover:shadow-md flex flex-col justify-between"
+          >
+            <div>
+              <div className="w-10 h-10 rounded-xl bg-slate-200 dark:bg-slate-800 text-amber-600 dark:text-amber-400 flex items-center justify-center font-bold mb-3">
+                <HelpCircle className="w-5 h-5" />
+              </div>
+              <h3 className="text-sm font-bold text-slate-950 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                + Add FAQ Question
+              </h3>
+              <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
+                Add questions, answers, and Dubai hotel pickup locations.
+              </p>
+            </div>
+            <span className="mt-4 text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+              Manage FAQs &rarr;
+            </span>
+          </Link>
         </div>
       </div>
 

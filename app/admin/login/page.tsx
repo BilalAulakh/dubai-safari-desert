@@ -16,7 +16,7 @@ export default function AdminLoginPage() {
 
   // Default credentials
   const DEMO_EMAIL = "admin@dubaisafaridesert.com";
-  const DEMO_PASSWORD = "admin12345";
+  const DEMO_PASSWORD = "Bilaljutt2339@";
 
   const handleAutofill = () => {
     setEmail(DEMO_EMAIL);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { initialPackages } from "@/lib/data/packages";
 import { Package } from "@/types";
@@ -11,6 +11,21 @@ export default function AdminPackagesPage() {
   const [packages, setPackages] = useState<Package[]>(initialPackages);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingPackage, setEditingPackage] = useState<Package | null>(null);
+
+  // Sync custom packages from localStorage on mount
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem("admin_custom_packages");
+      if (stored) {
+        const custom: Package[] = JSON.parse(stored);
+        if (custom.length > 0) {
+          setPackages([...custom, ...initialPackages]);
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
 
   // Form fields
   const [name, setName] = useState("");
@@ -202,15 +217,24 @@ export default function AdminPackagesPage() {
           </p>
         </div>
 
-        <button
-          type="button"
-          onClick={openCreateModal}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold text-xs uppercase tracking-wider shadow hover:from-amber-400 hover:to-amber-500 transition-all hover:scale-105 active:scale-95"
-          id="btn-add-new-package"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Add New Package</span>
-        </button>
+        <div className="flex flex-wrap items-center gap-2">
+          <Link
+            href="/admin/packages/new"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-extrabold text-xs uppercase tracking-wider shadow hover:from-amber-400 hover:to-amber-500 transition-all hover:scale-105 active:scale-95"
+            id="btn-add-new-package"
+          >
+            <Plus className="w-4 h-4" />
+            <span>+ Create New Package</span>
+          </Link>
+
+          <button
+            type="button"
+            onClick={openCreateModal}
+            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-xs uppercase tracking-wider hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+          >
+            <span>Quick Popup</span>
+          </button>
+        </div>
       </div>
 
       {/* Grid of Packages */}

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Compass, Menu, X, Phone } from "lucide-react";
+import { Compass, Menu, X, Phone, ShieldCheck } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config/site";
 import ThemeToggle from "@/components/common/ThemeToggle";
 
@@ -79,6 +79,16 @@ export default function Navbar() {
             <ThemeToggle />
 
             <Link
+              href="/admin"
+              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-bold rounded-lg border border-amber-500/30 text-amber-700 dark:text-amber-400 hover:bg-amber-500/10 transition-colors"
+              title="Admin Management Portal"
+              id="nav-admin-cta"
+            >
+              <ShieldCheck className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+              <span>Admin</span>
+            </Link>
+
+            <Link
               href="/booking"
               className="inline-flex items-center justify-center px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 hover:from-amber-400 hover:to-amber-500 shadow-md transition-all hover:shadow-amber-500/20 hover:scale-[1.02]"
               id="nav-book-now-cta"
@@ -127,6 +137,14 @@ export default function Navbar() {
           </nav>
 
           <div className="mt-4 pt-4 border-t border-slate-200 dark:border-white/10 flex flex-col gap-3">
+            <Link
+              href="/admin"
+              className="w-full py-2.5 flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-wider rounded-lg border border-amber-500/40 text-amber-700 dark:text-amber-400 hover:bg-amber-500/10"
+            >
+              <ShieldCheck className="w-4 h-4" />
+              <span>Admin Management Portal</span>
+            </Link>
+
             <Link
               href="/booking"
               className="w-full py-3 text-center text-sm font-bold uppercase tracking-wider rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-md"

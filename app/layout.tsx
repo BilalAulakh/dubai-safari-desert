@@ -1,9 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-import FloatingWhatsApp from "@/components/layout/FloatingWhatsApp";
+import AppShell from "@/components/layout/AppShell";
 import { ThemeProvider } from "@/components/common/ThemeProvider";
 import { SITE_CONFIG } from "@/lib/config/site";
 
@@ -160,10 +158,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen flex flex-col bg-[var(--bg-page)] text-[var(--text-main)] font-sans antialiased selection:bg-amber-500 selection:text-slate-950 transition-colors duration-200">
         <ThemeProvider>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <FloatingWhatsApp />
+          <AppShell>{children}</AppShell>
         </ThemeProvider>
       </body>
     </html>

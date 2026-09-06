@@ -83,6 +83,25 @@ export async function getPackageBySlug(slug: string): Promise<Package | null> {
   return pkg || null;
 }
 
+export async function createPackage(pkg: Package): Promise<Package> {
+  fallbackPackages.unshift(pkg);
+  return pkg;
+}
+
+export async function updatePackage(id: string, updates: Partial<Package>): Promise<Package | null> {
+  const index = fallbackPackages.findIndex((p) => p.id === id);
+  if (index === -1) return null;
+  fallbackPackages[index] = { ...fallbackPackages[index], ...updates };
+  return fallbackPackages[index];
+}
+
+export async function deletePackage(id: string): Promise<boolean> {
+  const index = fallbackPackages.findIndex((p) => p.id === id);
+  if (index === -1) return false;
+  fallbackPackages.splice(index, 1);
+  return true;
+}
+
 // --- ACTIVITIES ---
 export async function getActivities(): Promise<Activity[]> {
   return fallbackActivities
