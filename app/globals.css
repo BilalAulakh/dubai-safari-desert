@@ -1,26 +1,110 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@variant dark (&:where(.dark, .dark *));
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --bg-page: #FCFBF8;
+    --bg-surface: #FFFFFF;
+    --bg-surface-alt: #F8F5EE;
+    --text-main: #0F172A;
+    --text-muted: #475569;
+    --border-subtle: rgba(217, 119, 6, 0.15);
+    color-scheme: light;
+  }
+
+  .dark {
+    --bg-page: #080B11;
+    --bg-surface: #0F1624;
+    --bg-surface-alt: #0B0F17;
+    --text-main: #F8FAFC;
+    --text-muted: #94A3B8;
+    --border-subtle: rgba(255, 255, 255, 0.1);
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  ::selection {
+    background-color: #D97706;
+    color: #FFFFFF;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Comprehensive Dark Mode Overrides for instant reliable theme switching */
+.dark .bg-\[\#FCFBF8\] {
+  background-color: #080B11 !important;
+}
+
+.dark .bg-\[\#F8F5EE\] {
+  background-color: #0C101A !important;
+}
+
+.dark .bg-white {
+  background-color: #0F1624 !important;
+}
+
+.dark .text-slate-900 {
+  color: #F8FAFC !important;
+}
+
+.dark .text-slate-800 {
+  color: #E2E8F0 !important;
+}
+
+.dark .text-slate-700,
+.dark .text-slate-600 {
+  color: #94A3B8 !important;
+}
+
+.dark .border-slate-200,
+.dark .border-slate-100 {
+  border-color: #1E293B !important;
+}
+
+.dark .border-amber-900\/10,
+.dark .border-amber-900\/15 {
+  border-color: rgba(245, 158, 11, 0.2) !important;
+}
+
+.dark .shadow-sm,
+.dark .shadow-md,
+.dark .shadow-xl {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Custom utility classes */
+.luxury-gradient {
+  background: linear-gradient(135deg, #0B0F17 0%, #1A2234 50%, #0F1626 100%);
+}
+
+.gold-gradient {
+  background: linear-gradient(135deg, #D97706 0%, #F59E0B 50%, #B45309 100%);
+}
+
+.sand-gradient {
+  background: linear-gradient(180deg, #FDFBF7 0%, #F8F5EE 100%);
+}
+
+.gold-text-gradient {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.luxury-card-border {
+  border: 1px solid rgba(217, 119, 6, 0.15);
+}
+
+.luxury-glow {
+  box-shadow: 0 10px 30px -10px rgba(217, 119, 6, 0.2);
 }

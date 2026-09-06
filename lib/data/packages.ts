@@ -1,0 +1,337 @@
+import { Package } from "@/types";
+
+export const initialPackages: Package[] = [
+  {
+    id: "pkg-evening-safari",
+    name: "Evening Desert Safari with BBQ Dinner",
+    slug: "evening-desert-safari",
+    short_description:
+      "The signature Dubai desert experience featuring thrilling 4x4 dune bashing, sunset camel ride, live Arabian shows, and a lavish 5-star BBQ buffet dinner under the stars.",
+    description:
+      "Embark on Dubai's most celebrated desert excursion. Our professional licensed safari marshals will pick you up in a luxury air-conditioned 4x4 Land Cruiser and take you deep into the Lahbab red dunes. Experience heart-pounding dune bashing, slide down crimson dunes on a sandboard, capture dramatic golden-hour sunset photos, and relax in our traditional Bedouin-style desert camp. The evening culminates in a grand open-air BBQ dinner accompanied by mesmerizing Tanoura dancing, fiery performances, and captivating belly dance artists.",
+    price: 150,
+    duration: "6 - 7 Hours",
+    featured: true,
+    active: true,
+    main_image:
+      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop",
+    gallery: [
+      "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1547234935-80c7145ec969?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1000&auto=format&fit=crop",
+    ],
+    inclusions: [
+      "Hotel Pickup & Drop-off in 4x4 Land Cruiser",
+      "30-40 minutes high-octane dune bashing on Lahbab red dunes",
+      "Sunset photo stop on high desert dunes",
+      "Camel riding experience",
+      "Sandboarding across pristine dunes",
+      "Traditional Arabic welcome with Gahwa (coffee) & fresh dates",
+      "Unlimited mineral water, soft drinks, tea & coffee",
+      "Lavish International & BBQ dinner buffet (Veg & Non-Veg)",
+      "Live Tanoura folk dance performance",
+      "Spectacular live Fire Show",
+      "Belly dance show",
+      "Henna hand painting for ladies & kids",
+      "Traditional Arabic costumes for souvenir photos",
+    ],
+    exclusions: [
+      "Alcoholic beverages (available for purchase at camp bar)",
+      "Quad biking / Dune buggy (can be added on request)",
+      "Falcon photography with souvenir print",
+      "VIP table service with food served at your table",
+    ],
+    itinerary: [
+      {
+        time: "02:30 PM - 03:30 PM",
+        title: "Hotel Pickup",
+        description: "Pickup from your hotel or residence in Dubai in an air-conditioned 4x4 vehicle.",
+        sort_order: 1,
+      },
+      {
+        time: "04:00 PM - 04:45 PM",
+        title: "Thrilling Red Dune Bashing",
+        description: "Adrenaline-filled 4x4 dune bashing across the Lahbab high red sand dunes.",
+        sort_order: 2,
+      },
+      {
+        time: "05:00 PM - 05:45 PM",
+        title: "Sunset Stop & Sandboarding",
+        description: "Watch the desert sunset, try sandboarding, and capture stunning desert photographs.",
+        sort_order: 3,
+      },
+      {
+        time: "06:00 PM - 08:30 PM",
+        title: "Bedouin Desert Camp Experience",
+        description: "Camel ride, Arabic coffee, henna painting, international BBQ dinner buffet, and 3 live stage shows.",
+        sort_order: 4,
+      },
+      {
+        time: "08:45 PM - 09:30 PM",
+        title: "Return Drop-off",
+        description: "Relaxing drive back to your hotel or residence in Dubai.",
+        sort_order: 5,
+      },
+    ],
+    pickup_info: "Pickups available from all hotels, apartments, and residences in Dubai, Sharjah, and Ajman.",
+    cancellation_policy: "Free cancellation up to 24 hours before safari departure. 100% refund guaranteed.",
+    seo_title: "Evening Desert Safari Dubai with BBQ Dinner | DubaiSafariDesert",
+    seo_description: "Book the best evening desert safari in Dubai with dune bashing, camel riding, BBQ dinner buffet, and live Arabian shows. Free hotel pickup and drop-off.",
+  },
+  {
+    id: "pkg-morning-safari",
+    name: "Morning Desert Safari & Dune Bashing",
+    slug: "morning-desert-safari",
+    short_description:
+      "Witness the serene beauty of the Arabian desert at dawn, combined with exhilarating dune bashing, camel trekking, and sandboarding in crisp morning air.",
+    description:
+      "Perfect for early birds, travelers with tight evening schedules, or families seeking calm daytime adventures. Experience the peaceful desert landscapes as the morning sun casts golden glows over untouched ripple patterns. Includes high-energy dune bashing, sandboarding, camel rides, and refreshing chilled beverages before returning to the city by midday.",
+    price: 130,
+    duration: "4 - 5 Hours",
+    featured: true,
+    active: true,
+    main_image:
+      "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1200&auto=format&fit=crop",
+    gallery: [
+      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1547234935-80c7145ec969?q=80&w=1000&auto=format&fit=crop",
+    ],
+    inclusions: [
+      "Hotel Pickup and Drop-off in 4x4 Land Cruiser",
+      "Dune Bashing on Red Dunes with professional licensed driver",
+      "Sandboarding experience down high dunes",
+      "Short camel ride",
+      "Sunrise / Morning desert photo opportunities",
+      "Complimentary cold mineral water and soft drinks",
+    ],
+    exclusions: [
+      "BBQ Dinner & Live Shows (exclusive to evening & overnight tours)",
+      "Quad bike / Buggy rental (optional upgrade)",
+    ],
+    itinerary: [
+      {
+        time: "07:30 AM - 08:30 AM",
+        title: "Morning Pickup",
+        description: "Pickup from your hotel or address in Dubai.",
+        sort_order: 1,
+      },
+      {
+        time: "09:00 AM - 09:45 AM",
+        title: "Dune Bashing",
+        description: "Experience 30-35 minutes of exciting dune bashing in the Lahbab desert.",
+        sort_order: 2,
+      },
+      {
+        time: "10:00 AM - 11:00 AM",
+        title: "Sandboarding & Camel Ride",
+        description: "Glide down steep dunes on sandboards, meet friendly camels, and take memorable photos.",
+        sort_order: 3,
+      },
+      {
+        time: "11:30 AM - 12:30 PM",
+        title: "Return to Hotel",
+        description: "Comfortable drive back to your hotel in time for lunch.",
+        sort_order: 4,
+      },
+    ],
+    pickup_info: "Pickups available from all central Dubai hotels and residences.",
+    cancellation_policy: "Free cancellation up to 24 hours prior to scheduled departure.",
+    seo_title: "Morning Desert Safari Dubai | Sunrise Dune Bashing & Sandboarding",
+    seo_description: "Experience Dubai morning desert safari with thrilling dune bashing, camel riding, and sandboarding. Best early sunrise desert tour in Dubai.",
+  },
+  {
+    id: "pkg-overnight-safari",
+    name: "Overnight Desert Safari & Stargazing Camp",
+    slug: "overnight-desert-safari",
+    short_description:
+      "Spend an enchanting night in traditional Bedouin tents beneath millions of stars, complete with evening safari entertainment, midnight campfire, and sunrise breakfast.",
+    description:
+      "Immerse yourself in authentic nomadic Arabian hospitality. This all-inclusive overnight experience encompasses all features of our premier evening safari—dune bashing, camel ride, BBQ buffet, and live performances—followed by a peaceful desert night around a crackling campfire with shisha. Sleep comfortably in furnished tents with blankets and pillows, and awaken to a magnificent sunrise over the dunes accompanied by a freshly prepared Arabic breakfast.",
+    price: 290,
+    duration: "18 Hours (Overnight)",
+    featured: true,
+    active: true,
+    main_image:
+      "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1200&auto=format&fit=crop",
+    gallery: [
+      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1000&auto=format&fit=crop",
+    ],
+    inclusions: [
+      "All Evening Desert Safari activities (dune bashing, camel ride, shows, BBQ dinner)",
+      "Overnight stay in comfortable Bedouin tent equipped with mattresses, sheets & pillows",
+      "Midnight campfire gathering under starlit Arabian skies",
+      "Arabic tea, coffee, and dates throughout the night",
+      "Wake up to spectacular desert sunrise",
+      "Freshly prepared hot continental & Arabic breakfast",
+      "Morning camel trekking",
+      "Next morning return drop-off to hotel",
+    ],
+    exclusions: [
+      "Alcoholic beverages",
+      "Quad bike rental",
+    ],
+    itinerary: [
+      {
+        time: "03:00 PM",
+        title: "Afternoon Pickup & Dune Bashing",
+        description: "Pickup and travel to high red dunes for afternoon adventure.",
+        sort_order: 1,
+      },
+      {
+        time: "06:00 PM - 09:30 PM",
+        title: "Camp Entertainment & BBQ Dinner",
+        description: "Tanoura dance, belly dancing, fire show, and grand buffet dinner.",
+        sort_order: 2,
+      },
+      {
+        time: "10:00 PM - 12:00 AM",
+        title: "Stargazing & Campfire",
+        description: "Relax by the campfire, enjoy stargazing, and listen to desert folklore.",
+        sort_order: 3,
+      },
+      {
+        time: "06:00 AM - 08:30 AM",
+        title: "Sunrise & Breakfast",
+        description: "Witness the golden sunrise, enjoy morning breakfast, and return back to the city.",
+        sort_order: 4,
+      },
+    ],
+    pickup_info: "Pickups available from all hotels in Dubai and Sharjah.",
+    cancellation_policy: "Free cancellation up to 24 hours before pickup.",
+    seo_title: "Overnight Desert Safari Dubai | Camp Under Arabian Stars",
+    seo_description: "Unforgettable overnight desert safari in Dubai. Includes dune bashing, BBQ dinner, live shows, tent camping, stargazing, and sunrise breakfast.",
+  },
+  {
+    id: "pkg-private-safari",
+    name: "VIP Private Desert Safari Experience",
+    slug: "private-desert-safari",
+    short_description:
+      "Exclusive private 4x4 Land Cruiser just for you and your group, customizable dune bashing intensity, and premium VIP table service at the desert camp.",
+    description:
+      "Designed for discerning guests, couples seeking romantic privacy, or families wanting their own dedicated vehicle and pace. Your private safari marshal will cater directly to your preferences—whether you desire extreme adrenaline on the highest dunes or a gentle, scenic photographic journey. At the camp, enjoy reserved VIP sofa seating with personal waiter service so you can relax while your food is served directly to your table.",
+    price: 950,
+    duration: "6 - 7 Hours",
+    featured: true,
+    active: true,
+    main_image:
+      "https://images.unsplash.com/photo-1547234935-80c7145ec969?q=80&w=1200&auto=format&fit=crop",
+    gallery: [
+      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1000&auto=format&fit=crop",
+    ],
+    inclusions: [
+      "Private dedicated luxury 4x4 Land Cruiser (up to 6 guests included)",
+      "Flexible pickup time from your hotel, residence, or airport",
+      "Customized dune bashing (soft, medium, or extreme adrenaline)",
+      "Private sunset photo shoot at secluded panoramic dunes",
+      "Camel rides and unlimited sandboarding",
+      "Reserved VIP luxury lounge seating at the desert camp",
+      "Table-served 5-star BBQ dinner (no standing in buffet lines)",
+      "Dedicated waiter service and premium Arabic hospitality",
+      "All live entertainment shows (Tanoura, Fire, Belly Dance)",
+    ],
+    exclusions: [
+      "Alcoholic drinks (available on a-la-carte menu)",
+      "Private dune buggy rentals",
+    ],
+    itinerary: [
+      {
+        time: "Flexible (02:30 - 03:30 PM)",
+        title: "VIP Private Hotel Pickup",
+        description: "Direct doorstep pickup in your private Land Cruiser.",
+        sort_order: 1,
+      },
+      {
+        time: "04:15 PM - 05:00 PM",
+        title: "Custom Dune Bashing",
+        description: "Private dune bashing tailored to your preferred thrills level.",
+        sort_order: 2,
+      },
+      {
+        time: "05:15 PM - 05:45 PM",
+        title: "Sunset Photos & Sandboarding",
+        description: "Private photo stops on the crest of Dubai's red dunes.",
+        sort_order: 3,
+      },
+      {
+        time: "06:00 PM - 08:45 PM",
+        title: "VIP Lounge Dining & Live Shows",
+        description: "Table-served gourmet dinner and front-row seats for all live shows.",
+        sort_order: 4,
+      },
+      {
+        time: "09:00 PM",
+        title: "Private Return Drop-off",
+        description: "Direct private transfer back to your destination.",
+        sort_order: 5,
+      },
+    ],
+    pickup_info: "Pickups available from anywhere in Dubai, Sharjah, or Ajman (hotels, private villas, airports).",
+    cancellation_policy: "Free cancellation up to 24 hours prior to departure.",
+    seo_title: "Private Desert Safari Dubai | Exclusive VIP Luxury 4x4 Tour",
+    seo_description: "Experience Dubai desert in complete luxury with a private 4x4 Land Cruiser, VIP reserved camp seating, table-served BBQ dinner, and personalized dune bashing.",
+  },
+  {
+    id: "pkg-quad-buggy-safari",
+    name: "Quad Bike & Dune Buggy Desert Safari",
+    slug: "quad-bike-desert-safari",
+    short_description:
+      "Take command of high-power quad bikes and Can-Am dune buggies across open red desert dunes, followed by an evening BBQ feast and entertainment.",
+    description:
+      "Feel the raw horsepower as you navigate Dubai's crimson desert on high-performance 250cc-400cc quad bikes or 1000cc turbo dune buggies. Led by certified desert instructors with full safety gear provided. After the adrenaline rush, enjoy traditional camel riding, sunset views, and our full evening safari camp experience with live stage shows and a lavish BBQ dinner.",
+    price: 280,
+    duration: "6 Hours",
+    featured: false,
+    active: true,
+    main_image:
+      "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1200&auto=format&fit=crop",
+    gallery: [
+      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000&auto=format&fit=crop",
+    ],
+    inclusions: [
+      "Hotel Pickup and Drop-off in 4x4 vehicle",
+      "30 or 60-minute Quad Bike (ATV) ride in designated desert terrain",
+      "Complete safety gear: helmets, goggles, and safety briefing",
+      "Dune bashing experience",
+      "Sandboarding & Camel ride",
+      "Full access to Bedouin camp with BBQ buffet dinner and 3 live shows",
+      "Unlimited refreshments",
+    ],
+    exclusions: [
+      "Buggy upgrade to 1000cc 2-seater (available for supplement)",
+      "Alcoholic drinks",
+    ],
+    itinerary: [
+      {
+        time: "02:30 PM",
+        title: "Hotel Pickup",
+        description: "Pickup from your hotel.",
+        sort_order: 1,
+      },
+      {
+        time: "03:45 PM - 04:30 PM",
+        title: "Quad Biking & Safety Briefing",
+        description: "Gear up and ride across the desert trails.",
+        sort_order: 2,
+      },
+      {
+        time: "04:45 PM - 05:30 PM",
+        title: "Dune Bashing & Sandboarding",
+        description: "4x4 dune bashing and sandboarding.",
+        sort_order: 3,
+      },
+      {
+        time: "06:00 PM - 08:30 PM",
+        title: "Camp Shows & BBQ Dinner",
+        description: "Dinner buffet and Arabian performances.",
+        sort_order: 4,
+      },
+    ],
+    pickup_info: "Doorstep pickup available across all major Dubai areas.",
+    cancellation_policy: "Free cancellation up to 24 hours before tour start.",
+    seo_title: "Quad Biking & Dune Buggy Desert Safari Dubai | DubaiSafariDesert",
+    seo_description: "Ride powerful ATVs and dune buggies on Dubai desert red dunes. Includes safety gear, dune bashing, camel ride, and BBQ dinner show.",
+  },
+];

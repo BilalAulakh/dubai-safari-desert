@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B"/>
+      <stop offset="50%" stop-color="#D97706"/>
+      <stop offset="100%" stop-color="#92400E"/>
+    </linearGradient>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#0B0F17"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background Circle with Golden Luxury Border -->
+  <circle cx="32" cy="32" r="30" fill="url(#bgGrad)" stroke="url(#goldGrad)" stroke-width="3"/>
+
+  <!-- Desert Sun / Glowing Crescent Accent -->
+  <circle cx="44" cy="20" r="6" fill="#F59E0B" opacity="0.85"/>
+
+  <!-- Flowing Desert Sand Dunes -->
+  <path d="M4 42 Q 18 30, 36 38 Q 48 44, 60 36 L 60 56 Q 48 58, 32 58 Q 16 58, 4 56 Z" fill="url(#goldGrad)" opacity="0.95"/>
+  <path d="M4 48 Q 20 40, 38 46 Q 50 50, 60 45 L 60 58 Q 46 60, 32 60 Q 18 60, 4 58 Z" fill="#92400E" opacity="0.6"/>
+
+  <!-- Luxury Compass / Desert Guide Star -->
+  <polygon points="32,10 35,22 47,25 35,28 32,40 29,28 17,25 29,22" fill="#FDE68A"/>
+</svg>
