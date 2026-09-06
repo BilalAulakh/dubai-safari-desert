@@ -12,6 +12,7 @@ import {
   AlertCircle,
   Eye,
 } from "lucide-react";
+import ImageUpload from "@/components/admin/ImageUpload";
 
 export default function CreatePackagePage() {
   const router = useRouter();
@@ -256,34 +257,13 @@ export default function CreatePackagePage() {
             />
           </div>
 
-          {/* Main Image URL + Preview */}
-          <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2">
-              Main Image URL *
-            </label>
-            <input
-              type="url"
-              required
-              value={mainImage}
-              onChange={(e) => setMainImage(e.target.value)}
-              placeholder="https://images.unsplash.com/..."
-              className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
-            />
-
-            {/* Live Preview Thumbnail */}
-            {mainImage && (
-              <div className="mt-3 relative h-48 w-full max-w-sm rounded-2xl overflow-hidden border border-slate-300 dark:border-slate-700 shadow-sm bg-slate-900">
-                <img
-                  src={mainImage}
-                  alt="Preview"
-                  className="w-full h-full object-cover"
-                />
-                <span className="absolute bottom-2 left-2 px-2.5 py-0.5 rounded-full bg-black/70 text-white text-[10px] font-bold">
-                  Image Preview
-                </span>
-              </div>
-            )}
-          </div>
+          {/* Main Image with Supabase Storage Upload */}
+          <ImageUpload
+            value={mainImage}
+            onChange={setMainImage}
+            label="Package Main Image (Saved to safari-images)"
+            bucket="safari-images"
+          />
 
           {/* Inclusions & Exclusions */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

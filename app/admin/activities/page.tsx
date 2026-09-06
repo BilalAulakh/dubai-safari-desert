@@ -4,6 +4,7 @@ import { useState } from "react";
 import { initialActivities } from "@/lib/data/activities";
 import { Activity } from "@/types";
 import { Plus, Edit2, Trash2, X } from "lucide-react";
+import ImageUpload from "@/components/admin/ImageUpload";
 
 export default function AdminActivitiesPage() {
   const [activities, setActivities] = useState<Activity[]>(initialActivities);
@@ -259,18 +260,12 @@ export default function AdminActivitiesPage() {
                 />
               </div>
 
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                  Image URL *
-                </label>
-                <input
-                  type="url"
-                  required
-                  value={image}
-                  onChange={(e) => setImage(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-transparent text-xs focus:outline-none focus:ring-2 focus:ring-amber-500"
-                />
-              </div>
+              <ImageUpload
+                value={image}
+                onChange={setImage}
+                label="Activity Image (Saved to safari-images)"
+                bucket="safari-images"
+              />
 
               <div>
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">

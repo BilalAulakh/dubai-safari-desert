@@ -242,3 +242,25 @@ CREATE POLICY "Admin full access faqs" ON public.faqs TO authenticated USING (tr
 CREATE POLICY "Admin full access gallery" ON public.gallery TO authenticated USING (true) WITH CHECK (true);
 CREATE POLICY "Admin full access site_settings" ON public.site_settings TO authenticated USING (true) WITH CHECK (true);
 CREATE POLICY "Admin full access blog_posts" ON public.blog_posts TO authenticated USING (true) WITH CHECK (true);
+
+-- ==============================================================================
+-- 7. STORAGE BUCKET POLICIES (safari-images)
+-- ==============================================================================
+-- Allow anyone to view images from public bucket safari-images
+CREATE POLICY "Public view safari-images"
+ON storage.objects FOR SELECT
+USING (bucket_id = 'safari-images');
+
+-- Allow uploads to safari-images bucket
+CREATE POLICY "Allow uploads to safari-images"
+ON storage.objects FOR INSERT
+WITH CHECK (bucket_id = 'safari-images');
+
+-- Allow updates and deletes to safari-images
+CREATE POLICY "Allow update safari-images"
+ON storage.objects FOR UPDATE
+USING (bucket_id = 'safari-images');
+
+CREATE POLICY "Allow delete safari-images"
+ON storage.objects FOR DELETE
+USING (bucket_id = 'safari-images');

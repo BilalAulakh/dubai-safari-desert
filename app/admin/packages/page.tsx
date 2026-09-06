@@ -6,6 +6,7 @@ import { initialPackages } from "@/lib/data/packages";
 import { Package } from "@/types";
 import { formatPrice } from "@/lib/utils";
 import { Plus, Edit2, Trash2, Eye, X, Check, Sparkles } from "lucide-react";
+import ImageUpload from "@/components/admin/ImageUpload";
 
 export default function AdminPackagesPage() {
   const [packages, setPackages] = useState<Package[]>(initialPackages);
@@ -412,18 +413,12 @@ export default function AdminPackagesPage() {
                 </div>
               </div>
 
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                  Main Image URL *
-                </label>
-                <input
-                  type="url"
-                  required
-                  value={mainImage}
-                  onChange={(e) => setMainImage(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-transparent text-xs focus:outline-none focus:ring-2 focus:ring-amber-500"
-                />
-              </div>
+              <ImageUpload
+                value={mainImage}
+                onChange={setMainImage}
+                label="Main Image (Saved to safari-images)"
+                bucket="safari-images"
+              />
 
               <div>
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
