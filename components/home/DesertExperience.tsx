@@ -17,33 +17,45 @@ export default function DesertExperience() {
           <div className="grid grid-cols-2 gap-4 relative">
             <div className="relative h-64 sm:h-80 rounded-2xl overflow-hidden shadow-2xl border border-amber-500/20">
               <img
-                src="https://images.unsplash.com/photo-1547234935-80c7145ec969?q=80&w=800&auto=format&fit=crop"
+                src="https://images.unsplash.com/photo-1547234935-80c7145ec969?q=80&w=600&auto=format&fit=crop"
                 alt="Dubai 4x4 dune bashing"
+                width={400}
+                height={320}
                 loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover"
               />
             </div>
             <div className="relative h-64 sm:h-80 rounded-2xl overflow-hidden shadow-2xl border border-amber-500/20 mt-8">
               <img
-                src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=800&auto=format&fit=crop"
+                src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=600&auto=format&fit=crop"
                 alt="Arabian desert camp at dusk"
+                width={400}
+                height={320}
                 loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover"
               />
             </div>
             <div className="relative h-64 sm:h-80 rounded-2xl overflow-hidden shadow-2xl border border-amber-500/20 -mt-8">
               <img
-                src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=800&auto=format&fit=crop"
+                src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=600&auto=format&fit=crop"
                 alt="Desert camel trek at sunset"
+                width={400}
+                height={320}
                 loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover"
               />
             </div>
             <div className="relative h-64 sm:h-80 rounded-2xl overflow-hidden shadow-2xl border border-amber-500/20">
               <img
-                src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop"
+                src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=600&auto=format&fit=crop"
                 alt="Spectacular live fire dance in Dubai desert"
+                width={400}
+                height={320}
                 loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover"
               />
             </div>

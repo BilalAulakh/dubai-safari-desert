@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Clock, CheckCircle2, ArrowRight } from "lucide-react";
 import { Package } from "@/types";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, optimizeImageUrl } from "@/lib/utils";
 
 interface PackageCardProps {
   pkg: Package;
@@ -14,8 +14,11 @@ export default function PackageCard({ pkg }: PackageCardProps) {
       {/* Image Container */}
       <div className="relative h-56 w-full overflow-hidden bg-slate-900">
         <img
-          src={pkg.main_image}
+          src={optimizeImageUrl(pkg.main_image, 600)}
           alt={pkg.name}
+          width={600}
+          height={400}
+          decoding="async"
           className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
           loading="lazy"
         />

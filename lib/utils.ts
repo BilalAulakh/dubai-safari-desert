@@ -32,3 +32,16 @@ export function createWhatsAppUrl(phone: string, text: string): string {
   const encodedText = encodeURIComponent(text);
   return `https://wa.me/${cleanPhone}?text=${encodedText}`;
 }
+
+/**
+ * Optimizes image URLs by ensuring appropriate dimensions, WebP/AVIF format negotiation,
+ * and high-efficiency compression.
+ */
+export function optimizeImageUrl(url: string, width = 800, quality = 80): string {
+  if (!url) return "";
+  if (url.includes("images.unsplash.com")) {
+    const cleanUrl = url.split("?")[0];
+    return `${cleanUrl}?auto=format&fit=crop&w=${width}&q=${quality}`;
+  }
+  return url;
+}

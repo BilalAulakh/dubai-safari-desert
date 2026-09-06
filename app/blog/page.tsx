@@ -2,8 +2,10 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { BookOpen, Calendar, Clock, ArrowRight } from "lucide-react";
 import { getBlogPosts } from "@/lib/data/store";
-import { formatDate } from "@/lib/utils";
+import { formatDate, optimizeImageUrl } from "@/lib/utils";
 import CTASection from "@/components/home/CTASection";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "Dubai Desert Safari Guides & Travel Blog",
@@ -46,9 +48,12 @@ export default async function BlogPage() {
               <div>
                 <div className="relative h-64 w-full overflow-hidden bg-slate-900">
                   <img
-                    src={post.featured_image}
+                    src={optimizeImageUrl(post.featured_image, 600)}
                     alt={post.title}
+                    width={600}
+                    height={350}
                     loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>

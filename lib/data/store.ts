@@ -20,6 +20,16 @@ import { initialGalleryItems } from "./gallery";
 import { initialReviews } from "./reviews";
 import { initialBlogPosts } from "./blogPosts";
 import { generateBookingReference } from "../utils";
+import { createClient as createSupabaseClient } from "@supabase/supabase-js";
+
+function getPublicSupabase() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !anonKey) return null;
+  return createSupabaseClient(url, anonKey, {
+    auth: { persistSession: false },
+  });
+}
 
 // In-memory fallback stores for local/demo execution
 const fallbackPackages: Package[] = [...initialPackages];
@@ -71,24 +81,117 @@ const fallbackBookings: Booking[] = [
 
 // --- PACKAGES ---
 export async function getPackages(): Promise<Package[]> {
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("packages")
+        .select("id, name, slug, short_description, description, price, duration, featured, active, main_image, gallery, pickup_info, cancellation_policy, seo_title, seo_description")
+        .eq("active", true);
+
+      if (!error && data && data.length > 0) {
+        return data.map((pkg: any) => {
+          const fallback = fallbackPackages.find((f) => f.slug === pkg.slug || f.id === pkg.id);
+          return {
+            ...pkg,
+            price: Number(pkg.price),
+            inclusions: fallback?.inclusions || ["4x4 Dune Bashing", "Camel Ride", "BBQ Dinner", "Live Shows"],
+            exclusions: fallback?.exclusions || ["Alcoholic Drinks", "Quad Bike (optional)"],
+            itinerary: fallback?.itinerary || [],
+          };
+        });
+      }
+    }
+  } catch {
+    // Fallback to in-memory store
+  }
   return fallbackPackages.filter((p) => p.active);
 }
 
 export async function getAllPackages(): Promise<Package[]> {
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("packages")
+        .select("id, name, slug, short_description, description, price, duration, featured, active, main_image, gallery, pickup_info, cancellation_policy, seo_title, seo_description");
+
+      if (!error && data && data.length > 0) {
+        return data.map((pkg: any) => {
+          const fallback = fallbackPackages.find((f) => f.slug === pkg.slug || f.id === pkg.id);
+          return {
+            ...pkg,
+            price: Number(pkg.price),
+            inclusions: fallback?.inclusions || ["4x4 Dune Bashing", "Camel Ride", "BBQ Dinner", "Live Shows"],
+            exclusions: fallback?.exclusions || ["Alcoholic Drinks", "Quad Bike (optional)"],
+            itinerary: fallback?.itinerary || [],
+          };
+        });
+      }
+    }
+  } catch {}
   return fallbackPackages;
 }
 
 export async function getPackageBySlug(slug: string): Promise<Package | null> {
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("packages")
+        .select("id, name, slug, short_description, description, price, duration, featured, active, main_image, gallery, pickup_info, cancellation_policy, seo_title, seo_description")
+        .eq("slug", slug)
+        .maybeSingle();
+
+      if (!error && data) {
+        const fallback = fallbackPackages.find((f) => f.slug === data.slug || f.id === data.id);
+        return {
+          ...data,
+          price: Number(data.price),
+          inclusions: fallback?.inclusions || ["4x4 Dune Bashing", "Camel Ride", "BBQ Dinner", "Live Shows"],
+          exclusions: fallback?.exclusions || ["Alcoholic Drinks", "Quad Bike (optional)"],
+          itinerary: fallback?.itinerary || [],
+        };
+      }
+    }
+  } catch {}
   const pkg = fallbackPackages.find((p) => p.slug === slug);
   return pkg || null;
 }
 
 export async function createPackage(pkg: Package): Promise<Package> {
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      await supabase.from("packages").insert({
+        name: pkg.name,
+        slug: pkg.slug,
+        short_description: pkg.short_description,
+        description: pkg.description,
+        price: pkg.price,
+        duration: pkg.duration,
+        featured: pkg.featured,
+        active: pkg.active,
+        main_image: pkg.main_image,
+        gallery: pkg.gallery,
+        pickup_info: pkg.pickup_info,
+        cancellation_policy: pkg.cancellation_policy,
+        seo_title: pkg.seo_title,
+        seo_description: pkg.seo_description,
+      });
+    }
+  } catch {}
   fallbackPackages.unshift(pkg);
   return pkg;
 }
 
 export async function updatePackage(id: string, updates: Partial<Package>): Promise<Package | null> {
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      await supabase.from("packages").update(updates).eq("id", id);
+    }
+  } catch {}
   const index = fallbackPackages.findIndex((p) => p.id === id);
   if (index === -1) return null;
   fallbackPackages[index] = { ...fallbackPackages[index], ...updates };
@@ -96,6 +199,12 @@ export async function updatePackage(id: string, updates: Partial<Package>): Prom
 }
 
 export async function deletePackage(id: string): Promise<boolean> {
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      await supabase.from("packages").delete().eq("id", id);
+    }
+  } catch {}
   const index = fallbackPackages.findIndex((p) => p.id === id);
   if (index === -1) return false;
   fallbackPackages.splice(index, 1);
@@ -104,56 +213,211 @@ export async function deletePackage(id: string): Promise<boolean> {
 
 // --- ACTIVITIES ---
 export async function getActivities(): Promise<Activity[]> {
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("activities")
+        .select("id, name, slug, description, image, active, sort_order, highlights")
+        .eq("active", true)
+        .order("sort_order", { ascending: true });
+
+      if (!error && data && data.length > 0) {
+        return data;
+      }
+    }
+  } catch {}
   return fallbackActivities
     .filter((a) => a.active)
     .sort((a, b) => a.sort_order - b.sort_order);
 }
 
 export async function getAllActivities(): Promise<Activity[]> {
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("activities")
+        .select("id, name, slug, description, image, active, sort_order, highlights")
+        .order("sort_order", { ascending: true });
+
+      if (!error && data && data.length > 0) {
+        return data;
+      }
+    }
+  } catch {}
   return fallbackActivities.sort((a, b) => a.sort_order - b.sort_order);
 }
 
 // --- PICKUP LOCATIONS ---
 export async function getPickupLocations(): Promise<PickupLocation[]> {
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("pickup_locations")
+        .select("id, name, active, sort_order")
+        .eq("active", true)
+        .order("sort_order", { ascending: true });
+
+      if (!error && data && data.length > 0) {
+        return data;
+      }
+    }
+  } catch {}
   return fallbackPickupLocations
     .filter((l) => l.active)
     .sort((a, b) => a.sort_order - b.sort_order);
 }
 
 export async function getAllPickupLocations(): Promise<PickupLocation[]> {
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("pickup_locations")
+        .select("id, name, active, sort_order")
+        .order("sort_order", { ascending: true });
+
+      if (!error && data && data.length > 0) {
+        return data;
+      }
+    }
+  } catch {}
   return fallbackPickupLocations.sort((a, b) => a.sort_order - b.sort_order);
 }
 
 // --- FAQS ---
 export async function getFAQs(): Promise<FAQ[]> {
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("faqs")
+        .select("id, question, answer, category, active, sort_order")
+        .eq("active", true)
+        .order("sort_order", { ascending: true });
+
+      if (!error && data && data.length > 0) {
+        return data;
+      }
+    }
+  } catch {}
   return fallbackFAQs
     .filter((f) => f.active)
     .sort((a, b) => a.sort_order - b.sort_order);
 }
 
 export async function getAllFAQs(): Promise<FAQ[]> {
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("faqs")
+        .select("id, question, answer, category, active, sort_order")
+        .order("sort_order", { ascending: true });
+
+      if (!error && data && data.length > 0) {
+        return data;
+      }
+    }
+  } catch {}
   return fallbackFAQs.sort((a, b) => a.sort_order - b.sort_order);
 }
 
 // --- GALLERY ---
 export async function getGalleryItems(): Promise<GalleryItem[]> {
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("gallery")
+        .select("id, title, image_url, category, active, sort_order")
+        .eq("active", true)
+        .order("sort_order", { ascending: true });
+
+      if (!error && data && data.length > 0) {
+        return data;
+      }
+    }
+  } catch {}
   return fallbackGallery
     .filter((g) => g.active)
     .sort((a, b) => a.sort_order - b.sort_order);
 }
 
 export async function getAllGalleryItems(): Promise<GalleryItem[]> {
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("gallery")
+        .select("id, title, image_url, category, active, sort_order")
+        .order("sort_order", { ascending: true });
+
+      if (!error && data && data.length > 0) {
+        return data;
+      }
+    }
+  } catch {}
   return fallbackGallery.sort((a, b) => a.sort_order - b.sort_order);
 }
 
 // --- REVIEWS ---
 export async function getApprovedReviews(): Promise<Review[]> {
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("reviews")
+        .select("id, customer_name, rating, comment, country, created_at, status, featured")
+        .eq("status", "approved")
+        .order("created_at", { ascending: false });
+
+      if (!error && data && data.length > 0) {
+        return data.map((r: any) => ({
+          id: r.id,
+          customer_name: r.customer_name || "Safari Guest",
+          country: r.country || "International Guest",
+          rating: Number(r.rating) || 5,
+          comment: r.comment || "",
+          status: r.status || "approved",
+          featured: Boolean(r.featured),
+          created_at: r.created_at || new Date().toISOString(),
+          is_demo: false,
+        }));
+      }
+    }
+  } catch {}
   return fallbackReviews
     .filter((r) => r.status === "approved")
     .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
 }
 
 export async function getAllReviews(): Promise<Review[]> {
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("reviews")
+        .select("id, customer_name, rating, comment, country, created_at, status, featured")
+        .order("created_at", { ascending: false });
+
+      if (!error && data && data.length > 0) {
+        return data.map((r: any) => ({
+          id: r.id,
+          customer_name: r.customer_name || "Safari Guest",
+          country: r.country || "International Guest",
+          rating: Number(r.rating) || 5,
+          comment: r.comment || "",
+          status: r.status || "pending",
+          featured: Boolean(r.featured),
+          created_at: r.created_at || new Date().toISOString(),
+          is_demo: false,
+        }));
+      }
+    }
+  } catch {}
   return [...fallbackReviews].sort(
     (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   );

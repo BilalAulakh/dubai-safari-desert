@@ -4,6 +4,8 @@ import { Compass, ShieldCheck, HeartHandshake, Sparkles, MapPin, Users, Check } 
 import { SITE_CONFIG } from "@/lib/config/site";
 import CTASection from "@/components/home/CTASection";
 
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: "About DubaiSafariDesert | Our Mission & Desert Experience",
   description:
@@ -71,9 +73,12 @@ export default function AboutPage() {
 
           <div className="relative h-96 sm:h-[450px] rounded-3xl overflow-hidden shadow-2xl border border-slate-200">
             <img
-              src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1200&auto=format&fit=crop"
+              src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=800&auto=format&fit=crop"
               alt="Dubai desert safari guide with camel"
+              width={600}
+              height={450}
               loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover"
             />
           </div>

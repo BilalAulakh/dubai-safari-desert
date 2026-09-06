@@ -17,6 +17,8 @@ import {
   getFAQs,
 } from "@/lib/data/store";
 
+export const revalidate = 3600;
+
 export default async function HomePage() {
   const [packages, activities, galleryItems, reviews, faqs] = await Promise.all([
     getPackages(),

@@ -7,6 +7,8 @@ import { formatDate } from "@/lib/utils";
 import CommentSection from "@/components/blog/CommentSection";
 import CTASection from "@/components/home/CTASection";
 
+export const revalidate = 3600;
+
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
 }
@@ -97,6 +99,11 @@ export default async function SingleBlogPostPage({ params }: BlogPostPageProps) 
           <img
             src={post.featured_image}
             alt={post.title}
+            width={1200}
+            height={600}
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
             className="w-full h-full object-cover"
           />
         </div>

@@ -122,6 +122,9 @@ export default function AdminBookingsPage() {
     }, 400);
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
   const filteredBookings = bookings.filter((b) => {
     const matchesSearch =
       b.booking_reference.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -130,6 +133,12 @@ export default function AdminBookingsPage() {
     const matchesStatus = statusFilter === "all" || b.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
+
+  const totalPages = Math.ceil(filteredBookings.length / itemsPerPage) || 1;
+  const paginatedBookings = filteredBookings.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
@@ -190,7 +199,7 @@ export default function AdminBookingsPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
-                {filteredBookings.map((b) => {
+                {paginatedBookings.map((b) => {
                   const isSelected = selectedBooking?.id === b.id;
                   return (
                     <tr
@@ -251,6 +260,38 @@ export default function AdminBookingsPage() {
               </tbody>
             </table>
           </div>
+
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <div className="p-4 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600">
+              <span>
+                Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
+                {Math.min(currentPage * itemsPerPage, filteredBookings.length)} of{" "}
+                {filteredBookings.length} bookings
+              </span>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  disabled={currentPage <= 1}
+                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                  className="px-3 py-1.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 disabled:opacity-40 text-xs font-semibold"
+                >
+                  Previous
+                </button>
+                <span className="font-bold text-slate-900">
+                  {currentPage} / {totalPages}
+                </span>
+                <button
+                  type="button"
+                  disabled={currentPage >= totalPages}
+                  onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                  className="px-3 py-1.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 disabled:opacity-40 text-xs font-semibold"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Selected Booking Details & Admin Notes (1 Col) */}

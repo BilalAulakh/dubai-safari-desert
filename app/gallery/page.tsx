@@ -13,6 +13,8 @@ export const metadata: Metadata = {
   },
 };
 
+export const revalidate = 3600;
+
 export default async function GalleryPage() {
   const items = await getGalleryItems();
 

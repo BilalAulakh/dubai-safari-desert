@@ -82,6 +82,9 @@ export default function AdminReviewsPage() {
     }
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8;
+
   const filtered = reviews.filter((r) => {
     const matchesSearch =
       r.customer_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -90,6 +93,12 @@ export default function AdminReviewsPage() {
     const matchesStatus = statusFilter === "all" || r.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
+
+  const totalPages = Math.ceil(filtered.length / itemsPerPage) || 1;
+  const paginatedReviews = filtered.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
@@ -132,7 +141,7 @@ export default function AdminReviewsPage() {
 
       {/* Reviews Cards List */}
       <div className="space-y-4">
-        {filtered.map((rev) => (
+        {paginatedReviews.map((rev) => (
           <div
             key={rev.id}
             className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6"
@@ -186,17 +195,17 @@ export default function AdminReviewsPage() {
                 <span className="font-bold text-slate-900">{rev.customer_name}</span>
                 <span>{rev.country}</span>
                 {rev.email && <span>{rev.email}</span>}
-                <span>{formatDate(rev.created_at)}</span>
+                <span className="ml-auto">{formatDate(rev.created_at)}</span>
               </div>
             </div>
 
-            {/* Action buttons */}
+            {/* Actions */}
             <div className="flex items-center gap-2 shrink-0">
               {rev.status !== "approved" && (
                 <button
                   type="button"
                   onClick={() => handleUpdateStatus(rev.id, "approved")}
-                  className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1 transition-colors"
+                  className="px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs font-semibold flex items-center gap-1 transition-colors"
                 >
                   <CheckCircle className="w-3.5 h-3.5" />
                   <span>Approve</span>
@@ -240,6 +249,37 @@ export default function AdminReviewsPage() {
           </div>
         ))}
       </div>
+
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div className="p-4 bg-white rounded-2xl border border-slate-200 flex items-center justify-between text-xs text-slate-600">
+          <span>
+            Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
+            {Math.min(currentPage * itemsPerPage, filtered.length)} of {filtered.length} reviews
+          </span>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              disabled={currentPage <= 1}
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              className="px-3 py-1.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 disabled:opacity-40 text-xs font-semibold"
+            >
+              Previous
+            </button>
+            <span className="font-bold text-slate-900">
+              {currentPage} / {totalPages}
+            </span>
+            <button
+              type="button"
+              disabled={currentPage >= totalPages}
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              className="px-3 py-1.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 disabled:opacity-40 text-xs font-semibold"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

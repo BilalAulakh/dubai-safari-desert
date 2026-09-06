@@ -244,6 +244,22 @@ CREATE POLICY "Admin full access site_settings" ON public.site_settings TO authe
 CREATE POLICY "Admin full access blog_posts" ON public.blog_posts TO authenticated USING (true) WITH CHECK (true);
 
 -- ==============================================================================
+-- POSTGRESQL PERFORMANCE INDEXES (Optimized for Core Web Vitals & Speed)
+-- ==============================================================================
+CREATE INDEX IF NOT EXISTS idx_packages_active_slug ON public.packages (active, slug);
+CREATE INDEX IF NOT EXISTS idx_packages_featured ON public.packages (featured) WHERE active = true;
+CREATE INDEX IF NOT EXISTS idx_bookings_reference ON public.bookings (booking_reference);
+CREATE INDEX IF NOT EXISTS idx_bookings_status_created ON public.bookings (status, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_reviews_status_created ON public.reviews (status, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_activities_active_sort ON public.activities (active, sort_order);
+CREATE INDEX IF NOT EXISTS idx_pickup_locations_active_sort ON public.pickup_locations (active, sort_order);
+CREATE INDEX IF NOT EXISTS idx_faqs_active_sort ON public.faqs (active, sort_order);
+CREATE INDEX IF NOT EXISTS idx_gallery_active_sort ON public.gallery (active, sort_order);
+CREATE INDEX IF NOT EXISTS idx_package_inclusions_pkg_id ON public.package_inclusions (package_id);
+CREATE INDEX IF NOT EXISTS idx_package_exclusions_pkg_id ON public.package_exclusions (package_id);
+CREATE INDEX IF NOT EXISTS idx_package_itinerary_pkg_id ON public.package_itinerary (package_id, sort_order);
+
+-- ==============================================================================
 -- 7. STORAGE BUCKET POLICIES (safari-images)
 -- ==============================================================================
 -- Allow anyone to view images from public bucket safari-images

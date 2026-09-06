@@ -14,10 +14,12 @@ import {
   Sparkles,
 } from "lucide-react";
 import { getPackageBySlug, getPackages, getFAQs } from "@/lib/data/store";
-import { formatPrice, createWhatsAppUrl } from "@/lib/utils";
+import { formatPrice, createWhatsAppUrl, optimizeImageUrl } from "@/lib/utils";
 import { SITE_CONFIG } from "@/lib/config/site";
 import StickyBookingBar from "@/components/packages/StickyBookingBar";
 import CTASection from "@/components/home/CTASection";
+
+export const revalidate = 3600;
 
 interface PackagePageProps {
   params: Promise<{ slug: string }>;
@@ -87,10 +89,14 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
       <section className="relative min-h-[50vh] flex items-end bg-[#0B0F17] py-16">
         <div className="absolute inset-0 z-0">
           <img
-            src={pkg.main_image}
+            src={optimizeImageUrl(pkg.main_image, 1280)}
             alt={pkg.name}
-            className="w-full h-full object-cover object-center opacity-40"
+            width={1280}
+            height={600}
             loading="eager"
+            fetchPriority="high"
+            decoding="async"
+            className="w-full h-full object-cover object-center opacity-40"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F17] via-[#0B0F17]/70 to-transparent" />
         </div>
@@ -142,10 +148,13 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
                       className="relative h-28 rounded-xl overflow-hidden shadow-sm bg-slate-900 border border-slate-200"
                     >
                       <img
-                        src={img}
+                        src={optimizeImageUrl(img, 400)}
                         alt={`${pkg.name} preview ${i + 1}`}
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                        width={400}
+                        height={250}
                         loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                       />
                     </div>
                   ))}

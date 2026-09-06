@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Activity } from "@/types";
+import { optimizeImageUrl } from "@/lib/utils";
 
 interface ActivitiesShowcaseProps {
   activities: Activity[];
@@ -41,9 +42,12 @@ export default function ActivitiesShowcase({ activities }: ActivitiesShowcasePro
               className="group relative rounded-2xl overflow-hidden shadow-md bg-slate-900 h-72 flex flex-col justify-end p-6 border border-amber-900/10"
             >
               <img
-                src={act.image}
+                src={optimizeImageUrl(act.image, 600)}
                 alt={act.name}
+                width={600}
+                height={400}
                 loading="lazy"
+                decoding="async"
                 className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500 opacity-70 group-hover:opacity-60"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />

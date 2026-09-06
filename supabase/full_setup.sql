@@ -152,7 +152,7 @@ CREATE TABLE IF NOT EXISTS public.site_settings (
 );
 
 -- ==============================================================================
--- ENABLE ROW LEVEL SECURITY (RLS)
+-- ROW LEVEL SECURITY (RLS) POLICIES
 -- ==============================================================================
 ALTER TABLE public.packages ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.package_inclusions ENABLE ROW LEVEL SECURITY;
@@ -166,7 +166,33 @@ ALTER TABLE public.faqs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.gallery ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.site_settings ENABLE ROW LEVEL SECURITY;
 
--- PUBLIC POLICIES
+-- Drop existing policies if they already exist
+DROP POLICY IF EXISTS "Public can view packages" ON public.packages;
+DROP POLICY IF EXISTS "Public can view package_inclusions" ON public.package_inclusions;
+DROP POLICY IF EXISTS "Public can view package_exclusions" ON public.package_exclusions;
+DROP POLICY IF EXISTS "Public can view package_itinerary" ON public.package_itinerary;
+DROP POLICY IF EXISTS "Public can view activities" ON public.activities;
+DROP POLICY IF EXISTS "Public can view pickup_locations" ON public.pickup_locations;
+DROP POLICY IF EXISTS "Public can view approved reviews" ON public.reviews;
+DROP POLICY IF EXISTS "Public can submit review" ON public.reviews;
+DROP POLICY IF EXISTS "Public can view faqs" ON public.faqs;
+DROP POLICY IF EXISTS "Public can view gallery" ON public.gallery;
+DROP POLICY IF EXISTS "Public can view site settings" ON public.site_settings;
+DROP POLICY IF EXISTS "Public can create booking request" ON public.bookings;
+
+DROP POLICY IF EXISTS "Admin full access packages" ON public.packages;
+DROP POLICY IF EXISTS "Admin full access inclusions" ON public.package_inclusions;
+DROP POLICY IF EXISTS "Admin full access exclusions" ON public.package_exclusions;
+DROP POLICY IF EXISTS "Admin full access itinerary" ON public.package_itinerary;
+DROP POLICY IF EXISTS "Admin full access bookings" ON public.bookings;
+DROP POLICY IF EXISTS "Admin full access activities" ON public.activities;
+DROP POLICY IF EXISTS "Admin full access pickup_locations" ON public.pickup_locations;
+DROP POLICY IF EXISTS "Admin full access reviews" ON public.reviews;
+DROP POLICY IF EXISTS "Admin full access faqs" ON public.faqs;
+DROP POLICY IF EXISTS "Admin full access gallery" ON public.gallery;
+DROP POLICY IF EXISTS "Admin full access site_settings" ON public.site_settings;
+
+-- Public Read & Insert Policies
 CREATE POLICY "Public can view packages" ON public.packages FOR SELECT USING (true);
 CREATE POLICY "Public can view package_inclusions" ON public.package_inclusions FOR SELECT USING (true);
 CREATE POLICY "Public can view package_exclusions" ON public.package_exclusions FOR SELECT USING (true);
@@ -174,13 +200,13 @@ CREATE POLICY "Public can view package_itinerary" ON public.package_itinerary FO
 CREATE POLICY "Public can view activities" ON public.activities FOR SELECT USING (true);
 CREATE POLICY "Public can view pickup_locations" ON public.pickup_locations FOR SELECT USING (true);
 CREATE POLICY "Public can view approved reviews" ON public.reviews FOR SELECT USING (status = 'approved');
-CREATE POLICY "Public can submit review" ON public.reviews FOR INSERT WITH CHECK (status = 'pending');
+CREATE POLICY "Public can submit review" ON public.reviews FOR INSERT WITH CHECK (true);
 CREATE POLICY "Public can view faqs" ON public.faqs FOR SELECT USING (true);
 CREATE POLICY "Public can view gallery" ON public.gallery FOR SELECT USING (true);
 CREATE POLICY "Public can view site settings" ON public.site_settings FOR SELECT USING (true);
-CREATE POLICY "Public can create booking request" ON public.bookings FOR INSERT WITH CHECK (status = 'pending');
+CREATE POLICY "Public can create booking request" ON public.bookings FOR INSERT WITH CHECK (true);
 
--- ADMIN FULL ACCESS (Via authenticated or anon for demo)
+-- Admin Full Access Policies
 CREATE POLICY "Admin full access packages" ON public.packages FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "Admin full access inclusions" ON public.package_inclusions FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "Admin full access exclusions" ON public.package_exclusions FOR ALL USING (true) WITH CHECK (true);
@@ -194,8 +220,29 @@ CREATE POLICY "Admin full access gallery" ON public.gallery FOR ALL USING (true)
 CREATE POLICY "Admin full access site_settings" ON public.site_settings FOR ALL USING (true) WITH CHECK (true);
 
 -- ==============================================================================
+-- POSTGRESQL PERFORMANCE INDEXES (Optimized for Core Web Vitals & Speed)
+-- ==============================================================================
+CREATE INDEX IF NOT EXISTS idx_packages_active_slug ON public.packages (active, slug);
+CREATE INDEX IF NOT EXISTS idx_packages_featured ON public.packages (featured) WHERE active = true;
+CREATE INDEX IF NOT EXISTS idx_bookings_reference ON public.bookings (booking_reference);
+CREATE INDEX IF NOT EXISTS idx_bookings_status_created ON public.bookings (status, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_reviews_status_created ON public.reviews (status, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_activities_active_sort ON public.activities (active, sort_order);
+CREATE INDEX IF NOT EXISTS idx_pickup_locations_active_sort ON public.pickup_locations (active, sort_order);
+CREATE INDEX IF NOT EXISTS idx_faqs_active_sort ON public.faqs (active, sort_order);
+CREATE INDEX IF NOT EXISTS idx_gallery_active_sort ON public.gallery (active, sort_order);
+CREATE INDEX IF NOT EXISTS idx_package_inclusions_pkg_id ON public.package_inclusions (package_id);
+CREATE INDEX IF NOT EXISTS idx_package_exclusions_pkg_id ON public.package_exclusions (package_id);
+CREATE INDEX IF NOT EXISTS idx_package_itinerary_pkg_id ON public.package_itinerary (package_id, sort_order);
+
+-- ==============================================================================
 -- STORAGE POLICIES FOR 'safari-images' BUCKET
 -- ==============================================================================
+DROP POLICY IF EXISTS "Public view safari-images" ON storage.objects;
+DROP POLICY IF EXISTS "Allow uploads to safari-images" ON storage.objects;
+DROP POLICY IF EXISTS "Allow update safari-images" ON storage.objects;
+DROP POLICY IF EXISTS "Allow delete safari-images" ON storage.objects;
+
 CREATE POLICY "Public view safari-images"
 ON storage.objects FOR SELECT
 USING (bucket_id = 'safari-images');

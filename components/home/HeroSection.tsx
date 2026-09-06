@@ -18,14 +18,19 @@ export default function HeroSection() {
           loop
           muted
           playsInline
-          poster="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=85&w=2000&auto=format&fit=crop"
+          poster="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1280&auto=format&fit=crop"
           className="w-full h-full object-cover object-center opacity-45 dark:opacity-40 scale-105 transition-opacity duration-1000"
         >
           <source src="https://cdn.coverr.co/videos/coverr-driving-in-the-desert-4701/1080p.mp4" type="video/mp4" />
           <source src="https://assets.mixkit.co/videos/preview/mixkit-safari-jeep-driving-on-sand-dunes-in-a-desert-42500-large.mp4" type="video/mp4" />
           <img
-            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=85&w=2000&auto=format&fit=crop"
+            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1280&auto=format&fit=crop"
             alt="Dubai desert safari dunes sunset"
+            width={1280}
+            height={720}
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
             className="w-full h-full object-cover object-center"
           />
         </video>

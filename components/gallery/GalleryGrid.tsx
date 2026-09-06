@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { X, ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
 import { GalleryItem } from "@/types";
+import { optimizeImageUrl } from "@/lib/utils";
 
 interface GalleryGridProps {
   items: GalleryItem[];
@@ -78,8 +79,11 @@ export default function GalleryGrid({ items }: GalleryGridProps) {
             className="group relative h-64 sm:h-72 rounded-2xl overflow-hidden shadow-md bg-slate-900 cursor-pointer border border-slate-200"
           >
             <img
-              src={item.image_url}
+              src={optimizeImageUrl(item.image_url, 600)}
               alt={item.title}
+              width={600}
+              height={400}
+              decoding="async"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               loading="lazy"
             />
