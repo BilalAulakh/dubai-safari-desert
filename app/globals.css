@@ -49,6 +49,10 @@
   background-color: #0C101A !important;
 }
 
+.dark .bg-\[\#F4EFE6\] {
+  background-color: #0B0F17 !important;
+}
+
 .dark .bg-white {
   background-color: #0F1624 !important;
 }
@@ -107,4 +111,38 @@
 
 .luxury-glow {
   box-shadow: 0 10px 30px -10px rgba(217, 119, 6, 0.2);
+}
+
+/* Smooth continuous vertical image scroll animation */
+@keyframes scrollUp {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes scrollDown {
+  0% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.animate-scroll-up {
+  animation: scrollUp 24s linear infinite;
+  will-change: transform;
+}
+
+.animate-scroll-down {
+  animation: scrollDown 24s linear infinite;
+  will-change: transform;
+}
+
+.animate-scroll-up:hover,
+.animate-scroll-down:hover {
+  animation-play-state: paused;
 }

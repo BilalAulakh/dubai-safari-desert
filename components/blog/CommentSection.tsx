@@ -8,12 +8,16 @@ import { commentSchema, CommentFormData } from "@/lib/validations/comment";
 import { Comment } from "@/types";
 import { formatDate } from "@/lib/utils";
 
+import { useAppDispatch } from "@/lib/redux/hooks";
+import { submitComment } from "@/lib/redux/slices/blogSlice";
+
 interface CommentSectionProps {
   postId: string;
   approvedComments: Comment[];
 }
 
 export default function CommentSection({ postId, approvedComments }: CommentSectionProps) {
+  const dispatch = useAppDispatch();
   const [submitted, setSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -33,19 +37,13 @@ export default function CommentSection({ postId, approvedComments }: CommentSect
   const onSubmit = async (data: CommentFormData) => {
     setErrorMessage(null);
     try {
-      const res = await fetch("/api/comments", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      const json = await res.json();
-      if (!res.ok || !json.success) {
-        throw new Error(json.message || "Failed to submit comment.");
+      const actionResult = await dispatch(submitComment({ postId, data }));
+      if (submitComment.fulfilled.match(actionResult)) {
+        setSubmitted(true);
+        reset({ post_id: postId, website_honeypot: "" });
+      } else if (submitComment.rejected.match(actionResult)) {
+        setErrorMessage(actionResult.payload || "Failed to submit comment.");
       }
-
-      setSubmitted(true);
-      reset({ post_id: postId, website_honeypot: "" });
     } catch (err: any) {
       setErrorMessage(err.message || "An error occurred.");
     }

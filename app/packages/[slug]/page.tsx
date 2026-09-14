@@ -84,9 +84,9 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
   );
 
   return (
-    <div className="bg-[#FCFBF8] pb-20">
+    <div className="bg-[#FCFBF8] dark:bg-[#080B11] text-slate-900 dark:text-white pb-20 transition-colors duration-200">
       {/* Top Hero Banner */}
-      <section className="relative min-h-[50vh] flex items-end bg-[#0B0F17] py-16">
+      <section className="relative min-h-[45vh] flex items-end bg-[#0B0F17] py-16">
         <div className="absolute inset-0 z-0">
           <img
             src={optimizeImageUrl(pkg.main_image, 1280)}

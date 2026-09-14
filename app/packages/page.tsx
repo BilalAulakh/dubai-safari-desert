@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { Sparkles, ShieldCheck, Clock, MapPin } from "lucide-react";
 import { getPackages } from "@/lib/data/store";
-import PackageCard from "@/components/packages/PackageCard";
+import PackagesCatalogFilter from "@/components/packages/PackagesCatalogFilter";
 import CTASection from "@/components/home/CTASection";
 
 export const metadata: Metadata = {
@@ -19,7 +19,7 @@ export default async function PackagesPage() {
   const packages = await getPackages();
 
   return (
-    <div className="bg-[#FCFBF8]">
+    <div className="bg-[#FCFBF8] dark:bg-[#0B0F17]">
       {/* Header Banner */}
       <section className="relative py-20 bg-[#0B0F17] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -51,13 +51,9 @@ export default async function PackagesPage() {
         </div>
       </section>
 
-      {/* Package Grid */}
+      {/* Package Filter Catalog Grid */}
       <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {packages.map((pkg) => (
-            <PackageCard key={pkg.id} pkg={pkg} />
-          ))}
-        </div>
+        <PackagesCatalogFilter initialPackages={packages} />
       </section>
 
       <CTASection />

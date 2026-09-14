@@ -341,7 +341,7 @@ export async function getGalleryItems(): Promise<GalleryItem[]> {
       }
     }
   } catch {}
-  return fallbackGallery
+  return initialGalleryItems
     .filter((g) => g.active)
     .sort((a, b) => a.sort_order - b.sort_order);
 }

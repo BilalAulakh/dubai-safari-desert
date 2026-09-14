@@ -60,7 +60,7 @@ export default async function SingleBlogPostPage({ params }: BlogPostPageProps) 
   const approvedComments = await getCommentsByPostId(post.id);
 
   return (
-    <div className="bg-[#FCFBF8] py-12 sm:py-16">
+    <div className="bg-[#FCFBF8] dark:bg-[#080B11] text-slate-900 dark:text-white py-12 sm:py-16 transition-colors duration-200">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Link */}
         <Link
@@ -142,15 +142,15 @@ export default async function SingleBlogPostPage({ params }: BlogPostPageProps) 
         </article>
 
         {/* Internal Link CTA Banner */}
-        <div className="my-12 p-6 sm:p-8 rounded-3xl bg-[#0B0F17] text-white flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="my-12 p-6 sm:p-8 rounded-3xl bg-[#F4EFE6] dark:bg-[#0B0F17] text-slate-900 dark:text-white border border-amber-900/10 dark:border-amber-500/20 flex flex-col sm:flex-row items-center justify-between gap-6 transition-colors duration-200">
           <div>
-            <span className="text-xs uppercase font-bold text-amber-400 tracking-widest block mb-1">
+            <span className="text-xs uppercase font-bold text-amber-700 dark:text-amber-400 tracking-widest block mb-1">
               Ready to Experience Dubai?
             </span>
-            <h4 className="text-xl font-bold text-white">
+            <h4 className="text-xl font-bold text-slate-900 dark:text-white">
               Explore Our Signature Evening Desert Safari
             </h4>
-            <p className="text-xs text-slate-300 mt-1">
+            <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
               Includes hotel pickup, 4x4 dune bashing, camel riding, BBQ dinner, and live shows.
             </p>
           </div>

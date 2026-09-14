@@ -8,6 +8,8 @@ import { Loader2, Calendar, Users, MapPin, Send, MessageCircle, AlertCircle } fr
 import { bookingSchema, BookingFormData } from "@/lib/validations/booking";
 import { Package, PickupLocation } from "@/types";
 import { formatPrice } from "@/lib/utils";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
+import { submitBookingRequest } from "@/lib/redux/slices/bookingsSlice";
 
 interface BookingFormProps {
   packages: Package[];
@@ -21,6 +23,8 @@ export default function BookingForm({
   defaultPackageId,
 }: BookingFormProps) {
   const router = useRouter();
+  const dispatch = useAppDispatch();
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
@@ -53,7 +57,7 @@ export default function BookingForm({
   const adultsCount = watch("adults") || 1;
   const childrenCount = watch("children") || 0;
 
-  const estimatedTotal = selectedPackage
+  const estimatedTotalAED = selectedPackage
     ? selectedPackage.price * adultsCount + selectedPackage.price * 0.7 * childrenCount
     : 0;
 
@@ -62,22 +66,13 @@ export default function BookingForm({
     setSubmitError(null);
 
     try {
-      const response = await fetch("/api/bookings", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok || !result.success) {
-        throw new Error(
-          result.message || "Failed to submit booking request. Please try again."
-        );
+      const actionResult = await dispatch(submitBookingRequest(data));
+      if (submitBookingRequest.fulfilled.match(actionResult)) {
+        router.push(`/booking/confirmation/${actionResult.payload.bookingReference}`);
+      } else if (submitBookingRequest.rejected.match(actionResult)) {
+        setSubmitError(actionResult.payload || "Failed to submit booking request. Please try again.");
+        setIsSubmitting(false);
       }
-
-      // Navigate to confirmation page
-      router.push(`/booking/confirmation/${result.bookingReference}`);
     } catch (err: any) {
       setSubmitError(err.message || "An unexpected error occurred. Please try again.");
       setIsSubmitting(false);
@@ -305,7 +300,7 @@ export default function BookingForm({
           <span className="text-xs text-slate-500 uppercase font-semibold">Estimated Total</span>
           <div className="flex items-baseline gap-2">
             <span className="text-2xl sm:text-3xl font-extrabold text-slate-950">
-              {formatPrice(estimatedTotal)}
+              {formatPrice(estimatedTotalAED)}
             </span>
             <span className="text-xs text-slate-500">
               ({adultsCount} Adult{adultsCount > 1 ? "s" : ""}, {childrenCount} Child{childrenCount !== 1 ? "ren" : ""})

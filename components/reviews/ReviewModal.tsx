@@ -5,8 +5,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Star, X, Send, Loader2, CheckCircle2, ShieldAlert } from "lucide-react";
 import { reviewSchema, ReviewFormData } from "@/lib/validations/review";
+import { useAppDispatch } from "@/lib/redux/hooks";
+import { submitReview } from "@/lib/redux/slices/reviewsSlice";
 
 export default function ReviewModal() {
+  const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -31,19 +34,13 @@ export default function ReviewModal() {
   const onSubmit = async (data: ReviewFormData) => {
     setErrorMessage(null);
     try {
-      const res = await fetch("/api/reviews", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      const json = await res.json();
-      if (!res.ok || !json.success) {
-        throw new Error(json.message || "Failed to submit review.");
+      const actionResult = await dispatch(submitReview(data));
+      if (submitReview.fulfilled.match(actionResult)) {
+        setSubmitted(true);
+        reset();
+      } else if (submitReview.rejected.match(actionResult)) {
+        setErrorMessage(actionResult.payload || "Submission failed. Please try again.");
       }
-
-      setSubmitted(true);
-      reset();
     } catch (err: any) {
       setErrorMessage(err.message || "Submission failed. Please try again.");
     }

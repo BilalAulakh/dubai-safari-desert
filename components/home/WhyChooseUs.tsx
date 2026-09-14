@@ -41,19 +41,19 @@ export default function WhyChooseUs() {
   ];
 
   return (
-    <section className="py-20 bg-slate-900 text-white relative overflow-hidden">
+    <section className="py-20 bg-[#F8F5EE] dark:bg-[#0C101A] text-slate-900 dark:text-white relative overflow-hidden border-y border-amber-900/10 dark:border-white/5 transition-colors duration-200">
       {/* Background Subtle Desert Dunes Contour Glow */}
       <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-amber-500 via-transparent to-transparent" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="text-xs font-bold uppercase tracking-widest text-amber-400">
+          <span className="text-xs font-bold uppercase tracking-widest text-amber-700 dark:text-amber-400">
             Why Choose DubaiSafariDesert
           </span>
-          <h2 className="mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+          <h2 className="mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
             Excellence in Every Desert Journey
           </h2>
-          <p className="mt-3 text-base text-slate-300">
+          <p className="mt-3 text-base text-slate-600 dark:text-slate-300">
             We focus on genuine hospitality, safe dune driving standards, and authentic Arabian traditions to give you the most rewarding Dubai desert adventure.
           </p>
         </div>
@@ -64,13 +64,13 @@ export default function WhyChooseUs() {
             return (
               <div
                 key={index}
-                className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-amber-500/40 hover:bg-white/[0.06] transition-all duration-300 flex flex-col items-start"
+                className="p-6 rounded-2xl bg-white dark:bg-white/[0.03] border border-amber-900/10 dark:border-white/10 shadow-sm hover:border-amber-500/40 hover:shadow-md transition-all duration-300 flex flex-col items-start"
               >
-                <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center mb-4">
+                <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-400 flex items-center justify-center mb-4">
                   <Icon className="w-6 h-6" />
                 </div>
-                <h3 className="text-lg font-bold text-white mb-2">{point.title}</h3>
-                <p className="text-sm text-slate-300 leading-relaxed">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">{point.title}</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                   {point.description}
                 </p>
               </div>
