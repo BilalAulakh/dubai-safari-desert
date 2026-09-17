@@ -1,15 +1,23 @@
 import { Metadata } from "next";
 import { Sparkles, ShieldCheck, Clock, MapPin } from "lucide-react";
 import { getPackages } from "@/lib/data/store";
+import { SITE_CONFIG } from "@/lib/config/site";
 import PackagesCatalogFilter from "@/components/packages/PackagesCatalogFilter";
 import CTASection from "@/components/home/CTASection";
 
 export const metadata: Metadata = {
-  title: "Dubai Desert Safari Packages & Tour Prices",
+  title: "Dubai Desert Safari Packages & Tour Prices | Safari Dune Tours",
   description:
     "Explore our complete collection of Dubai desert safari tours: evening BBQ dinners, morning sunrise safaris, overnight desert camps, and private luxury Land Cruiser experiences.",
   alternates: {
-    canonical: "/packages",
+    canonical: `${SITE_CONFIG.url}/packages`,
+  },
+  openGraph: {
+    title: "Dubai Desert Safari Packages & Tour Prices | Safari Dune Tours",
+    description:
+      "Explore our complete collection of Dubai desert safari tours: evening BBQ dinners, morning sunrise safaris, overnight desert camps, and private luxury Land Cruiser experiences.",
+    url: `${SITE_CONFIG.url}/packages`,
+    siteName: SITE_CONFIG.name,
   },
 };
 

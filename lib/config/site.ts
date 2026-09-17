@@ -1,12 +1,12 @@
 export const SITE_CONFIG = {
   name: "Safari Dune Tours",
   tagline: "Discover the Magic of the Arabian Desert",
-  legalName: "Safari Dune Tours L.L.C.",
+  legalName: "Safari Dune Tours",
   title: "Safari Dune Tours | Dubai Desert Safari & Adventure Tours",
   description:
     "Explore Dubai desert safari experiences with Safari Dune Tours. Discover desert adventures, dune bashing, camel rides, sunset experiences and easy booking support.",
   url: "https://safaridunetours.com",
-  ogImage: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop",
+  ogImage: "https://safaridunetours.com/images/hero-desert.jpg",
   
   // Brand Color Palette
   colors: {
@@ -18,10 +18,10 @@ export const SITE_CONFIG = {
   
   // Centralized Business Contact
   contact: {
-    phone: "+971 50 123 4567",
-    whatsapp: "+971 50 123 4567",
-    email: "",
-    address: "Downtown Dubai, Sheikh Mohammed bin Rashid Blvd, Dubai, United Arab Emirates",
+    phone: "+971 56 913 7131",
+    whatsapp: "+971 56 913 7131",
+    email: "muhammadakram37131@gmail.com",
+    address: "Dubai, United Arab Emirates",
     supportHours: "Open Daily: 08:00 AM – 11:00 PM (GST)",
     googleMapsUrl: "https://maps.google.com/?q=Dubai+Desert+Safari",
   },
@@ -52,6 +52,7 @@ export const SITE_CONFIG = {
     { label: "Gallery", href: "/gallery" },
     { label: "Reviews", href: "/reviews" },
     { label: "FAQ", href: "/faq" },
+    { label: "Blog", href: "/blog" },
     { label: "Contact", href: "/contact" },
   ],
 };

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight, Camera, X, ChevronLeft, ChevronRight, Maximize2, Sparkles, Tag } from "lucide-react";
 import { GalleryItem } from "@/types";
 import { optimizeImageUrl } from "@/lib/utils";
+import ScrollReveal from "@/components/common/ScrollReveal";
 
 interface HomeGalleryProps {
   items: GalleryItem[];
@@ -98,48 +99,60 @@ export default function HomeGallery({ items }: HomeGalleryProps) {
           </Link>
         </div>
 
-        {/* Gallery Image Grid with Mixed Visual Dynamics */}
+        {/* Gallery Image Grid with Premium Asymmetric Luxury Dynamics */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
-          {displayItems.map((item, index) => (
-            <div
-              key={item.id}
-              onClick={() => openLightbox(index)}
-              className="group relative h-44 sm:h-60 md:h-64 rounded-2xl overflow-hidden shadow-sm bg-[#17120D] cursor-pointer border border-[#C89B3C]/20 hover:border-[#C89B3C]/60 hover:shadow-2xl transition-all duration-500 hover:-translate-y-1"
-            >
-              <img
-                src={optimizeImageUrl(item.image_url, 600)}
-                alt={item.title}
-                width={600}
-                height={400}
-                loading="lazy"
-                decoding="async"
-                className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
-              />
+          {displayItems.map((item, index) => {
+            // Asymmetric layout spans: Item 0 (wide 2-cols), Items 1-4 (1-col), Item 5 (wide panoramic)
+            const isFirst = index === 0;
+            const isLast = index === displayItems.length - 1 && displayItems.length > 4;
+            const spanClass = isFirst
+              ? "col-span-2 md:col-span-2 h-56 sm:h-72 md:h-80"
+              : isLast
+              ? "col-span-2 md:col-span-3 h-52 sm:h-64 md:h-72"
+              : "col-span-1 h-52 sm:h-64 md:h-72";
 
-              {/* Category Tag */}
-              <div className="absolute top-3 left-3 z-10">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#17120D]/80 backdrop-blur-md text-[#E8C48A] text-[10px] font-semibold border border-white/10 shadow-sm">
-                  <Tag className="w-2.5 h-2.5 text-[#C89B3C]" />
-                  {getCategoryLabel(item.category)}
-                </span>
-              </div>
+            return (
+              <ScrollReveal key={item.id} delay={index * 70} className={spanClass}>
+                <div
+                  onClick={() => openLightbox(index)}
+                  className="group relative w-full h-full rounded-2xl overflow-hidden shadow-sm bg-[#17120D] cursor-pointer border border-[#C89B3C]/20 hover:border-[#C89B3C]/60 hover:shadow-[0_16px_36px_rgba(23,18,13,0.3)] transition-all duration-300 hover:-translate-y-1"
+                >
+                  <img
+                    src={optimizeImageUrl(item.image_url, isFirst || isLast ? 900 : 600)}
+                    alt={item.title}
+                    width={isFirst || isLast ? 900 : 600}
+                    height={500}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500 ease-out"
+                  />
 
-              {/* Bottom Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#17120D]/95 via-[#17120D]/30 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-4">
-                <div className="flex-1 pr-2 min-w-0">
-                  <p className="font-heading text-sm font-bold text-white truncate group-hover:text-[#E8C48A] transition-colors">
-                    {item.title}
-                  </p>
-                  <p className="text-[11px] text-[#B8ADA2] flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span>Click to view in lightbox</span>
-                  </p>
+                  {/* Category Tag */}
+                  <div className="absolute top-3 left-3 z-10">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#17120D]/80 backdrop-blur-md text-[#E8C48A] text-[10px] font-semibold border border-white/10 shadow-sm">
+                      <Tag className="w-2.5 h-2.5 text-[#C89B3C]" />
+                      {getCategoryLabel(item.category)}
+                    </span>
+                  </div>
+
+                  {/* Bottom Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#17120D]/95 via-[#17120D]/30 to-transparent opacity-85 group-hover:opacity-95 transition-opacity duration-300 flex items-end justify-between p-4 sm:p-5">
+                    <div className="flex-1 pr-2 min-w-0">
+                      <p className="font-heading text-sm sm:text-base font-bold text-white truncate group-hover:text-[#E8C48A] transition-colors duration-200">
+                        {item.title}
+                      </p>
+                      <p className="text-[11px] text-[#B8ADA2] flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        <span>Click to view in high resolution</span>
+                      </p>
+                    </div>
+                    <div className="w-8 h-8 rounded-full bg-[#C89B3C] text-[#17120D] flex items-center justify-center shrink-0 shadow-md group-hover:scale-105 group-hover:bg-[#D6A84F] transition-all duration-200">
+                      <Maximize2 className="w-4 h-4" />
+                    </div>
+                  </div>
                 </div>
-                <div className="w-8 h-8 rounded-full bg-[#C89B3C] text-[#17120D] flex items-center justify-center shrink-0 shadow-md group-hover:scale-110 group-hover:bg-[#D6A84F] transition-all duration-300">
-                  <Maximize2 className="w-4 h-4" />
-                </div>
-              </div>
-            </div>
-          ))}
+              </ScrollReveal>
+            );
+          })}
         </div>
       </div>
 

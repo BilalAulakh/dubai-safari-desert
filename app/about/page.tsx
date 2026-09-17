@@ -7,11 +7,18 @@ import CTASection from "@/components/home/CTASection";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "About Safari Dune | Our Mission & Desert Experience",
+  title: "About Safari Dune Tours | Desert Safari Mission & Story",
   description:
-    "Learn about Safari Dune, our commitment to authentic Bedouin hospitality, safety standards, and providing memorable desert safari experiences in Dubai.",
+    "Learn about Safari Dune Tours, our dedication to authentic Arabian hospitality, desert adventures, and unforgettable experiences in Dubai.",
   alternates: {
-    canonical: "/about",
+    canonical: `${SITE_CONFIG.url}/about`,
+  },
+  openGraph: {
+    title: "About Safari Dune Tours | Desert Safari Mission & Story",
+    description:
+      "Learn about Safari Dune Tours, our dedication to authentic Arabian hospitality, desert adventures, and unforgettable experiences in Dubai.",
+    url: `${SITE_CONFIG.url}/about`,
+    siteName: SITE_CONFIG.name,
   },
 };
 
@@ -26,7 +33,7 @@ export default function AboutPage() {
             <span>Discover Our Story</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white max-w-3xl mx-auto">
-            About Safari Dune
+            About Safari Dune Tours
           </h1>
           <p className="mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
             Connecting international travelers with the raw majesty, peaceful beauty, and warm hospitality of the Dubai desert.
@@ -48,13 +55,13 @@ export default function AboutPage() {
               Dubai is internationally renowned for ultra-modern skyscrapers and architectural marvels. Yet just beyond the city skyline lies a mesmerizing wilderness that has inspired travelers and Bedouin nomads for centuries.
             </p>
             <p className="text-base text-slate-600 leading-relaxed">
-              At <strong>Safari Dune</strong>, our vision is to provide travelers with an experience that honors this rich natural heritage. From thrilling drives over the Lahbab red dunes to traditional open-air BBQ camps and Sufi Tanoura dance performances, every element of our tours is carefully organized.
+              At <strong>Safari Dune Tours</strong>, our vision is to provide travelers with an experience that honors this rich natural heritage. From thrilling drives over the Lahbab red dunes to traditional open-air BBQ camps and Sufi Tanoura dance performances, every element of our tours is carefully organized.
             </p>
 
             <div className="pt-4 border-t border-slate-200 grid grid-cols-2 gap-4 text-xs font-semibold text-slate-800">
               <div className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-emerald-600" />
-                <span>Licensed Safari Marshals</span>
+                <span>Experienced Safari Drivers</span>
               </div>
               <div className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-emerald-600" />
@@ -62,7 +69,7 @@ export default function AboutPage() {
               </div>
               <div className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-emerald-600" />
-                <span>Insured 4x4 Fleet</span>
+                <span>Comfortable 4x4 Vehicles</span>
               </div>
               <div className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-emerald-600" />

@@ -1,15 +1,23 @@
 import { Metadata } from "next";
 import { Sparkles, Camera } from "lucide-react";
 import { getGalleryItems } from "@/lib/data/store";
+import { SITE_CONFIG } from "@/lib/config/site";
 import GalleryGrid from "@/components/gallery/GalleryGrid";
 import CTASection from "@/components/home/CTASection";
 
 export const metadata: Metadata = {
-  title: "Dubai Desert Safari Gallery | Photos & Visual Moments",
+  title: "Dubai Desert Safari Gallery | Photos & Visual Moments | Safari Dune Tours",
   description:
     "View our stunning photo gallery of Dubai desert safaris, featuring red dune bashing, sunset camel rides, live Arabian shows, and Bedouin camp dinners.",
   alternates: {
-    canonical: "/gallery",
+    canonical: `${SITE_CONFIG.url}/gallery`,
+  },
+  openGraph: {
+    title: "Dubai Desert Safari Gallery | Safari Dune Tours",
+    description:
+      "View our stunning photo gallery of Dubai desert safaris, featuring red dune bashing, sunset camel rides, live Arabian shows, and Bedouin camp dinners.",
+    url: `${SITE_CONFIG.url}/gallery`,
+    siteName: SITE_CONFIG.name,
   },
 };
 

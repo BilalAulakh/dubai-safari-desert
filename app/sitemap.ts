@@ -37,11 +37,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.9,
   }));
 
-  // Dynamic blog post pages
+  // Dynamic blog post pages (strictly published articles only)
   const blogRoutes: MetadataRoute.Sitemap = blogPosts.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: new Date(post.published_date),
-    changeFrequency: "monthly",
+    lastModified: new Date(post.published_at || post.published_date || new Date()),
+    changeFrequency: "weekly",
     priority: 0.7,
   }));
 

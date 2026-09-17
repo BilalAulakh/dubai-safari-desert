@@ -12,6 +12,7 @@ import {
   MessageSquare,
   HelpCircle,
   MapPin,
+  BookOpen,
   Search,
   Settings,
   ExternalLink,
@@ -22,6 +23,7 @@ export default function AdminSidebar() {
 
   const links = [
     { href: "/admin", label: "Dashboard Overview", icon: LayoutDashboard },
+    { href: "/admin/blog", label: "Blog Articles", icon: BookOpen },
     { href: "/admin/bookings", label: "Bookings", icon: CalendarCheck },
     { href: "/admin/packages", label: "Safari Packages", icon: PackageIcon },
     { href: "/admin/activities", label: "Activities", icon: Compass },

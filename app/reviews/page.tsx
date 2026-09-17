@@ -2,15 +2,23 @@ import { Metadata } from "next";
 import { Star, MessageSquarePlus, ShieldCheck, ShieldAlert } from "lucide-react";
 import { getApprovedReviews } from "@/lib/data/store";
 import { formatDate } from "@/lib/utils";
+import { SITE_CONFIG } from "@/lib/config/site";
 import ReviewModal from "@/components/reviews/ReviewModal";
 import CTASection from "@/components/home/CTASection";
 
 export const metadata: Metadata = {
-  title: "Guest Reviews & Experiences | Safari Dune",
+  title: "Guest Reviews & Experiences | Safari Dune Tours",
   description:
-    "Read genuine reviews and testimonials from guests who experienced our Dubai desert safaris. Verified guest feedback on dune bashing, camel rides, and camps.",
+    "Read feedback from guests who experienced our Dubai desert safaris. Guest comments on dune bashing, camel rides, and camp hospitality.",
   alternates: {
-    canonical: "/reviews",
+    canonical: `${SITE_CONFIG.url}/reviews`,
+  },
+  openGraph: {
+    title: "Guest Reviews & Experiences | Safari Dune Tours",
+    description:
+      "Read feedback from guests who experienced our Dubai desert safaris. Guest comments on dune bashing, camel rides, and camp hospitality.",
+    url: `${SITE_CONFIG.url}/reviews`,
+    siteName: SITE_CONFIG.name,
   },
 };
 

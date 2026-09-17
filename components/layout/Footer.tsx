@@ -35,7 +35,7 @@ export default function Footer() {
             </p>
             <div className="flex items-center gap-2 text-xs text-[#E8C48A] pt-1 font-medium">
               <ShieldCheck className="w-4 h-4 text-[#C89B3C] shrink-0" />
-              <span>Licensed Safari Marshals & Insured Fleet</span>
+              <span>Experienced Safari Drivers & Authentic Hospitality</span>
             </div>
           </div>
 

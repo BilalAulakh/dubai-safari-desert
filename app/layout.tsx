@@ -1,25 +1,21 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
+import { Playfair_Display, Manrope } from "next/font/google";
 import "./globals.css";
 import AppShell from "@/components/layout/AppShell";
 import { ThemeProvider } from "@/components/common/ThemeProvider";
 import StoreProvider from "@/lib/redux/StoreProvider";
 import { SITE_CONFIG } from "@/lib/config/site";
 
-const fontHeading = Playfair_Display({
+const playfair = Playfair_Display({
   subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
-  display: "swap",
-  preload: true,
   variable: "--font-playfair",
+  display: "swap",
 });
 
-const fontSans = Inter({
+const manrope = Manrope({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  variable: "--font-manrope",
   display: "swap",
-  preload: true,
-  variable: "--font-inter",
 });
 
 export const viewport: Viewport = {
@@ -141,22 +137,14 @@ export default function RootLayout({
         legalName: SITE_CONFIG.legalName,
         url: SITE_CONFIG.url,
         telephone: SITE_CONFIG.contact.phone,
-        ...(SITE_CONFIG.contact.email ? { email: SITE_CONFIG.contact.email } : {}),
+        email: SITE_CONFIG.contact.email,
         priceRange: "AED 130 - AED 950",
         currenciesAccepted: "AED, USD, EUR, GBP",
         paymentAccepted: "Cash, Credit Card, Debit Card, Online Payment Link",
         address: {
           "@type": "PostalAddress",
-          streetAddress: "Downtown Dubai, Sheikh Mohammed bin Rashid Blvd",
           addressLocality: "Dubai",
-          addressRegion: "Dubai",
-          postalCode: "00000",
           addressCountry: "AE",
-        },
-        geo: {
-          "@type": "GeoCoordinates",
-          latitude: 25.2048,
-          longitude: 55.2708,
         },
         openingHoursSpecification: {
           "@type": "OpeningHoursSpecification",
@@ -185,7 +173,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={`${fontSans.variable} ${fontHeading.variable} scroll-smooth`} suppressHydrationWarning>
+    <html lang="en" className={`${playfair.variable} ${manrope.variable} scroll-smooth`} suppressHydrationWarning>
       <head>
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="shortcut icon" href="/icon.svg" type="image/svg+xml" />
@@ -200,7 +188,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-screen flex flex-col bg-[var(--bg-page)] text-[var(--text-main)] font-sans antialiased selection:bg-[#C89B3C] selection:text-[#17120D] transition-colors duration-200">
+      <body className={`${playfair.variable} ${manrope.variable} min-h-screen flex flex-col bg-[var(--bg-page)] text-[var(--text-main)] font-sans antialiased selection:bg-[#C89B3C] selection:text-[#17120D] transition-colors duration-200`}>
         <StoreProvider>
           <ThemeProvider>
             <AppShell>{children}</AppShell>

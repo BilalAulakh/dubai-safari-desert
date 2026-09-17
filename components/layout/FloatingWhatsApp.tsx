@@ -15,18 +15,6 @@ export default function FloatingWhatsApp() {
     <>
       {/* Desktop Floating Action Stack (Bottom Right) */}
       <div className="hidden sm:flex fixed bottom-6 right-6 z-50 flex-col items-end gap-3 pointer-events-none">
-        {/* Floating Book Now Button */}
-        <Link
-          href="/booking"
-          aria-label="Book Your Safari Today"
-          id="floating-book-now-btn"
-          className="pointer-events-auto group inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-gradient-to-r from-[#C89B3C] via-[#d8aa4a] to-[#8C6214] text-white text-xs font-bold uppercase tracking-wider shadow-2xl hover:scale-105 active:scale-95 transition-all duration-200 border border-white/25 backdrop-blur-md"
-        >
-          <CalendarCheck className="w-4 h-4 text-white animate-pulse" />
-          <span>Book Your Safari Today</span>
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-        </Link>
-
         {/* Sticky WhatsApp Button */}
         <div className="pointer-events-auto flex items-center group">
           <span className="mr-3 px-3.5 py-1.5 text-xs font-semibold rounded-full bg-[#17120D]/95 text-[#E8C48A] border border-[#C89B3C]/30 shadow-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap backdrop-blur-md">
@@ -38,7 +26,7 @@ export default function FloatingWhatsApp() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="WhatsApp Us Now"
-            className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#25D366] to-[#1eb857] text-white flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-[#25D366]/40 relative"
+            className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#25D366] to-[#1eb857] text-white flex items-center justify-center shadow-[0_8px_25px_rgba(37,211,102,0.35)] hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-[#25D366]/40 relative"
             id="floating-whatsapp-btn"
           >
             <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5">
@@ -57,7 +45,7 @@ export default function FloatingWhatsApp() {
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 py-2.5 px-3 rounded-xl bg-[#25D366] text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-transform"
+          className="flex-1 py-2.5 px-3 rounded-xl bg-[#25D366] text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-md active:scale-98 transition-transform"
         >
           <MessageCircle className="w-4 h-4 fill-white/20" />
           <span>WhatsApp Us Now</span>
@@ -65,7 +53,7 @@ export default function FloatingWhatsApp() {
 
         <Link
           href="/booking"
-          className="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#C89B3C] to-[#8C6214] text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-transform"
+          className="btn-gold flex-1 py-2.5 px-3 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-md active:scale-98"
         >
           <CalendarCheck className="w-4 h-4" />
           <span>Book Safari Today</span>

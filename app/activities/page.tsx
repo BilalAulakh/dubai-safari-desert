@@ -3,16 +3,24 @@ import Link from "next/link";
 import { Sparkles, CheckCircle2, ArrowRight } from "lucide-react";
 import { getActivities } from "@/lib/data/store";
 import { optimizeImageUrl } from "@/lib/utils";
+import { SITE_CONFIG } from "@/lib/config/site";
 import CTASection from "@/components/home/CTASection";
 
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Dubai Desert Safari Activities | Dune Bashing, Camel Ride & Quad Biking",
+  title: "Dubai Desert Safari Activities | Dune Bashing, Camel Ride & Quad Biking | Safari Dune Tours",
   description:
     "Discover the best desert safari activities in Dubai: 4x4 red dune bashing, camel trekking, sandboarding, quad bikes, dune buggies, fire shows, and BBQ dining.",
   alternates: {
-    canonical: "/activities",
+    canonical: `${SITE_CONFIG.url}/activities`,
+  },
+  openGraph: {
+    title: "Dubai Desert Safari Activities | Safari Dune Tours",
+    description:
+      "Discover the best desert safari activities in Dubai: 4x4 red dune bashing, camel trekking, sandboarding, quad bikes, dune buggies, fire shows, and BBQ dining.",
+    url: `${SITE_CONFIG.url}/activities`,
+    siteName: SITE_CONFIG.name,
   },
 };
 

@@ -6,11 +6,18 @@ import { SITE_CONFIG } from "@/lib/config/site";
 import { createWhatsAppUrl } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Book Dubai Desert Safari | Inquiry & Instant WhatsApp Confirmation",
+  title: "Book Dubai Desert Safari | Safari Dune Tours",
   description:
     "Submit your Dubai desert safari booking inquiry with free hotel pickup and zero advance payment. Our safari reservation team confirms details instantly on WhatsApp.",
   alternates: {
-    canonical: "/booking",
+    canonical: `${SITE_CONFIG.url}/booking`,
+  },
+  openGraph: {
+    title: "Book Dubai Desert Safari | Safari Dune Tours",
+    description:
+      "Submit your Dubai desert safari booking inquiry with free hotel pickup and zero advance payment. Our safari reservation team confirms details instantly on WhatsApp.",
+    url: `${SITE_CONFIG.url}/booking`,
+    siteName: SITE_CONFIG.name,
   },
 };
 

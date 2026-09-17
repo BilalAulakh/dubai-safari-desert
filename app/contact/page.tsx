@@ -7,18 +7,25 @@ import ContactForm from "@/components/contact/ContactForm";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Contact Safari Dune | Reservations & WhatsApp Support",
+  title: "Contact Safari Dune Tours | Reservations & WhatsApp Support",
   description:
-    "Contact our Dubai desert safari customer support team. Reach out via WhatsApp, phone, or online inquiry for instant tour bookings and assistance.",
+    "Contact Safari Dune Tours customer support team. Reach out via WhatsApp, phone, or online inquiry for instant tour bookings and assistance in Dubai.",
   alternates: {
-    canonical: "/contact",
+    canonical: `${SITE_CONFIG.url}/contact`,
+  },
+  openGraph: {
+    title: "Contact Safari Dune Tours | Reservations & WhatsApp Support",
+    description:
+      "Contact Safari Dune Tours customer support team. Reach out via WhatsApp, phone, or online inquiry for instant tour bookings and assistance in Dubai.",
+    url: `${SITE_CONFIG.url}/contact`,
+    siteName: SITE_CONFIG.name,
   },
 };
 
 export default function ContactPage() {
   const whatsappUrl = createWhatsAppUrl(
     SITE_CONFIG.contact.whatsapp,
-    "Hello Safari Dune, I would like to get in touch regarding desert tours."
+    "Hello Safari Dune Tours, I would like to get in touch regarding desert tours."
   );
 
   return (
@@ -31,7 +38,7 @@ export default function ContactPage() {
             <span>Get in Touch</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white max-w-3xl mx-auto">
-            Contact Safari Dune
+            Contact Safari Dune Tours
           </h1>
           <p className="mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
             Have questions about tour timing, private vehicle charters, or custom group events? Our reservation team is available daily to assist you.

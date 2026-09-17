@@ -145,12 +145,19 @@ export interface BlogPost {
   excerpt: string;
   content: string;
   featured_image: string;
+  featured_image_alt?: string;
+  category?: string;
   author: string;
-  published_date: string;
-  read_time: string;
+  published_date?: string;
+  published_at?: string;
+  read_time?: string;
   status: "draft" | "published";
+  meta_title?: string;
+  meta_description?: string;
   seo_title?: string;
   seo_description?: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface SiteSettings {

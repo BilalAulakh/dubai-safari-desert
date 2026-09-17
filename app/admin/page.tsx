@@ -16,8 +16,9 @@ import {
   HelpCircle,
   MapPin,
   Sparkles,
+  BookOpen,
 } from "lucide-react";
-import { getBookings, getAllReviews, getPackages } from "@/lib/data/store";
+import { getBookings, getAllReviews, getPackages, getAllBlogPosts } from "@/lib/data/store";
 import { formatDate } from "@/lib/utils";
 
 export default async function AdminDashboardPage() {
@@ -83,6 +84,14 @@ export default async function AdminDashboardPage() {
           >
             <HelpCircle className="w-3.5 h-3.5 text-amber-500" />
             <span>Add FAQ</span>
+          </Link>
+
+          <Link
+            href="/admin/blog/new"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 text-xs font-semibold shadow-sm transition-all"
+          >
+            <BookOpen className="w-3.5 h-3.5 text-amber-500" />
+            <span>Write Blog</span>
           </Link>
         </div>
       </div>

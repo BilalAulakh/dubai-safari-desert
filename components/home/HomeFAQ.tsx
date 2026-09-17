@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronDown, HelpCircle, ArrowRight, Sparkles } from "lucide-react";
+import { ChevronDown, HelpCircle, ArrowRight } from "lucide-react";
 import { FAQ } from "@/types";
+import ScrollReveal from "@/components/common/ScrollReveal";
 
 interface HomeFAQProps {
   faqs: FAQ[];
@@ -20,18 +21,20 @@ export default function HomeFAQ({ faqs }: HomeFAQProps) {
   return (
     <section className="py-20 sm:py-28 bg-[#FBF7F0] dark:bg-[#17120D] transition-colors duration-200">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#C89B3C]/15 border border-[#C89B3C]/30 text-[#C89B3C] dark:text-[#E8C48A] text-xs font-semibold uppercase tracking-wider mb-3">
-            <HelpCircle className="w-3.5 h-3.5 text-[#C89B3C]" />
-            <span>Essential Inquiries</span>
+        <ScrollReveal>
+          <div className="text-center mb-14">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#C89B3C]/15 border border-[#C89B3C]/30 text-[#C89B3C] dark:text-[#E8C48A] text-xs font-semibold uppercase tracking-wider mb-3">
+              <HelpCircle className="w-3.5 h-3.5 text-[#C89B3C]" />
+              <span>Essential Inquiries</span>
+            </div>
+            <h2 className="font-heading text-2xl sm:text-3xl lg:text-[36px] font-bold text-[#17120D] dark:text-[#FBF7F0] tracking-tight leading-[1.15]">
+              Frequently Asked Questions
+            </h2>
+            <p className="mt-2 text-sm sm:text-base text-[#6B6258] dark:text-[#B8ADA2]">
+              Everything you need to know before embarking on your Dubai desert safari.
+            </p>
           </div>
-          <h2 className="font-heading text-2xl sm:text-3xl lg:text-[36px] font-bold text-[#17120D] dark:text-[#FBF7F0] tracking-tight leading-[1.15]">
-            Frequently Asked Questions
-          </h2>
-          <p className="mt-2 text-sm sm:text-base text-[#6B6258] dark:text-[#B8ADA2]">
-            Everything you need to know before embarking on your Dubai desert safari.
-          </p>
-        </div>
+        </ScrollReveal>
 
         <div className="space-y-3">
           {displayFaqs.map((faq, index) => {

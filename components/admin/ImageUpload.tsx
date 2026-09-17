@@ -9,6 +9,7 @@ interface ImageUploadProps {
   onChange: (url: string) => void;
   label?: string;
   bucket?: string;
+  folder?: string;
 }
 
 export default function ImageUpload({
@@ -16,6 +17,7 @@ export default function ImageUpload({
   onChange,
   label = "Package Image",
   bucket = "safari-images",
+  folder = "packages",
 }: ImageUploadProps) {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
@@ -38,6 +40,9 @@ export default function ImageUpload({
     try {
       const formData = new FormData();
       formData.append("file", file);
+      if (folder) {
+        formData.append("folder", folder);
+      }
 
       const { data } = await api.post("/api/admin/upload", formData, {
         headers: {

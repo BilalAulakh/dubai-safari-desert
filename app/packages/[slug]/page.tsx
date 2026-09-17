@@ -18,6 +18,7 @@ import { formatPrice, createWhatsAppUrl, optimizeImageUrl } from "@/lib/utils";
 import { SITE_CONFIG } from "@/lib/config/site";
 import StickyBookingBar from "@/components/packages/StickyBookingBar";
 import CTASection from "@/components/home/CTASection";
+import Breadcrumbs from "@/components/common/Breadcrumbs";
 
 export const revalidate = 3600;
 
@@ -42,9 +43,10 @@ export async function generateMetadata({ params }: PackagePageProps): Promise<Me
     };
   }
 
-  const title = pkg.seo_title || `${pkg.name} | Safari Dune`;
+  const title = pkg.seo_title || `${pkg.name} | Safari Dune Tours`;
   const description =
     pkg.seo_description || `${pkg.short_description} Starting from ${formatPrice(pkg.price)} per person.`;
+  const canonicalUrl = `${SITE_CONFIG.url}/packages/${pkg.slug}`;
 
   return {
     title,
@@ -52,6 +54,8 @@ export async function generateMetadata({ params }: PackagePageProps): Promise<Me
     openGraph: {
       title,
       description,
+      url: canonicalUrl,
+      siteName: SITE_CONFIG.name,
       images: [
         {
           url: pkg.main_image,
@@ -61,8 +65,14 @@ export async function generateMetadata({ params }: PackagePageProps): Promise<Me
         },
       ],
     },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [pkg.main_image],
+    },
     alternates: {
-      canonical: `/packages/${pkg.slug}`,
+      canonical: canonicalUrl,
     },
   };
 }
@@ -83,8 +93,33 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
     SITE_CONFIG.whatsappTemplates.packageInquiry(pkg.name)
   );
 
+  const tripJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TouristTrip",
+    name: pkg.name,
+    description: pkg.short_description,
+    image: pkg.main_image,
+    touristType: ["Adventure Tourism", "Cultural Tourism"],
+    offers: {
+      "@type": "Offer",
+      price: pkg.price,
+      priceCurrency: "AED",
+      availability: "https://schema.org/InStock",
+      url: `${SITE_CONFIG.url}/packages/${pkg.slug}`,
+    },
+    provider: {
+      "@type": "Organization",
+      name: SITE_CONFIG.name,
+      url: SITE_CONFIG.url,
+    },
+  };
+
   return (
     <div className="bg-[#FCFBF8] dark:bg-[#080B11] text-slate-900 dark:text-white pb-20 transition-colors duration-200">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(tripJsonLd) }}
+      />
       {/* Top Hero Banner */}
       <section className="relative min-h-[45vh] flex items-end bg-[#0B0F17] py-16">
         <div className="absolute inset-0 z-0">
@@ -103,6 +138,13 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="max-w-3xl">
+            <Breadcrumbs
+              items={[
+                { label: "Safari Packages", href: "/packages" },
+                { label: pkg.name },
+              ]}
+              className="mb-4"
+            />
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase tracking-wider mb-3">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Premium Dubai Tour</span>

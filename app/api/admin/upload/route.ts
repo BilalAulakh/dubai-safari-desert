@@ -28,7 +28,9 @@ export async function POST(request: Request) {
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-");
     const fileName = `${cleanBaseName}-${Date.now()}.${fileExt}`;
-    const filePath = `packages/${fileName}`;
+    const folder = (formData.get("folder") as string)?.trim() || "packages";
+    const cleanFolder = folder.replace(/[^a-z0-9_-]/gi, "");
+    const filePath = `${cleanFolder || "packages"}/${fileName}`;
 
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);

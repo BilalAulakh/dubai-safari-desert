@@ -13,7 +13,14 @@ export const metadata: Metadata = {
   description:
     "Find immediate answers to questions regarding Dubai desert safari inclusions, clothing advice, child safety, pickup timing, payment methods, and cancellation policies.",
   alternates: {
-    canonical: "/faq",
+    canonical: `${SITE_CONFIG.url}/faq`,
+  },
+  openGraph: {
+    title: "Dubai Desert Safari FAQ | Safari Dune Tours",
+    description:
+      "Find immediate answers to questions regarding Dubai desert safari inclusions, clothing advice, child safety, pickup timing, payment methods, and cancellation policies.",
+    url: `${SITE_CONFIG.url}/faq`,
+    siteName: SITE_CONFIG.name,
   },
 };
 

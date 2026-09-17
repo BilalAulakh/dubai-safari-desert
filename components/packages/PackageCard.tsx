@@ -12,7 +12,7 @@ interface PackageCardProps {
 
 export default function PackageCard({ pkg }: PackageCardProps) {
   return (
-    <div className="group flex flex-col rounded-2xl bg-white dark:bg-[#241A12] border border-[#C89B3C]/15 dark:border-[#C89B3C]/20 shadow-md hover:shadow-2xl hover:border-[#C89B3C]/50 transition-all duration-300 overflow-hidden hover:-translate-y-1.5">
+    <div className="group flex flex-col rounded-2xl bg-white dark:bg-[#241A12] border border-[#C89B3C]/20 dark:border-[#C89B3C]/25 shadow-sm hover:shadow-[0_14px_32px_rgba(23,18,13,0.12)] hover:border-[#C89B3C]/55 transition-all duration-300 overflow-hidden hover:-translate-y-1">
       {/* Image Container with Cinematic Overlay */}
       <div className="relative h-60 w-full overflow-hidden bg-[#17120D]">
         <img
@@ -21,10 +21,10 @@ export default function PackageCard({ pkg }: PackageCardProps) {
           width={600}
           height={400}
           decoding="async"
-          className="w-full h-full object-cover object-center group-hover:scale-106 transition-transform duration-700 ease-out"
+          className="w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-500 ease-out"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#17120D]/90 via-[#17120D]/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#17120D]/90 via-[#17120D]/30 to-transparent group-hover:bg-black/15 transition-colors duration-300" />
 
         {/* Featured Badge */}
         {pkg.featured && (
@@ -82,7 +82,7 @@ export default function PackageCard({ pkg }: PackageCardProps) {
 
           <Link
             href={`/booking?package=${encodeURIComponent(pkg.id)}`}
-            className="btn-gold w-full py-2.5 px-3 text-center text-xs font-bold uppercase tracking-wider shadow-sm justify-center"
+            className="btn-gold w-full py-2.5 px-3 text-center text-xs font-bold uppercase tracking-wider shadow-sm justify-center group-hover:brightness-105 group-hover:shadow-md transition-all duration-200"
           >
             Book Now
           </Link>

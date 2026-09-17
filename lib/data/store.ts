@@ -508,18 +508,258 @@ export async function deleteReview(id: string): Promise<boolean> {
   return true;
 }
 
+function mapDbBlogToBlogPost(b: any): BlogPost {
+  const wordCount = b.content ? b.content.trim().split(/\s+/).length : 0;
+  const readTime = b.read_time || `${Math.max(1, Math.ceil(wordCount / 200))} min read`;
+  const publishedDate = b.published_at
+    ? b.published_at.slice(0, 10)
+    : b.published_date || new Date().toISOString().slice(0, 10);
+
+  return {
+    id: String(b.id),
+    title: b.title || "",
+    slug: b.slug || "",
+    excerpt: b.excerpt || "",
+    content: b.content || "",
+    featured_image: b.featured_image || "",
+    featured_image_alt: b.featured_image_alt || b.title || "",
+    category: b.category || "Desert Safari",
+    author: b.author || "Safari Dune Tours",
+    published_date: publishedDate,
+    published_at: b.published_at || b.created_at || new Date().toISOString(),
+    read_time: readTime,
+    status: (b.status as "draft" | "published") || "draft",
+    meta_title: b.meta_title || b.seo_title || b.title,
+    meta_description: b.meta_description || b.seo_description || b.excerpt,
+    seo_title: b.meta_title || b.seo_title || b.title,
+    seo_description: b.meta_description || b.seo_description || b.excerpt,
+    created_at: b.created_at || new Date().toISOString(),
+    updated_at: b.updated_at || new Date().toISOString(),
+  };
+}
+
 // --- BLOG POSTS ---
 export async function getBlogPosts(): Promise<BlogPost[]> {
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("blogs")
+        .select("*")
+        .eq("status", "published")
+        .order("published_at", { ascending: false });
+
+      if (!error && data && data.length > 0) {
+        return data.map(mapDbBlogToBlogPost);
+      }
+    }
+  } catch (err) {
+    console.error("Supabase getBlogPosts error:", err);
+  }
   return fallbackBlogPosts.filter((b) => b.status === "published");
 }
 
 export async function getAllBlogPosts(): Promise<BlogPost[]> {
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("blogs")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (!error && data && data.length > 0) {
+        return data.map(mapDbBlogToBlogPost);
+      }
+    }
+  } catch (err) {
+    console.error("Supabase getAllBlogPosts error:", err);
+  }
   return fallbackBlogPosts;
 }
 
-export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
+export async function getBlogPostBySlug(
+  slug: string,
+  allowDraft = false
+): Promise<BlogPost | null> {
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      let query = supabase.from("blogs").select("*").eq("slug", slug);
+      if (!allowDraft) {
+        query = query.eq("status", "published");
+      }
+      const { data, error } = await query.maybeSingle();
+
+      if (!error && data) {
+        return mapDbBlogToBlogPost(data);
+      }
+    }
+  } catch (err) {
+    console.error("Supabase getBlogPostBySlug error:", err);
+  }
+
   const post = fallbackBlogPosts.find((b) => b.slug === slug);
+  if (!post) return null;
+  if (!allowDraft && post.status !== "published") return null;
+  return post;
+}
+
+export async function getBlogPostById(id: string): Promise<BlogPost | null> {
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("blogs")
+        .select("*")
+        .eq("id", id)
+        .maybeSingle();
+
+      if (!error && data) {
+        return mapDbBlogToBlogPost(data);
+      }
+    }
+  } catch (err) {
+    console.error("Supabase getBlogPostById error:", err);
+  }
+
+  const post = fallbackBlogPosts.find((b) => b.id === id);
   return post || null;
+}
+
+export async function createBlogPost(
+  data: Omit<BlogPost, "id" | "created_at" | "updated_at"> & { id?: string }
+): Promise<BlogPost> {
+  const now = new Date().toISOString();
+  const wordCount = data.content ? data.content.trim().split(/\s+/).length : 0;
+  const readTime = data.read_time || `${Math.max(1, Math.ceil(wordCount / 200))} min read`;
+
+  const newPost: BlogPost = {
+    ...data,
+    id: data.id || `post-${Date.now()}`,
+    published_date: data.published_at ? data.published_at.slice(0, 10) : (data.published_date || now.slice(0, 10)),
+    published_at: data.status === "published" ? (data.published_at || now) : undefined,
+    read_time: readTime,
+    status: data.status || "draft",
+    category: data.category || "Desert Safari",
+    author: data.author || "Safari Dune Tours",
+    featured_image_alt: data.featured_image_alt || data.title,
+    meta_title: data.meta_title || data.seo_title || data.title,
+    meta_description: data.meta_description || data.seo_description || data.excerpt,
+    created_at: now,
+    updated_at: now,
+  };
+
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const insertPayload: any = {
+        title: newPost.title,
+        slug: newPost.slug,
+        excerpt: newPost.excerpt,
+        content: newPost.content,
+        featured_image: newPost.featured_image,
+        featured_image_alt: newPost.featured_image_alt,
+        meta_title: newPost.meta_title,
+        meta_description: newPost.meta_description,
+        category: newPost.category,
+        author: newPost.author,
+        status: newPost.status,
+        published_at: newPost.published_at || null,
+      };
+
+      const { data: inserted, error } = await supabase
+        .from("blogs")
+        .insert(insertPayload)
+        .select()
+        .single();
+
+      if (!error && inserted) {
+        newPost.id = String(inserted.id);
+      } else if (error) {
+        console.error("Supabase insert blog error:", error);
+      }
+    }
+  } catch (err) {
+    console.error("Supabase insert blog exception:", err);
+  }
+
+  // Also update local fallback store
+  fallbackBlogPosts.unshift(newPost);
+  return newPost;
+}
+
+export async function updateBlogPost(
+  id: string,
+  updates: Partial<BlogPost>
+): Promise<BlogPost | null> {
+  const now = new Date().toISOString();
+
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const dbUpdates: any = { ...updates, updated_at: now };
+      if (updates.status === "published" && !updates.published_at) {
+        dbUpdates.published_at = now;
+      }
+
+      const { data, error } = await supabase
+        .from("blogs")
+        .update(dbUpdates)
+        .eq("id", id)
+        .select()
+        .single();
+
+      if (!error && data) {
+        const mapped = mapDbBlogToBlogPost(data);
+        const idx = fallbackBlogPosts.findIndex((b) => b.id === id);
+        if (idx !== -1) fallbackBlogPosts[idx] = mapped;
+        return mapped;
+      }
+    }
+  } catch (err) {
+    console.error("Supabase update blog exception:", err);
+  }
+
+  const post = fallbackBlogPosts.find((b) => b.id === id);
+  if (!post) return null;
+
+  Object.assign(post, updates, { updated_at: now });
+  if (updates.status === "published" && !post.published_at) {
+    post.published_at = now;
+    post.published_date = now.slice(0, 10);
+  }
+  return post;
+}
+
+export async function deleteBlogPost(id: string): Promise<boolean> {
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      await supabase.from("blogs").delete().eq("id", id);
+    }
+  } catch (err) {
+    console.error("Supabase delete blog error:", err);
+  }
+
+  const index = fallbackBlogPosts.findIndex((b) => b.id === id);
+  if (index !== -1) {
+    fallbackBlogPosts.splice(index, 1);
+  }
+  return true;
+}
+
+export async function toggleBlogStatus(
+  id: string,
+  newStatus: "draft" | "published"
+): Promise<BlogPost | null> {
+  const updates: Partial<BlogPost> = {
+    status: newStatus,
+  };
+  if (newStatus === "published") {
+    updates.published_at = new Date().toISOString();
+  }
+  return updateBlogPost(id, updates);
 }
 
 // --- COMMENTS ---
