@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: PackagePageProps): Promise<Me
     };
   }
 
-  const title = pkg.seo_title || `${pkg.name} | DubaiSafariDesert`;
+  const title = pkg.seo_title || `${pkg.name} | Safari Dune`;
   const description =
     pkg.seo_description || `${pkg.short_description} Starting from ${formatPrice(pkg.price)} per person.`;
 

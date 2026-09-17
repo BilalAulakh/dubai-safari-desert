@@ -19,49 +19,50 @@ export default function AdminReviewsPage() {
   const [statusFilter, setStatusFilter] = useState<string>("all");
 
   useEffect(() => {
-    // Initial reviews load
-    const demoReviews: Review[] = [
-      {
-        id: "rev-1",
-        customer_name: "Sarah Jenkins",
-        country: "United Kingdom",
-        email: "sarah.j@example.com",
-        rating: 5,
-        comment:
-          "The evening desert safari exceeded all our expectations! The dune bashing was thrilling yet felt completely safe with our driver Rashid. The BBQ dinner was delicious and the fire show under the night sky was spectacular.",
-        status: "approved",
-        featured: true,
-        created_at: "2026-08-15T16:20:00Z",
-        is_demo: true,
-      },
-      {
-        id: "rev-2",
-        customer_name: "Marco Rossi",
-        country: "Italy",
-        email: "m.rossi@example.com",
-        rating: 5,
-        comment:
-          "We booked the VIP Private Safari for my family of four. Booking was effortless over WhatsApp, pickup arrived exactly on time, and having our private Land Cruiser made the experience so comfortable for the kids.",
-        status: "approved",
-        featured: true,
-        created_at: "2026-08-20T11:45:00Z",
-        is_demo: true,
-      },
-      {
-        id: "rev-new-submission",
-        customer_name: "Amira Al-Mansouri",
-        country: "UAE",
-        email: "amira.m@example.com",
-        rating: 5,
-        comment:
-          "Wonderful organization. Our driver Tariq gave us a fantastic dune driving tour and took stunning family sunset portraits on the dunes.",
-        status: "pending",
-        featured: false,
-        created_at: new Date(Date.now() - 3600000 * 5).toISOString(),
-        is_demo: false,
-      },
-    ];
-    setReviews(demoReviews);
+    async function loadReviews() {
+      try {
+        const res = await fetch("/api/reviews");
+        const data = await res.json();
+        if (data.success && Array.isArray(data.reviews) && data.reviews.length > 0) {
+          setReviews(data.reviews);
+          return;
+        }
+      } catch (err) {
+        console.error("Failed to load reviews:", err);
+      }
+
+      // Initial reviews load fallback
+      const demoReviews: Review[] = [
+        {
+          id: "rev-1",
+          customer_name: "Sarah Jenkins",
+          country: "United Kingdom",
+          email: "sarah.j@example.com",
+          rating: 5,
+          comment:
+            "The evening desert safari exceeded all our expectations! The dune bashing was thrilling yet felt completely safe with our driver Rashid. The BBQ dinner was delicious and the fire show under the night sky was spectacular.",
+          status: "approved",
+          featured: true,
+          created_at: "2026-08-15T16:20:00Z",
+          is_demo: true,
+        },
+        {
+          id: "rev-2",
+          customer_name: "Marco Rossi",
+          country: "Italy",
+          email: "m.rossi@example.com",
+          rating: 5,
+          comment:
+            "We booked the VIP Private Safari for my family of four. Booking was effortless over WhatsApp, pickup arrived exactly on time, and having our private Land Cruiser made the experience so comfortable for the kids.",
+          status: "approved",
+          featured: true,
+          created_at: "2026-08-20T11:45:00Z",
+          is_demo: true,
+        },
+      ];
+      setReviews(demoReviews);
+    }
+    loadReviews();
   }, []);
 
   const handleUpdateStatus = (id: string, newStatus: ReviewStatus) => {

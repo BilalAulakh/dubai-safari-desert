@@ -17,29 +17,29 @@ export default function StickyBookingBar({ pkg }: StickyBookingBarProps) {
   );
 
   return (
-    <div className="fixed bottom-0 inset-x-0 z-30 bg-[#0B0F17]/95 backdrop-blur-md border-t border-amber-500/20 py-3 px-4 shadow-2xl">
+    <div className="fixed bottom-0 inset-x-0 z-30 bg-[#17120D]/95 backdrop-blur-md border-t border-[#C89B3C]/25 py-3.5 px-4 sm:px-6 shadow-2xl">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
         {/* Package info & price */}
-        <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-2 truncate">
-          <span className="text-xs sm:text-sm font-bold text-white truncate max-w-[200px] sm:max-w-xs md:max-w-md">
+        <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-3 truncate">
+          <span className="font-heading text-sm sm:text-base font-bold text-white truncate max-w-[180px] sm:max-w-xs md:max-w-md">
             {pkg.name}
           </span>
-          <div className="flex items-baseline gap-1">
-            <span className="text-xs text-amber-300">From</span>
-            <span className="text-base sm:text-lg font-extrabold text-white">
+          <div className="flex items-baseline gap-1.5">
+            <span className="text-xs text-[#E8C48A] uppercase font-semibold">From</span>
+            <span className="text-lg sm:text-xl font-bold text-white tracking-tight">
               {formatPrice(pkg.price)}
             </span>
-            <span className="text-[10px] text-slate-400">/ person</span>
+            <span className="text-[11px] text-[#B8ADA2]">/ guest</span>
           </div>
         </div>
 
         {/* Action Buttons */}
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex items-center gap-3 shrink-0">
           <a
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 text-xs font-semibold hover:bg-emerald-600/30 transition-colors"
+            className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 text-xs font-semibold hover:bg-emerald-600/30 transition-colors"
           >
             <MessageCircle className="w-4 h-4" />
             <span>WhatsApp</span>
@@ -47,7 +47,7 @@ export default function StickyBookingBar({ pkg }: StickyBookingBarProps) {
 
           <Link
             href={`/booking?package=${encodeURIComponent(pkg.id)}`}
-            className="px-5 py-2.5 rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold text-xs sm:text-sm uppercase tracking-wider shadow hover:from-amber-400 hover:to-amber-500 transition-all hover:scale-105 active:scale-95"
+            className="btn-gold px-6 py-2.5 text-xs sm:text-sm uppercase tracking-wider font-bold shadow-md"
             id="sticky-book-now-cta"
           >
             Book Now

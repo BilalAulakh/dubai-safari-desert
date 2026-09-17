@@ -7,7 +7,7 @@ import ContactForm from "@/components/contact/ContactForm";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Contact DubaiSafariDesert | Reservations & WhatsApp Support",
+  title: "Contact Safari Dune | Reservations & WhatsApp Support",
   description:
     "Contact our Dubai desert safari customer support team. Reach out via WhatsApp, phone, or online inquiry for instant tour bookings and assistance.",
   alternates: {
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   const whatsappUrl = createWhatsAppUrl(
     SITE_CONFIG.contact.whatsapp,
-    "Hello DubaiSafariDesert, I would like to get in touch regarding desert tours."
+    "Hello Safari Dune, I would like to get in touch regarding desert tours."
   );
 
   return (
@@ -31,7 +31,7 @@ export default function ContactPage() {
             <span>Get in Touch</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white max-w-3xl mx-auto">
-            Contact DubaiSafariDesert
+            Contact Safari Dune
           </h1>
           <p className="mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
             Have questions about tour timing, private vehicle charters, or custom group events? Our reservation team is available daily to assist you.
@@ -99,21 +99,27 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              {/* Email Card */}
+              {/* Email / Online Inquiries Card */}
               <div className="p-5 rounded-2xl bg-white border border-slate-200 flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-700 flex items-center justify-center shrink-0">
                   <Mail className="w-6 h-6" />
                 </div>
                 <div>
-                  <h4 className="text-base font-bold text-slate-900">Email Address</h4>
-                  <a
-                    href={`mailto:${SITE_CONFIG.contact.email}`}
-                    className="text-sm font-semibold text-amber-700 hover:underline"
-                  >
-                    {SITE_CONFIG.contact.email}
-                  </a>
+                  <h4 className="text-base font-bold text-slate-900">Email & Inquiries</h4>
+                  {SITE_CONFIG.contact.email ? (
+                    <a
+                      href={`mailto:${SITE_CONFIG.contact.email}`}
+                      className="text-sm font-semibold text-amber-700 hover:underline"
+                    >
+                      {SITE_CONFIG.contact.email}
+                    </a>
+                  ) : (
+                    <p className="text-sm font-semibold text-slate-800">
+                      Direct online booking & quote inquiries
+                    </p>
+                  )}
                   <p className="text-xs text-slate-500 mt-1">
-                    Inquiries, corporate events, and invoices
+                    Corporate bookings, private charters, and invoice requests
                   </p>
                 </div>
               </div>
@@ -139,19 +145,30 @@ export default function ContactPage() {
           <div className="space-y-6">
             <ContactForm />
 
-            {/* Google Maps Location representation (Zero heavy script / iframe) */}
-            <div className="rounded-3xl overflow-hidden border border-slate-200 shadow-sm h-56 relative bg-slate-100 flex items-center justify-center text-center p-6">
-              <div className="space-y-2">
-                <MapPin className="w-8 h-8 text-amber-600 mx-auto" />
-                <h4 className="font-bold text-slate-900 text-sm">Dubai Safari Desert Center</h4>
-                <p className="text-xs text-slate-500">{SITE_CONFIG.contact.address}</p>
+            {/* Google Maps Location Representation */}
+            <div className="rounded-3xl overflow-hidden border border-[#C89B3C]/30 shadow-md relative bg-[#17120D] text-white p-7 flex flex-col justify-between">
+              <div className="space-y-2 relative z-10">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#C89B3C]/20 border border-[#C89B3C]/40 text-[#E8C48A] text-xs font-semibold uppercase tracking-wider">
+                  <MapPin className="w-3.5 h-3.5 text-[#C89B3C]" />
+                  <span>Google Maps Location</span>
+                </div>
+                <h4 className="font-heading font-bold text-lg text-white pt-1">
+                  Safari Dune Tours Center
+                </h4>
+                <p className="text-xs text-slate-300 leading-relaxed max-w-sm">
+                  {SITE_CONFIG.contact.address}
+                </p>
+              </div>
+
+              <div className="pt-6 relative z-10">
                 <a
                   href={SITE_CONFIG.contact.googleMapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block mt-2 text-xs font-bold text-amber-700 hover:underline"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#C89B3C] to-[#8C6214] text-white text-xs font-bold uppercase tracking-wider hover:from-[#d8aa4a] hover:to-[#9c6f1a] transition-all shadow"
                 >
-                  Open in Google Maps &rarr;
+                  <span>Open in Google Maps</span>
+                  <span>&rarr;</span>
                 </a>
               </div>
             </div>

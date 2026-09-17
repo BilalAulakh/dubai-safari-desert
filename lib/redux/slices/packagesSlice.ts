@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { Package } from "@/types";
 import { initialPackages } from "@/lib/data/packages";
+import api from "@/lib/axios";
 
 export interface PackagesState {
   items: Package[];
@@ -20,21 +21,18 @@ const initialState: PackagesState = {
   error: null,
 };
 
-// Async Thunk with createAsyncThunk
 export const fetchPackages = createAsyncThunk<
   Package[],
   void,
   { rejectValue: string }
 >("packages/fetchPackages", async (_, { rejectWithValue }) => {
   try {
-    const res = await fetch("/api/admin/packages");
-    if (!res.ok) {
-      throw new Error("Failed to fetch packages from server");
-    }
-    const data = await res.json();
+    const { data } = await api.get("/api/admin/packages");
     return data.packages || data;
   } catch (err: any) {
-    return rejectWithValue(err.message || "Failed to fetch packages");
+    return rejectWithValue(
+      err.response?.data?.message || err.message || "Failed to fetch packages"
+    );
   }
 });
 

@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import { Upload, Check, AlertCircle, Loader2, Image as ImageIcon, X, ExternalLink } from "lucide-react";
+import api from "@/lib/axios";
 
 interface ImageUploadProps {
   value: string;
@@ -38,14 +39,13 @@ export default function ImageUpload({
       const formData = new FormData();
       formData.append("file", file);
 
-      const res = await fetch("/api/admin/upload", {
-        method: "POST",
-        body: formData,
+      const { data } = await api.post("/api/admin/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
 
-      const data = await res.json();
-
-      if (!res.ok || !data.success) {
+      if (!data.success) {
         throw new Error(data.error || "Failed to upload image to Supabase");
       }
 

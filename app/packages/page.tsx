@@ -19,32 +19,34 @@ export default async function PackagesPage() {
   const packages = await getPackages();
 
   return (
-    <div className="bg-[#FCFBF8] dark:bg-[#0B0F17]">
+    <div className="bg-[#FBF7F0] dark:bg-[#17120D] text-[#17120D] dark:text-[#FBF7F0] transition-colors duration-200">
       {/* Header Banner */}
-      <section className="relative py-20 bg-[#0B0F17] text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-bold uppercase tracking-wider mb-4">
-            <Sparkles className="w-3.5 h-3.5" />
+      <section className="relative pt-28 pb-20 sm:pt-36 sm:pb-24 bg-[#17120D] text-white border-b border-[#C89B3C]/20 overflow-hidden">
+        <div className="absolute inset-0 opacity-15 pointer-events-none bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#C89B3C] via-transparent to-transparent" />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#C89B3C]/15 border border-[#C89B3C]/30 text-[#E8C48A] text-xs font-semibold uppercase tracking-wider mb-4">
+            <Sparkles className="w-3.5 h-3.5 text-[#C89B3C]" />
             <span>Curated Desert Tours</span>
           </div>
-          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white max-w-3xl mx-auto">
+          <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-[1.08]">
             Dubai Desert Safari Packages
           </h1>
-          <p className="mt-4 text-base sm:text-lg text-slate-300 max-w-2xl mx-auto">
+          <p className="mt-4 text-base sm:text-lg text-[#B8ADA2] max-w-2xl mx-auto leading-relaxed">
             Choose from authentic evening BBQ tours, sunrise morning treks, romantic starlight camps, or VIP private 4x4 safaris. All packages include door-to-door hotel pickup.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-amber-300/80">
-            <div className="flex items-center gap-1.5">
-              <MapPin className="w-4 h-4 text-amber-400" />
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-[#E8C48A]">
+            <div className="flex items-center gap-2">
+              <MapPin className="w-4 h-4 text-[#C89B3C]" />
               <span>Complimentary Hotel Pickup</span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-amber-400" />
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-[#C89B3C]" />
               <span>No Advance Card Needed</span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <Clock className="w-4 h-4 text-amber-400" />
+            <div className="flex items-center gap-2">
+              <Clock className="w-4 h-4 text-[#C89B3C]" />
               <span>Free 24h Cancellation</span>
             </div>
           </div>
@@ -52,7 +54,7 @@ export default async function PackagesPage() {
       </section>
 
       {/* Package Filter Catalog Grid */}
-      <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <PackagesCatalogFilter initialPackages={packages} />
       </section>
 

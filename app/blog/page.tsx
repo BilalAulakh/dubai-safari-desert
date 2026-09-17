@@ -8,9 +8,9 @@ import CTASection from "@/components/home/CTASection";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Dubai Desert Safari Guides & Travel Blog",
+  title: "Dubai Desert Safari Guides & Travel Blog | Safari Dune Tours",
   description:
-    "Expert travel advice, desert weather guides, packing tips, and comparison articles for travelers visiting Dubai.",
+    "Expert travel advice, desert packing tips, family guides, and activity ideas for experiencing Dubai desert safari with Safari Dune Tours.",
   alternates: {
     canonical: "/blog",
   },
@@ -29,7 +29,7 @@ export default async function BlogPage() {
             <span>Guides & Travel Advice</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white max-w-3xl mx-auto">
-            Dubai Desert Safari Travel Blog
+            Dubai Desert Safari Travel Blog & Guides
           </h1>
           <p className="mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
             Insider tips from licensed safari marshals: timing your visit, packing essentials, family safety, and tour comparisons.

@@ -2,131 +2,154 @@ import { BlogPost } from "@/types";
 
 export const initialBlogPosts: BlogPost[] = [
   {
-    id: "post-best-time",
-    title: "Best Time for Desert Safari in Dubai: Complete Month-by-Month Guide",
-    slug: "best-time-for-desert-safari-dubai",
+    id: "post-what-to-wear",
+    title: "What to Wear for Dubai Desert Safari: Essential Dress Code & Packing Tips",
+    slug: "what-to-wear-for-dubai-desert-safari",
     excerpt:
-      "Discover the ideal months, temperatures, and times of day to book your Dubai desert safari adventure for optimal comfort and clear sunset views.",
+      "Ensure maximum comfort on the red dunes with expert advice on footwear, breathable fabrics, sunglasses, cultural etiquette, and evening layering.",
     author: "Tariq Al-Mansoor",
-    published_date: "2026-08-10",
+    published_date: "2026-08-18",
     read_time: "5 min read",
     status: "published",
     featured_image:
-      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop",
-    seo_title: "Best Time for Desert Safari in Dubai | DubaiSafariDesert Guide",
-    seo_description: "Discover the best months, timings, and weather tips for experiencing Dubai Desert Safari in peak comfort.",
-    content: `
-Planning a trip to Dubai and wondering when is the best time to experience the Arabian desert? While safaris operate 365 days a year, timing your visit enhances the overall comfort and enjoyment of the experience.
-
-### The Peak Season: November to March
-The winter months are undeniably the prime season for desert safaris in Dubai. Daytime temperatures hover comfortably between 22°C and 28°C (72°F - 82°F), with gentle desert breezes. The evening brings a refreshing coolness, often dropping to 14°C - 18°C, making campfire gatherings and stargazing wonderfully pleasant.
-
-### Shoulder Months: April & October
-These transition months offer warm afternoons (around 32°C - 35°C) that cool down quickly as the sun dips below the horizon. They are fantastic months if you want slightly smaller crowds while still enjoying full outdoor camp entertainment and BBQ dining.
-
-### Summer Safaris: June to September
-Summer in Dubai brings intense daytime heat. However, our evening safaris are optimized to avoid the midday sun. Pickups take place in late afternoon in climate-controlled 4x4 Land Cruisers, and by the time you arrive at the camp, twilight cools the red dunes. Camps are equipped with outdoor air misting fans and chilled beverages.
-
-### Best Time of Day: Morning vs Evening
-- **Evening Safari (3:00 PM – 9:00 PM):** Best for full experience including sunset photos, BBQ dinner, and live shows.
-- **Morning Safari (7:30 AM – 11:30 AM):** Best for adventure lovers wanting crisp cool morning air, sunrise photography, and an early return to the city.
-    `,
-  },
-  {
-    id: "post-what-to-wear",
-    title: "What to Wear for Desert Safari Dubai: Essential Dress Code & Packing Tips",
-    slug: "what-to-wear-desert-safari-dubai",
-    excerpt:
-      "Ensure maximum comfort on the dunes with our expert advice on footwear, fabrics, sunscreen, cultural etiquette, and evening layering.",
-    author: "Elena Rostova",
-    published_date: "2026-08-18",
-    read_time: "4 min read",
-    status: "published",
-    featured_image:
       "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1200&auto=format&fit=crop",
-    seo_title: "What to Wear for Desert Safari Dubai | Dress Code & Packing Checklist",
-    seo_description: "Practical packing and clothing advice for Dubai desert safari: fabrics, footwear, winter layers, and modesty guidelines.",
+    seo_title: "What to Wear for Dubai Desert Safari | Dress Code & Packing Guide",
+    seo_description:
+      "Comprehensive guide on what to wear for a Dubai desert safari. Discover footwear tips, breathable fabrics, sun protection, evening layers, and cultural guidelines.",
     content: `
-Selecting the right attire for your Dubai desert safari will keep you comfortable during active dune bashing and sandboarding, as well as while relaxing at the camp.
+Selecting the right attire for your Dubai desert safari will keep you comfortable during active dune bashing, camel rides, and sandboarding, as well as while relaxing at the desert camp.
 
 ### 1. Breathable, Loose-Fitting Fabrics
-Opt for lightweight natural fabrics like cotton, linen, or moisture-wicking athletic wear. Loose t-shirts, relaxed trousers, or knee-length shorts are great. Avoid tight jeans or synthetic fabrics that trap heat.
+Opt for lightweight natural fabrics like cotton, linen, or moisture-wicking athletic wear. Loose t-shirts, relaxed trousers, or knee-length shorts are ideal. Avoid tight synthetic clothing that traps humidity.
 
 ### 2. Footwear: Sandals or Slip-On Shoes
-Fine desert sand easily penetrates athletic sneakers and socks. Open sandals, flip-flops, or lightweight slip-on shoes make it effortless to empty sand after sandboarding or camel trekking.
+Fine Arabian sand easily penetrates sneakers and socks. Open sandals, flip-flops, or lightweight slip-on shoes make it effortless to empty sand after sandboarding or camel trekking. If you plan on quad biking, closed shoes are recommended for pedal grip.
 
 ### 3. Sun Protection Essentials
-- UV-blocking sunglasses with polarization
-- Wide-brim sunhat or traditional keffiyeh (Arabian headscarf available at camp)
-- SPF 50+ broad-spectrum sunscreen
+- **Sunglasses:** UV400 polarized sunglasses to guard against midday glare.
+- **Sunscreen:** SPF 50+ broad-spectrum sunscreen applied before pickup.
+- **Headwear:** A wide-brim sunhat or traditional keffiyeh (Arabian headscarf available at camp).
 
-### 4. Evening Layers (November – March)
-The desert loses heat rapidly once the sun sets. If visiting between November and March, bring a light jacket, cardigan, or pashmina shawl for the dinner and show portion of the evening.
+### 4. Evening Layers (November to March)
+The desert temperature drops noticeably once the sun dips below the horizon. If visiting between November and March, bring a light jacket, cardigan, or pashmina shawl for the dinner buffet and fire show.
 
-### 5. Respectful Dress Guidelines
-Dubai is welcoming and cosmopolitan. While casual resort attire is completely acceptable, respect local culture by avoiding excessively revealing clothing.
+### 5. Cultural Modesty Guidelines
+Dubai is welcoming and cosmopolitan. While casual holiday attire is completely fine on the dunes, respect local traditions by avoiding excessively revealing swimwear or micro-shorts at the family camp.
     `,
   },
   {
-    id: "post-evening-vs-morning",
-    title: "Evening vs Morning Desert Safari: Which Experience is Right for You?",
-    slug: "evening-vs-morning-desert-safari",
+    id: "post-morning-vs-evening",
+    title: "Morning vs Evening Desert Safari in Dubai: Which Experience is Right for You?",
+    slug: "morning-vs-evening-desert-safari",
     excerpt:
       "Compare highlights, itineraries, dining, entertainment, and pricing to decide between a morning sunrise safari or an evening dinner safari.",
-    author: "Tariq Al-Mansoor",
-    published_date: "2026-08-26",
+    author: "Elena Rostova",
+    published_date: "2026-08-25",
     read_time: "6 min read",
     status: "published",
     featured_image:
       "https://images.unsplash.com/photo-1547234935-80c7145ec969?q=80&w=1200&auto=format&fit=crop",
-    seo_title: "Evening vs Morning Desert Safari Dubai | Detailed Comparison Guide",
-    seo_description: "Deciding between morning vs evening desert safari in Dubai? Read our head-to-head comparison of activities, meals, and timings.",
+    seo_title: "Morning vs Evening Desert Safari Dubai | Comparison Guide",
+    seo_description:
+      "Deciding between a morning vs evening desert safari in Dubai? Read our detailed head-to-head comparison of timings, activities, entertainment, and BBQ dinners.",
     content: `
-First-time visitors to Dubai often ask: "Should I book the Morning Safari or the Evening Safari?" Both offer magnificent views of the Arabian dunes, but they cater to very different travel styles.
+First-time visitors to Dubai often ask: "Should I book the Morning Safari or the Evening Safari?" Both offer magnificent views of the Arabian dunes, but they cater to very different schedules and travel styles.
 
-### Morning Desert Safari: Pure Adrenaline & Sunrise
+### Morning Desert Safari: Pure Adventure & Crisp Sunrise
 The morning safari is tailored for travelers who want action-packed desert adventures with minimal downtime.
-- **Duration:** 4 to 5 hours (08:00 AM – 12:30 PM)
-- **Top Highlights:** Sunrise over pristine sand dunes, 35-minute intense dune bashing, sandboarding, short camel ride.
-- **Who it is for:** Travelers with tight evening flight connections, business travelers with evening dinners, or those who prefer avoiding late-night activities.
+- **Duration:** 4 to 5 hours (07:30 AM – 12:00 PM)
+- **Top Highlights:** Golden sunrise over pristine red dunes, 35-minute intense 4x4 dune bashing, sandboarding, short camel ride, and optional quad biking.
+- **Who it is for:** Adventure seekers, photographers wanting morning light, business travelers with evening engagements, or those with late-night flights.
 
 ### Evening Desert Safari: The Full Arabian Night
-The evening safari is the quintessential Dubai tourism highlight, combining sports with rich cultural immersion.
-- **Duration:** 6 to 7 hours (03:00 PM – 09:30 PM)
-- **Top Highlights:** Golden hour sunset over red dunes, 40-minute dune bashing, camel trek, henna painting, grand BBQ dinner buffet, Tanoura dance, belly dancing, and fire shows.
-- **Who it is for:** Families, couples, vacationers, and anyone seeking the complete Dubai safari experience.
+The evening safari is the quintessential Dubai tourism experience, blending thrilling sports with rich Bedouin cultural immersion.
+- **Duration:** 6 to 7 hours (02:30 PM – 09:30 PM)
+- **Top Highlights:** Sunset photography on high dunes, 40-minute dune bashing, camel rides, henna artistry, international 5-star BBQ dinner buffet, Tanoura dance, fire show, and belly dancing.
+- **Who it is for:** Families, couples, vacationers, and first-time Dubai visitors seeking a complete, relaxed cultural night.
+
+### Summary: How to Choose
+- If your schedule is tight and you want adventure: **Book Morning Safari**.
+- If you want the complete Dubai experience with dinner and live shows: **Book Evening Safari**.
     `,
   },
   {
-    id: "post-safety-children",
-    title: "Is Desert Safari in Dubai Safe for Children and Toddlers?",
-    slug: "is-desert-safari-safe-for-children",
+    id: "post-families",
+    title: "Best Desert Safari in Dubai for Families: Kids, Safety & Top Tips",
+    slug: "best-desert-safari-in-dubai-for-families",
     excerpt:
-      "A parent's guide to family-friendly safaris: baby seat requirements, gentle dune rides, food choices, and private car options.",
+      "A parent's guide to family-friendly safaris: baby seat availability, gentle dune rides, kid-friendly camp dining, and private vehicle options.",
     author: "Sarah Jenkins",
     published_date: "2026-09-02",
     read_time: "5 min read",
     status: "published",
     featured_image:
       "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1200&auto=format&fit=crop",
-    seo_title: "Is Dubai Desert Safari Safe for Kids & Toddlers? | Family Guide",
-    seo_description: "Safety guidelines, age recommendations, and family tips for taking kids on a Dubai desert safari.",
+    seo_title: "Best Desert Safari in Dubai for Families | Kids Guide & Safety",
+    seo_description:
+      "Explore the best desert safari in Dubai for families with children and seniors. Learn about gentle dune drives, kid-friendly camp activities, and private car options.",
     content: `
-A desert safari is one of the most memorable family experiences you can have in the United Arab Emirates. However, parents with young children often have valid questions regarding vehicle safety and motion sickness.
+A desert safari is one of the most memorable family experiences you can share in the United Arab Emirates. With gentle camel rides, fascinating fire shows, and endless sand for kids to run on, children of all ages have an unforgettable time.
 
-### Age Guidelines
-- **Children aged 4 and above:** Generally love the dune bashing, camel rides, and stage shows.
-- **Infants & Toddlers (under 3 years):** Aggressive dune bashing is not recommended for infants due to sudden lateral movements. However, families with infants can either opt for a **gentle scenic dune drive** or choose a **VIP Private Safari vehicle** where our driver travels along smooth desert tracks directly to the camp.
+### Age Guidelines & Recommendations
+- **Children aged 4 and above:** Generally love the rollercoaster thrills of dune bashing, sandboarding, and stage entertainment.
+- **Toddlers and Infants (under 3 years):** High-speed dune bashing is not recommended for infants due to sudden lateral motion. However, families with toddlers can book a **gentle scenic dune drive** or our **VIP Private Safari vehicle**, where the driver drives along smooth desert trails directly to the camp.
 
-### Vehicle Safety Measures
-All our 4x4 Land Cruisers are legally certified for desert tourism:
-- Reinforced structural steel roll cages
-- Individual seatbelts for every passenger
-- Baby car seats available upon advance request
-- Professional drivers with dedicated DTCM desert license
+### Safety Standards You Can Trust
+- All Safari Dune Tours Land Cruisers feature internal roll-cages, GPS navigation, and passenger insurance.
+- Baby car seats and booster seats are available upon advance reservation request.
+- Our drivers hold DTCM commercial desert driving licenses and first-aid certification.
 
-### Child-Friendly Food at Camp
-Our 5-star international buffet includes kid-friendly choices such as grilled chicken skewers, pasta, French fries, freshly baked bread, sliced fruits, and mild lentil soups.
+### Kid-Friendly Dining at Camp
+Our evening buffet includes universally loved choices such as grilled chicken skewers, crispy potato wedges, pasta, flatbreads, and fresh fruit platters.
+    `,
+  },
+  {
+    id: "post-things-to-do",
+    title: "10 Best Things to Do in the Dubai Desert: Ultimate Adventure Guide",
+    slug: "things-to-do-in-dubai-desert",
+    excerpt:
+      "From high-octane 4x4 red dune bashing and ATV quad biking to serene camel trekking and stargazing BBQ buffets, explore the top 10 desert activities.",
+    author: "Tariq Al-Mansoor",
+    published_date: "2026-09-10",
+    read_time: "7 min read",
+    status: "published",
+    featured_image:
+      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop",
+    seo_title: "10 Best Things to Do in Dubai Desert | Safari Adventure Guide",
+    seo_description:
+      "From thrilling 4x4 red dune bashing and quad biking to camel trekking and stargazing BBQ camps, discover the top 10 things to do in the Dubai desert.",
+    content: `
+The Arabian desert surrounding Dubai is an extraordinary natural playground. Here are the 10 best activities every traveler should experience on a Dubai desert safari with Safari Dune Tours:
+
+### 1. 4x4 Red Dune Bashing
+Experience high-speed adrenaline as skilled desert marshals drift up and down the sweeping 300-foot red dunes of Lahbab in customized Land Cruisers.
+
+### 2. Sandboarding Down Giant Dunes
+Strap on a custom sandboard and glide down silky sand waves. It is safe, exhilarating, and suitable for all skill levels.
+
+### 3. Sunset Photography Over Golden Dunes
+As the late afternoon sun dips below the horizon, the sand transforms into glowing shades of amber and gold. Our drivers stop at the highest dunes for breathtaking photography.
+
+### 4. Traditional Camel Trekking
+Climb aboard the "ship of the desert" for a peaceful caravan trek across the sands, just as Bedouin nomads traveled for generations.
+
+### 5. High-Power Quad Biking & Dune Buggies
+Take control of powerful 400cc ATVs or 1000cc turbo Can-Am buggies in a dedicated open-desert track equipped with full safety gear.
+
+### 6. Henna Hand Artistry
+Adorn your hands with delicate, traditional henna floral patterns created by skilled Arabic artists at the Bedouin camp.
+
+### 7. Authentic Gahwa Coffee & Fresh Dates
+Experience true Emirati hospitality with a warm cup of cardamom-infused Arabian coffee and organic local dates upon arrival.
+
+### 8. 5-Star International BBQ Buffet Dinner
+Savor flame-grilled chicken shish taouk, lamb kofta, fresh tabbouleh, hummus, pasta, and traditional sweets under the Arabian stars.
+
+### 9. Mesmerizing Tanoura & Fire Shows
+Watch the hypnotic spinning of Sufi Tanoura dancers in LED costumes, followed by an electrifying live fire dance spectacle.
+
+### 10. Overnight Stargazing Under Quiet Desert Skies
+Extend your evening safari into an overnight campout with private tents, campfire stargazing, and a fresh sunrise breakfast.
     `,
   },
 ];

@@ -6,7 +6,7 @@ import ReviewModal from "@/components/reviews/ReviewModal";
 import CTASection from "@/components/home/CTASection";
 
 export const metadata: Metadata = {
-  title: "Guest Reviews & Experiences | DubaiSafariDesert",
+  title: "Guest Reviews & Experiences | Safari Dune",
   description:
     "Read genuine reviews and testimonials from guests who experienced our Dubai desert safaris. Verified guest feedback on dune bashing, camel rides, and camps.",
   alternates: {
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
 };
 
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 export default async function ReviewsPage() {
   const reviews = await getApprovedReviews();
@@ -29,7 +29,7 @@ export default async function ReviewsPage() {
             <span>Traveler Experiences</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white max-w-3xl mx-auto">
-            Dubai Safari Desert Reviews
+            Safari Dune Reviews
           </h1>
           <p className="mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
             Read what our travelers have to say about our desert safaris, licensed drivers, and Arabian hospitality.
@@ -41,12 +41,12 @@ export default async function ReviewsPage() {
         </div>
       </section>
 
-      {/* Moderation Policy Notice */}
+      {/* Community Authenticity Notice */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
         <div className="p-4 rounded-xl bg-amber-50 border border-amber-200/70 text-xs text-amber-900 flex items-start gap-3">
           <ShieldAlert className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
           <div>
-            <span className="font-bold">Authenticity & Moderation Notice:</span> Reviews marked with a &ldquo;Demo Preview&rdquo; badge are sample testimonials for website demonstration. Real submitted guest reviews are held in pending status until reviewed by our administration team to ensure spam-free, authentic community feedback.
+            <span className="font-bold">Verified Guest Reviews:</span> Submitted guest feedback is displayed directly to help travelers choose their ideal desert safari experience.
           </div>
         </div>
       </section>

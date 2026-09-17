@@ -1,21 +1,29 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import AppShell from "@/components/layout/AppShell";
 import { ThemeProvider } from "@/components/common/ThemeProvider";
 import StoreProvider from "@/lib/redux/StoreProvider";
 import { SITE_CONFIG } from "@/lib/config/site";
 
-const fontSans = Plus_Jakarta_Sans({
+const fontHeading = Playfair_Display({
   subsets: ["latin"],
-  weight: ["400", "600", "700", "800"],
+  weight: ["500", "600", "700", "800"],
   display: "swap",
   preload: true,
-  variable: "--font-sans",
+  variable: "--font-playfair",
+});
+
+const fontSans = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  preload: true,
+  variable: "--font-inter",
 });
 
 export const viewport: Viewport = {
-  themeColor: "#0B0F17",
+  themeColor: "#17120D",
   width: "device-width",
   initialScale: 1,
 };
@@ -92,26 +100,51 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Structured Data (JSON-LD) for LocalBusiness & TouristAttraction
+  // Structured Data (JSON-LD) for Organization, WebSite, TravelAgency & TouristAttraction
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "TouristAttraction",
-        "@id": `${SITE_CONFIG.url}#attraction`,
-        name: "Dubai Desert Safari",
-        description: SITE_CONFIG.description,
+        "@type": "Organization",
+        "@id": `${SITE_CONFIG.url}#organization`,
+        name: SITE_CONFIG.name,
+        legalName: SITE_CONFIG.legalName,
         url: SITE_CONFIG.url,
-        touristType: ["Adventure Tourism", "Cultural Tourism", "Family Friendly"],
+        logo: `${SITE_CONFIG.url}/icon.svg`,
+        description: SITE_CONFIG.description,
+        contactPoint: {
+          "@type": "ContactPoint",
+          telephone: SITE_CONFIG.contact.phone,
+          contactType: "customer service",
+          areaServed: "AE",
+          availableLanguage: ["English", "Arabic"],
+        },
+        sameAs: [
+          SITE_CONFIG.social.instagram,
+          SITE_CONFIG.social.facebook,
+        ],
       },
       {
-        "@type": "LocalBusiness",
+        "@type": "WebSite",
+        "@id": `${SITE_CONFIG.url}#website`,
+        url: SITE_CONFIG.url,
+        name: SITE_CONFIG.name,
+        description: SITE_CONFIG.description,
+        publisher: {
+          "@id": `${SITE_CONFIG.url}#organization`,
+        },
+      },
+      {
+        "@type": ["TravelAgency", "LocalBusiness"],
         "@id": `${SITE_CONFIG.url}#business`,
-        name: SITE_CONFIG.legalName,
+        name: SITE_CONFIG.name,
+        legalName: SITE_CONFIG.legalName,
         url: SITE_CONFIG.url,
         telephone: SITE_CONFIG.contact.phone,
-        email: SITE_CONFIG.contact.email,
+        ...(SITE_CONFIG.contact.email ? { email: SITE_CONFIG.contact.email } : {}),
         priceRange: "AED 130 - AED 950",
+        currenciesAccepted: "AED, USD, EUR, GBP",
+        paymentAccepted: "Cash, Credit Card, Debit Card, Online Payment Link",
         address: {
           "@type": "PostalAddress",
           streetAddress: "Downtown Dubai, Sheikh Mohammed bin Rashid Blvd",
@@ -140,11 +173,19 @@ export default function RootLayout({
           closes: "23:00",
         },
       },
+      {
+        "@type": "TouristAttraction",
+        "@id": `${SITE_CONFIG.url}#attraction`,
+        name: "Safari Dune Tours - Dubai Desert Safari Adventures",
+        description: SITE_CONFIG.description,
+        url: SITE_CONFIG.url,
+        touristType: ["Adventure Tourism", "Cultural Tourism", "Family Friendly"],
+      },
     ],
   };
 
   return (
-    <html lang="en" className={`${fontSans.variable} scroll-smooth`} suppressHydrationWarning>
+    <html lang="en" className={`${fontSans.variable} ${fontHeading.variable} scroll-smooth`} suppressHydrationWarning>
       <head>
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="shortcut icon" href="/icon.svg" type="image/svg+xml" />
@@ -159,7 +200,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-screen flex flex-col bg-[var(--bg-page)] text-[var(--text-main)] font-sans antialiased selection:bg-amber-500 selection:text-slate-950 transition-colors duration-200">
+      <body className="min-h-screen flex flex-col bg-[var(--bg-page)] text-[var(--text-main)] font-sans antialiased selection:bg-[#C89B3C] selection:text-[#17120D] transition-colors duration-200">
         <StoreProvider>
           <ThemeProvider>
             <AppShell>{children}</AppShell>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { Search, SlidersHorizontal, ArrowUpDown } from "lucide-react";
+import { Search, ArrowUpDown } from "lucide-react";
 import { Package } from "@/types";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import {
@@ -55,39 +55,38 @@ export default function PackagesCatalogFilter({
         if (sortBy === "price-asc") return a.price - b.price;
         if (sortBy === "price-desc") return b.price - a.price;
         if (sortBy === "rating") return (b.featured ? 1 : 0) - (a.featured ? 1 : 0);
-        // Default "featured"
         return (b.featured ? 1 : 0) - (a.featured ? 1 : 0);
       });
   }, [allPackages, searchQuery, selectedDuration, sortBy]);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       {/* Search & Filter Toolbar */}
-      <div className="bg-white dark:bg-[#0F1624] p-4 sm:p-6 rounded-2xl border border-amber-900/10 dark:border-white/10 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="bg-white dark:bg-[#241A12] p-5 sm:p-7 rounded-2xl border border-[#C89B3C]/20 shadow-md flex flex-col md:flex-row items-center justify-between gap-5 transition-colors duration-200">
         {/* Search Bar */}
-        <div className="relative w-full md:w-80">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+        <div className="relative w-full md:w-88">
+          <Search className="w-4 h-4 text-[#C89B3C] absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => dispatch(setSearchQuery(e.target.value))}
-            placeholder="Search tours, BBQ, camel rides..."
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/60 text-slate-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all"
+            placeholder="Search safaris, BBQ, camel rides, quad..."
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-[#C89B3C]/20 bg-[#FBF7F0]/60 dark:bg-[#17120D]/60 text-[#17120D] dark:text-[#FBF7F0] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#C89B3C] focus:border-[#C89B3C] transition-all"
           />
         </div>
 
         {/* Duration Tags & Sort Dropdown */}
         <div className="w-full md:w-auto flex flex-wrap items-center justify-between md:justify-end gap-3">
           {/* Duration Filters */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0">
             {durations.map((dur) => (
               <button
                 key={dur}
                 onClick={() => dispatch(setSelectedDuration(dur))}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
                   selectedDuration === dur
-                    ? "bg-amber-500 text-slate-950 font-bold shadow-sm"
-                    : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
+                    ? "bg-[#C89B3C] text-[#17120D] font-bold shadow-sm"
+                    : "bg-[#F2E8D5] dark:bg-[#17120D] text-[#6B6258] dark:text-[#B8ADA2] hover:text-[#17120D] dark:hover:text-white"
                 }`}
               >
                 {dur === "all" ? "All Durations" : dur}
@@ -97,11 +96,11 @@ export default function PackagesCatalogFilter({
 
           {/* Sort By Dropdown */}
           <div className="flex items-center gap-1.5 ml-auto md:ml-0">
-            <ArrowUpDown className="w-3.5 h-3.5 text-slate-400" />
+            <ArrowUpDown className="w-3.5 h-3.5 text-[#C89B3C]" />
             <select
               value={sortBy}
               onChange={(e) => dispatch(setSortBy(e.target.value as any))}
-              className="text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-amber-500 cursor-pointer"
+              className="text-xs font-semibold bg-[#F2E8D5] dark:bg-[#17120D] text-[#17120D] dark:text-[#FBF7F0] border border-[#C89B3C]/20 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-[#C89B3C] cursor-pointer"
             >
               <option value="featured">Featured First</option>
               <option value="price-asc">Price: Low to High</option>
@@ -112,9 +111,9 @@ export default function PackagesCatalogFilter({
       </div>
 
       {/* Package Results Count */}
-      <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 px-1">
+      <div className="flex items-center justify-between text-xs text-[#6B6258] dark:text-[#B8ADA2] px-1">
         <span>
-          Showing <strong>{filteredPackages.length}</strong> safari adventure
+          Showing <strong>{filteredPackages.length}</strong> luxury safari tour
           {filteredPackages.length !== 1 ? "s" : ""}
         </span>
         {(searchQuery || selectedDuration !== "all") && (
@@ -123,7 +122,7 @@ export default function PackagesCatalogFilter({
               dispatch(setSearchQuery(""));
               dispatch(setSelectedDuration("all"));
             }}
-            className="text-amber-600 dark:text-amber-400 hover:underline font-semibold"
+            className="text-[#C89B3C] hover:underline font-semibold"
           >
             Reset filters
           </button>
@@ -138,21 +137,21 @@ export default function PackagesCatalogFilter({
           ))}
         </div>
       ) : (
-        <div className="text-center py-16 bg-white dark:bg-[#0F1624] rounded-3xl border border-slate-200 dark:border-slate-800 p-8">
-          <p className="text-base font-bold text-slate-800 dark:text-white">
-            No safari packages found matching your criteria.
+        <div className="text-center py-20 bg-white dark:bg-[#241A12] rounded-3xl border border-[#C89B3C]/20 p-8 shadow-sm">
+          <p className="font-heading text-xl font-bold text-[#17120D] dark:text-[#FBF7F0]">
+            No safari packages match your current search.
           </p>
-          <p className="text-xs text-slate-500 mt-1">
-            Try adjusting your search query or selecting "All Durations".
+          <p className="text-xs text-[#6B6258] dark:text-[#B8ADA2] mt-2">
+            Try adjusting your search keywords or resetting duration filters.
           </p>
           <button
             onClick={() => {
               dispatch(setSearchQuery(""));
               dispatch(setSelectedDuration("all"));
             }}
-            className="mt-4 px-4 py-2 rounded-xl bg-amber-500 text-slate-950 text-xs font-bold uppercase tracking-wider"
+            className="btn-gold mt-6 px-6 py-2.5 text-xs uppercase tracking-wider font-bold"
           >
-            Show All Packages
+            Show All Safari Tours
           </button>
         </div>
       )}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Star, X, Send, Loader2, CheckCircle2, ShieldAlert } from "lucide-react";
@@ -9,6 +10,7 @@ import { useAppDispatch } from "@/lib/redux/hooks";
 import { submitReview } from "@/lib/redux/slices/reviewsSlice";
 
 export default function ReviewModal() {
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -38,6 +40,7 @@ export default function ReviewModal() {
       if (submitReview.fulfilled.match(actionResult)) {
         setSubmitted(true);
         reset();
+        router.refresh();
       } else if (submitReview.rejected.match(actionResult)) {
         setErrorMessage(actionResult.payload || "Submission failed. Please try again.");
       }
@@ -50,6 +53,7 @@ export default function ReviewModal() {
     setIsOpen(false);
     setSubmitted(false);
     setErrorMessage(null);
+    router.refresh();
   };
 
   return (
@@ -84,9 +88,9 @@ export default function ReviewModal() {
                 <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900">Review Submitted!</h3>
+                <h3 className="text-2xl font-bold text-slate-900">Review Published!</h3>
                 <p className="text-sm text-slate-600 max-w-sm mx-auto">
-                  Thank you for your feedback. In accordance with our moderation policy, all guest reviews are reviewed by our team before publication.
+                  Thank you for your feedback! Your review is now live on our website.
                 </p>
                 <button
                   type="button"

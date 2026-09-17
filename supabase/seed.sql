@@ -7,14 +7,14 @@ INSERT INTO public.site_settings (
   business_name, phone, whatsapp, email, address, google_maps_url,
   instagram_url, facebook_url, support_hours, footer_description
 ) VALUES (
-  'DubaiSafariDesert',
+  'Safari Dune',
   '+971 50 123 4567',
   '+971 50 123 4567',
-  'info@dubaisafaridesert.com',
+  '',
   'Sheikh Mohammed bin Rashid Blvd, Downtown Dubai, UAE',
   'https://maps.google.com/?q=Dubai+Desert+Safari',
-  'https://instagram.com/dubaisafaridesert',
-  'https://facebook.com/dubaisafaridesert',
+  'https://instagram.com/safaridunetours',
+  'https://facebook.com/safaridunetours',
   'Open Daily: 08:00 AM – 11:00 PM (GST)',
   'Premier Dubai desert safari company offering authentic Arabian adventures, red dune bashing, luxury camps, and unforgettable Bedouin hospitality.'
 ) ON CONFLICT DO NOTHING;

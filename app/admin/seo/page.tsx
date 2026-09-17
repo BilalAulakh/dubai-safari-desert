@@ -12,7 +12,7 @@ export default function AdminSEOPage() {
     },
     {
       page: "Safari Packages (/packages)",
-      title: "Dubai Desert Safari Packages & Tour Prices | DubaiSafariDesert",
+      title: "Dubai Desert Safari Packages & Tour Prices | Safari Dune",
       description: "Explore evening BBQ dinners, morning sunrise safaris, overnight camps, and VIP private safaris.",
       canonical: `${SITE_CONFIG.url}/packages`,
     },
@@ -24,7 +24,7 @@ export default function AdminSEOPage() {
     },
     {
       page: "Travel Blog (/blog)",
-      title: "Dubai Desert Safari Guides & Travel Blog | DubaiSafariDesert",
+      title: "Dubai Desert Safari Guides & Travel Blog | Safari Dune",
       description: "Expert travel advice, desert weather guides, packing tips, and comparison articles.",
       canonical: `${SITE_CONFIG.url}/blog`,
     },

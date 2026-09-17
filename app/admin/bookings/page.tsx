@@ -349,7 +349,7 @@ export default function AdminBookingsPage() {
                 <a
                   href={createWhatsAppUrl(
                     selectedBooking.phone,
-                    `Hello ${selectedBooking.customer_name}, this is DubaiSafariDesert following up on your booking request (${selectedBooking.booking_reference}).`
+                    `Hello ${selectedBooking.customer_name}, this is Safari Dune following up on your booking request (${selectedBooking.booking_reference}).`
                   )}
                   target="_blank"
                   rel="noopener noreferrer"

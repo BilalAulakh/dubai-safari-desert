@@ -13,6 +13,7 @@ import {
   Eye,
 } from "lucide-react";
 import ImageUpload from "@/components/admin/ImageUpload";
+import api from "@/lib/axios";
 
 export default function CreatePackagePage() {
   const router = useRouter();
@@ -85,17 +86,7 @@ export default function CreatePackagePage() {
     };
 
     try {
-      const res = await fetch("/api/admin/packages", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      if (!res.ok) {
-        throw new Error("Failed to save package");
-      }
-
-      const data = await res.json();
+      const { data } = await api.post("/api/admin/packages", payload);
 
       // Also persist in localStorage so client state sees it across all pages
       if (typeof window !== "undefined") {
@@ -144,7 +135,7 @@ export default function CreatePackagePage() {
                 Create New Safari Package
               </h1>
               <p className="text-xs text-amber-100">
-                Fill in the details below to add a new tour to DubaiSafariDesert
+                Fill in the details below to add a new tour to Safari Dune
               </p>
             </div>
           </div>

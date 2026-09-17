@@ -76,7 +76,7 @@ export const initialPackages: Package[] = [
     ],
     pickup_info: "Pickups available from all hotels, apartments, and residences in Dubai, Sharjah, and Ajman.",
     cancellation_policy: "Free cancellation up to 24 hours before safari departure. 100% refund guaranteed.",
-    seo_title: "Evening Desert Safari Dubai with BBQ Dinner | DubaiSafariDesert",
+    seo_title: "Evening Desert Safari Dubai with BBQ Dinner | Safari Dune",
     seo_description: "Book the best evening desert safari in Dubai with dune bashing, camel riding, BBQ dinner buffet, and live Arabian shows. Free hotel pickup and drop-off.",
   },
   {
@@ -331,7 +331,7 @@ export const initialPackages: Package[] = [
     ],
     pickup_info: "Doorstep pickup available across all major Dubai areas.",
     cancellation_policy: "Free cancellation up to 24 hours before tour start.",
-    seo_title: "Quad Biking & Dune Buggy Desert Safari Dubai | DubaiSafariDesert",
+    seo_title: "Quad Biking & Dune Buggy Desert Safari Dubai | Safari Dune",
     seo_description: "Ride powerful ATVs and dune buggies on Dubai desert red dunes. Includes safety gear, dune bashing, camel ride, and BBQ dinner show.",
   },
 ];

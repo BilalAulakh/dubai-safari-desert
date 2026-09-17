@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Star, MessageSquarePlus, ShieldAlert } from "lucide-react";
+import { Star, MessageSquarePlus, ShieldAlert, Sparkles } from "lucide-react";
 import { Review } from "@/types";
 import { formatDate } from "@/lib/utils";
 
@@ -11,70 +11,76 @@ export default function HomeReviews({ reviews }: HomeReviewsProps) {
   const displayReviews = reviews.slice(0, 3);
 
   return (
-    <section className="py-20 bg-[#FCFBF8]">
+    <section className="py-20 sm:py-28 bg-[#FBF7F0] dark:bg-[#17120D] transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">
           <div>
-            <span className="text-xs font-bold uppercase tracking-widest text-amber-700">
-              Guest Feedback & Experiences
-            </span>
-            <h2 className="mt-2 text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#C89B3C]/15 border border-[#C89B3C]/30 text-[#C89B3C] dark:text-[#E8C48A] text-xs font-semibold uppercase tracking-wider mb-3">
+              <Sparkles className="w-3.5 h-3.5 text-[#C89B3C]" />
+              <span>Guest Experiences</span>
+            </div>
+            <h2 className="font-heading text-2xl sm:text-3xl lg:text-[36px] font-bold text-[#17120D] dark:text-[#FBF7F0] tracking-tight leading-[1.15]">
               What Travelers Say About Our Safaris
             </h2>
-            <div className="mt-2 flex items-center gap-2 text-xs text-slate-500">
-              <ShieldAlert className="w-3.5 h-3.5 text-amber-600" />
-              <span>Reviews shown with demo tags reflect sample traveler testimonials.</span>
+            <div className="mt-3 flex items-center gap-2 text-xs text-[#6B6258] dark:text-[#B8ADA2]">
+              <ShieldAlert className="w-4 h-4 text-[#C89B3C] shrink-0" />
+              <span>Sample guest testimonials displayed. Verified reviews are updated dynamically.</span>
             </div>
           </div>
 
-          <div className="mt-4 md:mt-0 flex items-center gap-3">
+          <div className="flex items-center gap-3 shrink-0">
             <Link
               href="/reviews"
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-lg bg-white border border-slate-300 text-slate-700 hover:text-slate-900 hover:bg-slate-50 text-xs font-bold uppercase tracking-wider transition-colors shadow-sm"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white dark:bg-[#241A12] border border-[#C89B3C]/30 text-[#17120D] dark:text-[#FBF7F0] hover:border-[#C89B3C] hover:bg-[#C89B3C]/10 text-xs font-bold uppercase tracking-wider transition-all shadow-sm"
             >
-              <MessageSquarePlus className="w-4 h-4 text-amber-600" />
+              <MessageSquarePlus className="w-4 h-4 text-[#C89B3C]" />
               <span>Leave a Review</span>
             </Link>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
           {displayReviews.map((rev) => (
             <div
               key={rev.id}
-              className="p-6 rounded-2xl bg-white border border-amber-900/10 shadow-sm flex flex-col justify-between"
+              className="p-7 sm:p-8 rounded-2xl bg-white dark:bg-[#241A12] border border-[#C89B3C]/20 shadow-sm hover:border-[#C89B3C]/50 hover:shadow-xl transition-all duration-300 flex flex-col justify-between hover:-translate-y-1"
             >
               <div>
                 {/* Rating Stars */}
-                <div className="flex items-center gap-1 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`w-4 h-4 ${
-                        i < rev.rating
-                          ? "text-amber-500 fill-amber-500"
-                          : "text-slate-200"
-                      }`}
-                    />
-                  ))}
+                <div className="flex items-center justify-between gap-1 mb-5">
+                  <div className="flex items-center gap-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className={`w-4 h-4 ${
+                          i < rev.rating
+                            ? "text-[#C89B3C] fill-[#C89B3C]"
+                            : "text-slate-200 dark:text-white/10"
+                        }`}
+                      />
+                    ))}
+                  </div>
+
                   {rev.is_demo && (
-                    <span className="ml-2 text-[10px] px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200/60 font-medium">
+                    <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-[#C89B3C]/10 text-[#C89B3C] border border-[#C89B3C]/25 font-semibold">
                       Demo Preview
                     </span>
                   )}
                 </div>
 
-                <p className="text-sm text-slate-700 italic leading-relaxed mb-6">
+                <p className="text-sm sm:text-base text-[#17120D]/85 dark:text-[#FBF7F0]/85 italic leading-relaxed mb-6 font-serif">
                   &ldquo;{rev.comment}&rdquo;
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+              <div className="pt-4 border-t border-[#C89B3C]/15 dark:border-white/10 flex items-center justify-between">
                 <div>
-                  <h4 className="text-sm font-bold text-slate-900">{rev.customer_name}</h4>
-                  <p className="text-xs text-slate-500">{rev.country}</p>
+                  <h4 className="font-heading text-base font-bold text-[#17120D] dark:text-[#FBF7F0]">
+                    {rev.customer_name}
+                  </h4>
+                  <p className="text-xs text-[#6B6258] dark:text-[#B8ADA2]">{rev.country}</p>
                 </div>
-                <span className="text-[11px] text-slate-400">
+                <span className="text-[11px] text-[#6B6258] dark:text-[#B8ADA2]">
                   {formatDate(rev.created_at)}
                 </span>
               </div>

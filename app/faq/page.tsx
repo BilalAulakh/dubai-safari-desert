@@ -9,9 +9,9 @@ import CTASection from "@/components/home/CTASection";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Dubai Desert Safari FAQ | Timing, Clothing, Pickup & Safety",
+  title: "Dubai Desert Safari FAQ | Safari Dune Tours",
   description:
-    "Find immediate answers to questions regarding Dubai desert safari pickup locations, clothing advice, child safety, vegetarian food menus, and cancellation policies.",
+    "Find immediate answers to questions regarding Dubai desert safari inclusions, clothing advice, child safety, pickup timing, payment methods, and cancellation policies.",
   alternates: {
     canonical: "/faq",
   },
@@ -22,7 +22,7 @@ export default async function FAQPage() {
 
   const whatsappUrl = createWhatsAppUrl(
     SITE_CONFIG.contact.whatsapp,
-    "Hello DubaiSafariDesert, I have a question about desert safari tours."
+    "Hello Safari Dune Tours, I have a question about desert safari tours."
   );
 
   // Structured Data (JSON-LD) for FAQPage rich snippet

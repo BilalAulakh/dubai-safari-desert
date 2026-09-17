@@ -20,7 +20,7 @@ interface ConfirmationPageProps {
 }
 
 export const metadata: Metadata = {
-  title: "Booking Request Received | DubaiSafariDesert",
+  title: "Booking Request Received | Safari Dune",
   description: "Your desert safari booking request has been received by our reservation team.",
 };
 
@@ -56,7 +56,7 @@ export default async function BookingConfirmationPage({ params }: ConfirmationPa
           </h1>
 
           <p className="mt-3 text-base text-slate-600 max-w-xl mx-auto leading-relaxed">
-            Thank you for choosing <strong>DubaiSafariDesert</strong>. Your booking request has been received. Our team will contact you shortly to confirm availability and final details.
+            Thank you for choosing <strong>Safari Dune</strong>. Your booking request has been received. Our team will contact you shortly to confirm availability and final details.
           </p>
 
           {/* Reference Badge */}

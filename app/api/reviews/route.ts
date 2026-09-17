@@ -1,6 +1,20 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { reviewSchema } from "@/lib/validations/review";
-import { createReview } from "@/lib/data/store";
+import { createReview, getAllReviews } from "@/lib/data/store";
+
+export async function GET() {
+  try {
+    const reviews = await getAllReviews();
+    return NextResponse.json({ success: true, reviews });
+  } catch (error) {
+    console.error("Fetch reviews error:", error);
+    return NextResponse.json(
+      { success: false, message: "Failed to fetch reviews." },
+      { status: 500 }
+    );
+  }
+}
 
 export async function POST(request: Request) {
   try {
@@ -31,9 +45,14 @@ export async function POST(request: Request) {
       is_demo: false,
     });
 
+    try {
+      revalidatePath("/reviews");
+      revalidatePath("/");
+    } catch {}
+
     return NextResponse.json({
       success: true,
-      message: "Thank you! Your review has been submitted for moderation and will be published once approved by our team.",
+      message: "Thank you! Your review has been published.",
       review,
     });
   } catch (error) {

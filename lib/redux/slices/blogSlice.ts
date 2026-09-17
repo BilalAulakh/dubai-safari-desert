@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { BlogPost, Comment, CommentStatus } from "@/types";
 import { initialBlogPosts } from "@/lib/data/blogPosts";
 import { CommentFormData } from "@/lib/validations/comment";
+import api from "@/lib/axios";
 
 export interface BlogState {
   posts: BlogPost[];
@@ -24,13 +25,8 @@ export const submitComment = createAsyncThunk<
   { rejectValue: string }
 >("blog/submitComment", async ({ postId, data }, { rejectWithValue }) => {
   try {
-    const res = await fetch("/api/comments", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...data, post_id: postId }),
-    });
-    const json = await res.json();
-    if (!res.ok || !json.success) {
+    const { data: json } = await api.post("/api/comments", { ...data, post_id: postId });
+    if (!json.success) {
       throw new Error(json.message || "Failed to submit comment");
     }
     const newComment: Comment = json.comment || {
@@ -44,7 +40,9 @@ export const submitComment = createAsyncThunk<
     };
     return newComment;
   } catch (err: any) {
-    return rejectWithValue(err.message || "Failed to post comment");
+    return rejectWithValue(
+      err.response?.data?.message || err.message || "Failed to post comment"
+    );
   }
 });
 

@@ -375,17 +375,21 @@ export async function getApprovedReviews(): Promise<Review[]> {
         .order("created_at", { ascending: false });
 
       if (!error && data && data.length > 0) {
-        return data.map((r: any) => ({
+        const dbReviews: Review[] = data.map((r: any) => ({
           id: r.id,
           customer_name: r.customer_name || "Safari Guest",
           country: r.country || "International Guest",
           rating: Number(r.rating) || 5,
           comment: r.comment || "",
-          status: r.status || "approved",
+          status: (r.status as ReviewStatus) || "approved",
           featured: Boolean(r.featured),
           created_at: r.created_at || new Date().toISOString(),
           is_demo: false,
         }));
+
+        // Include initial demo reviews alongside user reviews
+        const demoReviews = fallbackReviews.filter((r) => r.is_demo);
+        return [...dbReviews, ...demoReviews];
       }
     }
   } catch {}
@@ -404,17 +408,19 @@ export async function getAllReviews(): Promise<Review[]> {
         .order("created_at", { ascending: false });
 
       if (!error && data && data.length > 0) {
-        return data.map((r: any) => ({
+        const dbReviews: Review[] = data.map((r: any) => ({
           id: r.id,
           customer_name: r.customer_name || "Safari Guest",
           country: r.country || "International Guest",
           rating: Number(r.rating) || 5,
           comment: r.comment || "",
-          status: r.status || "pending",
+          status: (r.status as ReviewStatus) || "approved",
           featured: Boolean(r.featured),
           created_at: r.created_at || new Date().toISOString(),
           is_demo: false,
         }));
+        const demoReviews = fallbackReviews.filter((r) => r.is_demo);
+        return [...dbReviews, ...demoReviews];
       }
     }
   } catch {}
@@ -427,9 +433,36 @@ export async function createReview(data: Omit<Review, "id" | "created_at" | "sta
   const newReview: Review = {
     ...data,
     id: `rev-${Date.now()}`,
-    status: "pending", // Always pending by default per prompt
+    status: "approved", // Auto-approved so review appears immediately
     created_at: new Date().toISOString(),
+    is_demo: false,
   };
+
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const { data: inserted, error } = await supabase
+        .from("reviews")
+        .insert({
+          customer_name: data.customer_name,
+          country: data.country,
+          email: data.email || null,
+          rating: data.rating,
+          comment: data.comment,
+          status: "approved",
+          featured: false,
+        })
+        .select()
+        .single();
+
+      if (!error && inserted) {
+        newReview.id = inserted.id;
+      }
+    }
+  } catch (err) {
+    console.error("Supabase insert review error:", err);
+  }
+
   fallbackReviews.unshift(newReview);
   return newReview;
 }
@@ -439,6 +472,17 @@ export async function updateReviewStatus(
   status: ReviewStatus,
   featured?: boolean
 ): Promise<Review | null> {
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const updates: any = { status };
+      if (featured !== undefined) updates.featured = featured;
+      await supabase.from("reviews").update(updates).eq("id", id);
+    }
+  } catch (err) {
+    console.error("Supabase update review error:", err);
+  }
+
   const review = fallbackReviews.find((r) => r.id === id);
   if (!review) return null;
   review.status = status;
@@ -447,12 +491,21 @@ export async function updateReviewStatus(
 }
 
 export async function deleteReview(id: string): Promise<boolean> {
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      await supabase.from("reviews").delete().eq("id", id);
+    }
+  } catch (err) {
+    console.error("Supabase delete review error:", err);
+  }
+
   const index = fallbackReviews.findIndex((r) => r.id === id);
   if (index !== -1) {
     fallbackReviews.splice(index, 1);
     return true;
   }
-  return false;
+  return true;
 }
 
 // --- BLOG POSTS ---

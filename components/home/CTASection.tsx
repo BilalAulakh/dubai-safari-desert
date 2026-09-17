@@ -1,58 +1,64 @@
 import Link from "next/link";
-import { MessageCircle, Phone, CalendarCheck } from "lucide-react";
+import { MessageCircle, Phone, CalendarCheck, Sparkles } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config/site";
 import { createWhatsAppUrl } from "@/lib/utils";
 
 export default function CTASection() {
   const whatsappUrl = createWhatsAppUrl(
     SITE_CONFIG.contact.whatsapp,
-    "Hello DubaiSafariDesert, I would like to book a desert safari tour."
+    "Hello Safari Dune, I would like to book a desert safari tour."
   );
 
   return (
-    <section className="relative py-16 sm:py-20 bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 text-slate-950 overflow-hidden">
-      {/* Background Accent Gradients */}
-      <div className="absolute inset-0 opacity-15 pointer-events-none bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-yellow-300 via-transparent to-transparent" />
+    <section className="relative py-20 sm:py-28 bg-[#F2E8D5] dark:bg-[#17120D] text-[#17120D] dark:text-white overflow-hidden border-t border-[#C89B3C]/20 transition-colors duration-300">
+      {/* Background Subtle Desert Dunes Glow & Ambient Gradient */}
+      <div className="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#C89B3C] via-[#241A12] to-[#17120D]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-[#241A12] via-transparent to-transparent opacity-60 pointer-events-none" />
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-slate-950/20 text-slate-950 text-xs font-bold uppercase tracking-wider mb-4">
-          <CalendarCheck className="w-4 h-4" />
-          <span>Instant Availability Check</span>
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#C89B3C]/15 border border-[#C89B3C]/35 text-[#8C6214] dark:text-[#E8C48A] text-xs font-semibold uppercase tracking-wider mb-5">
+          <CalendarCheck className="w-3.5 h-3.5 text-[#C89B3C]" />
+          <span>Instant Availability & Free 24h Cancellation</span>
         </div>
 
-        <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white max-w-3xl mx-auto leading-tight">
-          Ready for the Ultimate Dubai Desert Adventure?
+        <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-bold tracking-tight text-[#17120D] dark:text-white max-w-3xl mx-auto leading-[1.15]">
+          Ready for Your Dubai Desert Adventure?
         </h2>
 
-        <p className="mt-4 text-base sm:text-lg text-amber-100 max-w-2xl mx-auto">
-          Reserve your safari today with zero advance payment requirements. Experience red dune bashing, breathtaking sunsets, and Arabian hospitality.
+        <p className="mt-3 text-sm sm:text-base text-[#55493D] dark:text-[#FBF7F0]/85 max-w-2xl mx-auto leading-relaxed">
+          Reserve your safari today with zero advance payment requirements. Experience red dune bashing, breathtaking sunsets, and genuine Arabian hospitality.
         </p>
 
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3.5">
           <Link
             href="/booking"
-            className="w-full sm:w-auto px-8 py-4 rounded-xl bg-slate-950 text-amber-400 font-extrabold text-sm uppercase tracking-wider shadow-2xl hover:bg-slate-900 transition-all hover:scale-105 active:scale-95"
+            className="btn-gold w-full sm:w-auto px-7 py-3 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-xl shadow-xl transition-all hover:scale-105 active:scale-95"
             id="cta-book-safari-now"
           >
-            Book Your Safari Now
+            Book Your Safari Today
           </Link>
 
           <a
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-emerald-600 text-white font-bold text-sm uppercase tracking-wider shadow-lg hover:bg-emerald-500 transition-all hover:scale-105 active:scale-95"
+            className="btn-whatsapp w-full sm:w-auto px-6 py-3 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-xl shadow-lg transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-2"
           >
-            <MessageCircle className="w-5 h-5" />
-            <span>Chat on WhatsApp</span>
+            <MessageCircle className="w-4 h-4" />
+            <span>WhatsApp Us Now</span>
           </a>
 
           <a
-            href={`tel:${SITE_CONFIG.contact.phone.replace(/[^0-9+]/g, "")}`}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-white/20 text-white font-semibold text-sm hover:bg-white/30 transition-colors"
+            href={createWhatsAppUrl(
+              SITE_CONFIG.contact.whatsapp,
+              SITE_CONFIG.whatsappTemplates.freeQuote
+            )}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-luxury-outline w-full sm:w-auto px-6 py-3 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-xl !bg-white/90 dark:!bg-white/5 !text-[#17120D] dark:!text-white border-[#C89B3C]/50 hover:border-[#C89B3C] transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-2"
           >
-            <Phone className="w-4 h-4" />
-            <span>Call: {SITE_CONFIG.contact.phone}</span>
+            <Sparkles className="w-4 h-4 text-[#C89B3C]" />
+            <span>Get a Free Quote</span>
           </a>
         </div>
       </div>

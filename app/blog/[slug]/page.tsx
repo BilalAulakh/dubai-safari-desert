@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   }
 
   return {
-    title: post.seo_title || `${post.title} | DubaiSafariDesert`,
+    title: post.seo_title || `${post.title} | Safari Dune Tours`,
     description: post.seo_description || post.excerpt,
     openGraph: {
       title: post.title,
@@ -59,8 +59,58 @@ export default async function SingleBlogPostPage({ params }: BlogPostPageProps) 
 
   const approvedComments = await getCommentsByPostId(post.id);
 
+  // Article & BreadcrumbList Structured Data
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BlogPosting",
+        headline: post.title,
+        description: post.excerpt,
+        image: post.featured_image,
+        datePublished: post.published_date,
+        author: {
+          "@type": "Person",
+          name: post.author,
+        },
+        publisher: {
+          "@type": "Organization",
+          name: "Safari Dune Tours",
+          logo: "https://safaridunetours.com/icon.svg",
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://safaridunetours.com",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Blog",
+            item: "https://safaridunetours.com/blog",
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: post.title,
+            item: `https://safaridunetours.com/blog/${post.slug}`,
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <div className="bg-[#FCFBF8] dark:bg-[#080B11] text-slate-900 dark:text-white py-12 sm:py-16 transition-colors duration-200">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Link */}
         <Link

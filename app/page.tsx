@@ -19,12 +19,14 @@ import {
 
 export const revalidate = 3600;
 
+import WhyTravelersChooseUs from "@/components/home/WhyTravelersChooseUs";
+
 export default async function HomePage() {
-  const [packages, activities, galleryItems, reviews, faqs] = await Promise.all([
+  const [packages, activities, reviews, galleryItems, faqs] = await Promise.all([
     getPackages(),
     getActivities(),
-    getGalleryItems(),
     getApprovedReviews(),
+    getGalleryItems(),
     getFAQs(),
   ]);
 
@@ -36,19 +38,22 @@ export default async function HomePage() {
       {/* 2. Featured Safari Packages */}
       <FeaturedPackages packages={packages} />
 
-      {/* 3. Why Choose DubaiSafariDesert */}
+      {/* 3. Why Choose Safari Dune Tours */}
       <WhyChooseUs />
 
       {/* 4. Safari Activities */}
       <ActivitiesShowcase activities={activities} />
 
-      {/* 5. How It Works */}
+      {/* 5. How It Works (4-Step Booking Process) */}
       <HowItWorks />
 
       {/* 6. Visual Desert Experience */}
       <DesertExperience />
 
-      {/* 7. Featured Reviews (clearly identified demo testimonials) */}
+      {/* 7. Social Proof: Why Travelers Choose Us */}
+      <WhyTravelersChooseUs />
+
+      {/* 8. Featured Reviews */}
       <HomeReviews reviews={reviews} />
 
       {/* 8. Gallery Highlights */}

@@ -158,10 +158,10 @@ CREATE TABLE IF NOT EXISTS public.gallery (
 -- 12. SITE SETTINGS
 CREATE TABLE IF NOT EXISTS public.site_settings (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  business_name TEXT NOT NULL DEFAULT 'DubaiSafariDesert',
+  business_name TEXT NOT NULL DEFAULT 'Safari Dune',
   phone TEXT NOT NULL DEFAULT '+971 50 123 4567',
   whatsapp TEXT NOT NULL DEFAULT '+971 50 123 4567',
-  email TEXT NOT NULL DEFAULT 'info@dubaisafaridesert.com',
+  email TEXT NOT NULL DEFAULT '',
   address TEXT NOT NULL DEFAULT 'Downtown Dubai, UAE',
   google_maps_url TEXT,
   instagram_url TEXT,

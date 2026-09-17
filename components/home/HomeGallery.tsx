@@ -55,88 +55,87 @@ export default function HomeGallery({ items }: HomeGalleryProps) {
       case "dune-bashing":
         return "Dune Bashing";
       case "entertainment":
-        return "Live Show";
+        return "Live Shows";
       case "camp":
         return "Bedouin Camp";
       case "food":
-        return "BBQ Feast";
+        return "BBQ Dining";
       default:
         return "Desert Safari";
     }
   };
 
   return (
-    <section className="relative py-12 sm:py-16 bg-[#F8F5EE] dark:bg-[#090D15] transition-colors duration-300 overflow-hidden">
+    <section className="relative py-20 sm:py-28 bg-[#F2E8D5] dark:bg-[#1D150E] transition-colors duration-200 overflow-hidden border-t border-[#C89B3C]/15">
       {/* Ambient Luxury Desert Glow */}
-      <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-amber-500/10 blur-[130px] rounded-full" />
+      <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#C89B3C]/10 blur-[140px] rounded-full" />
 
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Compact & Beautiful Luxury Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Luxury Header */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-amber-500/15 dark:bg-amber-500/20 border border-amber-500/30 text-amber-700 dark:text-amber-400 mb-2">
-              <Sparkles className="w-3 h-3 text-amber-500" />
-              <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#C89B3C]/15 border border-[#C89B3C]/30 text-[#C89B3C] dark:text-[#E8C48A] mb-3">
+              <Sparkles className="w-3.5 h-3.5 text-[#C89B3C]" />
+              <span className="text-xs font-semibold uppercase tracking-wider">
                 Visual Desert Portfolio
               </span>
             </div>
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+            <h2 className="font-heading text-2xl sm:text-3xl lg:text-[36px] font-bold text-[#17120D] dark:text-[#FBF7F0] tracking-tight leading-[1.15]">
               Glimpses of the <span className="gold-text-gradient">Arabian Dunes</span>
             </h2>
-            <p className="mt-1 text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-xl">
-              Real captured moments from thrilling red dune bashings to magical starlit Bedouin nights.
+            <p className="mt-2 text-sm sm:text-base text-[#6B6258] dark:text-[#B8ADA2] max-w-2xl leading-relaxed">
+              Real captured moments from thrilling red dune bashings to romantic starlit Bedouin nights.
             </p>
           </div>
 
           <Link
             href="/gallery"
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-amber-500/30 bg-white/60 dark:bg-white/5 backdrop-blur-md text-xs font-bold text-amber-700 dark:text-amber-400 hover:bg-amber-500 hover:text-slate-950 dark:hover:bg-amber-500 dark:hover:text-slate-950 transition-all duration-300 shadow-sm group shrink-0 w-fit"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-[#C89B3C]/40 bg-white/70 dark:bg-white/5 backdrop-blur-md text-xs font-bold text-[#17120D] dark:text-[#FBF7F0] hover:bg-[#C89B3C] hover:text-[#17120D] hover:border-[#C89B3C] transition-all duration-300 shadow-sm group shrink-0 w-fit"
           >
-            <Camera className="w-3.5 h-3.5" />
+            <Camera className="w-4 h-4 text-[#C89B3C] group-hover:text-[#17120D]" />
             <span>View Full Gallery</span>
-            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
 
-        {/* Beautiful Compact Image Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+        {/* Gallery Image Grid with Mixed Visual Dynamics */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
           {displayItems.map((item, index) => (
             <div
               key={item.id}
               onClick={() => openLightbox(index)}
-              className="group relative h-36 sm:h-44 md:h-48 rounded-xl overflow-hidden shadow-sm bg-slate-900 cursor-pointer border border-amber-900/10 dark:border-amber-500/20 hover:border-amber-500/60 hover:shadow-xl hover:shadow-amber-500/10 transition-all duration-500"
+              className="group relative h-44 sm:h-60 md:h-64 rounded-2xl overflow-hidden shadow-sm bg-[#17120D] cursor-pointer border border-[#C89B3C]/20 hover:border-[#C89B3C]/60 hover:shadow-2xl transition-all duration-500 hover:-translate-y-1"
             >
-              {/* Photo */}
               <img
                 src={optimizeImageUrl(item.image_url, 600)}
                 alt={item.title}
-                width={500}
-                height={350}
+                width={600}
+                height={400}
                 loading="lazy"
                 decoding="async"
                 className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
               />
 
-              {/* Floating Frosted Category Tag */}
-              <div className="absolute top-2.5 left-2.5 z-10">
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-black/65 backdrop-blur-md text-amber-300 text-[10px] font-semibold border border-white/15 shadow-sm">
-                  <Tag className="w-2.5 h-2.5 text-amber-400" />
+              {/* Category Tag */}
+              <div className="absolute top-3 left-3 z-10">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#17120D]/80 backdrop-blur-md text-[#E8C48A] text-[10px] font-semibold border border-white/10 shadow-sm">
+                  <Tag className="w-2.5 h-2.5 text-[#C89B3C]" />
                   {getCategoryLabel(item.category)}
                 </span>
               </div>
 
-              {/* Cinematic Bottom Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-3">
+              {/* Bottom Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#17120D]/95 via-[#17120D]/30 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-4">
                 <div className="flex-1 pr-2 min-w-0">
-                  <p className="text-xs font-bold text-white truncate drop-shadow group-hover:text-amber-300 transition-colors">
+                  <p className="font-heading text-sm font-bold text-white truncate group-hover:text-[#E8C48A] transition-colors">
                     {item.title}
                   </p>
-                  <p className="text-[10px] text-slate-300 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span>Click to view slider</span>
+                  <p className="text-[11px] text-[#B8ADA2] flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <span>Click to view in lightbox</span>
                   </p>
                 </div>
-                <div className="w-6 h-6 rounded-full bg-amber-500 text-slate-950 flex items-center justify-center shrink-0 shadow-md group-hover:scale-110 group-hover:bg-amber-400 transition-all duration-300">
-                  <Maximize2 className="w-3 h-3" />
+                <div className="w-8 h-8 rounded-full bg-[#C89B3C] text-[#17120D] flex items-center justify-center shrink-0 shadow-md group-hover:scale-110 group-hover:bg-[#D6A84F] transition-all duration-300">
+                  <Maximize2 className="w-4 h-4" />
                 </div>
               </div>
             </div>
@@ -149,15 +148,15 @@ export default function HomeGallery({ items }: HomeGalleryProps) {
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col justify-between p-3 sm:p-6 animate-in fade-in duration-200"
+          className="fixed inset-0 z-50 bg-[#17120D]/95 backdrop-blur-xl flex flex-col justify-between p-4 sm:p-8 animate-in fade-in duration-200"
         >
           {/* Top Control Bar */}
           <div className="flex items-center justify-between w-full max-w-5xl mx-auto z-10 pb-2">
-            <div className="flex items-center gap-2">
-              <span className="px-3 py-1 rounded-full bg-white/10 text-amber-300 text-xs font-semibold backdrop-blur-md border border-white/15">
+            <div className="flex items-center gap-3">
+              <span className="px-3.5 py-1 rounded-full bg-white/10 text-[#E8C48A] text-xs font-semibold backdrop-blur-md border border-white/15">
                 {lightboxIndex + 1} / {displayItems.length} Photos
               </span>
-              <span className="hidden sm:inline-block px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-medium border border-amber-500/30">
+              <span className="hidden sm:inline-block px-3 py-1 rounded-full bg-[#C89B3C]/20 text-[#E8C48A] text-xs font-medium border border-[#C89B3C]/30">
                 {getCategoryLabel(displayItems[lightboxIndex].category)}
               </span>
             </div>
@@ -165,7 +164,7 @@ export default function HomeGallery({ items }: HomeGalleryProps) {
             <button
               type="button"
               onClick={closeLightbox}
-              className="w-9 h-9 rounded-full bg-white/10 text-white hover:bg-white/25 flex items-center justify-center transition-colors border border-white/15"
+              className="w-10 h-10 rounded-full bg-white/10 text-white hover:bg-[#C89B3C] hover:text-[#17120D] flex items-center justify-center transition-colors border border-white/15"
               aria-label="Close image modal"
             >
               <X className="w-5 h-5" />
@@ -174,36 +173,33 @@ export default function HomeGallery({ items }: HomeGalleryProps) {
 
           {/* Center Main Slider Canvas */}
           <div className="relative max-w-5xl w-full mx-auto flex items-center justify-center flex-1 my-auto">
-            {/* Prev Button */}
             <button
               type="button"
               onClick={prevImage}
-              className="absolute left-1 sm:left-4 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/60 hover:bg-amber-500 hover:text-slate-950 text-white flex items-center justify-center transition-all border border-white/20 shadow-xl"
+              className="absolute left-1 sm:left-4 z-20 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#17120D]/80 hover:bg-[#C89B3C] hover:text-[#17120D] text-white flex items-center justify-center transition-all border border-[#C89B3C]/30 shadow-2xl"
               aria-label="Previous photo"
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
 
-            {/* Active Image */}
-            <div className="relative max-h-[62vh] sm:max-h-[68vh] w-full flex flex-col items-center justify-center px-10 sm:px-14">
-              <div className="relative max-h-[58vh] sm:max-h-[64vh] rounded-2xl overflow-hidden shadow-2xl border border-amber-500/30 ring-1 ring-white/10">
+            <div className="relative max-h-[64vh] sm:max-h-[70vh] w-full flex flex-col items-center justify-center px-12 sm:px-16">
+              <div className="relative max-h-[60vh] sm:max-h-[66vh] rounded-2xl overflow-hidden shadow-2xl border border-[#C89B3C]/30 ring-1 ring-white/10">
                 <img
                   src={displayItems[lightboxIndex].image_url}
                   alt={displayItems[lightboxIndex].title}
-                  className="max-h-[58vh] sm:max-h-[64vh] max-w-full object-contain"
+                  className="max-h-[60vh] sm:max-h-[66vh] max-w-full object-contain"
                   loading="eager"
                 />
               </div>
-              <p className="mt-3 text-white text-xs sm:text-sm font-semibold tracking-wide drop-shadow-md text-center">
+              <p className="font-heading mt-3.5 text-[#FBF7F0] text-sm sm:text-base font-semibold tracking-wide drop-shadow-md text-center">
                 {displayItems[lightboxIndex].title}
               </p>
             </div>
 
-            {/* Next Button */}
             <button
               type="button"
               onClick={nextImage}
-              className="absolute right-1 sm:right-4 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/60 hover:bg-amber-500 hover:text-slate-950 text-white flex items-center justify-center transition-all border border-white/20 shadow-xl"
+              className="absolute right-1 sm:right-4 z-20 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#17120D]/80 hover:bg-[#C89B3C] hover:text-[#17120D] text-white flex items-center justify-center transition-all border border-[#C89B3C]/30 shadow-2xl"
               aria-label="Next photo"
             >
               <ChevronRight className="w-6 h-6" />
@@ -212,16 +208,16 @@ export default function HomeGallery({ items }: HomeGalleryProps) {
 
           {/* Bottom Thumbnail Strip Slider */}
           <div className="w-full max-w-2xl mx-auto pt-2 z-10">
-            <div className="flex items-center justify-center gap-2 sm:gap-3 overflow-x-auto py-2 px-2 scrollbar-none">
+            <div className="flex items-center justify-center gap-2.5 sm:gap-3 overflow-x-auto py-2 px-2 scrollbar-none">
               {displayItems.map((item, idx) => (
                 <button
                   key={`thumb-${item.id}`}
                   type="button"
                   onClick={() => setLightboxIndex(idx)}
-                  className={`relative w-12 h-10 sm:w-16 sm:h-12 rounded-lg overflow-hidden shrink-0 transition-all duration-300 ${
+                  className={`relative w-14 h-11 sm:w-16 sm:h-12 rounded-lg overflow-hidden shrink-0 transition-all duration-300 ${
                     lightboxIndex === idx
-                      ? "ring-2 ring-amber-400 scale-110 opacity-100 shadow-xl border border-amber-300"
-                      : "opacity-40 hover:opacity-80 border border-white/20"
+                      ? "ring-2 ring-[#C89B3C] scale-110 opacity-100 shadow-xl border border-[#E8C48A]"
+                      : "opacity-40 hover:opacity-85 border border-white/20"
                   }`}
                   aria-label={`Jump to image ${idx + 1}`}
                 >
@@ -241,5 +237,3 @@ export default function HomeGallery({ items }: HomeGalleryProps) {
     </section>
   );
 }
-
-

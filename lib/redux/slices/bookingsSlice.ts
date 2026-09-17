@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { Booking, BookingStatus } from "@/types";
 import { BookingFormData } from "@/lib/validations/booking";
+import api from "@/lib/axios";
 
 export interface BookingsState {
   items: Booking[];
@@ -73,13 +74,8 @@ export const submitBookingRequest = createAsyncThunk<
   { rejectValue: string }
 >("bookings/submitBookingRequest", async (formData, { rejectWithValue }) => {
   try {
-    const res = await fetch("/api/bookings", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
-    const result = await res.json();
-    if (!res.ok || !result.success) {
+    const { data: result } = await api.post("/api/bookings", formData);
+    if (!result.success) {
       throw new Error(result.message || "Failed to submit booking request");
     }
     const newBooking: Booking = result.booking || {
@@ -100,7 +96,9 @@ export const submitBookingRequest = createAsyncThunk<
     };
     return { booking: newBooking, bookingReference: result.bookingReference };
   } catch (err: any) {
-    return rejectWithValue(err.message || "An unexpected error occurred");
+    return rejectWithValue(
+      err.response?.data?.message || err.message || "An unexpected error occurred"
+    );
   }
 });
 

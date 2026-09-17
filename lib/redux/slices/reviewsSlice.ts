@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { Review, ReviewStatus } from "@/types";
 import { initialReviews } from "@/lib/data/reviews";
 import { ReviewFormData } from "@/lib/validations/review";
+import api from "@/lib/axios";
 
 export interface ReviewsState {
   items: Review[];
@@ -26,13 +27,8 @@ export const submitReview = createAsyncThunk<
   { rejectValue: string }
 >("reviews/submitReview", async (formData, { rejectWithValue }) => {
   try {
-    const res = await fetch("/api/reviews", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
-    const json = await res.json();
-    if (!res.ok || !json.success) {
+    const { data: json } = await api.post("/api/reviews", formData);
+    if (!json.success) {
       throw new Error(json.message || "Failed to submit review");
     }
     const newReview: Review = json.review || {
@@ -48,7 +44,9 @@ export const submitReview = createAsyncThunk<
     };
     return newReview;
   } catch (err: any) {
-    return rejectWithValue(err.message || "Failed to submit review");
+    return rejectWithValue(
+      err.response?.data?.message || err.message || "Failed to submit review"
+    );
   }
 });
 

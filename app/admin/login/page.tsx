@@ -15,7 +15,7 @@ export default function AdminLoginPage() {
   const [loading, setLoading] = useState(false);
 
   // Default credentials
-  const DEMO_EMAIL = "admin@dubaisafaridesert.com";
+  const DEMO_EMAIL = "admin";
   const DEMO_PASSWORD = "Bilaljutt2339@";
 
   const handleAutofill = () => {
@@ -33,10 +33,11 @@ export default function AdminLoginPage() {
       const cleanEmail = email.trim().toLowerCase();
       const cleanPassword = password.trim();
 
-      // Accepts either full email or "admin" username
+      // Accepts either "admin" or legacy email entries
       const isValidUser =
-        cleanEmail === DEMO_EMAIL.toLowerCase() ||
-        cleanEmail === "admin";
+        cleanEmail === "admin" ||
+        cleanEmail === "admin@safaridunetours.com" ||
+        cleanEmail === "admin@dubaisafaridesert.com";
       const isValidPassword = cleanPassword === DEMO_PASSWORD;
 
       if (isValidUser && isValidPassword) {
@@ -93,7 +94,7 @@ export default function AdminLoginPage() {
               </p>
               <div className="text-xs font-mono space-y-0.5 text-slate-200 pt-1">
                 <p>
-                  <strong className="text-amber-300">Email:</strong> {DEMO_EMAIL} (or <code className="bg-white/10 px-1 rounded">admin</code>)
+                  <strong className="text-amber-300">Username:</strong> <code className="bg-white/10 px-1.5 py-0.5 rounded text-amber-300 font-bold">admin</code>
                 </p>
                 <p>
                   <strong className="text-amber-300">Password:</strong> {DEMO_PASSWORD}
@@ -121,18 +122,18 @@ export default function AdminLoginPage() {
           <form className="space-y-5" onSubmit={handleLogin}>
             <div>
               <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-                Email or Username
+                Username or Email
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                  <Mail className="w-4 h-4" />
+                  <KeyRound className="w-4 h-4" />
                 </div>
                 <input
                   type="text"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@dubaisafaridesert.com"
+                  placeholder="admin"
                   className="w-full pl-10 pr-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors"
                 />
               </div>
