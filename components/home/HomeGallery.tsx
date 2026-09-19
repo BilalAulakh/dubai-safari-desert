@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { ArrowRight, Camera, X, ChevronLeft, ChevronRight, Maximize2, Sparkles, Tag } from "lucide-react";
+import { ArrowRight, Camera, X, ChevronLeft, ChevronRight, Maximize2, Tag } from "lucide-react";
 import { GalleryItem } from "@/types";
 import { optimizeImageUrl } from "@/lib/utils";
 import ScrollReveal from "@/components/common/ScrollReveal";
@@ -76,7 +76,6 @@ export default function HomeGallery({ items }: HomeGalleryProps) {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14">
           <div>
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#C89B3C]/15 border border-[#C89B3C]/30 text-[#C89B3C] dark:text-[#E8C48A] mb-3">
-              <Sparkles className="w-3.5 h-3.5 text-[#C89B3C]" />
               <span className="text-xs font-semibold uppercase tracking-wider">
                 Visual Desert Portfolio
               </span>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Clock, CheckCircle2, ArrowRight, MessageCircle, Sparkles } from "lucide-react";
+import { Clock, CheckCircle2, ArrowRight, MessageCircle } from "lucide-react";
 import { Package } from "@/types";
 import { formatPrice, optimizeImageUrl, createWhatsAppUrl } from "@/lib/utils";
 import { SITE_CONFIG } from "@/lib/config/site";
@@ -124,7 +124,6 @@ export default function PackageCard({ pkg }: PackageCardProps) {
           {/* Flexible Pricing Hint Banner */}
           <div className="flex items-center justify-between gap-1 py-1.5 px-2.5 rounded-lg bg-[#C89B3C]/10 dark:bg-[#C89B3C]/15 border border-[#C89B3C]/25 text-[#8C6214] dark:text-[#E8C48A] text-[11px] font-semibold mb-3">
             <div className="flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-[#C89B3C] shrink-0" />
               <span>Flexible Group Rates</span>
             </div>
             <span className="text-[10px] uppercase font-bold text-emerald-700 dark:text-emerald-400">Save up to 15%</span>

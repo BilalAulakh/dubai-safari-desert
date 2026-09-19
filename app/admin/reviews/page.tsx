@@ -6,7 +6,6 @@ import {
   CheckCircle,
   XCircle,
   Trash2,
-  Sparkles,
   Filter,
   Search,
   AlertTriangle,
@@ -216,7 +215,7 @@ export default function AdminReviewsPage() {
 
                 {rev.featured && (
                   <span className="px-2 py-0.5 rounded-full bg-purple-100 text-purple-800 text-[10px] font-bold uppercase tracking-wider flex items-center gap-1">
-                    <Sparkles className="w-3 h-3" />
+                    <Star className="w-3 h-3 fill-purple-600 text-purple-600" />
                     <span>Featured on Home</span>
                   </span>
                 )}
@@ -274,7 +273,7 @@ export default function AdminReviewsPage() {
                 }`}
                 title="Toggle Featured"
               >
-                <Sparkles className="w-3.5 h-3.5" />
+                <Star className="w-3.5 h-3.5" />
                 <span>{rev.featured ? "Unfeature" : "Feature"}</span>
               </button>
 

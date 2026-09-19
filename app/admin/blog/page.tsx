@@ -16,7 +16,6 @@ import {
   Calendar,
   AlertTriangle,
   X,
-  Sparkles,
   ExternalLink,
   Layers,
   ArrowUpRight,

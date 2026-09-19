@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MessageCircle, CalendarCheck, Sparkles } from "lucide-react";
+import { MessageCircle, CalendarCheck, Send } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config/site";
 import { createWhatsAppUrl } from "@/lib/utils";
 import ScrollReveal from "@/components/common/ScrollReveal";
@@ -62,7 +62,7 @@ export default function CTASection() {
               rel="noopener noreferrer"
               className="btn-luxury-outline w-full sm:w-auto px-6 py-3.5 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-xl !bg-white/90 dark:!bg-white/5 !text-[#17120D] dark:!text-white border-[#C89B3C]/50 hover:border-[#C89B3C] shadow-sm flex items-center justify-center gap-2"
             >
-              <Sparkles className="w-4 h-4 text-[#C89B3C]" />
+              <Send className="w-4 h-4 text-[#C89B3C]" />
               <span>Get a Free Quote</span>
             </a>
           </div>

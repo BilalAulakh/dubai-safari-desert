@@ -10,7 +10,6 @@ import {
   AlertCircle,
   Eye,
   RefreshCw,
-  Sparkles,
   Globe,
   Tag,
   User,

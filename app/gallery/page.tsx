@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { Sparkles, Camera } from "lucide-react";
+import { Camera } from "lucide-react";
 import { getGalleryItems } from "@/lib/data/store";
 import { SITE_CONFIG } from "@/lib/config/site";
 import GalleryGrid from "@/components/gallery/GalleryGrid";

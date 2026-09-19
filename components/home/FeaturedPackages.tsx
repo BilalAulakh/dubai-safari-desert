@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { ArrowRight, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Package } from "@/types";
 import PackageCard from "@/components/packages/PackageCard";
 import ScrollReveal from "@/components/common/ScrollReveal";
@@ -79,7 +79,6 @@ export default function FeaturedPackages({ packages }: FeaturedPackagesProps) {
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-12 gap-6">
             <div>
               <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#C89B3C]/15 border border-[#C89B3C]/30 text-[#8C6214] dark:text-[#E8C48A] text-xs font-bold uppercase tracking-wider mb-3">
-                <Sparkles className="w-3.5 h-3.5 text-[#C89B3C]" />
                 <span>Signature Desert Tours</span>
               </div>
               <h2 className="font-heading text-2xl sm:text-3xl lg:text-[40px] font-bold text-[#17120D] dark:text-[#FBF7F0] tracking-tight leading-[1.15]">

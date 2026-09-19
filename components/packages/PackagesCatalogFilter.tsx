@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Search, ArrowUpDown, Compass, Flame, ShieldAlert, Sparkles } from "lucide-react";
+import { Search, ArrowUpDown, Compass, Flame, ShieldAlert } from "lucide-react";
 import { Package, PackageCategory } from "@/types";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import {

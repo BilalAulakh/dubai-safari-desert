@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Star, MessageSquarePlus, CheckCircle2, Sparkles, ArrowRight } from "lucide-react";
+import { Star, MessageSquarePlus, CheckCircle2, ArrowRight } from "lucide-react";
 import { Review } from "@/types";
 import { formatDate } from "@/lib/utils";
 import { initialReviews } from "@/lib/data/reviews";
@@ -17,7 +17,6 @@ export default function HomeReviews({ reviews }: HomeReviewsProps) {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">
           <div>
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#C89B3C]/15 border border-[#C89B3C]/30 text-[#C89B3C] dark:text-[#E8C48A] text-xs font-semibold uppercase tracking-wider mb-3">
-              <Sparkles className="w-3.5 h-3.5 text-[#C89B3C]" />
               <span>Guest Experiences</span>
             </div>
             <h2 className="font-heading text-2xl sm:text-3xl lg:text-[36px] font-bold text-[#17120D] dark:text-[#FBF7F0] tracking-tight leading-[1.15]">

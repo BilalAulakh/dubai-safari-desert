@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { Compass, ShieldCheck, HeartHandshake, Sparkles, MapPin, Users, Check } from "lucide-react";
+import { Compass, ShieldCheck, HeartHandshake, Award, MapPin, Users, Check } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config/site";
 import CTASection from "@/components/home/CTASection";
 
@@ -127,7 +127,7 @@ export default function AboutPage() {
 
             <div className="p-8 rounded-2xl bg-white border border-slate-200 shadow-sm">
               <div className="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center mb-5">
-                <Sparkles className="w-6 h-6" />
+                <Award className="w-6 h-6" />
               </div>
               <h3 className="text-lg font-bold text-slate-900 mb-2">Quality Experiences</h3>
               <p className="text-sm text-slate-600 leading-relaxed">

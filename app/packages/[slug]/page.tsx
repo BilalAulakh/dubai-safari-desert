@@ -11,7 +11,6 @@ import {
   MessageCircle,
   HelpCircle,
   Users,
-  Sparkles,
 } from "lucide-react";
 import { getPackageBySlug, getPackages, getFAQs } from "@/lib/data/store";
 import { formatPrice, createWhatsAppUrl, optimizeImageUrl } from "@/lib/utils";
@@ -162,7 +161,6 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
                 ))
               ) : (
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase tracking-wider">
-                  <Sparkles className="w-3.5 h-3.5" />
                   <span>Signature Dubai Tour</span>
                 </div>
               )}
@@ -196,7 +194,7 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
                 </span>
               </div>
               <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-semibold">
-                <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                 <span>Flexible & Group Deals Available</span>
               </div>
             </div>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Zap, ShieldCheck, Layers, Headphones, MessageCircle, Sparkles } from "lucide-react";
+import { Zap, ShieldCheck, Layers, Headphones, MessageCircle } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config/site";
 import { createWhatsAppUrl } from "@/lib/utils";
 import ScrollReveal from "@/components/common/ScrollReveal";
@@ -47,7 +47,6 @@ export default function WhyTravelersChooseUs() {
         <ScrollReveal>
           <div className="text-center max-w-3xl mx-auto mb-14">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#C89B3C]/15 border border-[#C89B3C]/30 text-[#8C6214] dark:text-[#E8C48A] text-xs font-semibold uppercase tracking-wider mb-3">
-              <Sparkles className="w-3.5 h-3.5 text-[#C89B3C]" />
               <span>Reliable & Transparent Service</span>
             </div>
             <h2 className="font-heading text-2xl sm:text-3xl lg:text-[36px] font-bold tracking-tight text-[#17120D] dark:text-[#FBF7F0] leading-[1.15]">

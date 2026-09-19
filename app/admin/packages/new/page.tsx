@@ -7,7 +7,7 @@ import {
   ArrowLeft,
   Package as PackageIcon,
   Check,
-  Sparkles,
+  Star,
   Upload,
   AlertCircle,
   Eye,
@@ -296,7 +296,7 @@ export default function CreatePackagePage() {
               htmlFor="featured-checkbox"
               className="text-xs font-bold text-slate-800 dark:text-slate-200 cursor-pointer flex items-center gap-1.5"
             >
-              <Sparkles className="w-4 h-4 text-amber-600" />
+              <Star className="w-4 h-4 text-amber-600 fill-amber-500" />
               <span>Show in "Featured Safari Packages" on Homepage</span>
             </label>
           </div>

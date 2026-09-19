@@ -1,4 +1,4 @@
-import { Compass, Send, Sparkles, CheckCircle2 } from "lucide-react";
+import { Compass, Send, Sun, CheckCircle2 } from "lucide-react";
 import ScrollReveal from "@/components/common/ScrollReveal";
 
 export default function HowItWorks() {
@@ -23,7 +23,7 @@ export default function HowItWorks() {
     },
     {
       step: "04",
-      icon: Sparkles,
+      icon: Sun,
       title: "Enjoy Your Adventure",
       description: "Your 4x4 arrives at your doorstep. Experience high red dune bashing, camel rides, and starlit hospitality.",
     },

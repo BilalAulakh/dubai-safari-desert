@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { Sparkles, ShieldCheck, Clock, MapPin } from "lucide-react";
+import { ShieldCheck, Clock, MapPin } from "lucide-react";
 import { getPackages } from "@/lib/data/store";
 import { SITE_CONFIG } from "@/lib/config/site";
 import PackagesCatalogFilter from "@/components/packages/PackagesCatalogFilter";
@@ -34,7 +34,6 @@ export default async function PackagesPage() {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#C89B3C]/15 border border-[#C89B3C]/30 text-[#E8C48A] text-xs font-semibold uppercase tracking-wider mb-4">
-            <Sparkles className="w-3.5 h-3.5 text-[#C89B3C]" />
             <span>Curated Desert Tours</span>
           </div>
           <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-[1.08]">

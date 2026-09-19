@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import {
   Star,
-  Sparkles,
   Send,
   Loader2,
   CheckCircle2,
@@ -199,8 +198,7 @@ export default function DirectReviewForm({ tourOptions }: DirectReviewFormProps)
     <div className="bg-white dark:bg-[#1D150E] rounded-2xl p-4 sm:p-5 border border-[#C89B3C]/25 shadow-xl space-y-3.5">
       {/* Header Banner */}
       <div className="text-center space-y-1">
-        <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-800 dark:text-amber-400 text-[9px] font-bold uppercase tracking-wider">
-          <Sparkles className="w-2.5 h-2.5 text-amber-600 dark:text-amber-400" />
+        <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-800 dark:text-amber-400 text-[9px] font-bold uppercase tracking-wider">
           <span>Guest Feedback</span>
         </div>
 

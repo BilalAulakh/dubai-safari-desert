@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Users, Car, Sparkles, MessageCircle, ShieldCheck, CheckCircle2, ArrowRight, Minus, Plus } from "lucide-react";
+import { Users, Car, Calculator, MessageCircle, ShieldCheck, CheckCircle2, ArrowRight, Minus, Plus } from "lucide-react";
 import { Package } from "@/types";
 import { createWhatsAppUrl } from "@/lib/utils";
 import { SITE_CONFIG } from "@/lib/config/site";
@@ -80,7 +80,7 @@ Can you confirm your best flexible rate and today's availability? Thank you!`;
       <div className="bg-gradient-to-r from-[#17120D] via-[#2D1B0B] to-[#17120D] p-5 text-white border-b border-[#C89B3C]/30">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-[#E8C48A]" />
+            <Calculator className="w-4 h-4 text-[#E8C48A]" />
             <span className="text-xs font-bold uppercase tracking-wider text-[#E8C48A]">
               Flexible Pricing Calculator
             </span>

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { initialPackages } from "@/lib/data/packages";
 import { Package } from "@/types";
 import { formatPrice } from "@/lib/utils";
-import { Plus, Edit2, Trash2, Eye, X, Check, Sparkles } from "lucide-react";
+import { Plus, Edit2, Trash2, Eye, X, Check } from "lucide-react";
 import ImageUpload from "@/components/admin/ImageUpload";
 import DeleteConfirmModal from "@/components/admin/DeleteConfirmModal";
 

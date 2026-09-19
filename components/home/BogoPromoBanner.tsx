@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Sparkles, CheckCircle2, MessageCircle, ArrowRight, Flame } from "lucide-react";
+import { CheckCircle2, MessageCircle, ArrowRight, Flame } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config/site";
 import { createWhatsAppUrl } from "@/lib/utils";
 import ScrollReveal from "@/components/common/ScrollReveal";
@@ -119,7 +119,6 @@ export default function BogoPromoBanner() {
 
                   <div className="pt-2">
                     <span className="text-[11px] text-amber-300 font-semibold flex items-center justify-center gap-1">
-                      <Sparkles className="w-3 h-3" />
                       <span>Limited Daily Sunset Slots Available</span>
                     </span>
                   </div>
