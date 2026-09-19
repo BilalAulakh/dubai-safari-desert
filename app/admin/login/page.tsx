@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Compass, Lock, Mail, Eye, EyeOff, ShieldCheck, ArrowRight, KeyRound } from "lucide-react";
+import { Compass, Lock, Eye, EyeOff, ArrowRight, KeyRound } from "lucide-react";
 import ThemeToggle from "@/components/common/ThemeToggle";
 
 export default function AdminLoginPage() {
@@ -14,15 +14,18 @@ export default function AdminLoginPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Default credentials
+  // Admin credentials
   const DEMO_EMAIL = "admin";
-  const DEMO_PASSWORD = "Bilaljutt2339@";
+  const DEMO_PASSWORD = "Akramjutt20@";
 
-  const handleAutofill = () => {
-    setEmail(DEMO_EMAIL);
-    setPassword(DEMO_PASSWORD);
-    setError("");
-  };
+  // When reaching the login page, clear any previous auth session
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      sessionStorage.removeItem("admin_auth");
+      localStorage.removeItem("admin_auth");
+      document.cookie = "admin_auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+  }, []);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,7 +36,7 @@ export default function AdminLoginPage() {
       const cleanEmail = email.trim().toLowerCase();
       const cleanPassword = password.trim();
 
-      // Accepts either "admin" or legacy email entries
+      // Accepts "admin" or official admin email addresses
       const isValidUser =
         cleanEmail === "admin" ||
         cleanEmail === "admin@safaridunetours.com" ||
@@ -42,12 +45,13 @@ export default function AdminLoginPage() {
 
       if (isValidUser && isValidPassword) {
         if (typeof window !== "undefined") {
+          sessionStorage.setItem("admin_auth", "true");
           localStorage.setItem("admin_auth", "true");
           document.cookie = "admin_auth=true; path=/; max-age=86400";
         }
         router.push("/admin");
       } else {
-        setError("Invalid credentials. Please use the credentials shown below.");
+        setError("Invalid username or password. Please use the credentials shown below.");
         setLoading(false);
       }
     }, 400);
@@ -84,32 +88,6 @@ export default function AdminLoginPage() {
           </p>
         </div>
 
-        {/* Credentials Info Box */}
-        <div className="mt-6 p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-200">
-          <div className="flex items-start justify-between gap-2">
-            <div className="space-y-1">
-              <p className="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4" />
-                <span>Admin Login Credentials:</span>
-              </p>
-              <div className="text-xs font-mono space-y-0.5 text-slate-200 pt-1">
-                <p>
-                  <strong className="text-amber-300">Username:</strong> <code className="bg-white/10 px-1.5 py-0.5 rounded text-amber-300 font-bold">admin</code>
-                </p>
-                <p>
-                  <strong className="text-amber-300">Password:</strong> {DEMO_PASSWORD}
-                </p>
-              </div>
-            </div>
-            <button
-              type="button"
-              onClick={handleAutofill}
-              className="px-2.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-[11px] font-bold uppercase tracking-wider transition-colors shrink-0 shadow"
-            >
-              Auto-fill
-            </button>
-          </div>
-        </div>
 
         {/* Form Card */}
         <div className="mt-6 bg-[#0E1522] py-8 px-6 sm:px-10 rounded-2xl border border-slate-800 shadow-2xl">

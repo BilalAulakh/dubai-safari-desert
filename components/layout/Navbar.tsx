@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Compass, Menu, X, Phone, ShieldCheck, MessageCircle } from "lucide-react";
+import { Menu, X, Phone, ShieldCheck, MessageCircle } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config/site";
 import ThemeToggle from "@/components/common/ThemeToggle";
 import { createWhatsAppUrl } from "@/lib/utils";
@@ -40,7 +41,7 @@ export default function Navbar() {
     <header
       className={`fixed top-0 inset-x-0 z-40 transition-all duration-300 ${
         isTransparent
-          ? "bg-gradient-to-b from-black/85 via-black/40 to-transparent py-4 sm:py-5 border-b border-transparent"
+          ? "bg-transparent py-4 sm:py-5 border-b border-transparent"
           : "bg-[#17120D]/95 backdrop-blur-md border-b border-[#C89B3C]/20 shadow-lg py-3 sm:py-3.5"
       }`}
     >
@@ -53,12 +54,19 @@ export default function Navbar() {
             id="nav-brand-logo"
             aria-label="Safari Dune Tours Homepage"
           >
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#C89B3C] to-[#241A12] p-0.5 shadow-md group-hover:scale-105 transition-transform duration-300">
-              <div className="w-full h-full rounded-[10px] bg-[#17120D] flex items-center justify-center">
-                <Compass className="w-4 h-4 text-[#E8C48A] group-hover:rotate-45 transition-transform duration-500" />
+            <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-[#C89B3C]/50 via-[#241A12] to-[#17120D] p-0.5 shadow-[0_2px_12px_rgba(200,155,60,0.3)] group-hover:shadow-[0_4px_20px_rgba(200,155,60,0.5)] group-hover:scale-105 transition-all duration-300">
+              <div className="w-full h-full rounded-[10px] bg-[#17120D] flex items-center justify-center p-1">
+                <Image
+                  src="/images/logo-emblem.png"
+                  alt="Safari Dune Tours"
+                  width={40}
+                  height={40}
+                  priority
+                  className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
+                />
               </div>
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
               <span className="font-heading text-base sm:text-lg font-bold tracking-tight text-white group-hover:text-[#E8C48A] transition-colors leading-tight">
                 Safari Dune <span className="text-[#C89B3C]">Tours</span>
               </span>
@@ -79,7 +87,7 @@ export default function Navbar() {
                   className={`whitespace-nowrap px-3 py-1.5 text-xs xl:text-[13px] font-medium rounded-lg transition-all duration-200 ${
                     isActive
                       ? "text-[#FDE68A] bg-white/15 font-semibold backdrop-blur-md shadow-sm border border-white/20"
-                      : "text-white/85 hover:text-[#E8C48A] hover:bg-white/10"
+                      : "text-white hover:text-[#E8C48A] hover:bg-white/10 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]"
                   }`}
                 >
                   {link.label}
@@ -105,9 +113,16 @@ export default function Navbar() {
             <ThemeToggle />
 
             <Link
-              href="/admin"
-              className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold rounded-lg border border-[#C89B3C]/35 text-[#E8C48A] hover:text-white hover:bg-white/10 transition-colors"
-              title="Admin Portal"
+              href="/admin/login"
+              onClick={() => {
+                if (typeof window !== "undefined") {
+                  sessionStorage.removeItem("admin_auth");
+                  localStorage.removeItem("admin_auth");
+                  document.cookie = "admin_auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                }
+              }}
+              className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold rounded-lg border border-[#C89B3C]/35 text-[#E8C48A] hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+              title="Admin Portal (Requires Login)"
               id="nav-admin-cta"
             >
               <ShieldCheck className="w-3 h-3 text-[#C89B3C]" />
@@ -191,8 +206,16 @@ export default function Navbar() {
               </a>
 
               <Link
-                href="/admin"
-                className="flex items-center gap-1 text-[#E8C48A] hover:underline"
+                href="/admin/login"
+                onClick={() => {
+                  if (typeof window !== "undefined") {
+                    sessionStorage.removeItem("admin_auth");
+                    localStorage.removeItem("admin_auth");
+                    document.cookie = "admin_auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                  }
+                  setIsOpen(false);
+                }}
+                className="flex items-center gap-1 text-[#E8C48A] hover:underline cursor-pointer"
               >
                 <ShieldCheck className="w-3.5 h-3.5 text-[#C89B3C]" />
                 <span>Admin</span>

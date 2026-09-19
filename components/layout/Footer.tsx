@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Compass, Phone, Mail, MapPin, Clock, MessageCircle, ShieldCheck } from "lucide-react";
+import Image from "next/image";
+import { Phone, Mail, MapPin, Clock, MessageCircle, ShieldCheck } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config/site";
 import { createWhatsAppUrl } from "@/lib/utils";
 
@@ -15,10 +16,16 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8 pb-12 border-b border-[#241A12]">
           {/* Col 1: Brand & Philosophy */}
           <div className="space-y-4">
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#C89B3C] to-[#241A12] p-0.5 shadow-md">
-                <div className="w-full h-full rounded-[10px] bg-[#17120D] flex items-center justify-center">
-                  <Compass className="w-5 h-5 text-[#E8C48A]" />
+            <Link href="/" className="flex items-center gap-3 group">
+              <div className="relative w-12 h-12 rounded-xl bg-gradient-to-br from-[#C89B3C]/50 via-[#241A12] to-[#17120D] p-0.5 shadow-[0_2px_12px_rgba(200,155,60,0.3)] group-hover:scale-105 transition-all duration-300">
+                <div className="w-full h-full rounded-[10px] bg-[#17120D] flex items-center justify-center p-1">
+                  <Image
+                    src="/images/logo-emblem.png"
+                    alt="Safari Dune Tours"
+                    width={44}
+                    height={44}
+                    className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                  />
                 </div>
               </div>
               <div className="flex flex-col">
@@ -188,7 +195,17 @@ export default function Footer() {
           </p>
           <div className="flex items-center gap-6">
             <span>Dubai, United Arab Emirates</span>
-            <Link href="/admin" className="hover:text-[#E8C48A] transition-colors">
+            <Link
+              href="/admin/login"
+              onClick={() => {
+                if (typeof window !== "undefined") {
+                  sessionStorage.removeItem("admin_auth");
+                  localStorage.removeItem("admin_auth");
+                  document.cookie = "admin_auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                }
+              }}
+              className="hover:text-[#E8C48A] transition-colors cursor-pointer"
+            >
               Admin Portal
             </Link>
           </div>

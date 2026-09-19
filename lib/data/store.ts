@@ -38,6 +38,7 @@ const fallbackPickupLocations: PickupLocation[] = [...initialPickupLocations];
 const fallbackFAQs: FAQ[] = [...initialFAQs];
 const fallbackGallery: GalleryItem[] = [...initialGalleryItems];
 const fallbackReviews: Review[] = [...initialReviews];
+const deletedReviewIds = new Set<string>();
 const fallbackBlogPosts: BlogPost[] = [...initialBlogPosts];
 const fallbackComments: Comment[] = [];
 const fallbackBookings: Booking[] = [
@@ -250,6 +251,23 @@ export async function getAllActivities(): Promise<Activity[]> {
 }
 
 // --- PICKUP LOCATIONS ---
+function parsePickupLocation(item: any): PickupLocation {
+  const rawName: string = item.name || "";
+  if (rawName.includes("|||")) {
+    const [name, map_url] = rawName.split("|||");
+    return {
+      ...item,
+      name: name.trim(),
+      map_url: map_url.trim(),
+    };
+  }
+  return {
+    ...item,
+    name: rawName.trim(),
+    map_url: item.map_url || undefined,
+  };
+}
+
 export async function getPickupLocations(): Promise<PickupLocation[]> {
   try {
     const supabase = getPublicSupabase();
@@ -261,13 +279,14 @@ export async function getPickupLocations(): Promise<PickupLocation[]> {
         .order("sort_order", { ascending: true });
 
       if (!error && data && data.length > 0) {
-        return data;
+        return data.map(parsePickupLocation);
       }
     }
   } catch {}
   return fallbackPickupLocations
     .filter((l) => l.active)
-    .sort((a, b) => a.sort_order - b.sort_order);
+    .sort((a, b) => a.sort_order - b.sort_order)
+    .map(parsePickupLocation);
 }
 
 export async function getAllPickupLocations(): Promise<PickupLocation[]> {
@@ -280,11 +299,111 @@ export async function getAllPickupLocations(): Promise<PickupLocation[]> {
         .order("sort_order", { ascending: true });
 
       if (!error && data && data.length > 0) {
-        return data;
+        return data.map(parsePickupLocation);
       }
     }
   } catch {}
-  return fallbackPickupLocations.sort((a, b) => a.sort_order - b.sort_order);
+  return fallbackPickupLocations
+    .sort((a, b) => a.sort_order - b.sort_order)
+    .map(parsePickupLocation);
+}
+
+export async function createPickupLocation(name: string, map_url?: string): Promise<PickupLocation> {
+  const cleanName = name.trim();
+  const cleanUrl = map_url?.trim();
+  const storedName = cleanUrl ? `${cleanName}|||${cleanUrl}` : cleanName;
+
+  let newLoc: PickupLocation = {
+    id: `loc-${Date.now()}`,
+    name: cleanName,
+    active: true,
+    sort_order: fallbackPickupLocations.length + 1,
+    map_url: cleanUrl || undefined,
+  };
+
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("pickup_locations")
+        .insert({
+          name: storedName,
+          active: true,
+          sort_order: fallbackPickupLocations.length + 1,
+        })
+        .select()
+        .single();
+
+      if (!error && data) {
+        newLoc = parsePickupLocation(data);
+      }
+    }
+  } catch (err) {
+    console.error("createPickupLocation error:", err);
+  }
+
+  fallbackPickupLocations.push(newLoc);
+  return newLoc;
+}
+
+export async function updatePickupLocation(
+  id: string,
+  updates: Partial<PickupLocation>
+): Promise<PickupLocation | null> {
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const dbUpdates: any = {};
+      if (updates.active !== undefined) dbUpdates.active = updates.active;
+      if (updates.sort_order !== undefined) dbUpdates.sort_order = updates.sort_order;
+      if (updates.name !== undefined || updates.map_url !== undefined) {
+        const cleanName = updates.name !== undefined ? updates.name.trim() : "";
+        const cleanUrl = updates.map_url !== undefined ? updates.map_url.trim() : "";
+        dbUpdates.name = cleanUrl ? `${cleanName}|||${cleanUrl}` : cleanName;
+      }
+
+      const { data, error } = await supabase
+        .from("pickup_locations")
+        .update(dbUpdates)
+        .eq("id", id)
+        .select()
+        .maybeSingle();
+
+      if (!error && data) {
+        const parsed = parsePickupLocation(data);
+        const fb = fallbackPickupLocations.find((l) => l.id === id);
+        if (fb) Object.assign(fb, parsed);
+        return parsed;
+      }
+    }
+  } catch (err) {
+    console.error("updatePickupLocation error:", err);
+  }
+
+  const fb = fallbackPickupLocations.find((l) => l.id === id);
+  if (!fb) return null;
+  Object.assign(fb, updates);
+  return fb;
+}
+
+export async function deletePickupLocation(id: string): Promise<boolean> {
+  let deleted = false;
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const { error } = await supabase.from("pickup_locations").delete().eq("id", id);
+      if (!error) deleted = true;
+    }
+  } catch (err) {
+    console.error("deletePickupLocation error:", err);
+  }
+
+  const idx = fallbackPickupLocations.findIndex((l) => l.id === id);
+  if (idx !== -1) {
+    fallbackPickupLocations.splice(idx, 1);
+    return true;
+  }
+  return deleted;
 }
 
 // --- FAQS ---
@@ -374,7 +493,7 @@ export async function getApprovedReviews(): Promise<Review[]> {
         .eq("status", "approved")
         .order("created_at", { ascending: false });
 
-      if (!error && data && data.length > 0) {
+      if (!error && data) {
         const dbReviews: Review[] = data.map((r: any) => ({
           id: r.id,
           customer_name: r.customer_name || "Safari Guest",
@@ -387,14 +506,15 @@ export async function getApprovedReviews(): Promise<Review[]> {
           is_demo: false,
         }));
 
-        // Include initial demo reviews alongside user reviews
         const demoReviews = fallbackReviews.filter((r) => r.is_demo);
-        return [...dbReviews, ...demoReviews];
+        return [...dbReviews, ...demoReviews]
+          .filter((r) => !deletedReviewIds.has(r.id))
+          .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
       }
     }
   } catch {}
   return fallbackReviews
-    .filter((r) => r.status === "approved")
+    .filter((r) => r.status === "approved" && !deletedReviewIds.has(r.id))
     .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
 }
 
@@ -407,7 +527,7 @@ export async function getAllReviews(): Promise<Review[]> {
         .select("id, customer_name, rating, comment, country, created_at, status, featured")
         .order("created_at", { ascending: false });
 
-      if (!error && data && data.length > 0) {
+      if (!error && data) {
         const dbReviews: Review[] = data.map((r: any) => ({
           id: r.id,
           customer_name: r.customer_name || "Safari Guest",
@@ -420,13 +540,17 @@ export async function getAllReviews(): Promise<Review[]> {
           is_demo: false,
         }));
         const demoReviews = fallbackReviews.filter((r) => r.is_demo);
-        return [...dbReviews, ...demoReviews];
+        return [...dbReviews, ...demoReviews]
+          .filter((r) => !deletedReviewIds.has(r.id))
+          .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
       }
     }
   } catch {}
-  return [...fallbackReviews].sort(
-    (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-  );
+  return [...fallbackReviews]
+    .filter((r) => !deletedReviewIds.has(r.id))
+    .sort(
+      (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    );
 }
 
 export async function createReview(data: Omit<Review, "id" | "created_at" | "status">): Promise<Review> {
@@ -469,13 +593,14 @@ export async function createReview(data: Omit<Review, "id" | "created_at" | "sta
 
 export async function updateReviewStatus(
   id: string,
-  status: ReviewStatus,
+  status?: ReviewStatus,
   featured?: boolean
 ): Promise<Review | null> {
   try {
     const supabase = getPublicSupabase();
     if (supabase) {
-      const updates: any = { status };
+      const updates: any = {};
+      if (status !== undefined) updates.status = status;
       if (featured !== undefined) updates.featured = featured;
       await supabase.from("reviews").update(updates).eq("id", id);
     }
@@ -484,17 +609,23 @@ export async function updateReviewStatus(
   }
 
   const review = fallbackReviews.find((r) => r.id === id);
-  if (!review) return null;
-  review.status = status;
-  if (featured !== undefined) review.featured = featured;
-  return review;
+  if (review) {
+    if (status !== undefined) review.status = status;
+    if (featured !== undefined) review.featured = featured;
+    return review;
+  }
+  return null;
 }
 
 export async function deleteReview(id: string): Promise<boolean> {
+  deletedReviewIds.add(id);
   try {
     const supabase = getPublicSupabase();
     if (supabase) {
-      await supabase.from("reviews").delete().eq("id", id);
+      const { error } = await supabase.from("reviews").delete().eq("id", id);
+      if (error) {
+        console.error("Supabase delete review error:", error);
+      }
     }
   } catch (err) {
     console.error("Supabase delete review error:", err);
@@ -503,7 +634,6 @@ export async function deleteReview(id: string): Promise<boolean> {
   const index = fallbackReviews.findIndex((r) => r.id === id);
   if (index !== -1) {
     fallbackReviews.splice(index, 1);
-    return true;
   }
   return true;
 }
@@ -802,12 +932,52 @@ export async function deleteComment(id: string): Promise<boolean> {
 
 // --- BOOKINGS ---
 export async function getBookings(): Promise<Booking[]> {
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("bookings")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (!error && data) {
+        const supabaseRefs = new Set(data.map((b: any) => b.booking_reference?.toLowerCase()));
+        const uniqueFallbacks = fallbackBookings.filter(
+          (fb) => !supabaseRefs.has(fb.booking_reference?.toLowerCase())
+        );
+        const combined = [...data, ...uniqueFallbacks].sort(
+          (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        );
+        return combined as Booking[];
+      }
+    }
+  } catch (err) {
+    console.error("Supabase getBookings error:", err);
+  }
+
   return [...fallbackBookings].sort(
     (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   );
 }
 
 export async function getBookingByReference(reference: string): Promise<Booking | null> {
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("bookings")
+        .select("*")
+        .ilike("booking_reference", reference)
+        .maybeSingle();
+
+      if (!error && data) {
+        return data as Booking;
+      }
+    }
+  } catch (err) {
+    console.error("Supabase getBookingByReference error:", err);
+  }
+
   const booking = fallbackBookings.find(
     (b) => b.booking_reference.toLowerCase() === reference.toLowerCase()
   );
@@ -819,15 +989,52 @@ export async function createBooking(
 ): Promise<Booking> {
   const booking_reference = generateBookingReference();
   const pkg = fallbackPackages.find((p) => p.id === data.package_id);
+  const packageName = pkg ? pkg.name : "Custom Desert Safari";
 
-  const newBooking: Booking = {
+  let newBooking: Booking = {
     ...data,
     id: `bkg-${Date.now()}`,
     booking_reference,
-    package_name: pkg ? pkg.name : "Custom Desert Safari",
-    status: "pending", // Default pending per prompt requirement
+    package_name: packageName,
+    status: "pending",
     created_at: new Date().toISOString(),
   };
+
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const { data: inserted, error } = await supabase
+        .from("bookings")
+        .insert({
+          booking_reference,
+          package_id: data.package_id,
+          package_name: packageName,
+          customer_name: data.customer_name,
+          phone: data.phone,
+          email: data.email || null,
+          booking_date: data.booking_date,
+          adults: data.adults,
+          children: data.children || 0,
+          pickup_location: data.pickup_location,
+          hotel_name: data.hotel_name || null,
+          special_requests: data.special_requests || null,
+          status: "pending",
+        })
+        .select()
+        .single();
+
+      if (!error && inserted) {
+        newBooking = {
+          ...inserted,
+          id: inserted.id,
+        };
+      } else if (error) {
+        console.error("Supabase createBooking insert error:", error);
+      }
+    }
+  } catch (err) {
+    console.error("Supabase createBooking exception:", err);
+  }
 
   fallbackBookings.unshift(newBooking);
   return newBooking;
@@ -838,10 +1045,66 @@ export async function updateBookingStatus(
   status: BookingStatus,
   adminNotes?: string
 ): Promise<Booking | null> {
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const updates: any = {
+        status,
+        updated_at: new Date().toISOString(),
+      };
+      if (adminNotes !== undefined) {
+        updates.admin_notes = adminNotes;
+      }
+
+      const { data, error } = await supabase
+        .from("bookings")
+        .update(updates)
+        .eq("id", id)
+        .select()
+        .maybeSingle();
+
+      if (!error && data) {
+        const fb = fallbackBookings.find((b) => b.id === id);
+        if (fb) {
+          fb.status = status;
+          if (adminNotes !== undefined) fb.admin_notes = adminNotes;
+        }
+        return data as Booking;
+      }
+    }
+  } catch (err) {
+    console.error("Supabase updateBookingStatus error:", err);
+  }
+
   const booking = fallbackBookings.find((b) => b.id === id);
   if (!booking) return null;
   booking.status = status;
   if (adminNotes !== undefined) booking.admin_notes = adminNotes;
   booking.updated_at = new Date().toISOString();
   return booking;
+}
+
+export async function deleteBooking(id: string): Promise<boolean> {
+  let deleted = false;
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const { error } = await supabase.from("bookings").delete().eq("id", id);
+      if (!error) {
+        deleted = true;
+      } else {
+        console.error("Supabase deleteBooking error:", error);
+      }
+    }
+  } catch (err) {
+    console.error("Supabase deleteBooking exception:", err);
+  }
+
+  const index = fallbackBookings.findIndex((b) => b.id === id);
+  if (index !== -1) {
+    fallbackBookings.splice(index, 1);
+    return true;
+  }
+
+  return deleted;
 }

@@ -22,6 +22,7 @@ import {
 import ImageUpload from "@/components/admin/ImageUpload";
 import BlogContentEditor from "@/components/admin/BlogContentEditor";
 import { BlogPost } from "@/types";
+import api, { getApiErrorMessage } from "@/lib/axios";
 
 export default function EditBlogPage({
   params,
@@ -66,14 +67,12 @@ export default function EditBlogPage({
     async function loadArticle() {
       try {
         setLoading(true);
-        const res = await fetch(`/api/admin/blogs/${id}`);
-        const data = await res.json();
-        if (!res.ok || !data.success || !data.blog) {
+        const { data } = await api.get(`/api/admin/blogs/${id}`);
+        if (!data.success || !data.blog) {
           throw new Error(data.error || "Failed to load article.");
         }
 
         const b: BlogPost = data.blog;
-        setInitialPost(b);
         setTitle(b.title || "");
         setSlug(b.slug || "");
         setCategory(b.category || "Travel Guide");
@@ -90,7 +89,7 @@ export default function EditBlogPage({
         }
       } catch (err: any) {
         console.error(err);
-        setError(err.message || "Failed to load article data.");
+        setError(getApiErrorMessage(err, "Failed to load article data."));
       } finally {
         setLoading(false);
       }
@@ -149,15 +148,9 @@ export default function EditBlogPage({
         published_at: targetStatus === "published" ? new Date(publishedAt).toISOString() : undefined,
       };
 
-      const res = await fetch(`/api/admin/blogs/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const { data } = await api.put(`/api/admin/blogs/${id}`, payload);
 
-      const data = await res.json();
-
-      if (!res.ok || !data.success) {
+      if (!data.success) {
         throw new Error(data.error || "Failed to update blog post.");
       }
 
@@ -166,7 +159,7 @@ export default function EditBlogPage({
       setTimeout(() => setSuccess(""), 4000);
     } catch (err: any) {
       console.error(err);
-      setError(err.message || "An error occurred while updating the article.");
+      setError(getApiErrorMessage(err, "An error occurred while updating the article."));
     } finally {
       setSaving(false);
     }
@@ -175,16 +168,13 @@ export default function EditBlogPage({
   const handleDelete = async () => {
     try {
       setIsDeleting(true);
-      const res = await fetch(`/api/admin/blogs/${id}`, {
-        method: "DELETE",
-      });
-      const data = await res.json();
-      if (!res.ok || !data.success) {
+      const { data } = await api.delete(`/api/admin/blogs/${id}`);
+      if (!data.success) {
         throw new Error(data.error || "Failed to delete article.");
       }
       router.push("/admin/blog");
     } catch (err: any) {
-      alert(err.message || "Failed to delete article.");
+      alert(getApiErrorMessage(err, "Failed to delete article."));
       setIsDeleting(false);
     }
   };

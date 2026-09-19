@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { BlogPost } from "@/types";
 import { formatDate } from "@/lib/utils";
+import api, { getApiErrorMessage } from "@/lib/axios";
 
 export default function AdminBlogPage() {
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
@@ -40,8 +41,7 @@ export default function AdminBlogPage() {
     try {
       setLoading(true);
       setError("");
-      const res = await fetch("/api/admin/blogs");
-      const data = await res.json();
+      const { data } = await api.get("/api/admin/blogs");
       if (data.success && Array.isArray(data.blogs)) {
         setBlogs(data.blogs);
       } else {
@@ -49,7 +49,7 @@ export default function AdminBlogPage() {
       }
     } catch (err: any) {
       console.error(err);
-      setError(err.message || "Failed to load blog articles.");
+      setError(getApiErrorMessage(err, "Failed to load blog articles."));
     } finally {
       setLoading(false);
     }
@@ -96,11 +96,8 @@ export default function AdminBlogPage() {
   // Toggle publish/unpublish
   const handleToggleStatus = async (blog: BlogPost) => {
     try {
-      const res = await fetch(`/api/admin/blogs/${blog.id}/toggle`, {
-        method: "POST",
-      });
-      const data = await res.json();
-      if (!res.ok || !data.success) {
+      const { data } = await api.post(`/api/admin/blogs/${blog.id}/toggle`);
+      if (!data.success) {
         throw new Error(data.error || "Failed to change publication status.");
       }
 
@@ -114,7 +111,7 @@ export default function AdminBlogPage() {
       );
       setTimeout(() => setActionSuccess(""), 4000);
     } catch (err: any) {
-      alert(err.message || "Status toggle failed.");
+      alert(getApiErrorMessage(err, "Status toggle failed."));
     }
   };
 
@@ -123,11 +120,8 @@ export default function AdminBlogPage() {
     if (!blogToDelete) return;
     try {
       setIsDeleting(true);
-      const res = await fetch(`/api/admin/blogs/${blogToDelete.id}`, {
-        method: "DELETE",
-      });
-      const data = await res.json();
-      if (!res.ok || !data.success) {
+      const { data } = await api.delete(`/api/admin/blogs/${blogToDelete.id}`);
+      if (!data.success) {
         throw new Error(data.error || "Failed to delete article.");
       }
 
@@ -136,7 +130,7 @@ export default function AdminBlogPage() {
       setTimeout(() => setActionSuccess(""), 4000);
       setBlogToDelete(null);
     } catch (err: any) {
-      alert(err.message || "Deletion failed.");
+      alert(getApiErrorMessage(err, "Deletion failed."));
     } finally {
       setIsDeleting(false);
     }

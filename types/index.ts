@@ -94,6 +94,7 @@ export interface PickupLocation {
   name: string;
   active: boolean;
   sort_order: number;
+  map_url?: string;
 }
 
 export interface Review {

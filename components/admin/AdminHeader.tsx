@@ -10,6 +10,7 @@ export default function AdminHeader() {
 
   const handleLogout = () => {
     if (typeof window !== "undefined") {
+      sessionStorage.removeItem("admin_auth");
       localStorage.removeItem("admin_auth");
       document.cookie = "admin_auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     }

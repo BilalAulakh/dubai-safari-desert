@@ -7,11 +7,14 @@ import { Package } from "@/types";
 import { formatPrice } from "@/lib/utils";
 import { Plus, Edit2, Trash2, Eye, X, Check, Sparkles } from "lucide-react";
 import ImageUpload from "@/components/admin/ImageUpload";
+import DeleteConfirmModal from "@/components/admin/DeleteConfirmModal";
 
 export default function AdminPackagesPage() {
   const [packages, setPackages] = useState<Package[]>(initialPackages);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingPackage, setEditingPackage] = useState<Package | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<{ id: string; name: string } | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   // Sync custom packages from localStorage on mount
   useEffect(() => {
@@ -200,8 +203,22 @@ export default function AdminPackagesPage() {
   };
 
   const handleDelete = (id: string, pkgName: string) => {
-    if (confirm(`Are you sure you want to delete the package "${pkgName}"?`)) {
-      setPackages((prev) => prev.filter((p) => p.id !== id));
+    setDeleteTarget({ id, name: pkgName });
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!deleteTarget) return;
+    setIsDeleting(true);
+    try {
+      await fetch(`/api/admin/packages?id=${deleteTarget.id}`, {
+        method: "DELETE",
+      });
+      setPackages((prev) => prev.filter((p) => p.id !== deleteTarget.id));
+    } catch (err) {
+      console.error("Failed to delete package:", err);
+    } finally {
+      setIsDeleting(false);
+      setDeleteTarget(null);
     }
   };
 
@@ -508,6 +525,16 @@ export default function AdminPackagesPage() {
           </div>
         </div>
       )}
+
+      {/* Delete Confirmation Popup Modal */}
+      <DeleteConfirmModal
+        isOpen={!!deleteTarget}
+        title="Delete Safari Package"
+        itemName={deleteTarget?.name}
+        isLoading={isDeleting}
+        onConfirm={handleConfirmDelete}
+        onClose={() => setDeleteTarget(null)}
+      />
     </div>
   );
 }

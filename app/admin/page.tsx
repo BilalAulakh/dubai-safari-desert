@@ -21,6 +21,9 @@ import {
 import { getBookings, getAllReviews, getPackages, getAllBlogPosts } from "@/lib/data/store";
 import { formatDate } from "@/lib/utils";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function AdminDashboardPage() {
   const [bookings, reviews, packages] = await Promise.all([
     getBookings(),

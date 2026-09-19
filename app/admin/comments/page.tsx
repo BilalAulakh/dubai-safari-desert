@@ -4,6 +4,7 @@ import { useState } from "react";
 import { CheckCircle, XCircle, Trash2, MessageSquare } from "lucide-react";
 import { Comment, CommentStatus } from "@/types";
 import { formatDate } from "@/lib/utils";
+import DeleteConfirmModal from "@/components/admin/DeleteConfirmModal";
 
 export default function AdminCommentsPage() {
   const [comments, setComments] = useState<Comment[]>([
@@ -29,16 +30,18 @@ export default function AdminCommentsPage() {
     },
   ]);
 
+  const [deleteTarget, setDeleteTarget] = useState<Comment | null>(null);
+
   const handleUpdateStatus = (id: string, status: CommentStatus) => {
     setComments((prev) =>
       prev.map((c) => (c.id === id ? { ...c, status } : c))
     );
   };
 
-  const handleDelete = (id: string) => {
-    if (confirm("Delete this comment?")) {
-      setComments((prev) => prev.filter((c) => c.id !== id));
-    }
+  const handleConfirmDelete = () => {
+    if (!deleteTarget) return;
+    setComments((prev) => prev.filter((c) => c.id !== deleteTarget.id));
+    setDeleteTarget(null);
   };
 
   return (
@@ -107,8 +110,9 @@ export default function AdminCommentsPage() {
 
               <button
                 type="button"
-                onClick={() => handleDelete(comm.id)}
-                className="p-2 text-slate-400 hover:text-rose-600 rounded-lg"
+                onClick={() => setDeleteTarget(comm)}
+                className="p-2 text-slate-400 hover:text-rose-600 rounded-lg transition-colors cursor-pointer"
+                title="Delete Comment"
               >
                 <Trash2 className="w-4 h-4" />
               </button>
@@ -116,6 +120,20 @@ export default function AdminCommentsPage() {
           </div>
         ))}
       </div>
+
+      {/* Delete Confirmation Popup Modal */}
+      <DeleteConfirmModal
+        isOpen={!!deleteTarget}
+        title="Delete Comment"
+        itemName={deleteTarget ? `Comment by ${deleteTarget.customer_name}` : undefined}
+        message={
+          deleteTarget
+            ? `Are you sure you want to permanently delete the comment by "${deleteTarget.customer_name}"?`
+            : undefined
+        }
+        onConfirm={handleConfirmDelete}
+        onClose={() => setDeleteTarget(null)}
+      />
     </div>
   );
 }

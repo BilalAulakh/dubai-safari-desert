@@ -6,6 +6,7 @@ import HowItWorks from "@/components/home/HowItWorks";
 import DesertExperience from "@/components/home/DesertExperience";
 import WhyTravelersChooseUs from "@/components/home/WhyTravelersChooseUs";
 import HomeGallery from "@/components/home/HomeGallery";
+import HomeReviews from "@/components/home/HomeReviews";
 import HomeFAQ from "@/components/home/HomeFAQ";
 import CTASection from "@/components/home/CTASection";
 
@@ -14,16 +15,18 @@ import {
   getActivities,
   getGalleryItems,
   getFAQs,
+  getApprovedReviews,
 } from "@/lib/data/store";
 
 export const revalidate = 3600;
 
 export default async function HomePage() {
-  const [packages, activities, galleryItems, faqs] = await Promise.all([
+  const [packages, activities, galleryItems, faqs, reviews] = await Promise.all([
     getPackages(),
     getActivities(),
     getGalleryItems(),
     getFAQs(),
+    getApprovedReviews(),
   ]);
 
   return (
@@ -62,10 +65,13 @@ export default async function HomePage() {
       {/* 8. Gallery Highlights */}
       <HomeGallery items={galleryItems} />
 
-      {/* 9. Frequently Asked Questions */}
+      {/* 9. Guest Testimonials & Reviews */}
+      <HomeReviews reviews={reviews} />
+
+      {/* 10. Frequently Asked Questions */}
       <HomeFAQ faqs={faqs} />
 
-      {/* 10. High-converting Booking & WhatsApp CTA Banner */}
+      {/* 11. High-converting Booking & WhatsApp CTA Banner */}
       <CTASection />
     </div>
   );

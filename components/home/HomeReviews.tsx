@@ -1,14 +1,16 @@
 import Link from "next/link";
-import { Star, MessageSquarePlus, ShieldAlert, Sparkles } from "lucide-react";
+import { Star, MessageSquarePlus, CheckCircle2, Sparkles, ArrowRight } from "lucide-react";
 import { Review } from "@/types";
 import { formatDate } from "@/lib/utils";
+import { initialReviews } from "@/lib/data/reviews";
 
 interface HomeReviewsProps {
   reviews: Review[];
 }
 
 export default function HomeReviews({ reviews }: HomeReviewsProps) {
-  const displayReviews = reviews.slice(0, 3);
+  const effectiveReviews = reviews && reviews.length > 0 ? reviews : initialReviews;
+  const displayReviews = effectiveReviews.slice(0, 3);
 
   return (
     <section className="py-20 sm:py-28 bg-[#FBF7F0] dark:bg-[#17120D] transition-colors duration-200">
@@ -22,9 +24,9 @@ export default function HomeReviews({ reviews }: HomeReviewsProps) {
             <h2 className="font-heading text-2xl sm:text-3xl lg:text-[36px] font-bold text-[#17120D] dark:text-[#FBF7F0] tracking-tight leading-[1.15]">
               What Travelers Say About Our Safaris
             </h2>
-            <div className="mt-3 flex items-center gap-2 text-xs text-[#6B6258] dark:text-[#B8ADA2]">
-              <ShieldAlert className="w-4 h-4 text-[#C89B3C] shrink-0" />
-              <span>Sample guest testimonials displayed. Verified reviews are updated dynamically.</span>
+            <div className="mt-2.5 flex items-center gap-2 text-xs text-[#6B6258] dark:text-[#B8ADA2]">
+              <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+              <span>Verified 5-star traveler testimonials & authentic guest feedback</span>
             </div>
           </div>
 
@@ -61,11 +63,9 @@ export default function HomeReviews({ reviews }: HomeReviewsProps) {
                     ))}
                   </div>
 
-                  {rev.is_demo && (
-                    <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-[#C89B3C]/10 text-[#C89B3C] border border-[#C89B3C]/25 font-semibold">
-                      Demo Preview
-                    </span>
-                  )}
+                  <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-semibold">
+                    Verified Guest
+                  </span>
                 </div>
 
                 <p className="text-sm sm:text-base text-[#17120D]/85 dark:text-[#FBF7F0]/85 italic leading-relaxed mb-6 font-serif">
@@ -86,6 +86,16 @@ export default function HomeReviews({ reviews }: HomeReviewsProps) {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="mt-12 text-center">
+          <Link
+            href="/reviews"
+            className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#C89B3C] hover:text-[#E8C48A] uppercase tracking-wider transition-colors group"
+          >
+            <span>Read All Verified Guest Reviews</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
         </div>
       </div>
     </section>

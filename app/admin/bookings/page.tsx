@@ -13,12 +13,18 @@ import {
   Clock,
   Save,
   Loader2,
+  RotateCw,
+  Trash2,
 } from "lucide-react";
 import { Booking, BookingStatus } from "@/types";
 import { formatDate, createWhatsAppUrl } from "@/lib/utils";
+import DeleteConfirmModal from "@/components/admin/DeleteConfirmModal";
 
 export default function AdminBookingsPage() {
   const [bookings, setBookings] = useState<Booking[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<{ id: string; reference: string } | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
@@ -26,100 +32,124 @@ export default function AdminBookingsPage() {
   const [isSavingNote, setIsSavingNote] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
 
-  // Load bookings from in-memory / api
+  // Fetch live bookings from API
+  const fetchBookings = async () => {
+    setIsLoading(true);
+    try {
+      const res = await fetch("/api/bookings", { cache: "no-store" });
+      const json = await res.json();
+      if (json.success && Array.isArray(json.bookings)) {
+        setBookings(json.bookings);
+        if (json.bookings.length > 0) {
+          // If previously selected booking still exists, update it, otherwise select first
+          setSelectedBooking((prev) => {
+            if (prev) {
+              const updatedMatch = json.bookings.find((b: Booking) => b.id === prev.id);
+              if (updatedMatch) return updatedMatch;
+            }
+            return json.bookings[0];
+          });
+          setNoteText((prev) => {
+            const currentSelected = selectedBooking
+              ? json.bookings.find((b: Booking) => b.id === selectedBooking.id)
+              : json.bookings[0];
+            return currentSelected?.admin_notes || "";
+          });
+        }
+      }
+    } catch (err) {
+      console.error("Failed to load bookings:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    // Initial mock/store load
-    const load = async () => {
-      // In local dev, read mock bookings from store or fallback
-      const initial: Booking[] = [
-        {
-          id: "booking-demo-1",
-          booking_reference: "DSD-2026-DXB81",
-          package_id: "pkg-evening-safari",
-          package_name: "Evening Desert Safari with BBQ Dinner",
-          customer_name: "Alexander Wright",
-          phone: "+971 52 987 6543",
-          email: "alex.wright@example.com",
-          booking_date: "2026-09-12",
-          adults: 2,
-          children: 1,
-          pickup_location: "Downtown Dubai (Burj Khalifa area)",
-          hotel_name: "Address Downtown, Room 1402",
-          special_requests: "Vegetarian meal for 1 adult, baby seat for 1 child.",
-          status: "pending",
-          admin_notes: "Followed up on WhatsApp, waiting for customer to confirm pickup time.",
-          created_at: new Date(Date.now() - 3600000 * 4).toISOString(),
-        },
-        {
-          id: "booking-demo-2",
-          booking_reference: "DSD-2026-VIP44",
-          package_id: "pkg-private-safari",
-          package_name: "VIP Private Desert Safari Experience",
-          customer_name: "Nadia Al-Hassan",
-          phone: "+971 50 888 1234",
-          email: "nadia.hassan@example.com",
-          booking_date: "2026-09-15",
-          adults: 4,
-          children: 0,
-          pickup_location: "Palm Jumeirah & Madinat Jumeirah",
-          hotel_name: "Atlantis The Royal",
-          special_requests: "Anniversary celebration table at camp with cake.",
-          status: "confirmed",
-          admin_notes: "Private Land Cruiser allocated. Driver Rashid assigned.",
-          created_at: new Date(Date.now() - 3600000 * 28).toISOString(),
-        },
-        {
-          id: "booking-demo-3",
-          booking_reference: "DSD-2026-MORN7",
-          package_id: "pkg-morning-safari",
-          package_name: "Morning Desert Safari & Dune Bashing",
-          customer_name: "Liam O'Connor",
-          phone: "+971 55 432 1098",
-          email: "liam@example.ie",
-          booking_date: "2026-09-10",
-          adults: 2,
-          children: 0,
-          pickup_location: "Dubai Marina & JBR",
-          hotel_name: "Ritz-Carlton Dubai",
-          special_requests: "Early departure requested.",
-          status: "contacted",
-          admin_notes: "Offered 7:30 AM pickup, customer agreed.",
-          created_at: new Date(Date.now() - 3600000 * 12).toISOString(),
-        },
-      ];
-      setBookings(initial);
-      setSelectedBooking(initial[0]);
-      setNoteText(initial[0].admin_notes || "");
-    };
-    load();
+    fetchBookings();
   }, []);
 
-  const handleStatusChange = (bookingId: string, newStatus: BookingStatus) => {
+  const handleStatusChange = async (bookingId: string, newStatus: BookingStatus) => {
+    // Optimistic UI update
     setBookings((prev) =>
       prev.map((b) => (b.id === bookingId ? { ...b, status: newStatus } : b))
     );
     if (selectedBooking && selectedBooking.id === bookingId) {
       setSelectedBooking((prev) => (prev ? { ...prev, status: newStatus } : null));
     }
+
+    try {
+      await fetch("/api/bookings", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: bookingId, status: newStatus }),
+      });
+    } catch (err) {
+      console.error("Failed to update status on server:", err);
+    }
   };
 
-  const handleSaveNotes = () => {
+  const handleSaveNotes = async () => {
     if (!selectedBooking) return;
     setIsSavingNote(true);
     setSaveSuccess(false);
 
-    // Save in local state
-    setTimeout(() => {
+    try {
+      await fetch("/api/bookings", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: selectedBooking.id,
+          status: selectedBooking.status,
+          admin_notes: noteText,
+        }),
+      });
+
       setBookings((prev) =>
         prev.map((b) =>
           b.id === selectedBooking.id ? { ...b, admin_notes: noteText } : b
         )
       );
       setSelectedBooking((prev) => (prev ? { ...prev, admin_notes: noteText } : null));
-      setIsSavingNote(false);
       setSaveSuccess(true);
       setTimeout(() => setSaveSuccess(false), 2500);
-    }, 400);
+    } catch (err) {
+      console.error("Failed to save note:", err);
+    } finally {
+      setIsSavingNote(false);
+    }
+  };
+
+  const handleDeleteBooking = (bookingId: string, reference: string) => {
+    setDeleteTarget({ id: bookingId, reference });
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!deleteTarget) return;
+
+    setDeletingId(deleteTarget.id);
+    try {
+      const res = await fetch(`/api/bookings?id=${deleteTarget.id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (data.success) {
+        const deletedId = deleteTarget.id;
+        setBookings((prev) => prev.filter((b) => b.id !== deletedId));
+        if (selectedBooking?.id === deletedId) {
+          const remaining = bookings.filter((b) => b.id !== deletedId);
+          setSelectedBooking(remaining.length > 0 ? remaining[0] : null);
+          setNoteText(remaining.length > 0 ? remaining[0].admin_notes || "" : "");
+        }
+      } else {
+        alert(data.message || "Failed to delete booking.");
+      }
+    } catch (err) {
+      console.error("Failed to delete booking:", err);
+      alert("An unexpected error occurred while deleting the booking.");
+    } finally {
+      setDeletingId(null);
+      setDeleteTarget(null);
+    }
   };
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -179,6 +209,16 @@ export default function AdminBookingsPage() {
             <option value="cancelled">Cancelled</option>
             <option value="completed">Completed</option>
           </select>
+
+          <button
+            onClick={fetchBookings}
+            disabled={isLoading}
+            className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 transition-colors shadow-sm disabled:opacity-50 cursor-pointer"
+            title="Refresh bookings from server"
+          >
+            <RotateCw className={`w-3.5 h-3.5 ${isLoading ? "animate-spin" : ""}`} />
+            <span>Refresh</span>
+          </button>
         </div>
       </div>
 
@@ -250,9 +290,36 @@ export default function AdminBookingsPage() {
                         </select>
                       </td>
                       <td className="py-3.5 px-4">
-                        <span className="text-amber-700 font-bold hover:underline">
-                          View
-                        </span>
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedBooking(b);
+                              setNoteText(b.admin_notes || "");
+                            }}
+                            className="text-amber-700 font-bold hover:underline cursor-pointer"
+                          >
+                            View
+                          </button>
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDeleteBooking(b.id, b.booking_reference);
+                            }}
+                            disabled={deletingId === b.id}
+                            className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer disabled:opacity-40"
+                            title="Delete booking"
+                            aria-label={`Delete booking ${b.booking_reference}`}
+                          >
+                            {deletingId === b.id ? (
+                              <Loader2 className="w-3.5 h-3.5 animate-spin text-rose-500" />
+                            ) : (
+                              <Trash2 className="w-3.5 h-3.5" />
+                            )}
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   );
@@ -407,6 +474,29 @@ export default function AdminBookingsPage() {
                   )}
                 </div>
               </div>
+
+              {/* Danger Zone: Delete Booking */}
+              <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+                <span className="text-[11px] text-slate-400">Danger Zone</span>
+                <button
+                  type="button"
+                  onClick={() =>
+                    handleDeleteBooking(
+                      selectedBooking.id,
+                      selectedBooking.booking_reference
+                    )
+                  }
+                  disabled={deletingId === selectedBooking.id}
+                  className="px-3 py-1.5 rounded-xl text-xs font-bold text-rose-700 hover:text-rose-800 bg-rose-50 hover:bg-rose-100 border border-rose-200 flex items-center gap-1.5 transition-colors cursor-pointer disabled:opacity-50"
+                >
+                  {deletingId === selectedBooking.id ? (
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  ) : (
+                    <Trash2 className="w-3.5 h-3.5" />
+                  )}
+                  <span>Delete Booking</span>
+                </button>
+              </div>
             </>
           ) : (
             <p className="text-xs text-slate-400 text-center py-8">
@@ -415,6 +505,17 @@ export default function AdminBookingsPage() {
           )}
         </div>
       </div>
+
+      {/* Delete Confirmation Popup Modal */}
+      <DeleteConfirmModal
+        isOpen={!!deleteTarget}
+        title="Delete Booking Record"
+        itemName={deleteTarget?.reference}
+        message={`Are you sure you want to permanently delete booking reference "${deleteTarget?.reference}"? This will remove it from the system.`}
+        isLoading={!!deletingId}
+        onConfirm={handleConfirmDelete}
+        onClose={() => setDeleteTarget(null)}
+      />
     </div>
   );
 }

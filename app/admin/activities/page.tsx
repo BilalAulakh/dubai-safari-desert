@@ -5,11 +5,13 @@ import { initialActivities } from "@/lib/data/activities";
 import { Activity } from "@/types";
 import { Plus, Edit2, Trash2, X } from "lucide-react";
 import ImageUpload from "@/components/admin/ImageUpload";
+import DeleteConfirmModal from "@/components/admin/DeleteConfirmModal";
 
 export default function AdminActivitiesPage() {
   const [activities, setActivities] = useState<Activity[]>(initialActivities);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingActivity, setEditingActivity] = useState<Activity | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<{ id: string; name: string } | null>(null);
 
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
@@ -94,9 +96,13 @@ export default function AdminActivitiesPage() {
   };
 
   const handleDelete = (id: string, actName: string) => {
-    if (confirm(`Are you sure you want to delete "${actName}"?`)) {
-      setActivities((prev) => prev.filter((a) => a.id !== id));
-    }
+    setDeleteTarget({ id, name: actName });
+  };
+
+  const handleConfirmDelete = () => {
+    if (!deleteTarget) return;
+    setActivities((prev) => prev.filter((a) => a.id !== deleteTarget.id));
+    setDeleteTarget(null);
   };
 
   return (
@@ -312,6 +318,15 @@ export default function AdminActivitiesPage() {
           </div>
         </div>
       )}
+
+      {/* Delete Confirmation Popup Modal */}
+      <DeleteConfirmModal
+        isOpen={!!deleteTarget}
+        title="Delete Desert Activity"
+        itemName={deleteTarget?.name}
+        onConfirm={handleConfirmDelete}
+        onClose={() => setDeleteTarget(null)}
+      />
     </div>
   );
 }

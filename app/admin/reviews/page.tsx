@@ -14,19 +14,21 @@ import {
 } from "lucide-react";
 import { Review, ReviewStatus } from "@/types";
 import { formatDate } from "@/lib/utils";
+import api from "@/lib/axios";
+import DeleteConfirmModal from "@/components/admin/DeleteConfirmModal";
 
 export default function AdminReviewsPage() {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [reviewToDelete, setReviewToDelete] = useState<Review | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     async function loadReviews() {
       try {
-        const res = await fetch("/api/reviews");
-        const data = await res.json();
-        if (data.success && Array.isArray(data.reviews) && data.reviews.length > 0) {
+        const { data } = await api.get("/api/reviews");
+        if (data.success && Array.isArray(data.reviews)) {
           setReviews(data.reviews);
           return;
         }
@@ -68,22 +70,43 @@ export default function AdminReviewsPage() {
     loadReviews();
   }, []);
 
-  const handleUpdateStatus = (id: string, newStatus: ReviewStatus) => {
-    setReviews((prev) =>
-      prev.map((r) => (r.id === id ? { ...r, status: newStatus } : r))
-    );
+  const handleUpdateStatus = async (id: string, newStatus: ReviewStatus) => {
+    try {
+      await api.patch("/api/reviews", { id, status: newStatus });
+      setReviews((prev) =>
+        prev.map((r) => (r.id === id ? { ...r, status: newStatus } : r))
+      );
+    } catch (err) {
+      console.error("Failed to update review status:", err);
+    }
   };
 
-  const handleToggleFeatured = (id: string) => {
-    setReviews((prev) =>
-      prev.map((r) => (r.id === id ? { ...r, featured: !r.featured } : r))
-    );
+  const handleToggleFeatured = async (id: string) => {
+    const rev = reviews.find((r) => r.id === id);
+    if (!rev) return;
+    const newFeatured = !rev.featured;
+    try {
+      await api.patch("/api/reviews", { id, featured: newFeatured });
+      setReviews((prev) =>
+        prev.map((r) => (r.id === id ? { ...r, featured: newFeatured } : r))
+      );
+    } catch (err) {
+      console.error("Failed to toggle review featured status:", err);
+    }
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     if (!reviewToDelete) return;
-    setReviews((prev) => prev.filter((r) => r.id !== reviewToDelete.id));
-    setReviewToDelete(null);
+    try {
+      setIsDeleting(true);
+      await api.delete(`/api/reviews?id=${reviewToDelete.id}`);
+      setReviews((prev) => prev.filter((r) => r.id !== reviewToDelete.id));
+      setReviewToDelete(null);
+    } catch (err) {
+      console.error("Failed to delete review:", err);
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -287,76 +310,19 @@ export default function AdminReviewsPage() {
       )}
 
       {/* Custom Delete Confirmation Modal Popup */}
-      {reviewToDelete && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="delete-review-modal-title"
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150"
-        >
-          <div className="w-full max-w-md bg-white dark:bg-[#1D150E] rounded-3xl p-6 sm:p-7 shadow-2xl border border-slate-200 dark:border-[#C89B3C]/30 space-y-5 animate-in zoom-in-95 duration-200 relative">
-            {/* Close Cross */}
-            <button
-              type="button"
-              onClick={() => setReviewToDelete(null)}
-              className="absolute top-5 right-5 p-1.5 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
-              aria-label="Close modal"
-            >
-              <X className="w-4 h-4" />
-            </button>
-
-            {/* Warning Icon & Heading */}
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-rose-500/10 text-rose-600 border border-rose-500/20 flex items-center justify-center shrink-0 shadow-sm">
-                <AlertTriangle className="w-6 h-6 text-rose-600" />
-              </div>
-              <div className="pr-6">
-                <h3
-                  id="delete-review-modal-title"
-                  className="font-heading text-lg sm:text-xl font-bold text-slate-900 dark:text-white leading-tight"
-                >
-                  Delete Review?
-                </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
-                  Are you sure you want to permanently delete this review? This action cannot be undone.
-                </p>
-              </div>
-            </div>
-
-            {/* Review Preview Card */}
-            <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-black/35 border border-slate-200/80 dark:border-white/10 space-y-1.5 text-xs">
-              <div className="flex items-center justify-between text-slate-700 dark:text-slate-300 font-semibold">
-                <span className="font-bold">{reviewToDelete.customer_name}</span>
-                <span className="text-[11px] text-amber-500 font-bold">
-                  ★ {reviewToDelete.rating} / 5
-                </span>
-              </div>
-              <p className="text-slate-600 dark:text-slate-400 italic line-clamp-2 text-[11px] leading-relaxed">
-                &ldquo;{reviewToDelete.comment}&rdquo;
-              </p>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex items-center justify-end gap-3 pt-2">
-              <button
-                type="button"
-                onClick={() => setReviewToDelete(null)}
-                className="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-white/20 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={handleConfirmDelete}
-                className="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 active:scale-95 text-white text-xs font-bold shadow-md hover:shadow-lg transition-all"
-                id="confirm-delete-review-btn"
-              >
-                Yes, Delete Review
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <DeleteConfirmModal
+        isOpen={!!reviewToDelete}
+        title="Delete Customer Review"
+        itemName={reviewToDelete ? `Review by "${reviewToDelete.customer_name}"` : undefined}
+        message={
+          reviewToDelete
+            ? `Are you sure you want to permanently delete the review by "${reviewToDelete.customer_name}"? This action cannot be undone.`
+            : undefined
+        }
+        isLoading={isDeleting}
+        onConfirm={handleConfirmDelete}
+        onClose={() => setReviewToDelete(null)}
+      />
     </div>
   );
 }

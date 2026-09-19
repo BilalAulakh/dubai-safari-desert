@@ -4,11 +4,13 @@ import { useState } from "react";
 import { initialFAQs } from "@/lib/data/faqs";
 import { FAQ } from "@/types";
 import { Plus, Edit2, Trash2, X } from "lucide-react";
+import DeleteConfirmModal from "@/components/admin/DeleteConfirmModal";
 
 export default function AdminFAQsPage() {
   const [faqs, setFaqs] = useState<FAQ[]>(initialFAQs);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingFaq, setEditingFaq] = useState<FAQ | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<{ id: string; question: string } | null>(null);
 
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
@@ -63,10 +65,14 @@ export default function AdminFAQsPage() {
     );
   };
 
-  const handleDelete = (id: string) => {
-    if (confirm("Delete this FAQ question?")) {
-      setFaqs((prev) => prev.filter((f) => f.id !== id));
-    }
+  const handleDelete = (id: string, qText: string) => {
+    setDeleteTarget({ id, question: qText });
+  };
+
+  const handleConfirmDelete = () => {
+    if (!deleteTarget) return;
+    setFaqs((prev) => prev.filter((f) => f.id !== deleteTarget.id));
+    setDeleteTarget(null);
   };
 
   return (
@@ -140,9 +146,9 @@ export default function AdminFAQsPage() {
 
               <button
                 type="button"
-                onClick={() => handleDelete(faq.id)}
-                className="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg"
-                title="Delete FAQ"
+                onClick={() => handleDelete(faq.id, faq.question)}
+                className="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-950/30"
+                title="Delete Question"
               >
                 <Trash2 className="w-4 h-4" />
               </button>
@@ -238,6 +244,15 @@ export default function AdminFAQsPage() {
           </div>
         </div>
       )}
+
+      {/* Delete Confirmation Popup Modal */}
+      <DeleteConfirmModal
+        isOpen={!!deleteTarget}
+        title="Delete FAQ Question"
+        itemName={deleteTarget?.question}
+        onConfirm={handleConfirmDelete}
+        onClose={() => setDeleteTarget(null)}
+      />
     </div>
   );
 }

@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import ImageUpload from "@/components/admin/ImageUpload";
 import BlogContentEditor from "@/components/admin/BlogContentEditor";
+import api, { getApiErrorMessage } from "@/lib/axios";
 
 export default function CreateBlogPage() {
   const router = useRouter();
@@ -124,15 +125,9 @@ export default function CreateBlogPage() {
         published_at: targetStatus === "published" ? new Date(publishedAt).toISOString() : undefined,
       };
 
-      const res = await fetch("/api/admin/blogs", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const { data } = await api.post("/api/admin/blogs", payload);
 
-      const data = await res.json();
-
-      if (!res.ok || !data.success) {
+      if (!data.success) {
         throw new Error(data.error || "Failed to save blog post.");
       }
 
@@ -142,7 +137,7 @@ export default function CreateBlogPage() {
       }, 1000);
     } catch (err: any) {
       console.error(err);
-      setError(err.message || "An error occurred while saving the article.");
+      setError(getApiErrorMessage(err, "An error occurred while saving the article."));
     } finally {
       setSaving(false);
     }

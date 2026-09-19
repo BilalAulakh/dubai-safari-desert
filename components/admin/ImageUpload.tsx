@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import { Upload, Check, AlertCircle, Loader2, Image as ImageIcon, X, ExternalLink } from "lucide-react";
-import api from "@/lib/axios";
+import api, { getApiErrorMessage } from "@/lib/axios";
 
 interface ImageUploadProps {
   value: string;
@@ -58,8 +58,10 @@ export default function ImageUpload({
     } catch (err: any) {
       console.error(err);
       setError(
-        err.message ||
+        getApiErrorMessage(
+          err,
           "Upload failed. Make sure Storage RLS policy allows uploads to 'safari-images'."
+        )
       );
     } finally {
       setUploading(false);

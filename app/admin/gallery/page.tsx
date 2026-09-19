@@ -5,10 +5,12 @@ import { initialGalleryItems } from "@/lib/data/gallery";
 import { GalleryItem } from "@/types";
 import { Plus, Trash2, X } from "lucide-react";
 import ImageUpload from "@/components/admin/ImageUpload";
+import DeleteConfirmModal from "@/components/admin/DeleteConfirmModal";
 
 export default function AdminGalleryPage() {
   const [items, setItems] = useState<GalleryItem[]>(initialGalleryItems);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState<GalleryItem | null>(null);
 
   const [title, setTitle] = useState("");
   const [imageUrl, setImageUrl] = useState(
@@ -22,10 +24,10 @@ export default function AdminGalleryPage() {
     );
   };
 
-  const handleDelete = (id: string) => {
-    if (confirm("Delete this photo from the gallery?")) {
-      setItems((prev) => prev.filter((item) => item.id !== id));
-    }
+  const handleConfirmDelete = () => {
+    if (!deleteTarget) return;
+    setItems((prev) => prev.filter((item) => item.id !== deleteTarget.id));
+    setDeleteTarget(null);
   };
 
   const handleAdd = (e: React.FormEvent) => {
@@ -114,8 +116,9 @@ export default function AdminGalleryPage() {
 
                 <button
                   type="button"
-                  onClick={() => handleDelete(item.id)}
-                  className="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg"
+                  onClick={() => setDeleteTarget(item)}
+                  className="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg transition-colors cursor-pointer"
+                  title="Delete Photo"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                 </button>
@@ -204,6 +207,14 @@ export default function AdminGalleryPage() {
           </div>
         </div>
       )}
+      {/* Delete Confirmation Popup Modal */}
+      <DeleteConfirmModal
+        isOpen={!!deleteTarget}
+        title="Delete Photo"
+        itemName={deleteTarget?.title}
+        onConfirm={handleConfirmDelete}
+        onClose={() => setDeleteTarget(null)}
+      />
     </div>
   );
 }

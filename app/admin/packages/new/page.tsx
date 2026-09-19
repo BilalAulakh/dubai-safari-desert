@@ -13,7 +13,7 @@ import {
   Eye,
 } from "lucide-react";
 import ImageUpload from "@/components/admin/ImageUpload";
-import api from "@/lib/axios";
+import api, { getApiErrorMessage } from "@/lib/axios";
 
 export default function CreatePackagePage() {
   const router = useRouter();
@@ -105,7 +105,7 @@ export default function CreatePackagePage() {
       }, 1000);
     } catch (err: any) {
       console.error(err);
-      setErrorMessage(err.message || "Something went wrong.");
+      setErrorMessage(getApiErrorMessage(err, "Failed to create package."));
       setLoading(false);
     }
   };

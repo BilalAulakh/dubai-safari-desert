@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getAllPackages, createPackage } from "@/lib/data/store";
+import { getAllPackages, createPackage, deletePackage } from "@/lib/data/store";
 import { Package } from "@/types";
 
 export async function GET() {
@@ -77,5 +77,20 @@ export async function POST(request: Request) {
       { error: "Internal Server Error" },
       { status: 500 }
     );
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+    if (!id) {
+      return NextResponse.json({ error: "Package ID is required" }, { status: 400 });
+    }
+    const success = await deletePackage(id);
+    return NextResponse.json({ success });
+  } catch (err) {
+    console.error("Error deleting package:", err);
+    return NextResponse.json({ error: "Failed to delete package" }, { status: 500 });
   }
 }

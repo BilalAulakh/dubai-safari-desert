@@ -84,10 +84,11 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon.png", type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" },
     ],
-    shortcut: "/icon.svg",
-    apple: "/icon.svg",
+    shortcut: "/icon.png",
+    apple: "/apple-icon.png",
   },
 };
 
@@ -106,7 +107,7 @@ export default function RootLayout({
         name: SITE_CONFIG.name,
         legalName: SITE_CONFIG.legalName,
         url: SITE_CONFIG.url,
-        logo: `${SITE_CONFIG.url}/icon.svg`,
+        logo: `${SITE_CONFIG.url}/images/logo-transparent.png`,
         description: SITE_CONFIG.description,
         contactPoint: {
           "@type": "ContactPoint",
