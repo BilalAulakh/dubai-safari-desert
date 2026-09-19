@@ -30,6 +30,13 @@ export interface PackageItineraryItem {
   sort_order: number;
 }
 
+export type PackageCategory =
+  | "desert-safari"
+  | "atv-quad"
+  | "dune-buggy"
+  | "overnight"
+  | "special-offer";
+
 export interface Package {
   id: string;
   name: string;
@@ -37,6 +44,10 @@ export interface Package {
   short_description: string;
   description: string;
   price: number;
+  original_price?: number;
+  per_unit?: string;
+  category?: PackageCategory;
+  badges?: string[];
   duration: string;
   featured: boolean;
   active: boolean;

@@ -17,6 +17,7 @@ import { getPackageBySlug, getPackages, getFAQs } from "@/lib/data/store";
 import { formatPrice, createWhatsAppUrl, optimizeImageUrl } from "@/lib/utils";
 import { SITE_CONFIG } from "@/lib/config/site";
 import StickyBookingBar from "@/components/packages/StickyBookingBar";
+import FlexiblePriceCalculator from "@/components/packages/FlexiblePriceCalculator";
 import CTASection from "@/components/home/CTASection";
 import Breadcrumbs from "@/components/common/Breadcrumbs";
 
@@ -145,9 +146,26 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
               ]}
               className="mb-4"
             />
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase tracking-wider mb-3">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Premium Dubai Tour</span>
+            <div className="flex flex-wrap items-center gap-2 mb-3">
+              {pkg.badges && pkg.badges.length > 0 ? (
+                pkg.badges.map((badge, i) => (
+                  <span
+                    key={i}
+                    className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
+                      i === 0
+                        ? "bg-gradient-to-r from-[#FF6B00] to-[#FF2E88] text-white shadow-md"
+                        : "bg-amber-500/20 text-amber-300 border border-amber-500/30"
+                    }`}
+                  >
+                    {badge}
+                  </span>
+                ))
+              ) : (
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Signature Dubai Tour</span>
+                </div>
+              )}
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight">
               {pkg.name}
@@ -165,9 +183,21 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
                 <MapPin className="w-4 h-4 text-amber-400" />
                 <span>Free Hotel Pickup</span>
               </div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                <span className="text-sm font-extrabold">{formatPrice(pkg.price)}</span>
-                <span className="text-[11px] font-normal text-slate-300">/ adult</span>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                {pkg.original_price && pkg.original_price > pkg.price && (
+                  <span className="text-slate-400 line-through text-xs font-semibold">
+                    AED {pkg.original_price}
+                  </span>
+                )}
+                <span className="text-xs font-bold uppercase text-amber-300">From</span>
+                <span className="text-base font-extrabold text-white">AED {pkg.price}</span>
+                <span className="text-[11px] font-normal text-slate-300">
+                  {pkg.per_unit ? `(${pkg.per_unit})` : "/ guest"}
+                </span>
+              </div>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-semibold">
+                <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Flexible & Group Deals Available</span>
               </div>
             </div>
           </div>
@@ -311,67 +341,10 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
             </div>
           </div>
 
-          {/* Right Column: Sticky Booking Widget */}
+          {/* Right Column: Sticky Flexible Booking Calculator */}
           <div className="lg:col-span-1">
-            <div className="sticky top-24 bg-white p-6 rounded-2xl border border-amber-900/15 shadow-xl space-y-6">
-              <div>
-                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider block">
-                  Starting Price
-                </span>
-                <div className="flex items-baseline gap-2 mt-1">
-                  <span className="text-3xl font-extrabold text-slate-950">
-                    {formatPrice(pkg.price)}
-                  </span>
-                  <span className="text-xs text-slate-500">/ guest</span>
-                </div>
-                <p className="text-xs text-emerald-600 font-semibold mt-1 flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  <span>Free Cancellation up to 24 Hours</span>
-                </p>
-              </div>
-
-              <div className="space-y-3 pt-4 border-t border-slate-100 text-xs text-slate-600">
-                <div className="flex items-center justify-between">
-                  <span>Duration:</span>
-                  <span className="font-semibold text-slate-900">{pkg.duration}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span>Vehicle:</span>
-                  <span className="font-semibold text-slate-900">4x4 Land Cruiser</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span>Pickup:</span>
-                  <span className="font-semibold text-slate-900">Door-to-door included</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span>Payment:</span>
-                  <span className="font-semibold text-slate-900">Pay on Confirmation</span>
-                </div>
-              </div>
-
-              <div className="space-y-3 pt-4">
-                <Link
-                  href={`/booking?package=${encodeURIComponent(pkg.id)}`}
-                  className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold text-sm uppercase tracking-wider text-center block shadow hover:from-amber-400 hover:to-amber-500 transition-all hover:scale-[1.02]"
-                  id="package-detail-book-now"
-                >
-                  Book This Safari
-                </Link>
-
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow transition-colors"
-                >
-                  <MessageCircle className="w-4 h-4" />
-                  <span>Ask on WhatsApp</span>
-                </a>
-              </div>
-
-              <div className="pt-2 text-center text-[11px] text-slate-400">
-                No credit card required for inquiry submission.
-              </div>
+            <div className="sticky top-24">
+              <FlexiblePriceCalculator pkg={pkg} />
             </div>
           </div>
         </div>

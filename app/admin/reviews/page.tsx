@@ -11,6 +11,10 @@ import {
   Search,
   AlertTriangle,
   X,
+  Share2,
+  Copy,
+  ExternalLink,
+  MessageCircle,
 } from "lucide-react";
 import { Review, ReviewStatus } from "@/types";
 import { formatDate } from "@/lib/utils";
@@ -23,6 +27,34 @@ export default function AdminReviewsPage() {
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [reviewToDelete, setReviewToDelete] = useState<Review | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
+  const [copiedMessage, setCopiedMessage] = useState(false);
+  const [origin, setOrigin] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setOrigin(window.location.origin);
+    }
+  }, []);
+
+  const reviewUrl = `${origin || "http://localhost:3000"}/review`;
+  const whatsappTemplate = `Dear guest, thank you for choosing Safari Dune Tours for your Dubai desert adventure! 🐪✨ We hope you had a thrilling and memorable experience. Could you please take 30 seconds to drop us a quick 5-star rating and share your review here? 👉 ${reviewUrl} Your feedback means the world to our drivers and team! Thank you!`;
+
+  const copyToClipboard = async (text: string, isMsg: boolean) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      if (isMsg) {
+        setCopiedMessage(true);
+        setTimeout(() => setCopiedMessage(false), 2000);
+      } else {
+        setCopiedLink(true);
+        setTimeout(() => setCopiedLink(false), 2000);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   useEffect(() => {
     async function loadReviews() {
@@ -35,37 +67,7 @@ export default function AdminReviewsPage() {
       } catch (err) {
         console.error("Failed to load reviews:", err);
       }
-
-      // Initial reviews load fallback
-      const demoReviews: Review[] = [
-        {
-          id: "rev-1",
-          customer_name: "Sarah Jenkins",
-          country: "United Kingdom",
-          email: "sarah.j@example.com",
-          rating: 5,
-          comment:
-            "The evening desert safari exceeded all our expectations! The dune bashing was thrilling yet felt completely safe with our driver Rashid. The BBQ dinner was delicious and the fire show under the night sky was spectacular.",
-          status: "approved",
-          featured: true,
-          created_at: "2026-08-15T16:20:00Z",
-          is_demo: true,
-        },
-        {
-          id: "rev-2",
-          customer_name: "Marco Rossi",
-          country: "Italy",
-          email: "m.rossi@example.com",
-          rating: 5,
-          comment:
-            "We booked the VIP Private Safari for my family of four. Booking was effortless over WhatsApp, pickup arrived exactly on time, and having our private Land Cruiser made the experience so comfortable for the kids.",
-          status: "approved",
-          featured: true,
-          created_at: "2026-08-20T11:45:00Z",
-          is_demo: true,
-        },
-      ];
-      setReviews(demoReviews);
+      setReviews([]);
     }
     loadReviews();
   }, []);
@@ -129,13 +131,25 @@ export default function AdminReviewsPage() {
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
-      <div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-          Review Moderation
-        </h1>
-        <p className="text-xs sm:text-sm text-slate-500 mt-1">
-          Approve, reject, or feature guest testimonials. Only approved reviews appear on the public website.
-        </p>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            Review Moderation
+          </h1>
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
+            Approve, reject, or feature guest testimonials. Only approved reviews appear on the public website.
+          </p>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setIsShareModalOpen(true)}
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold text-xs uppercase tracking-wider shadow hover:from-amber-400 hover:to-amber-500 transition-all hover:scale-105 active:scale-95 shrink-0"
+          id="btn-get-review-link"
+        >
+          <Share2 className="w-4 h-4" />
+          <span>Get Review Link for Guests</span>
+        </button>
       </div>
 
       {/* Filter & Search */}
@@ -323,6 +337,104 @@ export default function AdminReviewsPage() {
         onConfirm={handleConfirmDelete}
         onClose={() => setReviewToDelete(null)}
       />
+
+      {/* Share Review Link Modal */}
+      {isShareModalOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
+        >
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full border border-slate-200 shadow-2xl relative space-y-6">
+            <button
+              type="button"
+              onClick={() => setIsShareModalOpen(false)}
+              className="absolute top-5 right-5 p-2 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 text-amber-700 text-xs font-bold uppercase tracking-wider mb-2">
+                <Share2 className="w-3.5 h-3.5" />
+                <span>Customer Review Link</span>
+              </div>
+              <h3 className="text-xl font-extrabold text-slate-900">
+                Collect Direct 5-Star Reviews
+              </h3>
+              <p className="text-xs text-slate-500 mt-1">
+                Share this special direct link with your safari guests on WhatsApp or SMS right after their tour.
+              </p>
+            </div>
+
+            {/* Direct Link Box */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold uppercase text-slate-700 block">
+                Direct Review URL
+              </label>
+              <div className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+                <input
+                  type="text"
+                  readOnly
+                  value={reviewUrl}
+                  className="bg-transparent text-xs text-slate-700 w-full outline-none font-mono"
+                />
+                <button
+                  type="button"
+                  onClick={() => copyToClipboard(reviewUrl, false)}
+                  className="px-3 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-bold hover:bg-slate-800 transition-colors shrink-0 flex items-center gap-1"
+                >
+                  <Copy className="w-3.5 h-3.5" />
+                  <span>{copiedLink ? "Copied!" : "Copy"}</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Ready WhatsApp Message Box */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold uppercase text-slate-700 block">
+                Pre-written WhatsApp Message
+              </label>
+              <div className="p-3.5 rounded-xl bg-emerald-50/50 border border-emerald-200 text-xs text-slate-700 leading-relaxed">
+                {whatsappTemplate}
+              </div>
+              <div className="flex items-center gap-2 pt-1">
+                <button
+                  type="button"
+                  onClick={() => copyToClipboard(whatsappTemplate, true)}
+                  className="flex-1 py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-sm transition-colors"
+                >
+                  <Copy className="w-4 h-4" />
+                  <span>{copiedMessage ? "Message Copied!" : "Copy Full Message"}</span>
+                </button>
+                <a
+                  href={`https://wa.me/?text=${encodeURIComponent(whatsappTemplate)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs flex items-center gap-1.5 transition-colors"
+                >
+                  <MessageCircle className="w-4 h-4 text-emerald-600" />
+                  <span>Share</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Direct Open Link */}
+            <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+              <span>Test the link yourself:</span>
+              <a
+                href={reviewUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-amber-600 hover:text-amber-700 font-bold flex items-center gap-1 hover:underline"
+              >
+                <span>Open /review page</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

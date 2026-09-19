@@ -13,33 +13,31 @@ export default function WhyChooseUs() {
   const trustPoints = [
     {
       icon: Compass,
-      title: "Professional Safari Experience",
+      badge: "🏆 #1 Rated",
+      title: "Award-Winning Service",
       description:
-        "Experienced desert guides with comfortable 4x4 Land Cruisers ensure memorable red dune drives, sandboarding, and authentic Bedouin camp hospitality.",
-    },
-    {
-      icon: CalendarCheck,
-      title: "Easy Booking Process",
-      description:
-        "Reserve in under 2 minutes with zero advance card requirements. Receive an instant booking reference code and prompt confirmation.",
-    },
-    {
-      icon: HeadphonesIcon,
-      title: "Dedicated Customer Support",
-      description:
-        "Real-time WhatsApp and phone assistance available daily to answer questions, adjust timings, and accommodate special family requests.",
-    },
-    {
-      icon: Layers,
-      title: "Flexible Safari Packages",
-      description:
-        "Morning sunrise drives, evening BBQ buffets, overnight stargazing, quad biking, and private VIP charters tailored to your group.",
+        "Voted top desert safari operator in Dubai with over 2,000+ 5-star traveler reviews and DTCM certified safari marshals.",
     },
     {
       icon: ShieldCheck,
-      title: "Trusted Dubai Tour Experience",
+      badge: "🛡️ 100% Safe",
+      title: "Licensed & Roll-Caged 4x4s",
       description:
-        "Dedicated to passenger comfort, safety-first driving on desert terrain, and memorable Arabian adventures for guests worldwide.",
+        "Every vehicle features heavy-duty roll cages, first-aid kits, GPS tracking, and comprehensive commercial passenger insurance.",
+    },
+    {
+      icon: Layers,
+      badge: "🤝 Honest Pricing",
+      title: "Transparent & Card-Free",
+      description:
+        "Zero hidden fees and no upfront card required. Pay on the day of your tour in cash or card directly to your driver.",
+    },
+    {
+      icon: CalendarCheck,
+      badge: "🏨 Free Transfers",
+      title: "Door-to-Door Transfers",
+      description:
+        "Complimentary pickup and drop-off in air-conditioned 4x4 Land Cruisers from any hotel, apartment, or residence in Dubai.",
     },
   ];
 
@@ -63,25 +61,26 @@ export default function WhyChooseUs() {
           </div>
         </ScrollReveal>
 
-        {/* 5 Distinct Trust Pillars Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        {/* 4 Distinct Trust Pillars Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {trustPoints.map((point, index) => {
             const Icon = point.icon;
             return (
               <ScrollReveal key={index} delay={index * 70}>
-                <div
-                  className={`h-full p-7 rounded-2xl bg-white dark:bg-[#241A12] border border-[#C89B3C]/25 shadow-sm hover:border-[#C89B3C] hover:shadow-xl transition-all duration-300 flex flex-col justify-between hover:-translate-y-1 ${
-                    index === 4 ? "md:col-span-2 lg:col-span-1" : ""
-                  }`}
-                >
+                <div className="h-full p-6 sm:p-7 rounded-2xl bg-white dark:bg-[#241A12] border border-[#C89B3C]/25 shadow-sm hover:border-[#C89B3C] hover:shadow-xl transition-all duration-300 flex flex-col justify-between hover:-translate-y-1">
                   <div>
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#C89B3C]/20 to-[#C89B3C]/5 border border-[#C89B3C]/30 flex items-center justify-center mb-5 text-[#8C6214] dark:text-[#E8C48A] shadow-inner">
-                      <Icon className="w-6 h-6" />
+                    <div className="flex items-center justify-between mb-5">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#C89B3C]/20 to-[#C89B3C]/5 border border-[#C89B3C]/30 flex items-center justify-center text-[#8C6214] dark:text-[#E8C48A] shadow-inner">
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <span className="text-[11px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-[#C89B3C]/15 border border-[#C89B3C]/30 text-[#8C6214] dark:text-[#E8C48A]">
+                        {point.badge}
+                      </span>
                     </div>
                     <h3 className="font-heading text-lg font-bold tracking-tight text-[#17120D] dark:text-[#FBF7F0] mb-2.5">
                       {point.title}
                     </h3>
-                    <p className="text-sm leading-relaxed text-[#6B6258] dark:text-[#B8ADA2]">
+                    <p className="text-xs sm:text-sm leading-relaxed text-[#6B6258] dark:text-[#B8ADA2]">
                       {point.description}
                     </p>
                   </div>

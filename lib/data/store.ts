@@ -91,16 +91,27 @@ export async function getPackages(): Promise<Package[]> {
         .eq("active", true);
 
       if (!error && data && data.length > 0) {
-        return data.map((pkg: any) => {
+        const supabaseMapped = data.map((pkg: any) => {
           const fallback = fallbackPackages.find((f) => f.slug === pkg.slug || f.id === pkg.id);
           return {
+            ...fallback,
             ...pkg,
             price: Number(pkg.price),
+            original_price: fallback?.original_price,
+            per_unit: fallback?.per_unit,
+            category: fallback?.category,
+            badges: fallback?.badges,
             inclusions: fallback?.inclusions || ["4x4 Dune Bashing", "Camel Ride", "BBQ Dinner", "Live Shows"],
             exclusions: fallback?.exclusions || ["Alcoholic Drinks", "Quad Bike (optional)"],
             itinerary: fallback?.itinerary || [],
           };
         });
+
+        const existingSlugs = new Set(data.map((p: any) => p.slug));
+        const missingFromDb = fallbackPackages.filter(
+          (f) => f.active && !existingSlugs.has(f.slug)
+        );
+        return [...missingFromDb, ...supabaseMapped];
       }
     }
   } catch {
@@ -118,16 +129,25 @@ export async function getAllPackages(): Promise<Package[]> {
         .select("id, name, slug, short_description, description, price, duration, featured, active, main_image, gallery, pickup_info, cancellation_policy, seo_title, seo_description");
 
       if (!error && data && data.length > 0) {
-        return data.map((pkg: any) => {
+        const supabaseMapped = data.map((pkg: any) => {
           const fallback = fallbackPackages.find((f) => f.slug === pkg.slug || f.id === pkg.id);
           return {
+            ...fallback,
             ...pkg,
             price: Number(pkg.price),
+            original_price: fallback?.original_price,
+            per_unit: fallback?.per_unit,
+            category: fallback?.category,
+            badges: fallback?.badges,
             inclusions: fallback?.inclusions || ["4x4 Dune Bashing", "Camel Ride", "BBQ Dinner", "Live Shows"],
             exclusions: fallback?.exclusions || ["Alcoholic Drinks", "Quad Bike (optional)"],
             itinerary: fallback?.itinerary || [],
           };
         });
+
+        const existingSlugs = new Set(data.map((p: any) => p.slug));
+        const missingFromDb = fallbackPackages.filter((f) => !existingSlugs.has(f.slug));
+        return [...missingFromDb, ...supabaseMapped];
       }
     }
   } catch {}
@@ -147,8 +167,13 @@ export async function getPackageBySlug(slug: string): Promise<Package | null> {
       if (!error && data) {
         const fallback = fallbackPackages.find((f) => f.slug === data.slug || f.id === data.id);
         return {
+          ...fallback,
           ...data,
           price: Number(data.price),
+          original_price: fallback?.original_price,
+          per_unit: fallback?.per_unit,
+          category: fallback?.category,
+          badges: fallback?.badges,
           inclusions: fallback?.inclusions || ["4x4 Dune Bashing", "Camel Ride", "BBQ Dinner", "Live Shows"],
           exclusions: fallback?.exclusions || ["Alcoholic Drinks", "Quad Bike (optional)"],
           itinerary: fallback?.itinerary || [],
@@ -190,26 +215,43 @@ export async function updatePackage(id: string, updates: Partial<Package>): Prom
   try {
     const supabase = getPublicSupabase();
     if (supabase) {
-      await supabase.from("packages").update(updates).eq("id", id);
+      const dbUpdates: any = {};
+      if (updates.name !== undefined) dbUpdates.name = updates.name;
+      if (updates.price !== undefined) dbUpdates.price = updates.price;
+      if (updates.duration !== undefined) dbUpdates.duration = updates.duration;
+      if (updates.short_description !== undefined) dbUpdates.short_description = updates.short_description;
+      if (updates.description !== undefined) dbUpdates.description = updates.description;
+      if (updates.main_image !== undefined) dbUpdates.main_image = updates.main_image;
+      if (updates.featured !== undefined) dbUpdates.featured = updates.featured;
+      if (updates.active !== undefined) dbUpdates.active = updates.active;
+      if (updates.slug !== undefined) dbUpdates.slug = updates.slug;
+
+      await supabase.from("packages").update(dbUpdates).or(`id.eq.${id},slug.eq.${id}`);
     }
   } catch {}
-  const index = fallbackPackages.findIndex((p) => p.id === id);
-  if (index === -1) return null;
-  fallbackPackages[index] = { ...fallbackPackages[index], ...updates };
-  return fallbackPackages[index];
+  const index = fallbackPackages.findIndex((p) => p.id === id || p.slug === id);
+  if (index !== -1) {
+    fallbackPackages[index] = { ...fallbackPackages[index], ...updates };
+    return fallbackPackages[index];
+  }
+  return null;
 }
 
 export async function deletePackage(id: string): Promise<boolean> {
+  let dbSuccess = false;
   try {
     const supabase = getPublicSupabase();
     if (supabase) {
-      await supabase.from("packages").delete().eq("id", id);
+      const { error } = await supabase.from("packages").delete().or(`id.eq.${id},slug.eq.${id}`);
+      if (!error) dbSuccess = true;
     }
   } catch {}
-  const index = fallbackPackages.findIndex((p) => p.id === id);
-  if (index === -1) return false;
-  fallbackPackages.splice(index, 1);
-  return true;
+  const index = fallbackPackages.findIndex((p) => p.id === id || p.slug === id);
+  if (index !== -1) {
+    fallbackPackages.splice(index, 1);
+    return true;
+  }
+  return dbSuccess;
 }
 
 // --- ACTIVITIES ---
@@ -494,28 +536,24 @@ export async function getApprovedReviews(): Promise<Review[]> {
         .order("created_at", { ascending: false });
 
       if (!error && data) {
-        const dbReviews: Review[] = data.map((r: any) => ({
-          id: r.id,
-          customer_name: r.customer_name || "Safari Guest",
-          country: r.country || "International Guest",
-          rating: Number(r.rating) || 5,
-          comment: r.comment || "",
-          status: (r.status as ReviewStatus) || "approved",
-          featured: Boolean(r.featured),
-          created_at: r.created_at || new Date().toISOString(),
-          is_demo: false,
-        }));
-
-        const demoReviews = fallbackReviews.filter((r) => r.is_demo);
-        return [...dbReviews, ...demoReviews]
-          .filter((r) => !deletedReviewIds.has(r.id))
-          .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+        return data
+          .map((r: any) => ({
+            id: r.id,
+            customer_name: r.customer_name || "Safari Guest",
+            country: r.country || "International Guest",
+            rating: Number(r.rating) || 5,
+            comment: r.comment || "",
+            status: (r.status as ReviewStatus) || "approved",
+            featured: Boolean(r.featured),
+            created_at: r.created_at || new Date().toISOString(),
+            is_demo: false,
+          }))
+          .filter((r) => !deletedReviewIds.has(r.id));
       }
     }
   } catch {}
   return fallbackReviews
-    .filter((r) => r.status === "approved" && !deletedReviewIds.has(r.id))
-    .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+    .filter((r) => r.status === "approved" && !deletedReviewIds.has(r.id) && !r.is_demo);
 }
 
 export async function getAllReviews(): Promise<Review[]> {
@@ -528,29 +566,23 @@ export async function getAllReviews(): Promise<Review[]> {
         .order("created_at", { ascending: false });
 
       if (!error && data) {
-        const dbReviews: Review[] = data.map((r: any) => ({
-          id: r.id,
-          customer_name: r.customer_name || "Safari Guest",
-          country: r.country || "International Guest",
-          rating: Number(r.rating) || 5,
-          comment: r.comment || "",
-          status: (r.status as ReviewStatus) || "approved",
-          featured: Boolean(r.featured),
-          created_at: r.created_at || new Date().toISOString(),
-          is_demo: false,
-        }));
-        const demoReviews = fallbackReviews.filter((r) => r.is_demo);
-        return [...dbReviews, ...demoReviews]
-          .filter((r) => !deletedReviewIds.has(r.id))
-          .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+        return data
+          .map((r: any) => ({
+            id: r.id,
+            customer_name: r.customer_name || "Safari Guest",
+            country: r.country || "International Guest",
+            rating: Number(r.rating) || 5,
+            comment: r.comment || "",
+            status: (r.status as ReviewStatus) || "approved",
+            featured: Boolean(r.featured),
+            created_at: r.created_at || new Date().toISOString(),
+            is_demo: false,
+          }))
+          .filter((r) => !deletedReviewIds.has(r.id));
       }
     }
   } catch {}
-  return [...fallbackReviews]
-    .filter((r) => !deletedReviewIds.has(r.id))
-    .sort(
-      (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-    );
+  return fallbackReviews.filter((r) => !deletedReviewIds.has(r.id) && !r.is_demo);
 }
 
 export async function createReview(data: Omit<Review, "id" | "created_at" | "status">): Promise<Review> {

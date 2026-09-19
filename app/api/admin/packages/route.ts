@@ -80,6 +80,22 @@ export async function POST(request: Request) {
   }
 }
 
+export async function PATCH(request: Request) {
+  try {
+    const body = await request.json();
+    const { id, ...updates } = body;
+    if (!id) {
+      return NextResponse.json({ error: "Package ID is required" }, { status: 400 });
+    }
+    const { updatePackage } = await import("@/lib/data/store");
+    const updated = await updatePackage(id, updates);
+    return NextResponse.json({ success: true, package: updated });
+  } catch (err) {
+    console.error("Error updating package:", err);
+    return NextResponse.json({ error: "Failed to update package" }, { status: 500 });
+  }
+}
+
 export async function DELETE(request: Request) {
   try {
     const { searchParams } = new URL(request.url);

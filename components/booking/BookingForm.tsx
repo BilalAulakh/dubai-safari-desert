@@ -15,12 +15,14 @@ interface BookingFormProps {
   packages: Package[];
   pickupLocations: PickupLocation[];
   defaultPackageId?: string;
+  defaultAdults?: number;
 }
 
 export default function BookingForm({
   packages,
   pickupLocations,
   defaultPackageId,
+  defaultAdults,
 }: BookingFormProps) {
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -43,7 +45,7 @@ export default function BookingForm({
     defaultValues: {
       package_id: defaultPackageId || packages[0]?.id || "",
       booking_date: minDateString,
-      adults: 2,
+      adults: defaultAdults && defaultAdults > 0 ? defaultAdults : 2,
       children: 0,
       pickup_location: pickupLocations[0]?.name || "Downtown Dubai (Burj Khalifa area)",
       hotel_name: "",
@@ -55,10 +57,29 @@ export default function BookingForm({
   const selectedPackage = packages.find((p) => p.id === selectedPackageId);
   const adultsCount = watch("adults") || 1;
   const childrenCount = watch("children") || 0;
+  const totalGuests = adultsCount + childrenCount;
 
-  const estimatedTotalAED = selectedPackage
+  // Flexible group discount tier calculation
+  const isPerVehicle = selectedPackage?.per_unit && (
+    selectedPackage.per_unit.toLowerCase().includes("buggy") ||
+    selectedPackage.per_unit.toLowerCase().includes("quad") ||
+    selectedPackage.per_unit.toLowerCase().includes("bike")
+  );
+
+  let discountPercent = 0;
+  if (!isPerVehicle) {
+    if (totalGuests >= 6) discountPercent = 15;
+    else if (totalGuests >= 3) discountPercent = 10;
+  } else if (adultsCount >= 3) {
+    discountPercent = 10;
+  }
+
+  const standardTotalAED = selectedPackage
     ? selectedPackage.price * adultsCount + selectedPackage.price * 0.7 * childrenCount
     : 0;
+
+  const estimatedTotalAED = Math.round(standardTotalAED * (1 - discountPercent / 100));
+  const groupSavings = standardTotalAED - estimatedTotalAED;
 
   const onSubmit = async (data: BookingFormData) => {
     setIsSubmitting(true);
@@ -110,7 +131,7 @@ export default function BookingForm({
           >
             {packages.map((pkg) => (
               <option key={pkg.id} value={pkg.id} className="bg-white dark:bg-[#17120D]">
-                {pkg.name} — From {formatPrice(pkg.price)} / guest
+                {pkg.name} — AED {pkg.price} {pkg.per_unit ? `(${pkg.per_unit})` : "/ guest"}
               </option>
             ))}
           </select>
@@ -295,9 +316,14 @@ export default function BookingForm({
       <div className="p-7 rounded-2xl bg-[#F2E8D5] dark:bg-[#1D150E] border border-[#C89B3C]/25 flex flex-col sm:flex-row items-center justify-between gap-6">
         <div>
           <span className="text-xs font-semibold uppercase tracking-wider text-[#6B6258] dark:text-[#B8ADA2]">
-            Estimated Safari Total
+            Estimated Safari Total (Flexible Group Pricing)
           </span>
           <div className="flex items-baseline gap-2.5 mt-1">
+            {groupSavings > 0 && (
+              <span className="text-sm font-bold text-gray-400 line-through">
+                {formatPrice(standardTotalAED)}
+              </span>
+            )}
             <span className="font-heading text-3xl sm:text-4xl font-bold text-[#17120D] dark:text-[#FBF7F0]">
               {formatPrice(estimatedTotalAED)}
             </span>
@@ -305,7 +331,23 @@ export default function BookingForm({
               ({adultsCount} Adult{adultsCount > 1 ? "s" : ""}{childrenCount > 0 ? `, ${childrenCount} Child${childrenCount > 1 ? "ren" : ""}` : ""})
             </span>
           </div>
-          <p className="text-xs text-[#6B6258] dark:text-[#B8ADA2] mt-1 flex items-center gap-1.5">
+
+          {groupSavings > 0 ? (
+            <div className="mt-1.5 flex flex-wrap items-center gap-2">
+              <span className="px-2 py-0.5 rounded-full bg-emerald-600 text-white text-[10px] font-black uppercase tracking-wider">
+                Group Saver ({discountPercent}% OFF)
+              </span>
+              <span className="text-xs text-emerald-700 dark:text-emerald-400 font-bold">
+                You save {formatPrice(groupSavings)}!
+              </span>
+            </div>
+          ) : (
+            <p className="text-[11px] text-amber-700 dark:text-amber-400 font-medium mt-1">
+              ✨ Tip: Select 3+ guests to unlock 10% to 15% flexible group savings!
+            </p>
+          )}
+
+          <p className="text-xs text-[#6B6258] dark:text-[#B8ADA2] mt-2 flex items-center gap-1.5">
             <ShieldCheck className="w-3.5 h-3.5 text-[#C89B3C]" />
             <span>No advance card charge. Pay after confirmation with our team.</span>
           </p>

@@ -91,4 +91,22 @@ export const initialFAQs: FAQ[] = [
     active: true,
     sort_order: 10,
   },
+  {
+    id: "faq-11",
+    question: "How does the Buy 1 Get 1 Free Desert Safari offer work?",
+    answer:
+      "Our signature Buy 1 Get 1 Free promotion allows 2 persons to experience the complete evening desert safari for just AED 79 total! Both guests receive the full experience including 4x4 dune bashing, camel riding, sandboarding, BBQ dinner buffet, and 7 live stage shows. Spots for sunset departures are limited daily, so we advise reserving in advance.",
+    category: "Packages",
+    active: true,
+    sort_order: 11,
+  },
+  {
+    id: "faq-12",
+    question: "Do I need a driving license to drive an ATV Quad Bike or Dune Buggy?",
+    answer:
+      "No driving license or prior off-road experience is required! Our Polaris RZR and Can-Am Maverick dune buggies as well as our ATV quad bikes are fully automatic and easy to handle. Before driving, our certified instructors provide a comprehensive safety demonstration, fit you with helmets and goggles, and lead you safely across the sand dunes.",
+    category: "Safety",
+    active: true,
+    sort_order: 12,
+  },
 ];

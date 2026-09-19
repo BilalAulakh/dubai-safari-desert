@@ -11,24 +11,30 @@ import DeleteConfirmModal from "@/components/admin/DeleteConfirmModal";
 
 export default function AdminPackagesPage() {
   const [packages, setPackages] = useState<Package[]>(initialPackages);
+  const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingPackage, setEditingPackage] = useState<Package | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<{ id: string; name: string } | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  // Sync custom packages from localStorage on mount
-  useEffect(() => {
+  // Fetch live packages from database on mount
+  const loadPackages = async () => {
     try {
-      const stored = localStorage.getItem("admin_custom_packages");
-      if (stored) {
-        const custom: Package[] = JSON.parse(stored);
-        if (custom.length > 0) {
-          setPackages([...custom, ...initialPackages]);
-        }
+      setLoading(true);
+      const res = await fetch("/api/admin/packages");
+      const data = await res.json();
+      if (data.success && Array.isArray(data.packages)) {
+        setPackages(data.packages);
       }
     } catch (e) {
-      console.error(e);
+      console.error("Failed to load packages:", e);
+    } finally {
+      setLoading(false);
     }
+  };
+
+  useEffect(() => {
+    loadPackages();
   }, []);
 
   // Form fields
@@ -77,9 +83,9 @@ export default function AdminPackagesPage() {
     setShortDesc(pkg.short_description);
     setDesc(pkg.description);
     setMainImage(pkg.main_image);
-    setInclusionsText(pkg.inclusions.join("\n"));
-    setExclusionsText(pkg.exclusions.join("\n"));
-    setFeatured(pkg.featured);
+    setInclusionsText((pkg.inclusions || []).join("\n"));
+    setExclusionsText((pkg.exclusions || []).join("\n"));
+    setFeatured(Boolean(pkg.featured));
     setIsModalOpen(true);
   };
 
@@ -95,7 +101,7 @@ export default function AdminPackagesPage() {
     }
   };
 
-  const handleSave = (e: React.FormEvent) => {
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim()) return;
 
@@ -110,25 +116,39 @@ export default function AdminPackagesPage() {
 
     if (editingPackage) {
       // Update existing
+      const updateData = {
+        name: name.trim(),
+        slug: slug.trim() || editingPackage.slug,
+        price: Number(price),
+        duration: duration.trim(),
+        short_description: shortDesc.trim(),
+        description: desc.trim(),
+        main_image: mainImage.trim(),
+        inclusions: inclusionsArray,
+        exclusions: exclusionsArray,
+        featured,
+      };
+
       setPackages((prev) =>
         prev.map((p) =>
           p.id === editingPackage.id
             ? {
                 ...p,
-                name: name.trim(),
-                slug: slug.trim() || editingPackage.slug,
-                price: Number(price),
-                duration: duration.trim(),
-                short_description: shortDesc.trim(),
-                description: desc.trim(),
-                main_image: mainImage.trim(),
-                inclusions: inclusionsArray,
-                exclusions: exclusionsArray,
-                featured,
+                ...updateData,
               }
             : p
         )
       );
+
+      try {
+        await fetch("/api/admin/packages", {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: editingPackage.id, ...updateData }),
+        });
+      } catch (err) {
+        console.error("Failed to update package in DB:", err);
+      }
     } else {
       // Add new
       const newPkg: Package = {
@@ -185,21 +205,60 @@ export default function AdminPackagesPage() {
       };
 
       setPackages((prev) => [newPkg, ...prev]);
+
+      try {
+        await fetch("/api/admin/packages", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newPkg),
+        });
+        loadPackages();
+      } catch (err) {
+        console.error("Failed to create package in DB:", err);
+      }
     }
 
     setIsModalOpen(false);
   };
 
-  const toggleActive = (id: string) => {
+  const toggleActive = async (id: string) => {
+    const target = packages.find((p) => p.id === id);
+    if (!target) return;
+    const newActive = !target.active;
+
     setPackages((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, active: !p.active } : p))
+      prev.map((p) => (p.id === id ? { ...p, active: newActive } : p))
     );
+
+    try {
+      await fetch("/api/admin/packages", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, active: newActive }),
+      });
+    } catch (err) {
+      console.error("Failed to toggle status:", err);
+    }
   };
 
-  const toggleFeatured = (id: string) => {
+  const toggleFeatured = async (id: string) => {
+    const target = packages.find((p) => p.id === id);
+    if (!target) return;
+    const newFeatured = !target.featured;
+
     setPackages((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, featured: !p.featured } : p))
+      prev.map((p) => (p.id === id ? { ...p, featured: newFeatured } : p))
     );
+
+    try {
+      await fetch("/api/admin/packages", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, featured: newFeatured }),
+      });
+    } catch (err) {
+      console.error("Failed to toggle featured:", err);
+    }
   };
 
   const handleDelete = (id: string, pkgName: string) => {
@@ -227,9 +286,14 @@ export default function AdminPackagesPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-            Safari Packages Management
-          </h1>
+          <div className="flex items-center gap-3">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+              Safari Packages Management
+            </h1>
+            <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+              {packages.length} Total
+            </span>
+          </div>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
             Create new safari tours, update prices, manage descriptions, and toggle bestsellers.
           </p>

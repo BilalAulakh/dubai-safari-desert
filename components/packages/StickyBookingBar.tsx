@@ -25,11 +25,21 @@ export default function StickyBookingBar({ pkg }: StickyBookingBarProps) {
             {pkg.name}
           </span>
           <div className="flex items-baseline gap-1.5">
-            <span className="text-xs text-[#E8C48A] uppercase font-semibold">From</span>
-            <span className="text-lg sm:text-xl font-bold text-white tracking-tight">
-              {formatPrice(pkg.price)}
+            {pkg.original_price && pkg.original_price > pkg.price && (
+              <span className="text-xs text-gray-400 line-through">
+                AED {pkg.original_price}
+              </span>
+            )}
+            <span className="text-[10px] uppercase font-bold text-amber-300">From</span>
+            <span className="text-lg sm:text-xl font-black text-[#FF6B00] dark:text-[#E8C48A] tracking-tight">
+              AED {pkg.price}
             </span>
-            <span className="text-[11px] text-[#B8ADA2]">/ guest</span>
+            <span className="text-[11px] text-[#B8ADA2]">
+              {pkg.per_unit ? `(${pkg.per_unit})` : "/ guest"}
+            </span>
+            <span className="hidden md:inline-block ml-2 px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold uppercase tracking-wider">
+              Flexible Group Rates
+            </span>
           </div>
         </div>
 

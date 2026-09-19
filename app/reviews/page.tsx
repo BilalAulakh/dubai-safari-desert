@@ -44,66 +44,92 @@ export default async function ReviewsPage() {
           </p>
 
           <div className="mt-8 flex justify-center">
-            <ReviewModal />
+            <Link
+              href="/review"
+              className="btn-gold px-7 py-3 text-xs sm:text-sm font-extrabold uppercase tracking-wider shadow-lg inline-flex items-center gap-2"
+            >
+              <Star className="w-4 h-4 fill-slate-950" />
+              <span>Write a Review</span>
+            </Link>
           </div>
         </div>
       </section>
 
       {/* Community Authenticity Notice */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
-        <div className="p-4 rounded-xl bg-amber-50 border border-amber-200/70 text-xs text-amber-900 flex items-start gap-3">
-          <ShieldAlert className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
+        <div className="p-4 rounded-xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200/70 dark:border-amber-500/20 text-xs text-amber-900 dark:text-amber-200 flex items-start gap-3">
+          <ShieldAlert className="w-4 h-4 text-amber-700 dark:text-amber-400 shrink-0 mt-0.5" />
           <div>
-            <span className="font-bold">Verified Guest Reviews:</span> Submitted guest feedback is displayed directly to help travelers choose their ideal desert safari experience.
+            <span className="font-bold">100% Genuine Guest Feedback:</span> Every review displayed is directly submitted by verified travelers who joined our desert safaris.
           </div>
         </div>
       </section>
 
       {/* Reviews Grid */}
       <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {reviews.map((rev) => (
-            <div
-              key={rev.id}
-              className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`w-4 h-4 ${
-                          i < rev.rating
-                            ? "text-amber-500 fill-amber-500"
-                            : "text-slate-200"
-                        }`}
-                      />
-                    ))}
+        {reviews.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {reviews.map((rev) => (
+              <div
+                key={rev.id}
+                className="p-6 rounded-2xl bg-white dark:bg-[#1D150E] border border-slate-200 dark:border-[#C89B3C]/20 shadow-sm flex flex-col justify-between hover:border-[#C89B3C]/40 transition-all"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-1">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className={`w-4 h-4 ${
+                            i < rev.rating
+                              ? "text-amber-500 fill-amber-500"
+                              : "text-slate-200 dark:text-white/15"
+                          }`}
+                        />
+                      ))}
+                    </div>
+
+                    <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-semibold">
+                      Verified Guest
+                    </span>
                   </div>
 
-                  {rev.is_demo && (
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200 font-medium">
-                      Demo Preview
-                    </span>
-                  )}
+                  <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed italic mb-6">
+                    &ldquo;{rev.comment}&rdquo;
+                  </p>
                 </div>
 
-                <p className="text-sm text-slate-700 leading-relaxed italic mb-6">
-                  &ldquo;{rev.comment}&rdquo;
-                </p>
-              </div>
-
-              <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-                <div>
-                  <h4 className="font-bold text-slate-900">{rev.customer_name}</h4>
-                  <p className="text-slate-500">{rev.country}</p>
+                <div className="pt-4 border-t border-slate-100 dark:border-white/10 flex items-center justify-between text-xs">
+                  <div>
+                    <h4 className="font-bold text-slate-900 dark:text-white">{rev.customer_name}</h4>
+                    <p className="text-slate-500 dark:text-slate-400">{rev.country}</p>
+                  </div>
+                  <span className="text-slate-400">{formatDate(rev.created_at)}</span>
                 </div>
-                <span className="text-slate-400">{formatDate(rev.created_at)}</span>
               </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-16 px-4 rounded-3xl bg-white dark:bg-[#1D150E] border border-[#C89B3C]/20 max-w-xl mx-auto space-y-4 shadow-sm">
+            <div className="flex justify-center text-amber-500 gap-1">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="w-7 h-7 fill-amber-500" />
+              ))}
             </div>
-          ))}
-        </div>
+            <h3 className="text-2xl font-bold text-slate-900 dark:text-white">
+              Be The First Guest Reviewer!
+            </h3>
+            <p className="text-sm text-slate-600 dark:text-slate-400 max-w-md mx-auto">
+              Share your genuine feedback on our Dubai desert safari experience and help future travelers plan their trip.
+            </p>
+            <Link
+              href="/review"
+              className="btn-gold inline-flex items-center gap-2 px-7 py-3 text-xs uppercase font-extrabold tracking-wider"
+            >
+              <span>Write Your Review Now</span>
+            </Link>
+          </div>
+        )}
       </section>
 
       <CTASection />

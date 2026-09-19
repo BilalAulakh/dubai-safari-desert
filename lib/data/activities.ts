@@ -122,4 +122,37 @@ export const initialActivities: Activity[] = [
     sort_order: 11,
     highlights: ["Golden hour lighting", "Undisturbed ripple textures", "360-degree desert vistas"],
   },
+  {
+    id: "act-dune-buggy",
+    name: "Polaris & Can-Am Dune Buggy Racing",
+    slug: "dune-buggy-racing",
+    description:
+      "Take the wheel of competition-grade 1000cc Polaris RZR and 195HP Can-Am Maverick X3 turbo buggies with welded roll cages and Fox racing shocks across Dubai's tallest red dunes.",
+    image: "/images/tours/can-am-3x-marvick-2-seater-buggy.webp",
+    active: true,
+    sort_order: 12,
+    highlights: ["1-4 Seater Options", "1000cc Polaris & Can-Am Turbo", "Full Roll Cage & Race Harness"],
+  },
+  {
+    id: "act-henna-makeover",
+    name: "Henna Body Art & Emirati Makeover",
+    slug: "henna-body-art",
+    description:
+      "Immerse yourself in Emirati traditions with intricate floral henna patterns hand-painted by local artisans, and dress in traditional Kandoras and Abayas for authentic souvenir portraits.",
+    image: "/images/tours/buy-1-get-1-free-safari.webp",
+    active: true,
+    sort_order: 13,
+    highlights: ["Natural herbal henna", "Traditional Emirati attire", "Souvenir photo opportunities"],
+  },
+  {
+    id: "act-vip-majlis",
+    name: "VIP Sofa Majlis & Waiter Service",
+    slug: "vip-majlis-dining",
+    description:
+      "Experience royal desert hospitality with reserved front-row sofa majlis seating and dedicated waiter table service delivering hot BBQ and gourmet Arabic delicacies directly to your table.",
+    image: "/images/tours/vip-evening-desert-safari-dubai.webp",
+    active: true,
+    sort_order: 14,
+    highlights: ["Front-row center stage views", "Dedicated waiter service", "Multi-course BBQ delivered to table"],
+  },
 ];

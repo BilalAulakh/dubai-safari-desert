@@ -28,6 +28,7 @@ interface BookingPageProps {
 export default async function BookingPage({ searchParams }: BookingPageProps) {
   const search = await searchParams;
   const packageParam = typeof search?.package === "string" ? search.package : undefined;
+  const adultsParam = typeof search?.adults === "string" ? parseInt(search.adults, 10) : undefined;
 
   const [packages, pickupLocations] = await Promise.all([
     getPackages(),
@@ -83,6 +84,7 @@ export default async function BookingPage({ searchParams }: BookingPageProps) {
           packages={packages}
           pickupLocations={pickupLocations}
           defaultPackageId={packageParam}
+          defaultAdults={adultsParam}
         />
       </div>
     </div>
