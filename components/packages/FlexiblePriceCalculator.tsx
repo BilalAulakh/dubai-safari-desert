@@ -230,14 +230,14 @@ Can you confirm your best flexible rate and today's availability? Thank you!`;
         </div>
 
         {/* Action Buttons */}
-        <div className="space-y-2.5 pt-2">
+        <div className="space-y-2 pt-2">
           {/* Direct Booking with Pre-filled guests */}
           <Link
             href={`/booking?package=${encodeURIComponent(pkg.id)}&adults=${guests}`}
-            className="btn-gold w-full py-3.5 px-4 text-center text-xs font-extrabold uppercase tracking-wider shadow-lg flex items-center justify-center gap-2"
+            className="w-full py-2.5 px-3 rounded-lg bg-[#C89B3C] hover:bg-[#D6A84F] text-[#17120D] text-center text-xs font-bold uppercase tracking-wider shadow flex items-center justify-center gap-1.5 transition-all"
           >
             <span>Book This Flexible Rate</span>
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-3.5 h-3.5" />
           </Link>
 
           {/* Negotiate / Inquire Custom Deal on WhatsApp */}
@@ -245,10 +245,10 @@ Can you confirm your best flexible rate and today's availability? Thank you!`;
             href={whatsappInquiryUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all shadow-md shadow-emerald-600/20 flex items-center justify-center gap-2 text-center"
+            className="w-full py-2.5 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all shadow-sm shadow-emerald-600/20 flex items-center justify-center gap-1.5 text-center"
           >
-            <MessageCircle className="w-4 h-4" />
-            <span>Negotiate / Custom Deal on WhatsApp</span>
+            <MessageCircle className="w-3.5 h-3.5" />
+            <span>Negotiate Custom Deal on WhatsApp</span>
           </a>
         </div>
 
