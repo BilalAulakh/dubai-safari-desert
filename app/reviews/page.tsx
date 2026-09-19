@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Link from "next/link";
 import { Star, MessageSquarePlus, ShieldCheck, ShieldAlert } from "lucide-react";
 import { getApprovedReviews } from "@/lib/data/store";
 import { formatDate } from "@/lib/utils";
