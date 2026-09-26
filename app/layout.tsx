@@ -1,21 +1,16 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, Manrope } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import AppShell from "@/components/layout/AppShell";
 import { ThemeProvider } from "@/components/common/ThemeProvider";
 import StoreProvider from "@/lib/redux/StoreProvider";
 import { SITE_CONFIG } from "@/lib/config/site";
 
-const playfair = Playfair_Display({
+const fontSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-playfair",
+  variable: "--font-sans",
   display: "swap",
-});
-
-const manrope = Manrope({
-  subsets: ["latin"],
-  variable: "--font-manrope",
-  display: "swap",
+  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
 export const viewport: Viewport = {
@@ -174,7 +169,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={`${playfair.variable} ${manrope.variable} scroll-smooth`} suppressHydrationWarning>
+    <html lang="en" className={`${fontSans.variable} scroll-smooth`} suppressHydrationWarning>
       <head>
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="shortcut icon" href="/icon.svg" type="image/svg+xml" />
@@ -189,7 +184,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${playfair.variable} ${manrope.variable} min-h-screen flex flex-col bg-[var(--bg-page)] text-[var(--text-main)] font-sans antialiased selection:bg-[#C89B3C] selection:text-[#17120D] transition-colors duration-200`}>
+      <body className={`${fontSans.variable} min-h-screen flex flex-col bg-[var(--bg-page)] text-[var(--text-main)] font-sans antialiased selection:bg-[#C89B3C] selection:text-[#17120D] transition-colors duration-200`}>
         <StoreProvider>
           <ThemeProvider>
             <AppShell>{children}</AppShell>

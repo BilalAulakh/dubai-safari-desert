@@ -67,7 +67,7 @@ export default function HomeReviews({ reviews }: HomeReviewsProps) {
                     </span>
                   </div>
 
-                  <p className="text-sm sm:text-base text-[#17120D]/85 dark:text-[#FBF7F0]/85 italic leading-relaxed mb-6 font-serif">
+                  <p className="text-sm sm:text-base text-[#17120D]/85 dark:text-[#FBF7F0]/85 italic leading-relaxed mb-6">
                     &ldquo;{rev.comment}&rdquo;
                   </p>
                 </div>
