@@ -30,6 +30,7 @@ const CATEGORY_TABS: CategoryTab[] = [
   { id: "dune-buggy", label: "Dune Buggies", icon: "🏎️" },
   { id: "overnight", label: "Overnight Camping", icon: "🏕️" },
   { id: "special-offer", label: "Deals & BOGO", icon: "🎁" },
+  { id: "dhow-cruise", label: "Dhow Cruise", icon: "⛵" },
 ];
 
 export default function PackagesCatalogFilter({
@@ -54,6 +55,7 @@ export default function PackagesCatalogFilter({
       "dune-buggy": 0,
       overnight: 0,
       "special-offer": 0,
+      "dhow-cruise": 0,
     };
 
     allPackages.forEach((pkg) => {

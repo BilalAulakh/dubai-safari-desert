@@ -1288,5 +1288,635 @@ export const initialPackages: Package[] = [
     "cancellation_policy": "Free cancellation up to 24 hours prior to departure.",
     "seo_title": "4 Seater Can-Am Maverick X3 Turbo Buggy Dubai | AED 1499",
     "seo_description": "Book 4-seater Can-Am Maverick X3 Turbo Dune Buggy in Dubai. Extreme 45-minute family/group self drive, sandboarding, guide."
+  },
+
+  // ——— VIP DESERT SAFARI ————————————————————————————————————————————
+  {
+    "id": "pkg-vip-desert-safari",
+    "name": "VIP Desert Safari",
+    "slug": "vip-desert-safari",
+    "category": "desert-safari",
+    "price": 599,
+    "original_price": null,
+    "per_unit": "per person",
+    "duration": "6 Hours",
+    "featured": true,
+    "active": true,
+    "badges": ["VIP Experience", "Table Service", "Front-Row Shows"],
+    "main_image": "https://dreamnighttours.ae/storage/uploads/media/vip-desert-safari-with-bbq-dinner.webp",
+    "gallery": [
+      "https://dreamnighttours.ae/storage/uploads/media/vip-desert-safari-with-bbq-dinner.webp",
+      "https://dreamnighttours.ae/storage/uploads/media/private-setup-fire-show.jpg",
+      "https://dreamnighttours.ae/storage/uploads/media/dune-bashing.webp",
+      "https://dreamnighttours.ae/storage/uploads/media/falcon-image-in-desert.webp",
+      "https://dreamnighttours.ae/storage/uploads/media/family-desert-safari-adventure-tour.webp",
+      "https://dreamnighttours.ae/storage/uploads/media/belly-dance-dubai-1.webp",
+      "https://dreamnighttours.ae/storage/uploads/media/premium-camp.jpg",
+      "https://dreamnighttours.ae/storage/uploads/media/tanoura-dance-camp.webp",
+      "https://dreamnighttours.ae/storage/uploads/media/sunset-in-the-desert.webp",
+      "https://dreamnighttours.ae/storage/uploads/media/camel-in-desert.webp",
+      "https://dreamnighttours.ae/storage/uploads/media/desert-safari-dubai.webp"
+    ],
+    "short_description": "Upgrade your desert safari with VIP treatment! Enjoy red dune bashing, private waiter service at your table (no buffet lines), VIP air-conditioned seating, and front-row show views.",
+    "description": "Experience the desert like royalty on our VIP Desert Safari! Designed for travelers who want premium comfort without the crowds, this tour combines the excitement of red dune bashing with first-class VIP hospitality.\n\nTravel to the famous Al Lahbab red dunes in a comfortable 4x4 Land Cruiser. Enjoy high-thrill dune bashing, sandboarding, and sunset photo stops before arriving at our deluxe desert camp.\n\nAt the camp, skip the main crowds and head straight to your reserved VIP area. Relax on plush cushioned seating with front-row views of the main entertainment stage. You never have to stand in a buffet queue: your personal waiter brings hot, fresh BBQ dishes, salads, breads, and drinks directly to your table throughout the evening.",
+    "inclusions": [
+      "Hotel pickup and drop-off in a 4x4 vehicle",
+      "Thrilling red dune bashing session with licensed driver",
+      "Sandboarding on high red dunes",
+      "Reserved VIP table seating with front-row view of the stage",
+      "Table service for dinner: food served directly to your table by dedicated waiters",
+      "Deluxe 5-star BBQ buffet menu with grilled meats, seafood, and vegetarian dishes",
+      "Unlimited chilled bottled water, soft drinks, tea, and Arabic coffee",
+      "Live shows: Fire show, Tanoura dance, and Belly dance"
+    ],
+    "exclusions": [
+      "Quad bike ATV or dune buggy rentals (optional add-on)",
+      "Alcoholic beverages (available at camp bar)",
+      "Tips for driver and waiter"
+    ],
+    "itinerary": [
+      { "time": "03:00 PM", "title": "Private Hotel Pickup", "description": "Your dedicated driver collects you in a premium 4x4.",
+        "sort_order": 1
+      },
+      { "time": "04:00 PM", "title": "Dune Bashing", "description": "An exclusive dune bashing session across the red dunes.",
+        "sort_order": 2
+      },
+      { "time": "05:15 PM", "title": "Welcome & Falcon Photo", "description": "Arrive at camp for a welcome drink and a private falcon photo opportunity.",
+        "sort_order": 3
+      },
+      { "time": "05:45 PM", "title": "VIP Majlis Seating", "description": "Settle into reserved premium seating with priority service.",
+        "sort_order": 4
+      },
+      { "time": "07:00 PM", "title": "Live BBQ Dinner & Show", "description": "Freshly grilled dinner from the live cooking station alongside entertainment.",
+        "sort_order": 5
+      },
+      { "time": "09:00 PM", "title": "Private Return Transfer", "description": "Direct drop-off back at your hotel.",
+        "sort_order": 6
+      }
+    ],
+    "know_before_you_go": [
+      "VIP seating is limited and sells out quickly on weekends; book in advance.",
+      "Dress code is smart casual. Flat shoes or sandals are recommended for the sand.",
+      "In winter months, the open-air camp can be cool in the evening, so bring a light jacket."
+    ],
+    "faqs": [
+      { "question": "What is the main difference between VIP and Standard Desert Safari?", "answer": "On the VIP Safari, you have a reserved table right in front of the stage, and your food is served directly to your table by a dedicated waiter so you never have to stand in a buffet line. You also enjoy upgraded seating and premium hospitality." },
+      { "question": "Can I get table service for drinks as well?", "answer": "Yes, your dedicated waiter will bring unlimited soft drinks, bottled water, tea, and Arabic coffee directly to your table whenever you wish." },
+      { "question": "Is this tour good for special celebrations like birthdays or anniversaries?", "answer": "Yes, the VIP Safari is our most popular choice for birthdays, anniversaries, and romantic dates because of the comfortable reserved seating and personalized service." }
+    ],
+    "highlights": [
+      "Exclusive VIP reserved table with clear, front-row views of the live stage",
+      "Personal waiter service delivering hot BBQ dishes directly to your table (no lines)",
+      "Action-packed 4x4 red dune bashing in Al Lahbab",
+      "Sandboarding gear and golden sunset photo stops",
+      "Complimentary camel ride and henna hand painting",
+      "Access to VIP lounge facilities and premium hospitality"
+    ],
+    "rating": 4.9,
+    "review_count": 5204,
+    "pickup_info": "Pickups available from all hotels across Dubai (3:00 PM - 4:00 PM).",
+    "cancellation_policy": "Free cancellation up to 24 hours prior to departure.",
+    "seo_title": "VIP Desert Safari Dubai | Table Service & Front-Row Shows | AED 599",
+    "seo_description": "Experience Dubai VIP Desert Safari with private table service, no buffet lines, front-row show seating, 4x4 dune bashing, and BBQ dinner. Book VIP tickets now!"
+  },
+
+  // ——— DHOW CRUISE ————————————————————————————————————————————————
+  {
+    "id": "pkg-dhow-luxury-marina",
+    "name": "Luxury Marina Dhow Cruise Dinner",
+    "slug": "luxury-marina-dhow-cruise-dinner",
+    "category": "dhow-cruise",
+    "price": 140,
+    "original_price": null,
+    "per_unit": "per person",
+    "duration": "2 Hours",
+    "featured": true,
+    "active": true,
+    "badges": ["Luxury", "Instant Confirmation", "Best Seller"],
+    "main_image": "https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?auto=format&fit=crop&w=800&q=80",
+    "gallery": [
+      "https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "short_description": "Enjoy an unforgettable luxury marina dhow cruise dinner experience in Dubai with Dream Night Tourism. Premium service, buffet dinner & stunning marina views.",
+    "description": "Step aboard our Luxury Marina Dhow Cruise Dinner for an evening of elegance and stunning skyline views. Glide through the glittering waters of Dubai Marina aboard a beautifully decorated traditional wooden dhow, reimagined as a floating fine-dining restaurant.\n\nSavor a lavish international buffet dinner as you cruise past the illuminated skyscrapers of JBR and Bluewaters Island. Live entertainment including Tanoura dance performances adds to the magical atmosphere.",
+    "inclusions": [
+      "Hotel pickup and drop-off",
+      "2-hour cruise along Dubai Marina",
+      "International buffet dinner",
+      "Unlimited soft drinks, water, tea & coffee",
+      "Live entertainment (Tanoura show)",
+      "Panoramic skyline views"
+    ],
+    "exclusions": [
+      "Alcoholic beverages",
+      "Gratuities"
+    ],
+    "itinerary": [
+      { "time": "07:00 PM", "title": "Hotel Pickup", "description": "Transfer from your hotel to the premium marina departure pier.",
+        "sort_order": 1
+      },
+      { "time": "08:00 PM", "title": "Boarding & Welcome", "description": "Board the luxury dhow and settle into your seating area.",
+        "sort_order": 2
+      },
+      { "time": "08:30 PM", "title": "Cruise Departs", "description": "The dhow sets sail along the illuminated marina waterway.",
+        "sort_order": 3
+      },
+      { "time": "09:00 PM", "title": "Buffet Dinner & Show", "description": "Enjoy the international buffet alongside live entertainment.",
+        "sort_order": 4
+      },
+      { "time": "10:30 PM", "title": "Return Transfer", "description": "Disembark and transfer back to your hotel.",
+        "sort_order": 5
+      }
+    ],
+    "highlights": [
+      "Cruise past Dubai Marina's glittering high-rises",
+      "Lavish international buffet dinner served on board",
+      "Live Tanoura folk dance performance",
+      "Panoramic views of JBR and Bluewaters Island"
+    ],
+    "rating": 4.9,
+    "review_count": 5034,
+    "pickup_info": "Pickups available from all hotels across Dubai.",
+    "cancellation_policy": "Free cancellation up to 24 hours prior to departure.",
+    "seo_title": "Luxury Marina Dhow Cruise Dinner Dubai | AED 140",
+    "seo_description": "Book Luxury Marina Dhow Cruise Dinner Dubai. Premium buffet dinner, live entertainment & stunning skyline views with Dream Night Tourism."
+  },
+  {
+    "id": "pkg-dhow-evening-dinner",
+    "name": "Dhow Cruise Dinner - Evening",
+    "slug": "dhow-cruise-dinner-evening",
+    "category": "dhow-cruise",
+    "price": 140,
+    "original_price": null,
+    "per_unit": "per person",
+    "duration": "2 Hours",
+    "featured": false,
+    "active": true,
+    "badges": ["Instant Confirmation", "Popular"],
+    "main_image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+    "gallery": [
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "short_description": "Dubai's classic evening Dhow Cruise with an international buffet dinner, live entertainment and illuminated skyline views.",
+    "description": "Sail Dubai's iconic waterways aboard a traditional wooden dhow, reimagined as a floating restaurant with panoramic skyline views. Enjoy a lavish international buffet dinner, live entertainment and unforgettable views of illuminated landmarks as you glide across the water.\n\nThis classic evening cruise is the perfect introduction to Dubai's magical waterfront after dark.",
+    "inclusions": [
+      "Hotel pickup and drop-off",
+      "2-hour evening cruise",
+      "International buffet dinner",
+      "Unlimited soft drinks, water, tea & coffee",
+      "Live entertainment (Tanoura show)",
+      "Panoramic illuminated skyline views"
+    ],
+    "exclusions": [
+      "Alcoholic beverages",
+      "Gratuities"
+    ],
+    "itinerary": [
+      { "time": "07:00 PM", "title": "Hotel Pickup", "description": "Transfer from your hotel to the marina departure point.",
+        "sort_order": 1
+      },
+      { "time": "08:00 PM", "title": "Boarding", "description": "Board the dhow and settle into your seating area.",
+        "sort_order": 2
+      },
+      { "time": "08:30 PM", "title": "Cruise Departs", "description": "The dhow sets sail along the illuminated waterway.",
+        "sort_order": 3
+      },
+      { "time": "09:00 PM", "title": "Buffet Dinner & Show", "description": "Enjoy the international buffet dinner alongside live entertainment.",
+        "sort_order": 4
+      },
+      { "time": "10:30 PM", "title": "Return Transfer", "description": "Disembark and transfer back to your hotel.",
+        "sort_order": 5
+      }
+    ],
+    "highlights": [
+      "Classic Dubai evening dhow experience",
+      "International buffet dinner on board",
+      "Live Tanoura dance performance",
+      "Illuminated skyline views"
+    ],
+    "rating": 4.9,
+    "review_count": 5527,
+    "pickup_info": "Pickups available from all hotels across Dubai.",
+    "cancellation_policy": "Free cancellation up to 24 hours prior to departure.",
+    "seo_title": "Evening Dhow Cruise Dinner Dubai | Buffet & Live Show | AED 140",
+    "seo_description": "Book Dubai's Evening Dhow Cruise Dinner with an international buffet, live Tanoura show and skyline views. Book with Dream Night Tourism."
+  },
+  {
+    "id": "pkg-dhow-dubai-marina",
+    "name": "Dubai Marina Dhow Cruise",
+    "slug": "dubai-marina-dhow-cruise",
+    "category": "dhow-cruise",
+    "price": 145,
+    "original_price": null,
+    "per_unit": "per person",
+    "duration": "2 Hours",
+    "featured": false,
+    "active": true,
+    "badges": ["Marina Views", "Instant Confirmation"],
+    "main_image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+    "gallery": [
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "short_description": "Cruise Dubai Marina's illuminated skyline on this Dhow Cruise with buffet dinner and live entertainment.",
+    "description": "Cruise past Dubai Marina's glittering high-rises, JBR and Bluewaters Island on this spectacular evening cruise. Aboard a beautifully lit traditional dhow, enjoy a lavish international buffet dinner while soaking in some of Dubai's most iconic waterfront views.\n\nLive entertainment, including a Tanoura folk dance performance, adds to the magical atmosphere as the city sparkles around you.",
+    "inclusions": [
+      "Hotel pickup and drop-off",
+      "2-hour Dubai Marina cruise",
+      "International buffet dinner",
+      "Unlimited soft drinks, water, tea & coffee",
+      "Live entertainment",
+      "Views of JBR and Bluewaters Island"
+    ],
+    "exclusions": [
+      "Alcoholic beverages",
+      "Gratuities"
+    ],
+    "itinerary": [
+      { "time": "07:00 PM", "title": "Hotel Pickup", "description": "Transfer from your hotel to the Dubai Marina Walk pier.",
+        "sort_order": 1
+      },
+      { "time": "08:00 PM", "title": "Boarding", "description": "Board the dhow at the marina departure point.",
+        "sort_order": 2
+      },
+      { "time": "08:30 PM", "title": "Cruise Departs", "description": "Sail past the illuminated Marina skyline, JBR and Bluewaters Island.",
+        "sort_order": 3
+      },
+      { "time": "09:00 PM", "title": "Buffet Dinner & Show", "description": "Enjoy the buffet dinner and live entertainment on board.",
+        "sort_order": 4
+      },
+      { "time": "10:30 PM", "title": "Return Transfer", "description": "Disembark and transfer back to your hotel.",
+        "sort_order": 5
+      }
+    ],
+    "highlights": [
+      "Cruise past Dubai Marina's iconic glittering high-rises",
+      "Views of JBR Beach and Bluewaters Island",
+      "International buffet dinner on board",
+      "Live entertainment included"
+    ],
+    "rating": 4.9,
+    "review_count": 5595,
+    "pickup_info": "Pickups available from all hotels across Dubai.",
+    "cancellation_policy": "Free cancellation up to 24 hours prior to departure.",
+    "seo_title": "Dubai Marina Dhow Cruise | Skyline Dinner Cruise | AED 145",
+    "seo_description": "Cruise Dubai Marina's illuminated skyline on this Dhow Cruise with buffet dinner and live entertainment. Book with Dream Night Tourism."
+  },
+  {
+    "id": "pkg-dhow-luxury",
+    "name": "Luxury Dhow Cruise",
+    "slug": "luxury-dhow-cruise",
+    "category": "dhow-cruise",
+    "price": 289,
+    "original_price": null,
+    "per_unit": "per person",
+    "duration": "2.5 Hours",
+    "featured": true,
+    "active": true,
+    "badges": ["À La Carte", "Premium", "Upper Deck Lounge"],
+    "main_image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+    "gallery": [
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "short_description": "Upgrade to Dubai's Luxury Dhow Cruise with à la carte dining, reserved lounge seating and skyline views. Book with Dream Night Tourism.",
+    "description": "An upgraded dhow experience with premium à la carte dining, a welcome drink and reserved upper-deck lounge seating. Enjoy a multi-course à la carte dinner served table-side as you cruise Dubai's iconic waterfront.\n\nWith reserved upper-deck lounge seating and panoramic skyline views, this is the most premium dhow cruise experience available.",
+    "inclusions": [
+      "Hotel pickup and drop-off",
+      "Reserved upper-deck lounge seating",
+      "Welcome mocktail on arrival",
+      "Multi-course à la carte dinner (table service)",
+      "Unlimited soft drinks, water, tea & coffee",
+      "Panoramic skyline views"
+    ],
+    "exclusions": [
+      "Alcoholic beverages",
+      "Gratuities"
+    ],
+    "itinerary": [
+      { "time": "07:00 PM", "title": "Hotel Pickup", "description": "Transfer from your hotel to the premium marina departure pier.",
+        "sort_order": 1
+      },
+      { "time": "08:00 PM", "title": "Boarding & Welcome Drink", "description": "Board the luxury dhow and receive a welcome mocktail.",
+        "sort_order": 2
+      },
+      { "time": "08:30 PM", "title": "Cruise Departs", "description": "Sail out with reserved upper-deck lounge seating and skyline views.",
+        "sort_order": 3
+      },
+      { "time": "09:00 PM", "title": "À La Carte Dinner", "description": "Enjoy a multi-course à la carte dinner served table-side.",
+        "sort_order": 4
+      },
+      { "time": "10:30 PM", "title": "Return Transfer", "description": "Disembark and transfer back to your hotel.",
+        "sort_order": 5
+      }
+    ],
+    "highlights": [
+      "Reserved upper-deck lounge seating",
+      "Premium à la carte dinner served at your table",
+      "Welcome mocktail included",
+      "Panoramic Dubai skyline views"
+    ],
+    "rating": 4.9,
+    "review_count": 5680,
+    "pickup_info": "Pickups available from all hotels across Dubai.",
+    "cancellation_policy": "Free cancellation up to 24 hours prior to departure.",
+    "seo_title": "Luxury Dhow Cruise Dubai | À La Carte Dinner Cruise | AED 289",
+    "seo_description": "Upgrade to Dubai's Luxury Dhow Cruise with à la carte dining, reserved lounge seating and skyline views. Book with Dream Night Tourism."
+  },
+  {
+    "id": "pkg-dhow-lunch",
+    "name": "Dhow Cruise Lunch (Afternoon)",
+    "slug": "dhow-cruise-lunch-afternoon",
+    "category": "dhow-cruise",
+    "price": 109,
+    "original_price": null,
+    "per_unit": "per person",
+    "duration": "2 Hours",
+    "featured": false,
+    "active": true,
+    "badges": ["Daytime Cruise", "Buffet Lunch"],
+    "main_image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+    "gallery": [
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "short_description": "A relaxed midday cruise with a buffet lunch, ideal for enjoying Dubai's waterfront skyline in daylight without the evening crowds.",
+    "description": "Enjoy a relaxed afternoon on the water with our Dhow Cruise Lunch experience. Cruise Dubai's beautiful waterways in daylight, with stunning views of the skyline without the evening crowds.\n\nA hearty international buffet lunch is served on board, making this the perfect daytime outing for families and groups.",
+    "inclusions": [
+      "Hotel pickup and drop-off",
+      "2-hour afternoon cruise",
+      "International buffet lunch",
+      "Unlimited soft drinks, water, tea & coffee",
+      "Daytime skyline views"
+    ],
+    "exclusions": [
+      "Alcoholic beverages",
+      "Gratuities"
+    ],
+    "itinerary": [
+      { "time": "12:30 PM", "title": "Hotel Pickup", "description": "Transfer from your hotel to the marina departure point.",
+        "sort_order": 1
+      },
+      { "time": "01:30 PM", "title": "Boarding", "description": "Board the dhow and settle into your seating area.",
+        "sort_order": 2
+      },
+      { "time": "02:00 PM", "title": "Cruise Departs", "description": "The dhow sets sail along the waterway in daylight.",
+        "sort_order": 3
+      },
+      { "time": "02:30 PM", "title": "Buffet Lunch", "description": "Enjoy the buffet lunch while taking in skyline views.",
+        "sort_order": 4
+      },
+      { "time": "04:00 PM", "title": "Return Transfer", "description": "Disembark and transfer back to your hotel.",
+        "sort_order": 5
+      }
+    ],
+    "highlights": [
+      "Relaxed afternoon cruise without crowds",
+      "International buffet lunch served on board",
+      "Stunning daytime skyline views",
+      "Perfect for families and groups"
+    ],
+    "rating": 4.7,
+    "review_count": 5544,
+    "pickup_info": "Pickups available from all hotels across Dubai.",
+    "cancellation_policy": "Free cancellation up to 24 hours prior to departure.",
+    "seo_title": "Dhow Cruise Lunch Afternoon Dubai | Buffet Lunch Cruise | AED 109",
+    "seo_description": "Book Dhow Cruise Lunch Dubai. Relaxed afternoon cruise with buffet lunch and skyline views. Perfect daytime tour with Dream Night Tourism."
+  },
+  {
+    "id": "pkg-dhow-sunset",
+    "name": "Sunset Dhow Cruise",
+    "slug": "sunset-dhow-cruise",
+    "category": "dhow-cruise",
+    "price": 129,
+    "original_price": null,
+    "per_unit": "per person",
+    "duration": "2 Hours",
+    "featured": false,
+    "active": true,
+    "badges": ["Golden Sunset", "Photo Opportunities"],
+    "main_image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+    "gallery": [
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "short_description": "Time your cruise to catch Dubai's golden sunset over the water, with a light buffet and unbeatable photo opportunities.",
+    "description": "Catch Dubai at its most magical on our Sunset Dhow Cruise. Timed perfectly to coincide with the golden hour, this cruise offers unbeatable sunset photo opportunities as the sky turns shades of orange, pink, and gold over the water.\n\nA light buffet spread is served on board as you glide along the waterway and watch the city's skyline light up for the evening.",
+    "inclusions": [
+      "Hotel pickup and drop-off",
+      "2-hour sunset-timed cruise",
+      "Light buffet spread",
+      "Unlimited soft drinks, water, tea & coffee",
+      "Golden hour sunset views & photo opportunities"
+    ],
+    "exclusions": [
+      "Alcoholic beverages",
+      "Gratuities"
+    ],
+    "itinerary": [
+      { "time": "05:30 PM", "title": "Hotel Pickup", "description": "Transfer from your hotel to the marina departure point (seasonal timing).",
+        "sort_order": 1
+      },
+      { "time": "06:15 PM", "title": "Boarding", "description": "Board the dhow ahead of the sunset-timed departure.",
+        "sort_order": 2
+      },
+      { "time": "06:30 PM", "title": "Cruise Departs", "description": "Sail out as the sky begins to turn golden.",
+        "sort_order": 3
+      },
+      { "time": "07:00 PM", "title": "Sunset & Buffet", "description": "Enjoy the light buffet spread as the sun sets over the skyline.",
+        "sort_order": 4
+      },
+      { "time": "08:30 PM", "title": "Return Transfer", "description": "Disembark and transfer back to your hotel.",
+        "sort_order": 5
+      }
+    ],
+    "highlights": [
+      "Cruise timed to catch Dubai's golden sunset",
+      "Stunning photo opportunities during golden hour",
+      "Light buffet served on board",
+      "Skyline views as the city lights up for the evening"
+    ],
+    "rating": 4.9,
+    "review_count": 5561,
+    "pickup_info": "Pickups available from all hotels across Dubai.",
+    "cancellation_policy": "Free cancellation up to 24 hours prior to departure.",
+    "seo_title": "Sunset Dhow Cruise Dubai | Golden Hour Cruise | AED 129",
+    "seo_description": "Book Sunset Dhow Cruise Dubai. Timed to catch the golden sunset over the water, with light buffet and stunning photo opportunities."
+  },
+  {
+    "id": "pkg-dhow-creek",
+    "name": "Dubai Creek Dhow Cruise",
+    "slug": "dubai-creek-dhow-cruise",
+    "category": "dhow-cruise",
+    "price": 129,
+    "original_price": null,
+    "per_unit": "per person",
+    "duration": "2 Hours",
+    "featured": false,
+    "active": true,
+    "badges": ["Heritage", "Old Dubai", "Instant Confirmation"],
+    "main_image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+    "gallery": [
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "short_description": "Sail through historic Old Dubai along the Creek, passing traditional souks and abra crossings for a heritage-focused cruise.",
+    "description": "Discover the historic heart of Dubai on our Dubai Creek Dhow Cruise. Sail through Old Dubai along the historic Creek, passing traditional wooden abra boats, bustling souks, and heritage buildings that tell the story of Dubai's trading past.\n\nAn international buffet dinner and live entertainment are served on board as you experience this unique side of Dubai.",
+    "inclusions": [
+      "Hotel pickup and drop-off",
+      "2-hour Dubai Creek cruise",
+      "International buffet dinner",
+      "Unlimited soft drinks, water, tea & coffee",
+      "Live entertainment",
+      "Views of Old Dubai souks and heritage buildings"
+    ],
+    "exclusions": [
+      "Alcoholic beverages",
+      "Gratuities"
+    ],
+    "itinerary": [
+      { "time": "07:00 PM", "title": "Hotel Pickup", "description": "Transfer from your hotel to the Dubai Creek pier.",
+        "sort_order": 1
+      },
+      { "time": "08:00 PM", "title": "Boarding", "description": "Board the dhow at the Creek departure point.",
+        "sort_order": 2
+      },
+      { "time": "08:30 PM", "title": "Cruise Departs", "description": "Sail past Old Dubai's souks, abra crossings and heritage buildings.",
+        "sort_order": 3
+      },
+      { "time": "09:00 PM", "title": "Buffet Dinner & Show", "description": "Enjoy the buffet dinner and live entertainment on board.",
+        "sort_order": 4
+      },
+      { "time": "10:30 PM", "title": "Return Transfer", "description": "Disembark and transfer back to your hotel.",
+        "sort_order": 5
+      }
+    ],
+    "highlights": [
+      "Sail through historic Old Dubai along the Creek",
+      "Pass traditional souks and abra crossings",
+      "International buffet dinner on board",
+      "Live entertainment included"
+    ],
+    "rating": 4.8,
+    "review_count": 5612,
+    "pickup_info": "Pickups available from all hotels across Dubai.",
+    "cancellation_policy": "Free cancellation up to 24 hours prior to departure.",
+    "seo_title": "Dubai Creek Dhow Cruise | Heritage Dinner Cruise | AED 129",
+    "seo_description": "Sail through historic Old Dubai along the Creek, passing traditional souks and abra crossings. Book Dubai Creek Dhow Cruise with Dream Night Tourism."
+  },
+  {
+    "id": "pkg-dhow-morning",
+    "name": "Morning/Breakfast Dhow Cruise",
+    "slug": "morningbreakfast-dhow-cruise",
+    "category": "dhow-cruise",
+    "price": 95,
+    "original_price": null,
+    "per_unit": "per person",
+    "duration": "1.5 Hours",
+    "featured": false,
+    "active": true,
+    "badges": ["Morning Cruise", "Breakfast Buffet"],
+    "main_image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+    "gallery": [
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "short_description": "Start the day with a peaceful morning cruise and a hearty breakfast buffet, before the waterway gets busy.",
+    "description": "Start your day on the water with our Morning/Breakfast Dhow Cruise. Enjoy the calm and peaceful atmosphere of the waterway in the morning light, before the city gets busy.\n\nA hearty breakfast buffet is served on board, with fresh pastries, hot dishes, juices, and more. The perfect way to begin a day of Dubai exploration.",
+    "inclusions": [
+      "Hotel pickup and drop-off",
+      "1.5-hour morning cruise",
+      "Hearty breakfast buffet",
+      "Unlimited fresh juices, tea & coffee",
+      "Peaceful morning waterway views"
+    ],
+    "exclusions": [
+      "Alcoholic beverages",
+      "Gratuities"
+    ],
+    "itinerary": [
+      { "time": "08:30 AM", "title": "Hotel Pickup", "description": "Transfer from your hotel to the marina departure point.",
+        "sort_order": 1
+      },
+      { "time": "09:15 AM", "title": "Boarding", "description": "Board the dhow for the morning sailing.",
+        "sort_order": 2
+      },
+      { "time": "09:30 AM", "title": "Cruise Departs", "description": "The dhow sets sail in the calm morning light.",
+        "sort_order": 3
+      },
+      { "time": "10:00 AM", "title": "Breakfast Buffet", "description": "Enjoy a hearty breakfast buffet while cruising the waterway.",
+        "sort_order": 4
+      },
+      { "time": "11:00 AM", "title": "Return Transfer", "description": "Disembark and transfer back to your hotel.",
+        "sort_order": 5
+      }
+    ],
+    "highlights": [
+      "Peaceful morning cruise before the city gets busy",
+      "Hearty breakfast buffet served on board",
+      "Calm waterway views in morning light",
+      "Perfect start to a day of Dubai exploration"
+    ],
+    "rating": 4.7,
+    "review_count": 5578,
+    "pickup_info": "Pickups available from all hotels across Dubai.",
+    "cancellation_policy": "Free cancellation up to 24 hours prior to departure.",
+    "seo_title": "Morning Breakfast Dhow Cruise Dubai | AED 95",
+    "seo_description": "Book Morning Breakfast Dhow Cruise Dubai. Peaceful morning cruise with hearty breakfast buffet before the waterway gets busy."
+  },
+  {
+    "id": "pkg-dhow-private",
+    "name": "Private Dhow Cruise",
+    "slug": "private-dhow-cruise",
+    "category": "dhow-cruise",
+    "price": 2500,
+    "original_price": null,
+    "per_unit": "per charter",
+    "duration": "2 Hours",
+    "featured": false,
+    "active": true,
+    "badges": ["Private Charter", "Customizable", "Groups & Events"],
+    "main_image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+    "gallery": [
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "short_description": "Charter an entire traditional dhow exclusively for your group, with a customizable route, menu and onboard entertainment.",
+    "description": "Celebrate your special occasion in style with our Private Dhow Cruise. Charter an entire traditional dhow exclusively for your group — perfect for birthdays, anniversaries, corporate events, or family gatherings.\n\nChoose your preferred route (Dubai Marina or Dubai Creek), customize the menu to your tastes, and request entertainment for your dedicated crew. Everything is arranged around your schedule and preferences.",
+    "inclusions": [
+      "Exclusive private charter of the entire dhow",
+      "Private hotel pickup and drop-off for your group",
+      "2-hour cruise on your chosen route (Marina or Creek)",
+      "Customizable menu (discuss options with our team)",
+      "Dedicated crew and optional entertainment",
+      "Flexible scheduling around your event"
+    ],
+    "exclusions": [
+      "Alcoholic beverages (can be arranged on request)",
+      "Gratuities for crew"
+    ],
+    "itinerary": [
+      { "time": "Flexible", "title": "Private Hotel Pickup", "description": "Transfer for your group at a time arranged around your private charter.",
+        "sort_order": 1
+      },
+      { "time": "Flexible", "title": "Private Boarding", "description": "Board your exclusively chartered dhow, decorated and set up to your preference.",
+        "sort_order": 2
+      },
+      { "time": "Flexible", "title": "Cruise Departs", "description": "Sail your chosen route — Dubai Marina or Dubai Creek.",
+        "sort_order": 3
+      },
+      { "time": "Flexible", "title": "Private Dinner & Entertainment", "description": "Enjoy your custom menu and any requested entertainment with your dedicated crew.",
+        "sort_order": 4
+      },
+      { "time": "Flexible", "title": "Private Return Transfer", "description": "Disembark and transfer back to your hotel.",
+        "sort_order": 5
+      }
+    ],
+    "highlights": [
+      "Entire dhow chartered exclusively for your group",
+      "Fully customizable route, menu & entertainment",
+      "Perfect for birthdays, anniversaries & corporate events",
+      "Dedicated crew and flexible scheduling"
+    ],
+    "rating": 4.9,
+    "review_count": 5663,
+    "pickup_info": "Private pickup arranged for your group from any Dubai hotel.",
+    "cancellation_policy": "Free cancellation up to 48 hours prior to departure.",
+    "seo_title": "Private Dhow Cruise Dubai | Exclusive Charter | From AED 2500",
+    "seo_description": "Charter a Private Dhow Cruise in Dubai for your group. Customizable route, menu & entertainment. Perfect for birthdays, anniversaries & corporate events."
   }
 ];

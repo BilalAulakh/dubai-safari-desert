@@ -35,7 +35,13 @@ export type PackageCategory =
   | "atv-quad"
   | "dune-buggy"
   | "overnight"
-  | "special-offer";
+  | "special-offer"
+  | "dhow-cruise";
+
+export interface PackageFAQ {
+  question: string;
+  answer: string;
+}
 
 export interface Package {
   id: string;
@@ -44,7 +50,7 @@ export interface Package {
   short_description: string;
   description: string;
   price: number;
-  original_price?: number;
+  original_price?: number | null;
   per_unit?: string;
   category?: PackageCategory;
   badges?: string[];
@@ -56,6 +62,11 @@ export interface Package {
   inclusions: string[];
   exclusions: string[];
   itinerary: PackageItineraryItem[];
+  highlights?: string[];
+  know_before_you_go?: string[];
+  faqs?: PackageFAQ[];
+  rating?: number;
+  review_count?: number;
   pickup_info: string;
   cancellation_policy: string;
   seo_title?: string;
