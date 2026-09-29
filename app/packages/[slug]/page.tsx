@@ -115,13 +115,13 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
   };
 
   return (
-    <div className="bg-[#FCFBF8] dark:bg-[#080B11] text-slate-900 dark:text-white pb-20 transition-colors duration-200">
+    <div className="bg-[#FBF7F0] dark:bg-[#17120D] text-[#17120D] dark:text-[#FBF7F0] pb-20 transition-colors duration-200">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(tripJsonLd) }}
       />
       {/* Top Hero Banner */}
-      <section className="relative min-h-[45vh] flex items-end bg-[#0B0F17] py-16">
+      <section className="relative min-h-[45vh] flex items-end bg-[#17120D] py-16">
         <div className="absolute inset-0 z-0">
           <img
             src={optimizeImageUrl(pkg.main_image, 1280)}
@@ -131,9 +131,9 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
             loading="eager"
             fetchPriority="high"
             decoding="async"
-            className="w-full h-full object-cover object-center opacity-40"
+            className="w-full h-full object-cover object-center opacity-45"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F17] via-[#0B0F17]/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#17120D] via-[#17120D]/70 to-transparent" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">

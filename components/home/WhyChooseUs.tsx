@@ -13,31 +13,31 @@ export default function WhyChooseUs() {
   const trustPoints = [
     {
       icon: Compass,
-      badge: "🏆 #1 Rated",
-      title: "Award-Winning Service",
+      badge: "Expert Guides",
+      title: "Experienced Safari Marshals",
       description:
-        "Voted top desert safari operator in Dubai with over 2,000+ 5-star traveler reviews and DTCM certified safari marshals.",
+        "Every desert expedition is led by seasoned, licensed drivers with deep expertise navigating Dubai's steep Lahbab red dunes safely.",
     },
     {
       icon: ShieldCheck,
-      badge: "🛡️ 100% Safe",
-      title: "Licensed & Roll-Caged 4x4s",
+      badge: "Passenger Safety",
+      title: "Certified 4x4 Fleet",
       description:
-        "Every vehicle features heavy-duty roll cages, first-aid kits, GPS tracking, and comprehensive commercial passenger insurance.",
+        "All safari Land Cruisers are fitted with reinforced internal roll cages, first-aid safety kits, and comprehensive commercial passenger coverage.",
     },
     {
       icon: Layers,
-      badge: "🤝 Honest Pricing",
+      badge: "Zero Deposit",
       title: "Transparent & Card-Free",
       description:
-        "Zero hidden fees and no upfront card required. Pay on the day of your tour in cash or card directly to your driver.",
+        "Book with complete confidence and zero upfront card requirement. Pay seamlessly on the tour day in cash or card directly to your driver.",
     },
     {
       icon: CalendarCheck,
-      badge: "🏨 Free Transfers",
-      title: "Door-to-Door Transfers",
+      badge: "Citywide Transfers",
+      title: "Door-to-Door Pickup",
       description:
-        "Complimentary pickup and drop-off in air-conditioned 4x4 Land Cruisers from any hotel, apartment, or residence in Dubai.",
+        "Enjoy complimentary hotel, resort, or residential apartment pickup and drop-off anywhere in Dubai in an air-conditioned 4x4 vehicle.",
     },
   ];
 

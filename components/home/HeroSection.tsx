@@ -28,7 +28,7 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-[88vh] sm:min-h-[92vh] flex items-center justify-center overflow-hidden bg-[#17120D] pt-24 pb-16 transition-colors duration-300">
-      {/* Background Cinematic Desert Safari Video with Fallback */}
+      {/* Background Cinematic Desert Safari Video — Crystal Clear & Crisp */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <video
           ref={videoRef}
@@ -37,14 +37,14 @@ export default function HeroSection() {
           muted
           playsInline
           preload="auto"
-          poster="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1920&auto=format&fit=crop"
-          className="w-full h-full object-cover object-center opacity-100 brightness-105 contrast-100 transition-opacity duration-700"
+          poster="/images/hero-desert.jpg"
+          className="w-full h-full object-cover object-center brightness-105 contrast-[1.08] saturate-[1.1] transition-opacity duration-700"
         >
           <source src="/videos/8865812-uhd_4096_2160_25fps.mp4" type="video/mp4" />
           <source src="https://cdn.coverr.co/videos/coverr-driving-in-the-desert-4701/1080p.mp4" type="video/mp4" />
           <img
-            src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1920&auto=format&fit=crop"
-            alt="Dubai desert safari dunes sunset"
+            src="/images/hero-desert.jpg"
+            alt="Dubai desert safari sunset dunes"
             width={1920}
             height={1080}
             loading="eager"
@@ -54,71 +54,85 @@ export default function HeroSection() {
           />
         </video>
 
-        {/* Clear Cinematic Overlay — Minimal and crisp so the video is vividly visible and navbar stays transparent */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-black/40 pointer-events-none" />
+        {/* Crisp Gradient Overlay: Transparent Center for 100% Clear Video Vision */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#17120D]/65 via-transparent to-[#17120D]/75 pointer-events-none" />
+
+        {/* Subtle Sunlight Tint at Top Edge Only */}
+        <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#17120D]/40 to-transparent pointer-events-none" />
       </div>
 
       {/* Content Container */}
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
-        {/* Main H1 Heading — Crisp, clean, and elegant */}
-        <h1 className="animate-hero-fade-up [animation-delay:200ms] opacity-0 font-heading text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-extrabold text-white max-w-2xl leading-[1.2] tracking-tight mb-6 sm:mb-8 drop-shadow-[0_3px_16px_rgba(0,0,0,0.9)]">
-          Unforgettable{" "}
-          <span className="bg-gradient-to-r from-[#FDE68A] via-[#E8C48A] to-[#C89B3C] bg-clip-text text-transparent">
-            Desert Safari
-          </span>{" "}
-          in Dubai
-        </h1>
-
-        {/* Action CTAs — Sleek and proportionate buttons */}
-        <div className="animate-hero-fade-up [animation-delay:400ms] opacity-0 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 w-full sm:w-auto mb-7 sm:mb-10 max-w-xs sm:max-w-none">
-          <Link
-            href="/booking"
-            className="btn-gold group inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-[13px] font-bold uppercase tracking-wider rounded-xl shadow-[0_4px_20px_rgba(200,155,60,0.4)] w-full sm:w-auto"
-            id="hero-book-safari-cta"
-          >
-            <CalendarCheck className="w-3.5 h-3.5 text-[#17120D]" />
-            <span>Book Your Safari</span>
-          </Link>
-
-          <Link
-            href="/packages"
-            className="btn-luxury-outline group inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-[13px] font-semibold tracking-wide rounded-xl shadow-lg w-full sm:w-auto bg-black/35 backdrop-blur-sm"
-            id="hero-explore-packages-cta"
-          >
-            <span>Explore Packages</span>
-            <ArrowRight className="w-3.5 h-3.5 text-[#E8C48A] group-hover:translate-x-1 transition-transform duration-200" />
-          </Link>
+      <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
+        {/* Subtle Luxury Eyebrow Pill */}
+        <div className="animate-hero-fade-up opacity-0 inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#C89B3C]/20 border border-[#E8C48A]/40 text-[#F3D7A4] text-[11px] sm:text-xs font-semibold uppercase tracking-[0.18em] mb-3 sm:mb-4 backdrop-blur-md shadow-[0_2px_12px_rgba(200,155,60,0.2)]">
+          <span>Premium Arabian Desert Excursions</span>
         </div>
 
-        {/* Trust Indicators Grid — Clean floating cards without harsh dividing line */}
-        <div className="animate-hero-fade-up [animation-delay:550ms] opacity-0 grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-2.5 w-full max-w-3xl pt-2 sm:pt-3">
-          <div className="flex items-center gap-2 sm:gap-2.5 p-2 sm:p-2.5 rounded-xl bg-black/40 backdrop-blur-xl border border-white/15 hover:border-[#C89B3C]/70 shadow-xl text-left hover:-translate-y-0.5 hover:bg-black/55 transition-all duration-300">
-            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#C89B3C]/20 border border-[#C89B3C]/40 text-[#E8C48A] flex items-center justify-center shrink-0 shadow-inner">
-              <MapPin className="w-3.5 h-3.5 text-[#E8C48A]" />
+        {/* Main H1 Heading — Refined font size with luminous golden gradient */}
+        <h1 className="animate-hero-fade-up [animation-delay:150ms] opacity-0 font-heading text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-bold text-white max-w-2xl leading-[1.2] tracking-tight mb-3 sm:mb-4 drop-shadow-[0_2px_16px_rgba(0,0,0,0.9)]">
+          Discover Dubai&apos;s{" "}
+          <span className="bg-gradient-to-r from-[#FFF0D0] via-[#E8C48A] to-[#C89B3C] bg-clip-text text-transparent drop-shadow-[0_2px_14px_rgba(200,155,60,0.6)]">
+            Golden Desert
+          </span>
+        </h1>
+
+        {/* Supporting Copy — Reduced font size & balanced spacing */}
+        <p className="animate-hero-fade-up [animation-delay:300ms] opacity-0 text-xs sm:text-sm md:text-base text-[#FBF7F0]/95 max-w-xl leading-relaxed font-normal mb-6 sm:mb-8 drop-shadow-[0_1px_6px_rgba(0,0,0,0.85)]">
+          Explore unforgettable desert adventures, from golden dunes to authentic Arabian hospitality.
+        </p>
+
+        {/* Action CTAs — Primary: Explore Safari Packages, Secondary: WhatsApp Us */}
+        <div className="animate-hero-fade-up [animation-delay:450ms] opacity-0 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3.5 w-full sm:w-auto mb-8 sm:mb-12 max-w-xs sm:max-w-none">
+          <Link
+            href="/packages"
+            className="btn-gold group inline-flex items-center justify-center gap-2 px-7 py-3.5 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-xl shadow-[0_6px_24px_rgba(200,155,60,0.35)] w-full sm:w-auto"
+            id="hero-explore-packages-cta"
+          >
+            <span>Explore Safari Packages</span>
+            <ArrowRight className="w-4 h-4 text-[#17120D] group-hover:translate-x-1 transition-transform duration-200" />
+          </Link>
+
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-luxury-outline group inline-flex items-center justify-center gap-2 px-6 py-3.5 text-xs sm:text-sm font-semibold tracking-wide rounded-xl shadow-lg w-full sm:w-auto bg-black/40 backdrop-blur-md border-[#C89B3C]/40 hover:border-[#C89B3C] text-white"
+            id="hero-whatsapp-cta"
+          >
+            <MessageCircle className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform duration-200" />
+            <span>WhatsApp Us</span>
+          </a>
+        </div>
+
+        {/* Trust Indicators Grid — Refined, verified, balanced */}
+        <div className="animate-hero-fade-up [animation-delay:600ms] opacity-0 grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 w-full max-w-3xl pt-2">
+          <div className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl bg-black/45 backdrop-blur-xl border border-white/10 hover:border-[#C89B3C]/50 shadow-lg text-left transition-all duration-300">
+            <div className="w-8 h-8 rounded-lg bg-[#C89B3C]/20 border border-[#C89B3C]/40 text-[#E8C48A] flex items-center justify-center shrink-0">
+              <MapPin className="w-4 h-4 text-[#E8C48A]" />
             </div>
             <div className="min-w-0">
-              <p className="text-[11px] sm:text-xs font-bold text-white leading-tight truncate">Hotel Pickup</p>
-              <p className="text-[9px] sm:text-[10px] text-[#E8C48A]/80 mt-0.5 truncate">Across Dubai</p>
+              <p className="text-xs font-bold text-white leading-tight truncate">Hotel Pickup</p>
+              <p className="text-[10px] text-[#E8C48A]/80 mt-0.5 truncate">Across Dubai</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-2.5 p-2 sm:p-2.5 rounded-xl bg-black/40 backdrop-blur-xl border border-white/15 hover:border-[#C89B3C]/70 shadow-xl text-left hover:-translate-y-0.5 hover:bg-black/55 transition-all duration-300">
-            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#C89B3C]/20 border border-[#C89B3C]/40 text-[#E8C48A] flex items-center justify-center shrink-0 shadow-inner">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#E8C48A]" />
+          <div className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl bg-black/45 backdrop-blur-xl border border-white/10 hover:border-[#C89B3C]/50 shadow-lg text-left transition-all duration-300">
+            <div className="w-8 h-8 rounded-lg bg-[#C89B3C]/20 border border-[#C89B3C]/40 text-[#E8C48A] flex items-center justify-center shrink-0">
+              <ShieldCheck className="w-4 h-4 text-[#E8C48A]" />
             </div>
             <div className="min-w-0">
-              <p className="text-[11px] sm:text-xs font-bold text-white leading-tight truncate">Licensed Marshals</p>
-              <p className="text-[9px] sm:text-[10px] text-[#E8C48A]/80 mt-0.5 truncate">Safety Certified</p>
+              <p className="text-xs font-bold text-white leading-tight truncate">Licensed Marshals</p>
+              <p className="text-[10px] text-[#E8C48A]/80 mt-0.5 truncate">Safety Certified</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-2.5 p-2 sm:p-2.5 rounded-xl bg-black/40 backdrop-blur-xl border border-white/15 hover:border-[#C89B3C]/70 shadow-xl text-left hover:-translate-y-0.5 hover:bg-black/55 transition-all duration-300">
-            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#C89B3C]/20 border border-[#C89B3C]/40 text-[#E8C48A] flex items-center justify-center shrink-0 shadow-inner">
-              <CalendarCheck className="w-3.5 h-3.5 text-[#E8C48A]" />
+          <div className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl bg-black/45 backdrop-blur-xl border border-white/10 hover:border-[#C89B3C]/50 shadow-lg text-left transition-all duration-300">
+            <div className="w-8 h-8 rounded-lg bg-[#C89B3C]/20 border border-[#C89B3C]/40 text-[#E8C48A] flex items-center justify-center shrink-0">
+              <CalendarCheck className="w-4 h-4 text-[#E8C48A]" />
             </div>
             <div className="min-w-0">
-              <p className="text-[11px] sm:text-xs font-bold text-white leading-tight truncate">Flexible Tours</p>
-              <p className="text-[9px] sm:text-[10px] text-[#E8C48A]/80 mt-0.5 truncate">Family & Private</p>
+              <p className="text-xs font-bold text-white leading-tight truncate">Card-Free Booking</p>
+              <p className="text-[10px] text-[#E8C48A]/80 mt-0.5 truncate">Pay on Tour Day</p>
             </div>
           </div>
 
@@ -126,14 +140,14 @@ export default function HeroSection() {
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 sm:gap-2.5 p-2 sm:p-2.5 rounded-xl bg-black/40 backdrop-blur-xl border border-white/15 hover:border-emerald-400/70 shadow-xl text-left hover:-translate-y-0.5 hover:bg-black/55 transition-all duration-300 group"
+            className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl bg-black/45 backdrop-blur-xl border border-white/10 hover:border-emerald-400/50 shadow-lg text-left transition-all duration-300 group"
           >
-            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center shrink-0 shadow-inner group-hover:scale-105 transition-transform duration-200">
-              <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
+            <div className="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform duration-200">
+              <MessageCircle className="w-4 h-4 text-emerald-400" />
             </div>
             <div className="min-w-0">
-              <p className="text-[11px] sm:text-xs font-bold text-white leading-tight group-hover:text-emerald-300 transition-colors truncate">Instant WhatsApp</p>
-              <p className="text-[9px] sm:text-[10px] text-emerald-400/90 mt-0.5 truncate">24/7 Assistance</p>
+              <p className="text-xs font-bold text-white leading-tight group-hover:text-emerald-300 transition-colors truncate">Direct WhatsApp</p>
+              <p className="text-[10px] text-emerald-400/90 mt-0.5 truncate">24/7 Assistance</p>
             </div>
           </a>
         </div>

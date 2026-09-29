@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -87,7 +86,7 @@ export default function AdminSidebar({
           <div className="p-6 border-b border-white/10 flex items-center justify-between">
             <Link href="/admin" className="flex items-center gap-2.5">
               <div className="relative w-9 h-9 rounded-lg bg-gradient-to-br from-amber-500/30 to-[#17120D] p-1 border border-amber-500/40 flex items-center justify-center text-white shadow">
-                <Image
+                <img
                   src="/images/logo-emblem.png"
                   alt="Dubai Safari Admin"
                   width={32}
@@ -147,7 +146,7 @@ export default function AdminSidebar({
               className="flex items-center gap-2.5"
             >
               <div className="relative w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500/30 to-[#17120D] p-1 border border-amber-500/40 flex items-center justify-center text-white shadow">
-                <Image
+                <img
                   src="/images/logo-emblem.png"
                   alt="Dubai Safari Admin"
                   width={28}

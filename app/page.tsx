@@ -4,7 +4,6 @@ import WhyChooseUs from "@/components/home/WhyChooseUs";
 import ActivitiesShowcase from "@/components/home/ActivitiesShowcase";
 import HowItWorks from "@/components/home/HowItWorks";
 import DesertExperience from "@/components/home/DesertExperience";
-import WhyTravelersChooseUs from "@/components/home/WhyTravelersChooseUs";
 import HomeGallery from "@/components/home/HomeGallery";
 import HomeReviews from "@/components/home/HomeReviews";
 import HomeFAQ from "@/components/home/HomeFAQ";
@@ -56,13 +55,10 @@ export default async function HomePage() {
       {/* 5. How It Works (4-Step Booking Process) */}
       <HowItWorks />
 
-      {/* 6. Visual Desert Experience */}
+      {/* 6. Visual Desert Experience & Heritage */}
       <DesertExperience />
 
-      {/* 7. Trust Pillars: Why Travelers Choose Us */}
-      <WhyTravelersChooseUs />
-
-      {/* 8. Gallery Highlights */}
+      {/* 7. Gallery Highlights */}
       <HomeGallery items={galleryItems} />
 
       {/* 9. Guest Testimonials & Reviews */}

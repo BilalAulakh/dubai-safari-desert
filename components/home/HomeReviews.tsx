@@ -20,11 +20,11 @@ export default function HomeReviews({ reviews }: HomeReviewsProps) {
               <span>Guest Experiences</span>
             </div>
             <h2 className="font-heading text-2xl sm:text-3xl lg:text-[36px] font-bold text-[#17120D] dark:text-[#FBF7F0] tracking-tight leading-[1.15]">
-              What Travelers Say About Our Safaris
+              Authentic Guest Experiences
             </h2>
             <div className="mt-2.5 flex items-center gap-2 text-xs text-[#6B6258] dark:text-[#B8ADA2]">
               <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-              <span>Verified 5-star traveler testimonials & authentic guest feedback</span>
+              <span>Genuine traveler feedback directly from our desert safari guests</span>
             </div>
           </div>
 

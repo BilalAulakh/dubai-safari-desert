@@ -50,63 +50,46 @@ export default function DesertExperience() {
     <section className="py-20 sm:py-28 bg-[#FBF7F0] dark:bg-[#17120D] text-[#17120D] dark:text-[#FBF7F0] overflow-hidden border-t border-[#C89B3C]/15 transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Animated Scrolling Image Collage */}
-          <div className="relative h-[440px] sm:h-[500px] overflow-hidden rounded-2xl bg-gradient-to-b from-[#C89B3C]/5 via-transparent to-[#C89B3C]/5 p-1 border border-[#C89B3C]/20 shadow-xl">
-            {/* Top & Bottom Gradient Masks for seamless continuous scroll effect */}
-            <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[#FBF7F0] dark:from-[#17120D] via-[#FBF7F0]/80 dark:via-[#17120D]/80 to-transparent z-10 pointer-events-none" />
-            <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#FBF7F0] dark:from-[#17120D] via-[#FBF7F0]/80 dark:via-[#17120D]/80 to-transparent z-10 pointer-events-none" />
+          {/* Editorial Luxury Image Composition */}
+          <div className="relative">
+            <div className="relative h-[380px] sm:h-[460px] rounded-3xl overflow-hidden shadow-2xl border border-[#C89B3C]/30 bg-[#17120D] group">
+              <img
+                src="/images/tours/private-morning-desert-safari-dubai.webp"
+                alt="Dubai VIP private desert safari with 4x4 Land Cruiser"
+                width={800}
+                height={600}
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#17120D]/90 via-[#17120D]/20 to-transparent" />
 
-            <div className="grid grid-cols-2 gap-3 sm:gap-4 h-full">
-              {/* Column 1 - Smooth upward scroll */}
-              <div className="flex flex-col gap-3 sm:gap-4 animate-scroll-up">
-                {[...col1Images, ...col1Images].map((img, idx) => (
-                  <div
-                    key={`col1-${idx}`}
-                    className="relative h-48 sm:h-56 rounded-xl overflow-hidden shadow-lg border border-[#C89B3C]/20 group shrink-0 bg-[#17120D]"
-                  >
-                    <img
-                      src={optimizeImageUrl(img.src, 500)}
-                      alt={img.alt}
-                      width={400}
-                      height={280}
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#17120D]/85 via-[#17120D]/20 to-transparent opacity-85 group-hover:opacity-95 transition-opacity" />
-                    <div className="absolute bottom-3 left-3 right-3">
-                      <span className="inline-block px-2.5 py-1 rounded-md bg-[#17120D]/80 backdrop-blur-md text-[#E8C48A] text-[10px] font-bold border border-[#C89B3C]/30 shadow-sm">
-                        {img.tag}
-                      </span>
-                    </div>
-                  </div>
-                ))}
+              <div className="absolute bottom-6 left-6 right-6">
+                <span className="inline-block px-3 py-1 rounded-full bg-[#17120D]/85 backdrop-blur-md text-[#E8C48A] text-xs font-semibold border border-[#C89B3C]/40 mb-2">
+                  Lahbab Red Dunes
+                </span>
+                <p className="text-white font-heading text-lg sm:text-xl font-bold">
+                  Breathtaking Dubai Desert Horizons
+                </p>
               </div>
+            </div>
 
-              {/* Column 2 - Smooth downward scroll */}
-              <div className="flex flex-col gap-3 sm:gap-4 animate-scroll-down">
-                {[...col2Images, ...col2Images].map((img, idx) => (
-                  <div
-                    key={`col2-${idx}`}
-                    className="relative h-48 sm:h-56 rounded-xl overflow-hidden shadow-lg border border-[#C89B3C]/20 group shrink-0 bg-[#17120D]"
-                  >
-                    <img
-                      src={optimizeImageUrl(img.src, 500)}
-                      alt={img.alt}
-                      width={400}
-                      height={280}
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#17120D]/85 via-[#17120D]/20 to-transparent opacity-85 group-hover:opacity-95 transition-opacity" />
-                    <div className="absolute bottom-3 left-3 right-3">
-                      <span className="inline-block px-2.5 py-1 rounded-md bg-[#17120D]/80 backdrop-blur-md text-[#E8C48A] text-[10px] font-bold border border-[#C89B3C]/30 shadow-sm">
-                        {img.tag}
-                      </span>
-                    </div>
-                  </div>
-                ))}
+            {/* Overlapping Floating Inset Card */}
+            <div className="hidden sm:block absolute -bottom-6 -right-6 w-60 rounded-2xl overflow-hidden shadow-2xl border-2 border-[#C89B3C]/40 bg-[#17120D] p-1.5 backdrop-blur-md">
+              <div className="relative h-36 rounded-xl overflow-hidden">
+                <img
+                  src="/images/tours/atv-quad-bike-ride-dubai-1-person.webp"
+                  alt="Quad biking and ATV adventure on red dunes"
+                  width={300}
+                  height={200}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#17120D]/80 to-transparent" />
+                <span className="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-[#17120D]/90 text-[#E8C48A] text-[10px] font-bold border border-[#C89B3C]/30">
+                  ATV Dune Adventures
+                </span>
               </div>
             </div>
           </div>

@@ -46,17 +46,17 @@ export default function PackageCard({ pkg }: PackageCardProps) {
             pkg.badges.map((badge, idx) => (
               <span
                 key={idx}
-                className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider shadow-md backdrop-blur-sm ${
+                className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-sm backdrop-blur-md ${
                   idx === 0
-                    ? "bg-gradient-to-r from-[#FF6B00] to-[#FF2E88] text-white"
-                    : "bg-[#17120D]/85 text-[#E8C48A] border border-[#C89B3C]/40"
+                    ? "bg-[#C89B3C] text-[#17120D] border border-[#C89B3C]"
+                    : "bg-[#17120D]/90 text-[#E8C48A] border border-[#C89B3C]/40"
                 }`}
               >
                 {badge}
               </span>
             ))
           ) : pkg.featured ? (
-            <span className="px-2.5 py-1 rounded-full bg-[#C89B3C] text-[#17120D] text-[10px] font-black uppercase tracking-wider shadow-md">
+            <span className="px-2.5 py-1 rounded-full bg-[#C89B3C] text-[#17120D] text-[10px] font-bold uppercase tracking-wider shadow-sm">
               Signature Tour
             </span>
           ) : null}
@@ -65,7 +65,7 @@ export default function PackageCard({ pkg }: PackageCardProps) {
         {/* Discount Savings Tag (Top Right) */}
         {discountPercent && discountPercent > 0 && (
           <div className="absolute top-3.5 right-3.5 z-10">
-            <span className="px-2.5 py-1 rounded-full bg-emerald-600 text-white text-[10px] font-black tracking-wide shadow-lg uppercase">
+            <span className="px-2.5 py-1 rounded-full bg-[#17120D]/90 text-[#E8C48A] border border-[#C89B3C]/50 text-[10px] font-bold tracking-wide shadow-sm uppercase backdrop-blur-md">
               {discountPercent}% OFF
             </span>
           </div>
@@ -85,14 +85,14 @@ export default function PackageCard({ pkg }: PackageCardProps) {
             </span>
           )}
           <div className="flex items-baseline justify-end gap-1.5">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-amber-300 drop-shadow-sm">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#E8C48A] drop-shadow-sm">
               From
             </span>
-            <span className="text-xl sm:text-2xl font-black text-[#FF6B00] dark:text-[#E8C48A] tracking-tight drop-shadow-sm">
+            <span className="text-xl sm:text-2xl font-black text-[#E8C48A] tracking-tight drop-shadow-sm">
               AED {pkg.price}
             </span>
           </div>
-          <span className="text-[10px] text-white/80 font-medium block">
+          <span className="text-[10px] text-white/85 font-medium block">
             {pkg.per_unit || "per person"}
           </span>
         </div>

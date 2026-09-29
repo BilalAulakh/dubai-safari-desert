@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Phone, Mail, MapPin, Clock, MessageCircle, ShieldCheck } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config/site";
 import { createWhatsAppUrl } from "@/lib/utils";
@@ -19,7 +18,7 @@ export default function Footer() {
             <Link href="/" className="flex items-center gap-3 group">
               <div className="relative w-12 h-12 rounded-xl bg-gradient-to-br from-[#C89B3C]/50 via-[#241A12] to-[#17120D] p-0.5 shadow-[0_2px_12px_rgba(200,155,60,0.3)] group-hover:scale-105 transition-all duration-300">
                 <div className="w-full h-full rounded-[10px] bg-[#17120D] flex items-center justify-center p-1">
-                  <Image
+                  <img
                     src="/images/logo-emblem.png"
                     alt="Safari Dune Tours"
                     width={44}

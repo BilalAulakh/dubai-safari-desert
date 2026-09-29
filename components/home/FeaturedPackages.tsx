@@ -58,18 +58,6 @@ export default function FeaturedPackages({ packages }: FeaturedPackagesProps) {
     });
   };
 
-  const scrollToIndex = (index: number) => {
-    if (!sliderRef.current) return;
-    const container = sliderRef.current;
-    const card = container.children[index] as HTMLElement | null;
-    if (card) {
-      card.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-        inline: "start",
-      });
-    }
-  };
 
   return (
     <section className="py-20 sm:py-28 bg-[#FBF7F0] dark:bg-[#17120D] transition-colors duration-200 overflow-hidden">
@@ -79,13 +67,13 @@ export default function FeaturedPackages({ packages }: FeaturedPackagesProps) {
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-12 gap-6">
             <div>
               <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#C89B3C]/15 border border-[#C89B3C]/30 text-[#8C6214] dark:text-[#E8C48A] text-xs font-bold uppercase tracking-wider mb-3">
-                <span>Signature Desert Tours</span>
+                <span>Curated Safari Experiences</span>
               </div>
               <h2 className="font-heading text-2xl sm:text-3xl lg:text-[40px] font-bold text-[#17120D] dark:text-[#FBF7F0] tracking-tight leading-[1.15]">
-                Top Rated Dubai Desert Safaris & Buggy Rides
+                Signature Dubai Desert Safaris & Tours
               </h2>
               <p className="mt-2 text-sm sm:text-base text-[#6B6258] dark:text-[#B8ADA2] max-w-2xl leading-relaxed">
-                Swipe through our complete collection of red dune bashes, quad bike safaris, and luxury Bedouin camps.
+                Explore our hand-picked collection of red dune bashes, quad bike adventures, and authentic Bedouin camps.
               </p>
             </div>
 
@@ -141,38 +129,19 @@ export default function FeaturedPackages({ packages }: FeaturedPackagesProps) {
           </div>
         </div>
 
-        {/* Slider Pagination Dots & Mobile Indicator */}
-        <div className="mt-4 flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
-          {/* Progress Dots */}
-          <div className="flex items-center gap-1.5 overflow-x-auto max-w-full py-1">
-            {displayPackages.map((_, idx) => (
-              <button
-                key={idx}
-                type="button"
-                onClick={() => scrollToIndex(idx)}
-                className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                  idx === activeIndex
-                    ? "w-8 bg-[#C89B3C]"
-                    : "w-2 bg-[#C89B3C]/30 hover:bg-[#C89B3C]/60"
-                }`}
-                aria-label={`Go to slide ${idx + 1}`}
-              />
-            ))}
-          </div>
-
-          <div className="flex items-center gap-4 text-xs font-semibold text-[#8C6214] dark:text-[#E8C48A]">
-            <span>
-              Slide {activeIndex + 1} of {displayPackages.length}
-            </span>
-            <span className="text-[#C89B3C]/40">•</span>
-            <Link
-              href="/packages"
-              className="hover:underline inline-flex items-center gap-1 text-[#C89B3C]"
-            >
-              <span>Explore All Tours</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
+        {/* Slider Indicator & Explore All Link */}
+        <div className="mt-4 flex items-center justify-between sm:justify-end gap-4 pt-2">
+          <span className="text-xs font-semibold text-[#8C6214] dark:text-[#E8C48A]">
+            Showing {activeIndex + 1} of {displayPackages.length} packages
+          </span>
+          <span className="hidden sm:inline text-[#C89B3C]/40">•</span>
+          <Link
+            href="/packages"
+            className="hover:underline inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#C89B3C]"
+          >
+            <span>Explore All Packages ({packages.length})</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
         </div>
       </div>
     </section>
