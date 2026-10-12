@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Star, MessageSquarePlus, CheckCircle2, ArrowRight } from "lucide-react";
 import { Review } from "@/types";
 import { formatDate } from "@/lib/utils";
-import { initialReviews } from "@/lib/data/reviews";
 
 interface HomeReviewsProps {
   reviews: Review[];
@@ -40,11 +39,11 @@ export default function HomeReviews({ reviews }: HomeReviewsProps) {
         </div>
 
         {displayReviews.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
             {displayReviews.map((rev) => (
               <div
                 key={rev.id}
-                className="p-7 sm:p-8 rounded-2xl bg-white dark:bg-[#241A12] border border-[#C89B3C]/20 shadow-sm hover:border-[#C89B3C]/50 hover:shadow-xl transition-all duration-300 flex flex-col justify-between hover:-translate-y-1"
+                className="w-full md:w-[calc(33.333%-1.334rem)] p-7 sm:p-8 rounded-2xl bg-white dark:bg-[#241A12] border border-[#C89B3C]/20 shadow-sm hover:border-[#C89B3C]/50 hover:shadow-xl transition-all duration-300 flex flex-col justify-between hover:-translate-y-1"
               >
                 <div>
                   {/* Rating Stars */}

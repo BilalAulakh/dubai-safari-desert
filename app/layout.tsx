@@ -10,14 +10,12 @@ const fontHeading = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-heading",
   display: "swap",
-  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
 const fontSans = Manrope({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
-  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
 export const viewport: Viewport = {
@@ -109,7 +107,7 @@ export default function RootLayout({
         name: SITE_CONFIG.name,
         legalName: SITE_CONFIG.legalName,
         url: SITE_CONFIG.url,
-        logo: `${SITE_CONFIG.url}/images/logo-transparent.png`,
+        logo: `${SITE_CONFIG.url}${SITE_CONFIG.logo}`,
         description: SITE_CONFIG.description,
         contactPoint: {
           "@type": "ContactPoint",
@@ -178,9 +176,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${fontHeading.variable} ${fontSans.variable} scroll-smooth`} suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-        <link rel="shortcut icon" href="/icon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/icon.svg" />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem("dsd_theme")||"dark";if(t==="dark"){document.documentElement.classList.add("dark")}else{document.documentElement.classList.remove("dark")}}catch(e){}})()`,
@@ -191,7 +186,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${fontSans.variable} ${fontHeading.variable} min-h-screen flex flex-col bg-[var(--bg-page)] text-[var(--text-main)] font-sans antialiased selection:bg-[#C89B3C] selection:text-[#17120D] transition-colors duration-200`}>
+      <body className={`min-h-screen flex flex-col bg-[var(--bg-page)] text-[var(--text-main)] font-sans antialiased selection:bg-[#C89B3C] selection:text-[#17120D]`}>
         <StoreProvider>
           <ThemeProvider>
             <AppShell>{children}</AppShell>

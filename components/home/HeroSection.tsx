@@ -13,17 +13,30 @@ export default function HeroSection() {
     SITE_CONFIG.whatsappTemplates.general
   );
 
+  // Attach the video only after the page has rendered, so it never competes with
+  // critical CSS/JS/fonts. The poster shows until then; data-saver users keep the poster.
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.muted = true;
-      videoRef.current.defaultMuted = true;
-      const promise = videoRef.current.play();
-      if (promise !== undefined) {
-        promise.catch(() => {
-          // Autoplay fallback
-        });
-      }
+    const video = videoRef.current;
+    if (!video) return;
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+    if (connection?.saveData) return;
+
+    const start = () => {
+      video.src = window.matchMedia("(max-width: 767px)").matches
+        ? "/videos/hero-desert-540.mp4"
+        : "/videos/hero-desert-1080.mp4";
+      video.muted = true;
+      video.play().catch(() => {
+        // Autoplay blocked: poster stays visible
+      });
+    };
+
+    if (document.readyState === "complete") {
+      start();
+      return;
     }
+    window.addEventListener("load", start, { once: true });
+    return () => window.removeEventListener("load", start);
   }, []);
 
   return (
@@ -32,30 +45,19 @@ export default function HeroSection() {
       <div className="absolute inset-0 z-0 overflow-hidden">
         <video
           ref={videoRef}
-          autoPlay
           loop
           muted
           playsInline
-          preload="auto"
-          poster="/images/hero-desert.jpg"
-          className="w-full h-full object-cover object-center brightness-105 contrast-[1.08] saturate-[1.1] transition-opacity duration-700"
-        >
-          <source src="/videos/8865812-uhd_4096_2160_25fps.mp4" type="video/mp4" />
-          <source src="https://cdn.coverr.co/videos/coverr-driving-in-the-desert-4701/1080p.mp4" type="video/mp4" />
-          <img
-            src="/images/hero-desert.jpg"
-            alt="Dubai desert safari sunset dunes"
-            width={1920}
-            height={1080}
-            loading="eager"
-            fetchPriority="high"
-            decoding="async"
-            className="w-full h-full object-cover object-center"
-          />
-        </video>
+          poster="/images/hero-poster.webp"
+          aria-hidden="true"
+          className="w-full h-full object-cover object-center brightness-105 contrast-[1.08] saturate-[1.1]"
+        />
 
-        {/* Crisp Gradient Overlay: Transparent Center for 100% Clear Video Vision */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#17120D]/65 via-transparent to-[#17120D]/75 pointer-events-none" />
+        {/* Gradient Overlay: top/bottom fade for navbar and section edges */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#17120D]/65 via-transparent to-[#17120D]/80 pointer-events-none" />
+
+        {/* Soft vignette behind the copy so the heading stays legible over bright sky */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_45%_at_50%_45%,rgba(23,18,13,0.55),transparent_75%)] pointer-events-none" />
 
         {/* Subtle Sunlight Tint at Top Edge Only */}
         <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#17120D]/40 to-transparent pointer-events-none" />
@@ -69,15 +71,15 @@ export default function HeroSection() {
         </div>
 
         {/* Main H1 Heading — Refined font size with luminous golden gradient */}
-        <h1 className="animate-hero-fade-up [animation-delay:150ms] opacity-0 font-heading text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-bold text-white max-w-2xl leading-[1.2] tracking-tight mb-3 sm:mb-4 drop-shadow-[0_2px_16px_rgba(0,0,0,0.9)]">
+        <h1 className="animate-hero-fade-up [animation-delay:150ms] opacity-0 font-heading text-[28px] sm:text-4xl md:text-5xl lg:text-[52px] font-bold text-white max-w-3xl text-balance leading-[1.15] tracking-tight mb-3 sm:mb-4 drop-shadow-[0_2px_16px_rgba(0,0,0,0.9)]">
           Discover Dubai&apos;s{" "}
-          <span className="bg-gradient-to-r from-[#FFF0D0] via-[#E8C48A] to-[#C89B3C] bg-clip-text text-transparent drop-shadow-[0_2px_14px_rgba(200,155,60,0.6)]">
+          <span className="whitespace-nowrap bg-gradient-to-r from-[#FFF0D0] via-[#E8C48A] to-[#C89B3C] bg-clip-text text-transparent drop-shadow-[0_2px_14px_rgba(200,155,60,0.6)]">
             Golden Desert
           </span>
         </h1>
 
         {/* Supporting Copy — Reduced font size & balanced spacing */}
-        <p className="animate-hero-fade-up [animation-delay:300ms] opacity-0 text-xs sm:text-sm md:text-base text-[#FBF7F0]/95 max-w-xl leading-relaxed font-normal mb-6 sm:mb-8 drop-shadow-[0_1px_6px_rgba(0,0,0,0.85)]">
+        <p className="animate-hero-fade-up [animation-delay:300ms] opacity-0 text-sm sm:text-base md:text-lg text-[#FBF7F0]/95 max-w-xl leading-relaxed font-normal mb-6 sm:mb-8 drop-shadow-[0_1px_6px_rgba(0,0,0,0.85)]">
           Explore unforgettable desert adventures, from golden dunes to authentic Arabian hospitality.
         </p>
 

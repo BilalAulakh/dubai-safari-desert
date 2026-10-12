@@ -8,7 +8,7 @@ export const SITE_CONFIG = {
   url: "https://safaridunetours.com",
   ogImage: "https://safaridunetours.com/images/hero-desert.jpg",
   logo: "/images/logo-transparent.png",
-  logoEmblem: "/images/logo-emblem.png",
+  logoEmblem: "/images/logo-emblem-96.webp",
   logoBadge: "/images/logo-badge.png",
   logoDark: "/images/logo-dark-mode.png",
   

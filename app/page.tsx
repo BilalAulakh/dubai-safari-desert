@@ -1,3 +1,4 @@
+import { preload } from "react-dom";
 import HeroSection from "@/components/home/HeroSection";
 import FeaturedPackages from "@/components/home/FeaturedPackages";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
@@ -8,6 +9,7 @@ import HomeGallery from "@/components/home/HomeGallery";
 import HomeReviews from "@/components/home/HomeReviews";
 import HomeFAQ from "@/components/home/HomeFAQ";
 import CTASection from "@/components/home/CTASection";
+import { toPackageCardData } from "@/components/packages/PackageCard";
 
 import {
   getPackages,
@@ -20,6 +22,9 @@ import {
 export const revalidate = 3600;
 
 export default async function HomePage() {
+  // Hero poster is the first large paint; fetch it with the HTML instead of after hydration
+  preload("/images/hero-poster.webp", { as: "image", fetchPriority: "high" });
+
   const [packages, activities, galleryItems, faqs, reviews] = await Promise.all([
     getPackages(),
     getActivities(),
@@ -34,7 +39,7 @@ export default async function HomePage() {
       <HeroSection />
 
       {/* 2. Featured Safari Packages */}
-      <FeaturedPackages packages={packages} />
+      <FeaturedPackages packages={packages.map(toPackageCardData)} />
 
       {/* Subtle Luxury Gold Section Transition */}
       <div className="w-full flex justify-center py-2 bg-[#FBF7F0] dark:bg-[#17120D]">

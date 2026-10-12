@@ -58,6 +58,11 @@
     letter-spacing: -0.015em;
   }
 
+  :focus-visible {
+    outline: 2px solid #C89B3C;
+    outline-offset: 2px;
+  }
+
   ::selection {
     background-color: #C89B3C;
     color: #17120D;
@@ -65,10 +70,6 @@
 }
 
 /* Custom Gradients */
-.gold-gradient {
-  background: linear-gradient(135deg, #C89B3C 0%, #D6A84F 50%, #B6862B 100%);
-}
-
 .gold-text-gradient {
   background: linear-gradient(135deg, #B58428 0%, #C89B3C 50%, #8C6214 100%);
   -webkit-background-clip: text;
@@ -79,14 +80,6 @@
   background: linear-gradient(135deg, #E8C48A 0%, #D6A84F 60%, #C89B3C 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-}
-
-.dark-luxury-gradient {
-  background: linear-gradient(180deg, #17120D 0%, #241A12 100%);
-}
-
-.sand-gradient {
-  background: linear-gradient(180deg, #FBF7F0 0%, #F2E8D5 100%);
 }
 
 /* Button utility classes */
@@ -204,69 +197,35 @@
   animation: heroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Luxury card hover behavior */
-.luxury-card {
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: 1.25rem;
-  transition: transform 250ms ease, box-shadow 250ms ease, border-color 250ms ease;
+/* Hide scrollbars on horizontal carousels while keeping them scrollable */
+.no-scrollbar {
+  scrollbar-width: none;
 }
-.luxury-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(200, 155, 60, 0.45);
-  box-shadow: 0 16px 36px -10px rgba(23, 18, 13, 0.15), 0 0 0 1px rgba(200, 155, 60, 0.2);
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
-/* Cinematic scale animation for Hero (slow and majestic) */
-@keyframes heroZoom {
-  0% {
-    transform: scale(1.02);
+/* Scroll-driven reveal (components/common/ScrollReveal.tsx).
+   Visible by default; only animates where scroll timelines are supported. */
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
   }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1.02);
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
-.animate-hero-zoom {
-  animation: heroZoom 26s ease-in-out infinite;
-  will-change: transform;
-}
-
-/* Continuous vertical scroll for collage */
-@keyframes scrollUp {
-  0% {
-    transform: translateY(0);
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .scroll-reveal {
+      animation: revealUp linear both;
+      animation-timeline: view();
+      animation-range: entry var(--reveal-offset, 0%) cover 22%;
+    }
   }
-  100% {
-    transform: translateY(-50%);
-  }
-}
-
-@keyframes scrollDown {
-  0% {
-    transform: translateY(-50%);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-.animate-scroll-up {
-  animation: scrollUp 28s linear infinite;
-  will-change: transform;
-}
-
-.animate-scroll-down {
-  animation: scrollDown 28s linear infinite;
-  will-change: transform;
-}
-
-.animate-scroll-up:hover,
-.animate-scroll-down:hover {
-  animation-play-state: paused;
 }
 
 /* Prefers Reduced Motion */

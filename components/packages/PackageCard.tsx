@@ -1,14 +1,47 @@
-"use client";
-
 import Link from "next/link";
 import { Clock, CheckCircle2, ArrowRight, MessageCircle } from "lucide-react";
 import { Package } from "@/types";
 import { formatPrice, optimizeImageUrl, createWhatsAppUrl } from "@/lib/utils";
 import { SITE_CONFIG } from "@/lib/config/site";
 
+// Only the fields the card renders, so pages can avoid shipping full package records to the client
+export type PackageCardData = Pick<
+  Package,
+  | "id"
+  | "name"
+  | "slug"
+  | "short_description"
+  | "price"
+  | "original_price"
+  | "per_unit"
+  | "badges"
+  | "duration"
+  | "featured"
+  | "active"
+  | "main_image"
+  | "inclusions"
+>;
+
+export function toPackageCardData(pkg: Package): PackageCardData {
+  return {
+    id: pkg.id,
+    name: pkg.name,
+    slug: pkg.slug,
+    short_description: pkg.short_description,
+    price: pkg.price,
+    original_price: pkg.original_price,
+    per_unit: pkg.per_unit,
+    badges: pkg.badges,
+    duration: pkg.duration,
+    featured: pkg.featured,
+    active: pkg.active,
+    main_image: pkg.main_image,
+    inclusions: pkg.inclusions.slice(0, 4),
+  };
+}
+
 interface PackageCardProps {
-  pkg: Package;
-  featuredOnly?: boolean;
+  pkg: PackageCardData;
 }
 
 export default function PackageCard({ pkg }: PackageCardProps) {

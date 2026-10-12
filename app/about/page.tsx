@@ -81,7 +81,7 @@ export default function AboutPage() {
 
           <div className="relative h-96 sm:h-[450px] rounded-3xl overflow-hidden shadow-2xl border border-[#C89B3C]/25 group">
             <img
-              src="/images/hero-desert.jpg"
+              src="/images/hero-desert.webp"
               alt="Dubai desert safari guide with camel"
               width={800}
               height={500}

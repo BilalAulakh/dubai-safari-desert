@@ -87,7 +87,7 @@ export default function AdminSidebar({
             <Link href="/admin" className="flex items-center gap-2.5">
               <div className="relative w-9 h-9 rounded-lg bg-gradient-to-br from-amber-500/30 to-[#17120D] p-1 border border-amber-500/40 flex items-center justify-center text-white shadow">
                 <img
-                  src="/images/logo-emblem.png"
+                  src="/images/logo-emblem-96.webp"
                   alt="Dubai Safari Admin"
                   width={32}
                   height={32}
@@ -147,7 +147,7 @@ export default function AdminSidebar({
             >
               <div className="relative w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500/30 to-[#17120D] p-1 border border-amber-500/40 flex items-center justify-center text-white shadow">
                 <img
-                  src="/images/logo-emblem.png"
+                  src="/images/logo-emblem-96.webp"
                   alt="Dubai Safari Admin"
                   width={28}
                   height={28}

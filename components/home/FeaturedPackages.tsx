@@ -3,12 +3,11 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
-import { Package } from "@/types";
-import PackageCard from "@/components/packages/PackageCard";
+import PackageCard, { type PackageCardData } from "@/components/packages/PackageCard";
 import ScrollReveal from "@/components/common/ScrollReveal";
 
 interface FeaturedPackagesProps {
-  packages: Package[];
+  packages: PackageCardData[];
 }
 
 export default function FeaturedPackages({ packages }: FeaturedPackagesProps) {
@@ -116,9 +115,8 @@ export default function FeaturedPackages({ packages }: FeaturedPackagesProps) {
           <div
             ref={sliderRef}
             className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar pb-6 pt-2"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
-            {displayPackages.map((pkg, index) => (
+            {displayPackages.map((pkg) => (
               <div
                 key={pkg.id}
                 className="w-[88vw] sm:w-[380px] lg:w-[390px] shrink-0 snap-start flex flex-col"

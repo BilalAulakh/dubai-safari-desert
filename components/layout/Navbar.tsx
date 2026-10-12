@@ -56,7 +56,7 @@ export default function Navbar() {
             <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-[#C89B3C]/50 via-[#241A12] to-[#17120D] p-0.5 shadow-[0_2px_12px_rgba(200,155,60,0.3)] group-hover:shadow-[0_4px_20px_rgba(200,155,60,0.5)] group-hover:scale-105 transition-all duration-300">
               <div className="w-full h-full rounded-[10px] bg-[#17120D] flex items-center justify-center p-1">
                 <img
-                  src="/images/logo-emblem.png"
+                  src="/images/logo-emblem-96.webp"
                   alt="Safari Dune Tours"
                   width={40}
                   height={40}

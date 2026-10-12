@@ -112,9 +112,11 @@ export default function HomeGallery({ items }: HomeGalleryProps) {
 
             return (
               <ScrollReveal key={item.id} delay={index * 70} className={spanClass}>
-                <div
+                <button
+                  type="button"
                   onClick={() => openLightbox(index)}
-                  className="group relative w-full h-full rounded-2xl overflow-hidden shadow-sm bg-[#17120D] cursor-pointer border border-[#C89B3C]/20 hover:border-[#C89B3C]/60 hover:shadow-[0_16px_36px_rgba(23,18,13,0.3)] transition-all duration-300 hover:-translate-y-1"
+                  aria-label={`View photo: ${item.title}`}
+                  className="group relative block text-left w-full h-full rounded-2xl overflow-hidden shadow-sm bg-[#17120D] cursor-pointer border border-[#C89B3C]/20 hover:border-[#C89B3C]/60 hover:shadow-[0_16px_36px_rgba(23,18,13,0.3)] transition-all duration-300 hover:-translate-y-1"
                 >
                   <img
                     src={optimizeImageUrl(item.image_url, isFirst || isLast ? 900 : 600)}
@@ -135,20 +137,20 @@ export default function HomeGallery({ items }: HomeGalleryProps) {
                   </div>
 
                   {/* Bottom Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#17120D]/95 via-[#17120D]/30 to-transparent opacity-85 group-hover:opacity-95 transition-opacity duration-300 flex items-end justify-between p-4 sm:p-5">
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#17120D]/95 via-[#17120D]/30 to-transparent opacity-85 group-hover:opacity-95 transition-opacity duration-300 flex items-end justify-between p-3 sm:p-5">
                     <div className="flex-1 pr-2 min-w-0">
-                      <p className="font-heading text-sm sm:text-base font-bold text-white truncate group-hover:text-[#E8C48A] transition-colors duration-200">
+                      <p className="font-heading text-[13px] sm:text-base font-bold text-white leading-snug line-clamp-2 sm:line-clamp-1 group-hover:text-[#E8C48A] transition-colors duration-200">
                         {item.title}
                       </p>
-                      <p className="text-[11px] text-[#B8ADA2] flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                      <p className="hidden sm:flex text-[11px] text-[#B8ADA2] items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                         <span>Click to view in high resolution</span>
                       </p>
                     </div>
-                    <div className="w-8 h-8 rounded-full bg-[#C89B3C] text-[#17120D] flex items-center justify-center shrink-0 shadow-md group-hover:scale-105 group-hover:bg-[#D6A84F] transition-all duration-200">
+                    <div className="hidden sm:flex w-8 h-8 rounded-full bg-[#C89B3C] text-[#17120D] items-center justify-center shrink-0 shadow-md group-hover:scale-105 group-hover:bg-[#D6A84F] transition-all duration-200">
                       <Maximize2 className="w-4 h-4" />
                     </div>
                   </div>
-                </div>
+                </button>
               </ScrollReveal>
             );
           })}

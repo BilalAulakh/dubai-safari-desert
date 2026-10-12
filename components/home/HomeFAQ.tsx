@@ -19,7 +19,7 @@ export default function HomeFAQ({ faqs }: HomeFAQProps) {
   };
 
   return (
-    <section className="py-20 sm:py-28 bg-[#FBF7F0] dark:bg-[#17120D] transition-colors duration-200">
+    <section className="pt-6 sm:pt-10 pb-20 sm:pb-28 bg-[#FBF7F0] dark:bg-[#17120D] transition-colors duration-200">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-14">
