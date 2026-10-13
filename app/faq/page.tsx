@@ -6,7 +6,7 @@ import { createWhatsAppUrl } from "@/lib/utils";
 import FAQInteractiveList from "@/components/faq/FAQInteractiveList";
 import CTASection from "@/components/home/CTASection";
 
-export const revalidate = 3600;
+export const revalidate = 86400; // 1 day; admin saves refresh pages on demand
 
 export const metadata: Metadata = {
   title: "Dubai Desert Safari FAQ | Safari Dune Tours",

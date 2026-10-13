@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
 };
 
-export const revalidate = 3600;
+export const revalidate = 86400; // 1 day; admin saves refresh pages on demand
 
 export default async function GalleryPage() {
   const [items, categories] = await Promise.all([getGalleryItems(), getGalleryCategories()]);

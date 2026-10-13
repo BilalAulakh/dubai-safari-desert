@@ -6,7 +6,7 @@ import { formatDate, optimizeImageUrl } from "@/lib/utils";
 import { SITE_CONFIG } from "@/lib/config/site";
 import CTASection from "@/components/home/CTASection";
 
-export const revalidate = 60; // Refresh every 60 seconds
+export const revalidate = 86400; // 1 day; admin saves refresh pages on demand
 
 export const metadata: Metadata = {
   title: "Dubai Desert Safari Guides & Travel Blog | Safari Dune Tours",

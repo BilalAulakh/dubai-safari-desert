@@ -20,7 +20,7 @@ import FlexiblePriceCalculator from "@/components/packages/FlexiblePriceCalculat
 import CTASection from "@/components/home/CTASection";
 import Breadcrumbs from "@/components/common/Breadcrumbs";
 
-export const revalidate = 3600;
+export const revalidate = 86400; // 1 day; admin saves refresh pages on demand
 
 interface PackagePageProps {
   params: Promise<{ slug: string }>;

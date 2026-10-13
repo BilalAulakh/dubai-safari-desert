@@ -9,6 +9,7 @@ function revalidateBlogPages() {
     revalidatePath("/");
     revalidatePath("/blog");
     revalidatePath("/blog/[slug]", "page");
+    revalidatePath("/sitemap.xml");
   } catch {}
 }
 

@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { SITE_CONFIG } from "@/lib/config/site";
 import { getPackages, getBlogPosts } from "@/lib/data/store";
 
-export const revalidate = 3600;
+export const revalidate = 86400; // 1 day; admin saves refresh pages on demand
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || SITE_CONFIG.url;
 

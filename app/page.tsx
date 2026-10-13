@@ -21,7 +21,7 @@ import {
   getApprovedReviews,
 } from "@/lib/data/store";
 
-export const revalidate = 3600;
+export const revalidate = 86400; // 1 day; admin saves refresh pages on demand
 
 export const metadata: Metadata = {
   alternates: {

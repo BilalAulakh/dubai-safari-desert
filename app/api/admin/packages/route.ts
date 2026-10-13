@@ -9,6 +9,7 @@ function revalidatePackagePages() {
     revalidatePath("/");
     revalidatePath("/packages");
     revalidatePath("/packages/[slug]", "page");
+    revalidatePath("/sitemap.xml");
   } catch {}
 }
 

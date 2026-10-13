@@ -4,7 +4,7 @@ import { SITE_CONFIG } from "@/lib/config/site";
 import { createWhatsAppUrl } from "@/lib/utils";
 import ContactForm from "@/components/contact/ContactForm";
 
-export const revalidate = 3600;
+export const revalidate = 86400; // 1 day; admin saves refresh pages on demand
 
 export const metadata: Metadata = {
   title: "Contact Safari Dune Tours | Reservations & WhatsApp Support",

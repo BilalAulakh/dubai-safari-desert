@@ -10,7 +10,7 @@ import CTASection from "@/components/home/CTASection";
 import Breadcrumbs from "@/components/common/Breadcrumbs";
 import { SITE_CONFIG } from "@/lib/config/site";
 
-export const revalidate = 60;
+export const revalidate = 86400; // 1 day; admin saves refresh pages on demand
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;

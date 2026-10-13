@@ -6,7 +6,7 @@ import { optimizeImageUrl } from "@/lib/utils";
 import { SITE_CONFIG } from "@/lib/config/site";
 import CTASection from "@/components/home/CTASection";
 
-export const revalidate = 3600;
+export const revalidate = 86400; // 1 day; admin saves refresh pages on demand
 
 export const metadata: Metadata = {
   title: "Desert Safari Activities in Dubai | Safari Dune Tours",
