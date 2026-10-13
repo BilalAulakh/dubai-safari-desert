@@ -1,6 +1,16 @@
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { getBlogPostById, updateBlogPost, deleteBlogPost, getAllBlogPosts } from "@/lib/data/store";
 import { BlogPost } from "@/types";
+
+// Blog pages are ISR-cached; refresh them right after admin edits
+function revalidateBlogPages() {
+  try {
+    revalidatePath("/");
+    revalidatePath("/blog");
+    revalidatePath("/blog/[slug]", "page");
+  } catch {}
+}
 
 export async function GET(
   request: Request,
@@ -106,6 +116,7 @@ export async function PUT(
     }
 
     const updated = await updateBlogPost(id, updates);
+    revalidateBlogPages();
     return NextResponse.json({ success: true, blog: updated });
   } catch (error: any) {
     console.error("PUT /api/admin/blogs/[id] error:", error);
@@ -129,6 +140,7 @@ export async function DELETE(
     }
 
     const deleted = await deleteBlogPost(id);
+    revalidateBlogPages();
     return NextResponse.json({ success: deleted });
   } catch (error: any) {
     console.error("DELETE /api/admin/blogs/[id] error:", error);

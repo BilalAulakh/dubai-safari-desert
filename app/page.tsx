@@ -16,6 +16,7 @@ import {
   getPackages,
   getActivities,
   getGalleryItems,
+  getGalleryCategories,
   getFAQs,
   getApprovedReviews,
 } from "@/lib/data/store";
@@ -32,10 +33,11 @@ export default async function HomePage() {
   // Hero poster is the first large paint; fetch it with the HTML instead of after hydration
   preload("/images/hero-poster.webp", { as: "image", fetchPriority: "high" });
 
-  const [packages, activities, galleryItems, faqs, reviews] = await Promise.all([
+  const [packages, activities, galleryItems, galleryCategories, faqs, reviews] = await Promise.all([
     getPackages(),
     getActivities(),
     getGalleryItems(),
+    getGalleryCategories(),
     getFAQs(),
     getApprovedReviews(),
   ]);
@@ -71,7 +73,7 @@ export default async function HomePage() {
       <DesertExperience />
 
       {/* 7. Gallery Highlights */}
-      <HomeGallery items={galleryItems} />
+      <HomeGallery items={galleryItems} categories={galleryCategories} />
 
       {/* 9. Guest Testimonials & Reviews */}
       <HomeReviews reviews={reviews} />

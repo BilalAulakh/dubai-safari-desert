@@ -155,8 +155,15 @@ export interface GalleryItem {
   id: string;
   title: string;
   image_url: string;
-  category: "desert" | "dune-bashing" | "camp" | "food" | "entertainment" | "activities";
+  category: string; // slug of a GalleryCategory
   active: boolean;
+  sort_order: number;
+}
+
+export interface GalleryCategory {
+  id: string;
+  slug: string;
+  label: string;
   sort_order: number;
 }
 

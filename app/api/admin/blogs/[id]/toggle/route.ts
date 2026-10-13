@@ -1,5 +1,15 @@
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { getBlogPostById, toggleBlogStatus } from "@/lib/data/store";
+
+// Blog pages are ISR-cached; refresh them right after admin edits
+function revalidateBlogPages() {
+  try {
+    revalidatePath("/");
+    revalidatePath("/blog");
+    revalidatePath("/blog/[slug]", "page");
+  } catch {}
+}
 
 export async function POST(
   request: Request,
@@ -23,6 +33,7 @@ export async function POST(
     }
 
     const updated = await toggleBlogStatus(id, nextStatus);
+    revalidateBlogPages();
     return NextResponse.json({ success: true, blog: updated });
   } catch (error: any) {
     console.error("POST /api/admin/blogs/[id]/toggle error:", error);

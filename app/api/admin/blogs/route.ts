@@ -1,7 +1,17 @@
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { getAllBlogPosts, createBlogPost } from "@/lib/data/store";
 import { BlogPost } from "@/types";
 
+
+// Blog pages are ISR-cached; refresh them right after admin edits
+function revalidateBlogPages() {
+  try {
+    revalidatePath("/");
+    revalidatePath("/blog");
+    revalidatePath("/blog/[slug]", "page");
+  } catch {}
+}
 export async function GET() {
   try {
     const blogs = await getAllBlogPosts();
@@ -86,6 +96,7 @@ export async function POST(request: Request) {
     };
 
     const saved = await createBlogPost(newBlogData);
+    revalidateBlogPages();
     return NextResponse.json({ success: true, blog: saved }, { status: 201 });
   } catch (error: any) {
     console.error("POST /api/admin/blogs error:", error);

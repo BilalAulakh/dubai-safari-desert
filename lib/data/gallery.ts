@@ -1,4 +1,14 @@
-import { GalleryItem } from "@/types";
+import { GalleryCategory, GalleryItem } from "@/types";
+
+// Used until the gallery_categories table exists in Supabase
+export const defaultGalleryCategories: GalleryCategory[] = [
+  { id: "cat-desert", slug: "desert", label: "Desert Landscapes", sort_order: 1 },
+  { id: "cat-dune-bashing", slug: "dune-bashing", label: "Dune Bashing", sort_order: 2 },
+  { id: "cat-camp", slug: "camp", label: "Bedouin Camp", sort_order: 3 },
+  { id: "cat-food", slug: "food", label: "BBQ & Dining", sort_order: 4 },
+  { id: "cat-entertainment", slug: "entertainment", label: "Live Shows", sort_order: 5 },
+  { id: "cat-activities", slug: "activities", label: "Activities", sort_order: 6 },
+];
 
 export const initialGalleryItems: GalleryItem[] = [
   {

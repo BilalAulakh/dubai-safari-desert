@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import { Calendar, Clock, ArrowLeft, Share2, Compass, ArrowRight, BookOpen } from "lucide-react";
 import { getBlogPostBySlug, getBlogPosts, getCommentsByPostId } from "@/lib/data/store";
 import { formatDate, optimizeImageUrl } from "@/lib/utils";
+import BlogContent from "@/components/blog/BlogContent";
 import CommentSection from "@/components/blog/CommentSection";
 import CTASection from "@/components/home/CTASection";
 import Breadcrumbs from "@/components/common/Breadcrumbs";
@@ -218,69 +219,7 @@ export default async function SingleBlogPostPage({ params }: BlogPostPageProps) 
 
         {/* Article Body */}
         <article className="prose prose-lg max-w-none text-slate-700 dark:text-slate-200 leading-relaxed space-y-6">
-          {post.content
-            .trim()
-            .split("\n\n")
-            .map((paragraph, idx) => {
-              const trimmed = paragraph.trim();
-
-              if (trimmed.startsWith("## ")) {
-                return (
-                  <h2 key={idx} className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mt-10 mb-4 font-heading">
-                    {trimmed.replace("## ", "")}
-                  </h2>
-                );
-              }
-              if (trimmed.startsWith("### ")) {
-                return (
-                  <h3 key={idx} className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-8 mb-3 font-heading">
-                    {trimmed.replace("### ", "")}
-                  </h3>
-                );
-              }
-              if (trimmed.startsWith("> ")) {
-                return (
-                  <blockquote
-                    key={idx}
-                    className="pl-4 border-l-4 border-amber-500 italic text-slate-600 dark:text-slate-400 my-5"
-                  >
-                    {trimmed.replace(/^>\s*/gm, "")}
-                  </blockquote>
-                );
-              }
-              if (trimmed.startsWith("- ") || trimmed.startsWith("* ")) {
-                const items = trimmed.split(/\n[-*]\s+/).map((item) => item.replace(/^[-*]\s+/, ""));
-                return (
-                  <ul key={idx} className="space-y-2 list-disc pl-5 my-4">
-                    {items.map((item, itemIdx) => (
-                      <li key={itemIdx} className="text-slate-700 dark:text-slate-300">
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                );
-              }
-              if (/^\d+\.\s+/.test(trimmed)) {
-                const items = trimmed.split(/\n\d+\.\s+/).map((item) => item.replace(/^\d+\.\s+/, ""));
-                return (
-                  <ol key={idx} className="space-y-2 list-decimal pl-5 my-4">
-                    {items.map((item, itemIdx) => (
-                      <li key={itemIdx} className="text-slate-700 dark:text-slate-300">
-                        {item}
-                      </li>
-                    ))}
-                  </ol>
-                );
-              }
-              if (trimmed === "---") {
-                return <hr key={idx} className="my-8 border-slate-200 dark:border-slate-800" />;
-              }
-              return (
-                <p key={idx} className="text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
-                  {trimmed}
-                </p>
-              );
-            })}
+          <BlogContent content={post.content} />
         </article>
 
         {/* Internal Link CTA Banner */}

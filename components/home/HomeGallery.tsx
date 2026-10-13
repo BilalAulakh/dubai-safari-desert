@@ -3,15 +3,16 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { ArrowRight, Camera, X, ChevronLeft, ChevronRight, Maximize2, Tag } from "lucide-react";
-import { GalleryItem } from "@/types";
+import { GalleryCategory, GalleryItem } from "@/types";
 import { optimizeImageUrl } from "@/lib/utils";
 import ScrollReveal from "@/components/common/ScrollReveal";
 
 interface HomeGalleryProps {
   items: GalleryItem[];
+  categories: GalleryCategory[];
 }
 
-export default function HomeGallery({ items }: HomeGalleryProps) {
+export default function HomeGallery({ items, categories }: HomeGalleryProps) {
   const displayItems = items.slice(0, 6);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
@@ -51,20 +52,8 @@ export default function HomeGallery({ items }: HomeGalleryProps) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [lightboxIndex, nextImage, prevImage]);
 
-  const getCategoryLabel = (category: string) => {
-    switch (category) {
-      case "dune-bashing":
-        return "Dune Bashing";
-      case "entertainment":
-        return "Live Shows";
-      case "camp":
-        return "Bedouin Camp";
-      case "food":
-        return "BBQ Dining";
-      default:
-        return "Desert Safari";
-    }
-  };
+  const getCategoryLabel = (category: string) =>
+    categories.find((cat) => cat.slug === category)?.label || "Desert Safari";
 
   return (
     <section className="relative py-20 sm:py-28 bg-[#F2E8D5] dark:bg-[#1D150E] transition-colors duration-200 overflow-hidden border-t border-[#C89B3C]/15">

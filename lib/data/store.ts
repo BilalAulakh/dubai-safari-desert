@@ -4,6 +4,7 @@ import {
   PickupLocation,
   FAQ,
   GalleryItem,
+  GalleryCategory,
   Review,
   BlogPost,
   Comment,
@@ -16,7 +17,7 @@ import { initialPackages } from "./packages";
 import { initialActivities } from "./activities";
 import { initialPickupLocations } from "./pickupLocations";
 import { initialFAQs } from "./faqs";
-import { initialGalleryItems } from "./gallery";
+import { initialGalleryItems, defaultGalleryCategories } from "./gallery";
 import { initialReviews } from "./reviews";
 import { initialBlogPosts } from "./blogPosts";
 import { generateBookingReference } from "../utils";
@@ -548,6 +549,127 @@ export async function getAllGalleryItems(): Promise<GalleryItem[]> {
   return fallbackGallery.sort((a, b) => a.sort_order - b.sort_order);
 }
 
+const GALLERY_COLUMNS = "id, title, image_url, category, active, sort_order";
+
+type GalleryItemInput = Omit<GalleryItem, "id">;
+
+// Admin: photos stored in Supabase only (no code fallback), errors are thrown
+export async function getDbGalleryItems(): Promise<GalleryItem[]> {
+  const { data, error } = await requireSupabase()
+    .from("gallery")
+    .select(GALLERY_COLUMNS)
+    .order("sort_order", { ascending: true });
+  if (error) throw new Error(error.message);
+  return data || [];
+}
+
+export async function createGalleryItem(input: GalleryItemInput): Promise<GalleryItem> {
+  const { data, error } = await requireSupabase()
+    .from("gallery")
+    .insert(input)
+    .select(GALLERY_COLUMNS)
+    .single();
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+export async function updateGalleryItem(
+  id: string,
+  updates: Partial<GalleryItemInput>
+): Promise<GalleryItem> {
+  const { data, error } = await requireSupabase()
+    .from("gallery")
+    .update(updates)
+    .eq("id", id)
+    .select(GALLERY_COLUMNS)
+    .single();
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+export async function deleteGalleryItem(id: string): Promise<void> {
+  const { error } = await requireSupabase().from("gallery").delete().eq("id", id);
+  if (error) throw new Error(error.message);
+}
+
+// Copies the built-in photo list into Supabase so the admin can manage it
+export async function importDefaultGalleryItems(): Promise<GalleryItem[]> {
+  const rows: GalleryItemInput[] = initialGalleryItems.map(({ id: _id, ...rest }) => rest);
+  const { data, error } = await requireSupabase()
+    .from("gallery")
+    .insert(rows)
+    .select(GALLERY_COLUMNS);
+  if (error) throw new Error(error.message);
+  return data || [];
+}
+
+// --- GALLERY CATEGORIES ---
+const CATEGORY_COLUMNS = "id, slug, label, sort_order";
+
+// Public: falls back to the built-in list until the table exists or has rows
+export async function getGalleryCategories(): Promise<GalleryCategory[]> {
+  try {
+    const supabase = getPublicSupabase();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("gallery_categories")
+        .select(CATEGORY_COLUMNS)
+        .order("sort_order", { ascending: true });
+
+      if (!error && data && data.length > 0) {
+        return data;
+      }
+    }
+  } catch {}
+  return defaultGalleryCategories;
+}
+
+// Admin: categories stored in Supabase only, errors are thrown
+export async function getDbGalleryCategories(): Promise<GalleryCategory[]> {
+  const { data, error } = await requireSupabase()
+    .from("gallery_categories")
+    .select(CATEGORY_COLUMNS)
+    .order("sort_order", { ascending: true });
+  if (error) throw new Error(error.message);
+  return data || [];
+}
+
+export async function createGalleryCategory(
+  input: Omit<GalleryCategory, "id">
+): Promise<GalleryCategory> {
+  const { data, error } = await requireSupabase()
+    .from("gallery_categories")
+    .insert(input)
+    .select(CATEGORY_COLUMNS)
+    .single();
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+export async function deleteGalleryCategory(id: string): Promise<void> {
+  const supabase = requireSupabase();
+  const { data: category, error: findError } = await supabase
+    .from("gallery_categories")
+    .select("slug")
+    .eq("id", id)
+    .single();
+  if (findError) throw new Error(findError.message);
+
+  const { count, error: countError } = await supabase
+    .from("gallery")
+    .select("id", { count: "exact", head: true })
+    .eq("category", category.slug);
+  if (countError) throw new Error(countError.message);
+  if (count) {
+    throw new Error(
+      `${count} photo(s) still use this category. Move or delete them first.`
+    );
+  }
+
+  const { error } = await supabase.from("gallery_categories").delete().eq("id", id);
+  if (error) throw new Error(error.message);
+}
+
 // --- REVIEWS ---
 export async function getApprovedReviews(): Promise<Review[]> {
   try {
@@ -694,6 +816,11 @@ export async function deleteReview(id: string): Promise<boolean> {
   return true;
 }
 
+// Content pasted on Windows arrives with CRLF; the renderers split paragraphs on blank lines
+function normalizeLineEndings(text: string): string {
+  return text.replace(/\r\n?/g, "\n");
+}
+
 function mapDbBlogToBlogPost(b: any): BlogPost {
   const wordCount = b.content ? b.content.trim().split(/\s+/).length : 0;
   const readTime = b.read_time || `${Math.max(1, Math.ceil(wordCount / 200))} min read`;
@@ -706,7 +833,7 @@ function mapDbBlogToBlogPost(b: any): BlogPost {
     title: b.title || "",
     slug: b.slug || "",
     excerpt: b.excerpt || "",
-    content: b.content || "",
+    content: normalizeLineEndings(b.content || ""),
     featured_image: b.featured_image || "",
     featured_image_alt: b.featured_image_alt || b.title || "",
     category: b.category || "Desert Safari",
@@ -843,7 +970,7 @@ export async function createBlogPost(
         title: newPost.title,
         slug: newPost.slug,
         excerpt: newPost.excerpt,
-        content: newPost.content,
+        content: normalizeLineEndings(newPost.content || ""),
         featured_image: newPost.featured_image,
         featured_image_alt: newPost.featured_image_alt,
         meta_title: newPost.meta_title,
@@ -875,6 +1002,21 @@ export async function createBlogPost(
   return newPost;
 }
 
+const BLOG_DB_COLUMNS = [
+  "title",
+  "slug",
+  "excerpt",
+  "content",
+  "featured_image",
+  "featured_image_alt",
+  "meta_title",
+  "meta_description",
+  "category",
+  "author",
+  "status",
+  "published_at",
+] as const;
+
 export async function updateBlogPost(
   id: string,
   updates: Partial<BlogPost>
@@ -884,7 +1026,15 @@ export async function updateBlogPost(
   try {
     const supabase = getPublicSupabase();
     if (supabase) {
-      const dbUpdates: any = { ...updates, updated_at: now };
+      // Only send real columns of the blogs table; derived fields like read_time,
+      // published_date and seo_* would make Supabase reject the whole update.
+      const dbUpdates: Record<string, unknown> = { updated_at: now };
+      for (const key of BLOG_DB_COLUMNS) {
+        if (updates[key] !== undefined) dbUpdates[key] = updates[key];
+      }
+      if (typeof dbUpdates.content === "string") {
+        dbUpdates.content = normalizeLineEndings(dbUpdates.content);
+      }
       if (updates.status === "published" && !updates.published_at) {
         dbUpdates.published_at = now;
       }
@@ -894,9 +1044,10 @@ export async function updateBlogPost(
         .update(dbUpdates)
         .eq("id", id)
         .select()
-        .single();
+        .maybeSingle();
 
-      if (!error && data) {
+      if (error) throw new Error(error.message);
+      if (data) {
         const mapped = mapDbBlogToBlogPost(data);
         const idx = fallbackBlogPosts.findIndex((b) => b.id === id);
         if (idx !== -1) fallbackBlogPosts[idx] = mapped;
@@ -904,7 +1055,8 @@ export async function updateBlogPost(
       }
     }
   } catch (err) {
-    console.error("Supabase update blog exception:", err);
+    console.error("Supabase update blog error:", err);
+    throw err;
   }
 
   const post = fallbackBlogPosts.find((b) => b.id === id);

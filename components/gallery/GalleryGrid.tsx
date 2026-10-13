@@ -2,25 +2,24 @@
 
 import { useState } from "react";
 import { X, ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
-import { GalleryItem } from "@/types";
+import { GalleryCategory, GalleryItem } from "@/types";
 import { optimizeImageUrl } from "@/lib/utils";
 
 interface GalleryGridProps {
   items: GalleryItem[];
+  categories: GalleryCategory[];
 }
 
-export default function GalleryGrid({ items }: GalleryGridProps) {
+export default function GalleryGrid({ items, categories: allCategories }: GalleryGridProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
+  // Only show filter tabs that have at least one photo
   const categories = [
     { id: "all", label: "All Photos" },
-    { id: "desert", label: "Desert Landscapes" },
-    { id: "dune-bashing", label: "Dune Bashing" },
-    { id: "camp", label: "Bedouin Camp" },
-    { id: "food", label: "BBQ & Dining" },
-    { id: "entertainment", label: "Live Shows" },
-    { id: "activities", label: "Activities" },
+    ...allCategories
+      .filter((cat) => items.some((item) => item.category === cat.slug))
+      .map((cat) => ({ id: cat.slug, label: cat.label })),
   ];
 
   const filteredItems =

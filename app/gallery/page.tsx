@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { Camera } from "lucide-react";
-import { getGalleryItems } from "@/lib/data/store";
+import { getGalleryItems, getGalleryCategories } from "@/lib/data/store";
 import { SITE_CONFIG } from "@/lib/config/site";
 import GalleryGrid from "@/components/gallery/GalleryGrid";
 import CTASection from "@/components/home/CTASection";
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 export const revalidate = 3600;
 
 export default async function GalleryPage() {
-  const items = await getGalleryItems();
+  const [items, categories] = await Promise.all([getGalleryItems(), getGalleryCategories()]);
 
   return (
     <div className="bg-[#FBF7F0] dark:bg-[#17120D] text-[#17120D] dark:text-[#FBF7F0] transition-colors duration-200">
@@ -47,7 +47,7 @@ export default async function GalleryPage() {
 
       {/* Gallery Section */}
       <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <GalleryGrid items={items} />
+        <GalleryGrid items={items} categories={categories} />
       </section>
 
       <CTASection />
