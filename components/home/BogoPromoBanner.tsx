@@ -32,7 +32,7 @@ export default function BogoPromoBanner() {
                   </span>
                 </div>
 
-                <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white leading-tight">
+                <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
                   Buy 1 Get 1 Free <br />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF9800] via-[#FFC107] to-[#E8C48A]">
                     Dubai Desert Safari

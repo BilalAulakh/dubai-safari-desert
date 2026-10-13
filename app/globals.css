@@ -3,9 +3,10 @@
 @variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-heading: var(--font-heading), "Playfair Display", Georgia, serif;
-  --font-body: var(--font-sans), "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-sans: var(--font-sans), "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sans: var(--font-jakarta), "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: var(--font-sans);
+  --font-body: var(--font-sans);
+  --font-serif: var(--font-sans);
 
   --color-primary-dark: #17120D;
   --color-dark-brown: #241A12;
@@ -50,12 +51,32 @@
     background-color: var(--bg-page);
     color: var(--text-main);
     font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.65;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     transition: background-color 0.25s ease, color 0.25s ease;
   }
 
-  h1, h2, h3, h4, .font-heading {
+  @media (min-width: 640px) {
+    body {
+      font-size: 16px;
+    }
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-heading {
     font-family: var(--font-heading);
-    letter-spacing: -0.015em;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  h1, h2 {
+    letter-spacing: -0.035em;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 
   :focus-visible {
@@ -82,6 +103,38 @@
   -webkit-text-fill-color: transparent;
 }
 
+/* Section eyebrow label shown above section headings */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin-bottom: 0.875rem;
+  color: #8C6214;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.eyebrow::before {
+  content: "";
+  width: 1.75rem;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  opacity: 0.7;
+}
+.text-center .eyebrow::after {
+  content: "";
+  width: 1.75rem;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  opacity: 0.7;
+}
+.dark .eyebrow {
+  color: #E8C48A;
+}
+
 /* Button utility classes */
 .btn-gold {
   display: inline-flex;
@@ -91,10 +144,11 @@
   color: #17120D;
   font-weight: 700;
   font-size: 0.875rem; /* 14px */
+  letter-spacing: 0.01em;
   border-radius: 0.75rem;
   padding: 0.625rem 1.25rem;
   transition: transform 200ms ease, filter 200ms ease, box-shadow 200ms ease, background-color 200ms ease;
-  box-shadow: 0 4px 14px rgba(200, 155, 60, 0.25);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.35) inset, 0 4px 14px rgba(200, 155, 60, 0.25);
   text-decoration: none;
 }
 .btn-gold:hover {

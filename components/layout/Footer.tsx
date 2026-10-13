@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Phone, Mail, MapPin, Clock, MessageCircle, ShieldCheck } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config/site";
 import { createWhatsAppUrl } from "@/lib/utils";
+import AdminLoginLink from "@/components/layout/AdminLoginLink";
 
 export default function Footer() {
   const whatsappUrl = createWhatsAppUrl(
@@ -16,22 +17,20 @@ export default function Footer() {
           {/* Col 1: Brand & Philosophy */}
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-3 group">
-              <div className="relative w-12 h-12 rounded-xl bg-gradient-to-br from-[#C89B3C]/50 via-[#241A12] to-[#17120D] p-0.5 shadow-[0_2px_12px_rgba(200,155,60,0.3)] group-hover:scale-105 transition-all duration-300">
-                <div className="w-full h-full rounded-[10px] bg-[#17120D] flex items-center justify-center p-1">
-                  <img
-                    src="/images/logo-emblem-96.webp"
-                    alt="Safari Dune Tours"
-                    width={44}
-                    height={44}
-                    className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
-                  />
-                </div>
-              </div>
+              <img
+                src="/images/logo-emblem-dark-96.webp"
+                srcSet="/images/logo-emblem-dark-96.webp 1x, /images/logo-emblem-dark-192.webp 2x"
+                alt=""
+                width={56}
+                height={56}
+                loading="lazy"
+                className="w-14 h-14 object-contain group-hover:scale-105 transition-transform duration-300"
+              />
               <div className="flex flex-col">
-                <span className="font-heading text-lg font-bold tracking-tight text-white group-hover:text-[#E8C48A] transition-colors">
+                <span className="font-heading text-xl font-extrabold tracking-tight text-white group-hover:text-[#E8C48A] transition-colors leading-none">
                   Safari Dune <span className="text-[#C89B3C]">Tours</span>
                 </span>
-                <span className="text-[9px] tracking-[0.2em] text-[#E8C48A]/80 uppercase font-medium">
+                <span className="mt-1.5 text-[9px] tracking-[0.2em] text-[#E8C48A]/80 uppercase font-medium">
                   {SITE_CONFIG.tagline}
                 </span>
               </div>
@@ -194,19 +193,9 @@ export default function Footer() {
           </p>
           <div className="flex items-center gap-6">
             <span>Dubai, United Arab Emirates</span>
-            <Link
-              href="/admin/login"
-              onClick={() => {
-                if (typeof window !== "undefined") {
-                  sessionStorage.removeItem("admin_auth");
-                  localStorage.removeItem("admin_auth");
-                  document.cookie = "admin_auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-                }
-              }}
-              className="hover:text-[#E8C48A] transition-colors cursor-pointer"
-            >
+            <AdminLoginLink className="hover:text-[#E8C48A] transition-colors cursor-pointer">
               Admin Portal
-            </Link>
+            </AdminLoginLink>
           </div>
         </div>
       </div>

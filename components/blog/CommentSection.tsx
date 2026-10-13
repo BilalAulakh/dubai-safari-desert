@@ -50,9 +50,9 @@ export default function CommentSection({ postId, approvedComments }: CommentSect
   };
 
   return (
-    <div className="mt-16 pt-12 border-t border-slate-200 space-y-10">
+    <div className="mt-16 pt-12 border-t border-slate-200 dark:border-[#C89B3C]/20 space-y-10">
       <div>
-        <h3 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h3 className="text-2xl font-bold text-slate-900 dark:text-[#FBF7F0] flex items-center gap-2">
           <MessageSquare className="w-6 h-6 text-amber-600" />
           <span>Reader Discussion ({approvedComments.length})</span>
         </h3>

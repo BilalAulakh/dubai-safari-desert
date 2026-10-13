@@ -1,6 +1,16 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getAllPackages, createPackage, deletePackage } from "@/lib/data/store";
 import { Package } from "@/types";
+
+// Homepage slider and package pages are ISR-cached; refresh them after admin edits
+function revalidatePackagePages() {
+  try {
+    revalidatePath("/");
+    revalidatePath("/packages");
+    revalidatePath("/packages/[slug]", "page");
+  } catch {}
+}
 
 export async function GET() {
   const packages = await getAllPackages();
@@ -70,6 +80,7 @@ export async function POST(request: Request) {
     };
 
     const saved = await createPackage(newPackage);
+    revalidatePackagePages();
     return NextResponse.json({ success: true, package: saved });
   } catch (error) {
     console.error("Error creating package:", error);
@@ -89,6 +100,7 @@ export async function PATCH(request: Request) {
     }
     const { updatePackage } = await import("@/lib/data/store");
     const updated = await updatePackage(id, updates);
+    revalidatePackagePages();
     return NextResponse.json({ success: true, package: updated });
   } catch (err) {
     console.error("Error updating package:", err);
@@ -104,6 +116,7 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ error: "Package ID is required" }, { status: 400 });
     }
     const success = await deletePackage(id);
+    revalidatePackagePages();
     return NextResponse.json({ success });
   } catch (err) {
     console.error("Error deleting package:", err);

@@ -23,7 +23,7 @@ export default function CTASection() {
             <span>Instant Availability & Free 24h Cancellation</span>
           </div>
 
-          <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white max-w-3xl mx-auto leading-[1.15]">
+          <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white max-w-3xl mx-auto leading-[1.1]">
             Ready for Your Dubai <span className="gold-text-gradient">Desert Adventure?</span>
           </h2>
 

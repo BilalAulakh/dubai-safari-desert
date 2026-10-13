@@ -1,74 +1,50 @@
-import { MetadataRoute } from 'next'
+import { MetadataRoute } from "next";
+import { SITE_CONFIG } from "@/lib/config/site";
+import { getPackages, getBlogPosts } from "@/lib/data/store";
 
-const BASE_URL = 'https://safaridunetours.com'
+export const revalidate = 3600;
 
-// TODO: Apne actual data source (database / CMS / API) se replace karein.
-// Ye function aapke saare package slugs return karega.
-async function getAllPackageSlugs(): Promise<string[]> {
-  // Example: agar aapke paas ek API route hai jo packages return karti hai
-  // const res = await fetch(`${BASE_URL}/api/packages`)
-  // const packages = await res.json()
-  // return packages.map((p: { slug: string }) => p.slug)
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || SITE_CONFIG.url;
 
-  // Abhi ke liye homepage se dekhe gaye slugs manually daal diye hain,
-  // aapko ise apne database query se replace karna hoga:
-  return [
-    'evening-desert-safari',
-    'morning-desert-safari',
-    'overnight-desert-safari',
-    'private-desert-safari',
-    'quad-bike-desert-safari',
-    'buy-1-get-1-free-desert-safari',
-    'vip-desert-safari',
-    'evening-desert-safari-with-atv-quad-bike-ride',
-    'vip-evening-desert-safari-dubai-with-atv-quad-bike-ride',
-    'private-morning-desert-safari-dubai',
-    'halfday-desert-safari-dubai',
-    '01-seater-dune-buggy-rzr-1000cc-self-drive',
-    '02-seater-dune-buggy-rzr-1000cc-self-drive',
-    'private-evening-desert-safari-dubai',
-    'vip-private-desert-safari-dubai',
-    'atv-quad-bike-self-drive-1-person',
-    '04-seater-dune-buggy-rzr-1000cc-self-drive',
-    'atv-quad-bike-self-drive-2-persons',
-  ]
+function toDate(value?: string): Date | undefined {
+  if (!value) return undefined;
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? undefined : date;
 }
 
-// TODO: Blog articles publish hone ke baad, yahan se unke slugs bhi fetch karein.
-async function getAllBlogSlugs(): Promise<string[]> {
-  // const res = await fetch(`${BASE_URL}/api/blog`)
-  // const posts = await res.json()
-  // return posts.map((p: { slug: string }) => p.slug)
-  return []
-}
-
+// Built from the live package and blog data so new or renamed slugs are picked up automatically
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const packageSlugs = await getAllPackageSlugs()
-  const blogSlugs = await getAllBlogSlugs()
+  const [packages, posts] = await Promise.all([getPackages(), getBlogPosts()]);
+  const now = new Date();
 
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: `${BASE_URL}/`, changeFrequency: 'daily', priority: 1.0 },
-    { url: `${BASE_URL}/packages`, changeFrequency: 'daily', priority: 0.9 },
-    { url: `${BASE_URL}/activities`, changeFrequency: 'weekly', priority: 0.7 },
-    { url: `${BASE_URL}/about`, changeFrequency: 'monthly', priority: 0.5 },
-    { url: `${BASE_URL}/gallery`, changeFrequency: 'weekly', priority: 0.5 },
-    { url: `${BASE_URL}/reviews`, changeFrequency: 'weekly', priority: 0.6 },
-    { url: `${BASE_URL}/faq`, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE_URL}/blog`, changeFrequency: 'daily', priority: 0.8 },
-    { url: `${BASE_URL}/contact`, changeFrequency: 'monthly', priority: 0.4 },
-  ]
+    { url: `${BASE_URL}/`, lastModified: now, changeFrequency: "daily", priority: 1.0 },
+    { url: `${BASE_URL}/packages`, lastModified: now, changeFrequency: "daily", priority: 0.9 },
+    { url: `${BASE_URL}/booking`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${BASE_URL}/activities`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
+    { url: `${BASE_URL}/blog`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
+    { url: `${BASE_URL}/reviews`, lastModified: now, changeFrequency: "weekly", priority: 0.6 },
+    { url: `${BASE_URL}/faq`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${BASE_URL}/gallery`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
+    { url: `${BASE_URL}/about`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
+    { url: `${BASE_URL}/contact`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
+  ];
 
-  const packageRoutes: MetadataRoute.Sitemap = packageSlugs.map((slug) => ({
-    url: `${BASE_URL}/packages/${slug}`,
-    changeFrequency: 'weekly',
-    priority: 0.8,
-  }))
+  const packageRoutes: MetadataRoute.Sitemap = packages
+    .filter((pkg) => pkg.active)
+    .map((pkg) => ({
+      url: `${BASE_URL}/packages/${pkg.slug}`,
+      lastModified: toDate(pkg.updated_at) ?? now,
+      changeFrequency: "weekly",
+      priority: pkg.featured ? 0.9 : 0.8,
+    }));
 
-  const blogRoutes: MetadataRoute.Sitemap = blogSlugs.map((slug) => ({
-    url: `${BASE_URL}/blog/${slug}`,
-    changeFrequency: 'monthly',
-    priority: 0.7,
-  }))
+  const blogRoutes: MetadataRoute.Sitemap = posts.map((post) => ({
+    url: `${BASE_URL}/blog/${post.slug}`,
+    lastModified: toDate(post.updated_at) ?? toDate(post.published_at) ?? now,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
 
-  return [...staticRoutes, ...packageRoutes, ...blogRoutes]
+  return [...staticRoutes, ...packageRoutes, ...blogRoutes];
 }

@@ -9,7 +9,7 @@ import CTASection from "@/components/home/CTASection";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Dubai Desert Safari Activities | Dune Bashing, Camel Ride & Quad Biking | Safari Dune Tours",
+  title: "Desert Safari Activities in Dubai | Safari Dune Tours",
   description:
     "Discover the best desert safari activities in Dubai: 4x4 red dune bashing, camel trekking, sandboarding, quad bikes, dune buggies, fire shows, and BBQ dining.",
   alternates: {

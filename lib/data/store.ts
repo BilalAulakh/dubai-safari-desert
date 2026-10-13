@@ -81,43 +81,10 @@ const fallbackBookings: Booking[] = [
 ];
 
 // --- PACKAGES ---
+// Public list mirrors the admin list order exactly, minus inactive packages
 export async function getPackages(): Promise<Package[]> {
-  try {
-    const supabase = getPublicSupabase();
-    if (supabase) {
-      const { data, error } = await supabase
-        .from("packages")
-        .select("id, name, slug, short_description, description, price, duration, featured, active, main_image, gallery, pickup_info, cancellation_policy, seo_title, seo_description")
-        .eq("active", true);
-
-      if (!error && data && data.length > 0) {
-        const supabaseMapped = data.map((pkg: any) => {
-          const fallback = fallbackPackages.find((f) => f.slug === pkg.slug || f.id === pkg.id);
-          return {
-            ...fallback,
-            ...pkg,
-            price: Number(pkg.price),
-            original_price: fallback?.original_price,
-            per_unit: fallback?.per_unit,
-            category: fallback?.category,
-            badges: fallback?.badges,
-            inclusions: fallback?.inclusions || ["4x4 Dune Bashing", "Camel Ride", "BBQ Dinner", "Live Shows"],
-            exclusions: fallback?.exclusions || ["Alcoholic Drinks", "Quad Bike (optional)"],
-            itinerary: fallback?.itinerary || [],
-          };
-        });
-
-        const existingSlugs = new Set(data.map((p: any) => p.slug));
-        const missingFromDb = fallbackPackages.filter(
-          (f) => f.active && !existingSlugs.has(f.slug)
-        );
-        return [...missingFromDb, ...supabaseMapped];
-      }
-    }
-  } catch {
-    // Fallback to in-memory store
-  }
-  return fallbackPackages.filter((p) => p.active);
+  const packages = await getAllPackages();
+  return packages.filter((p) => p.active);
 }
 
 export async function getAllPackages(): Promise<Package[]> {
@@ -290,6 +257,63 @@ export async function getAllActivities(): Promise<Activity[]> {
     }
   } catch {}
   return fallbackActivities.sort((a, b) => a.sort_order - b.sort_order);
+}
+
+const ACTIVITY_COLUMNS = "id, name, slug, description, image, active, sort_order, highlights";
+
+type ActivityInput = Omit<Activity, "id">;
+
+function requireSupabase() {
+  const supabase = getPublicSupabase();
+  if (!supabase) throw new Error("Supabase is not configured.");
+  return supabase;
+}
+
+// Admin: rows stored in Supabase only (no code fallback), errors are thrown
+export async function getDbActivities(): Promise<Activity[]> {
+  const { data, error } = await requireSupabase()
+    .from("activities")
+    .select(ACTIVITY_COLUMNS)
+    .order("sort_order", { ascending: true });
+  if (error) throw new Error(error.message);
+  return data || [];
+}
+
+export async function createActivity(input: ActivityInput): Promise<Activity> {
+  const { data, error } = await requireSupabase()
+    .from("activities")
+    .insert(input)
+    .select(ACTIVITY_COLUMNS)
+    .single();
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+export async function updateActivity(id: string, updates: Partial<ActivityInput>): Promise<Activity> {
+  const { data, error } = await requireSupabase()
+    .from("activities")
+    .update(updates)
+    .eq("id", id)
+    .select(ACTIVITY_COLUMNS)
+    .single();
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+export async function deleteActivity(id: string): Promise<void> {
+  const { error } = await requireSupabase().from("activities").delete().eq("id", id);
+  if (error) throw new Error(error.message);
+}
+
+// Copies the built-in activity list into Supabase so the admin can manage it
+export async function importDefaultActivities(): Promise<Activity[]> {
+  const rows: ActivityInput[] = initialActivities.map(({ id: _id, ...rest }) => rest);
+  const { data, error } = await requireSupabase()
+    .from("activities")
+    .upsert(rows, { onConflict: "slug", ignoreDuplicates: true })
+    .select(ACTIVITY_COLUMNS);
+  if (error) throw new Error(error.message);
+  return data || [];
 }
 
 // --- PICKUP LOCATIONS ---

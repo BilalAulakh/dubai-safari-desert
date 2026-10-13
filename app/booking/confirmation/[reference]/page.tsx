@@ -20,8 +20,9 @@ interface ConfirmationPageProps {
 }
 
 export const metadata: Metadata = {
-  title: "Booking Request Received | Safari Dune",
+  title: "Booking Request Received | Safari Dune Tours",
   description: "Your desert safari booking request has been received by our reservation team.",
+  robots: { index: false, follow: false },
 };
 
 export default async function BookingConfirmationPage({ params }: ConfirmationPageProps) {
@@ -64,7 +65,7 @@ export default async function BookingConfirmationPage({ params }: ConfirmationPa
             <span className="text-xs uppercase tracking-wider font-semibold text-[#8C6214] dark:text-[#E8C48A] block mb-1">
               Your Booking Reference
             </span>
-            <span className="text-2xl sm:text-3xl font-mono font-extrabold text-[#17120D] dark:text-white tracking-wider">
+            <span className="text-2xl sm:text-3xl font-extrabold tabular-nums text-[#17120D] dark:text-white tracking-wider">
               {reference}
             </span>
           </div>

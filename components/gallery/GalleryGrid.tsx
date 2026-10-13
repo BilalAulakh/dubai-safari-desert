@@ -135,7 +135,7 @@ export default function GalleryGrid({ items }: GalleryGridProps) {
 
             <div className="relative max-h-[62vh] sm:max-h-[68vh] w-full flex flex-col items-center justify-center px-12">
               <img
-                src={filteredItems[lightboxIndex].image_url}
+                src={optimizeImageUrl(filteredItems[lightboxIndex].image_url, 1600)}
                 alt={filteredItems[lightboxIndex].title}
                 className="max-h-[58vh] sm:max-h-[64vh] max-w-full object-contain rounded-xl shadow-2xl border border-white/10"
                 loading="eager"

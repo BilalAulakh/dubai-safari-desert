@@ -15,10 +15,10 @@ export default function HomeReviews({ reviews }: HomeReviewsProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#C89B3C]/15 border border-[#C89B3C]/30 text-[#C89B3C] dark:text-[#E8C48A] text-xs font-semibold uppercase tracking-wider mb-3">
+            <div className="eyebrow">
               <span>Guest Experiences</span>
             </div>
-            <h2 className="font-heading text-2xl sm:text-3xl lg:text-[36px] font-bold text-[#17120D] dark:text-[#FBF7F0] tracking-tight leading-[1.15]">
+            <h2 className="font-heading text-3xl sm:text-4xl lg:text-[44px] font-bold tracking-tight text-[#17120D] dark:text-[#FBF7F0] leading-[1.1]">
               Authentic Guest Experiences
             </h2>
             <div className="mt-2.5 flex items-center gap-2 text-xs text-[#6B6258] dark:text-[#B8ADA2]">

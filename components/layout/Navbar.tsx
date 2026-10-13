@@ -53,22 +53,19 @@ export default function Navbar() {
             id="nav-brand-logo"
             aria-label="Safari Dune Tours Homepage"
           >
-            <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-[#C89B3C]/50 via-[#241A12] to-[#17120D] p-0.5 shadow-[0_2px_12px_rgba(200,155,60,0.3)] group-hover:shadow-[0_4px_20px_rgba(200,155,60,0.5)] group-hover:scale-105 transition-all duration-300">
-              <div className="w-full h-full rounded-[10px] bg-[#17120D] flex items-center justify-center p-1">
-                <img
-                  src="/images/logo-emblem-96.webp"
-                  alt="Safari Dune Tours"
-                  width={40}
-                  height={40}
-                  className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
-                />
-              </div>
-            </div>
+            <img
+              src="/images/logo-emblem-dark-96.webp"
+              srcSet="/images/logo-emblem-dark-96.webp 1x, /images/logo-emblem-dark-192.webp 2x"
+              alt=""
+              width={48}
+              height={48}
+              className="w-11 h-11 sm:w-12 sm:h-12 object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] group-hover:scale-105 transition-transform duration-300"
+            />
             <div className="flex flex-col drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
-              <span className="font-heading text-base sm:text-lg font-bold tracking-tight text-white group-hover:text-[#E8C48A] transition-colors leading-tight">
+              <span className="font-heading text-[17px] sm:text-xl font-extrabold tracking-tight text-white group-hover:text-[#E8C48A] transition-colors leading-none">
                 Safari Dune <span className="text-[#C89B3C]">Tours</span>
               </span>
-              <span className="text-[8px] sm:text-[9px] tracking-[0.16em] text-[#E8C48A] uppercase font-medium">
+              <span className="mt-1 text-[9px] sm:text-[10px] tracking-[0.22em] text-[#E8C48A] uppercase font-semibold">
                 Dubai Desert Safaris
               </span>
             </div>

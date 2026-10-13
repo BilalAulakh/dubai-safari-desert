@@ -2,10 +2,16 @@
 
 import { usePathname } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
 import FloatingWhatsApp from "@/components/layout/FloatingWhatsApp";
 
-export default function AppShell({ children }: { children: React.ReactNode }) {
+// Footer arrives as a prop so it stays a server component and ships no client JS
+export default function AppShell({
+  children,
+  footer,
+}: {
+  children: React.ReactNode;
+  footer: React.ReactNode;
+}) {
   const pathname = usePathname();
   const isAdminRoute = pathname?.startsWith("/admin");
 
@@ -17,7 +23,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     <>
       <Navbar />
       <main className="flex-1">{children}</main>
-      <Footer />
+      {footer}
       <FloatingWhatsApp />
     </>
   );

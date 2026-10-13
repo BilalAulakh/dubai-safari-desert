@@ -75,12 +75,8 @@ export default function HomeGallery({ items }: HomeGalleryProps) {
         {/* Luxury Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14">
           <div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#C89B3C]/15 border border-[#C89B3C]/30 text-[#C89B3C] dark:text-[#E8C48A] mb-3">
-              <span className="text-xs font-semibold uppercase tracking-wider">
-                Visual Desert Portfolio
-              </span>
-            </div>
-            <h2 className="font-heading text-2xl sm:text-3xl lg:text-[36px] font-bold text-[#17120D] dark:text-[#FBF7F0] tracking-tight leading-[1.15]">
+            <div className="eyebrow">Visual Desert Portfolio</div>
+            <h2 className="font-heading text-3xl sm:text-4xl lg:text-[44px] font-bold tracking-tight text-[#17120D] dark:text-[#FBF7F0] leading-[1.1]">
               Glimpses of the <span className="gold-text-gradient">Arabian Dunes</span>
             </h2>
             <p className="mt-2 text-sm sm:text-base text-[#6B6258] dark:text-[#B8ADA2] max-w-2xl leading-relaxed">
@@ -199,7 +195,7 @@ export default function HomeGallery({ items }: HomeGalleryProps) {
             <div className="relative max-h-[64vh] sm:max-h-[70vh] w-full flex flex-col items-center justify-center px-12 sm:px-16">
               <div className="relative max-h-[60vh] sm:max-h-[66vh] rounded-2xl overflow-hidden shadow-2xl border border-[#C89B3C]/30 ring-1 ring-white/10">
                 <img
-                  src={displayItems[lightboxIndex].image_url}
+                  src={optimizeImageUrl(displayItems[lightboxIndex].image_url, 1600)}
                   alt={displayItems[lightboxIndex].title}
                   className="max-h-[60vh] sm:max-h-[66vh] max-w-full object-contain"
                   loading="eager"

@@ -4,6 +4,40 @@ import { useState, useRef } from "react";
 import { Upload, Check, AlertCircle, Loader2, Image as ImageIcon, X, ExternalLink } from "lucide-react";
 import api, { getApiErrorMessage } from "@/lib/axios";
 
+const MAX_IMAGE_DIMENSION = 1600;
+const WEBP_QUALITY = 0.82;
+
+// Resize and re-encode photos to WebP in the browser so the public site never serves multi-MB camera files
+async function compressImage(file: File): Promise<File> {
+  if (!/^image\/(jpeg|png|webp)$/.test(file.type)) return file;
+
+  try {
+    const bitmap = await createImageBitmap(file);
+    const scale = Math.min(1, MAX_IMAGE_DIMENSION / Math.max(bitmap.width, bitmap.height));
+    const width = Math.round(bitmap.width * scale);
+    const height = Math.round(bitmap.height * scale);
+
+    const canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return file;
+    ctx.drawImage(bitmap, 0, 0, width, height);
+    bitmap.close();
+
+    const blob = await new Promise<Blob | null>((resolve) =>
+      canvas.toBlob(resolve, "image/webp", WEBP_QUALITY)
+    );
+    // Keep the original if the browser can't encode WebP or the result isn't smaller
+    if (!blob || blob.type !== "image/webp" || blob.size >= file.size) return file;
+
+    const baseName = file.name.replace(/\.[^/.]+$/, "");
+    return new File([blob], `${baseName}.webp`, { type: "image/webp" });
+  } catch {
+    return file;
+  }
+}
+
 interface ImageUploadProps {
   value: string;
   onChange: (url: string) => void;
@@ -38,8 +72,9 @@ export default function ImageUpload({
     setError("");
 
     try {
+      const uploadFile = await compressImage(file);
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("file", uploadFile);
       if (folder) {
         formData.append("folder", folder);
       }

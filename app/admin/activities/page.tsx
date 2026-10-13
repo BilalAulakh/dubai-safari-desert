@@ -1,14 +1,30 @@
 "use client";
 
-import { useState } from "react";
-import { initialActivities } from "@/lib/data/activities";
+import { useEffect, useState } from "react";
 import { Activity } from "@/types";
-import { Plus, Edit2, Trash2, X } from "lucide-react";
+import { Plus, Edit2, Trash2, X, Loader2, Download } from "lucide-react";
 import ImageUpload from "@/components/admin/ImageUpload";
 import DeleteConfirmModal from "@/components/admin/DeleteConfirmModal";
 
+const DEFAULT_IMAGE =
+  "https://images.unsplash.com/photo-1547234935-80c7145ec969?q=80&w=800&auto=format&fit=crop";
+
+async function callApi(method: string, body?: unknown, query = "") {
+  const res = await fetch(`/api/admin/activities${query}`, {
+    method,
+    headers: body ? { "Content-Type": "application/json" } : undefined,
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
+  return data;
+}
+
 export default function AdminActivitiesPage() {
-  const [activities, setActivities] = useState<Activity[]>(initialActivities);
+  const [activities, setActivities] = useState<Activity[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingActivity, setEditingActivity] = useState<Activity | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<{ id: string; name: string } | null>(null);
@@ -16,20 +32,33 @@ export default function AdminActivitiesPage() {
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
   const [desc, setDesc] = useState("");
-  const [image, setImage] = useState(
-    "https://images.unsplash.com/photo-1547234935-80c7145ec969?q=80&w=800&auto=format&fit=crop"
-  );
-  const [highlightsText, setHighlightsText] = useState("Red Dunes, Licensed Marshals");
+  const [image, setImage] = useState(DEFAULT_IMAGE);
+  const [highlightsText, setHighlightsText] = useState("");
+
+  const loadActivities = async () => {
+    try {
+      const data = await callApi("GET");
+      setActivities(data.activities || []);
+      setError("");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to load activities");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadActivities();
+  }, []);
 
   const openCreateModal = () => {
     setEditingActivity(null);
     setName("");
     setSlug("");
     setDesc("");
-    setImage(
-      "https://images.unsplash.com/photo-1547234935-80c7145ec969?q=80&w=800&auto=format&fit=crop"
-    );
+    setImage(DEFAULT_IMAGE);
     setHighlightsText("");
+    setError("");
     setIsModalOpen(true);
   };
 
@@ -40,69 +69,82 @@ export default function AdminActivitiesPage() {
     setDesc(act.description);
     setImage(act.image);
     setHighlightsText((act.highlights || []).join(", "));
+    setError("");
     setIsModalOpen(true);
   };
 
-  const handleSave = (e: React.FormEvent) => {
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim()) return;
+    if (!name.trim() || busy) return;
 
-    const highlightsArray = highlightsText
-      .split(",")
-      .map((h) => h.trim())
-      .filter(Boolean);
+    const payload = {
+      name: name.trim(),
+      slug: slug.trim(),
+      description: desc.trim(),
+      image: image.trim(),
+      highlights: highlightsText
+        .split(",")
+        .map((h) => h.trim())
+        .filter(Boolean),
+    };
 
-    if (editingActivity) {
-      setActivities((prev) =>
-        prev.map((a) =>
-          a.id === editingActivity.id
-            ? {
-                ...a,
-                name: name.trim(),
-                slug: slug.trim() || editingActivity.slug,
-                description: desc.trim(),
-                image: image.trim(),
-                highlights: highlightsArray,
-              }
-            : a
-        )
-      );
-    } else {
-      const newAct: Activity = {
-        id: `act-${Date.now()}`,
-        name: name.trim(),
-        slug:
-          slug.trim() ||
-          name
-            .toLowerCase()
-            .replace(/[^a-z0-9]+/g, "-")
-            .replace(/(^-|-$)+/g, ""),
-        description: desc.trim(),
-        image: image.trim(),
-        active: true,
-        sort_order: activities.length + 1,
-        highlights: highlightsArray,
-      };
-      setActivities((prev) => [newAct, ...prev]);
+    setBusy(true);
+    setError("");
+    try {
+      if (editingActivity) {
+        const { activity } = await callApi("PATCH", { id: editingActivity.id, ...payload });
+        setActivities((prev) => prev.map((a) => (a.id === activity.id ? activity : a)));
+      } else {
+        const nextOrder = activities.reduce((max, a) => Math.max(max, a.sort_order), 0) + 1;
+        const { activity } = await callApi("POST", { ...payload, active: true, sort_order: nextOrder });
+        setActivities((prev) => [...prev, activity]);
+      }
+      setIsModalOpen(false);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to save activity");
+    } finally {
+      setBusy(false);
     }
-
-    setIsModalOpen(false);
   };
 
-  const toggleActive = (id: string) => {
-    setActivities((prev) =>
-      prev.map((a) => (a.id === id ? { ...a, active: !a.active } : a))
-    );
+  const toggleActive = async (act: Activity) => {
+    setError("");
+    try {
+      const { activity } = await callApi("PATCH", { id: act.id, active: !act.active });
+      setActivities((prev) => prev.map((a) => (a.id === activity.id ? activity : a)));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to update activity");
+    }
   };
 
   const handleDelete = (id: string, actName: string) => {
     setDeleteTarget({ id, name: actName });
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     if (!deleteTarget) return;
-    setActivities((prev) => prev.filter((a) => a.id !== deleteTarget.id));
+    const target = deleteTarget;
     setDeleteTarget(null);
+    setError("");
+    try {
+      await callApi("DELETE", undefined, `?id=${encodeURIComponent(target.id)}`);
+      setActivities((prev) => prev.filter((a) => a.id !== target.id));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to delete activity");
+    }
+  };
+
+  const handleImportDefaults = async () => {
+    setBusy(true);
+    setError("");
+    try {
+      await callApi("POST", { action: "import-defaults" });
+      await loadActivities();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to import activities");
+    } finally {
+      setBusy(false);
+    }
   };
 
   return (
@@ -127,6 +169,38 @@ export default function AdminActivitiesPage() {
         </button>
       </div>
 
+      {error && !isModalOpen && (
+        <div className="px-4 py-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 text-xs font-semibold text-rose-700 dark:text-rose-300">
+          {error}
+        </div>
+      )}
+
+      {loading ? (
+        <div className="flex items-center justify-center gap-2 py-20 text-sm text-slate-500 dark:text-slate-400">
+          <Loader2 className="w-5 h-5 animate-spin" />
+          <span>Loading activities from Supabase...</span>
+        </div>
+      ) : activities.length === 0 ? (
+        <div className="text-center py-16 px-6 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0F1624]">
+          <h3 className="text-base font-bold text-slate-900 dark:text-white">
+            No activities in Supabase yet
+          </h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 max-w-md mx-auto">
+            The website is currently showing the built-in default activities. Import them to
+            manage them here, or add your own. Once Supabase has at least one activity, the
+            website shows only Supabase activities.
+          </p>
+          <button
+            type="button"
+            onClick={handleImportDefaults}
+            disabled={busy}
+            className="mt-5 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold text-xs uppercase tracking-wider disabled:opacity-60"
+          >
+            {busy ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
+            <span>Import Default Activities</span>
+          </button>
+        </div>
+      ) : (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {activities.map((act) => (
           <div
@@ -178,7 +252,7 @@ export default function AdminActivitiesPage() {
             <div className="p-4 bg-slate-50 dark:bg-slate-900/40 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
               <button
                 type="button"
-                onClick={() => toggleActive(act.id)}
+                onClick={() => toggleActive(act)}
                 className="px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100"
               >
                 {act.active ? "Deactivate" : "Activate"}
@@ -207,6 +281,7 @@ export default function AdminActivitiesPage() {
           </div>
         ))}
       </div>
+      )}
 
       {/* Modal */}
       {isModalOpen && (
@@ -215,7 +290,7 @@ export default function AdminActivitiesPage() {
           aria-modal="true"
           className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
         >
-          <div className="bg-white dark:bg-[#0F1624] text-slate-900 dark:text-white rounded-3xl p-6 sm:p-8 max-w-lg w-full border border-slate-200 dark:border-slate-800 shadow-2xl relative">
+          <div className="bg-white dark:bg-[#0F1624] text-slate-900 dark:text-white rounded-3xl p-6 sm:p-8 max-w-lg w-full max-h-[calc(100dvh-2rem)] overflow-y-auto overscroll-contain border border-slate-200 dark:border-slate-800 shadow-2xl relative">
             <button
               type="button"
               onClick={() => setIsModalOpen(false)}
@@ -299,6 +374,10 @@ export default function AdminActivitiesPage() {
                 />
               </div>
 
+              {error && (
+                <p className="text-xs font-semibold text-rose-600 dark:text-rose-400">{error}</p>
+              )}
+
               <div className="pt-3 flex justify-end gap-2 border-t border-slate-200 dark:border-slate-800">
                 <button
                   type="button"
@@ -309,9 +388,11 @@ export default function AdminActivitiesPage() {
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold text-xs uppercase tracking-wider"
+                  disabled={busy}
+                  className="inline-flex items-center gap-2 px-6 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold text-xs uppercase tracking-wider disabled:opacity-60"
                 >
-                  Save Activity
+                  {busy && <Loader2 className="w-4 h-4 animate-spin" />}
+                  <span>{busy ? "Saving..." : "Save Activity"}</span>
                 </button>
               </div>
             </form>

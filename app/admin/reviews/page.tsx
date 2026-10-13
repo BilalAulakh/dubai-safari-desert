@@ -344,7 +344,7 @@ export default function AdminReviewsPage() {
           aria-modal="true"
           className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
         >
-          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full border border-slate-200 shadow-2xl relative space-y-6">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full max-h-[calc(100dvh-2rem)] overflow-y-auto overscroll-contain border border-slate-200 shadow-2xl relative space-y-6">
             <button
               type="button"
               onClick={() => setIsShareModalOpen(false)}

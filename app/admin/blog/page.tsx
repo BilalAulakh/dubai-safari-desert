@@ -380,7 +380,7 @@ export default function AdminBlogPage() {
                       <div className="flex items-center gap-3">
                         <div className="w-16 h-12 rounded-xl overflow-hidden bg-slate-800 shrink-0 border border-slate-200 dark:border-slate-700">
                           <img
-                            src={blog.featured_image || "/images/hero-desert.jpg"}
+                            src={blog.featured_image || "/images/hero-desert.webp"}
                             alt={blog.title}
                             className="w-full h-full object-cover"
                           />

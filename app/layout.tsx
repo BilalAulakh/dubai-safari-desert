@@ -1,20 +1,16 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, Manrope } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import AppShell from "@/components/layout/AppShell";
+import Footer from "@/components/layout/Footer";
 import { ThemeProvider } from "@/components/common/ThemeProvider";
 import StoreProvider from "@/lib/redux/StoreProvider";
 import { SITE_CONFIG } from "@/lib/config/site";
 
-const fontHeading = Playfair_Display({
+// One typeface across the whole site; headings differ only by weight and tracking
+const fontSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-heading",
-  display: "swap",
-});
-
-const fontSans = Manrope({
-  subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-jakarta",
   display: "swap",
 });
 
@@ -28,7 +24,8 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || SITE_CONFIG.url),
   title: {
     default: SITE_CONFIG.title,
-    template: `%s | ${SITE_CONFIG.name}`,
+    // Page titles already end with the brand name, so no suffix is appended here
+    template: "%s",
   },
   description: SITE_CONFIG.description,
   keywords: [
@@ -79,12 +76,10 @@ export const metadata: Metadata = {
     description: SITE_CONFIG.description,
     images: [SITE_CONFIG.ogImage],
   },
-  alternates: {
-    canonical: SITE_CONFIG.url,
-  },
   icons: {
     icon: [
-      { url: "/icon.png", type: "image/png" },
+      { url: "/icon.png", type: "image/png", sizes: "192x192" },
+      { url: "/icon-512.png", type: "image/png", sizes: "512x512" },
       { url: "/favicon.ico", sizes: "any" },
     ],
     shortcut: "/icon.png",
@@ -137,6 +132,8 @@ export default function RootLayout({
         name: SITE_CONFIG.name,
         legalName: SITE_CONFIG.legalName,
         url: SITE_CONFIG.url,
+        logo: `${SITE_CONFIG.url}${SITE_CONFIG.logo}`,
+        image: SITE_CONFIG.ogImage,
         telephone: SITE_CONFIG.contact.phone,
         email: SITE_CONFIG.contact.email,
         priceRange: "AED 130 - AED 950",
@@ -145,8 +142,10 @@ export default function RootLayout({
         address: {
           "@type": "PostalAddress",
           addressLocality: "Dubai",
+          addressRegion: "Dubai",
           addressCountry: "AE",
         },
+        areaServed: { "@type": "City", name: "Dubai" },
         openingHoursSpecification: {
           "@type": "OpeningHoursSpecification",
           dayOfWeek: [
@@ -174,7 +173,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={`${fontHeading.variable} ${fontSans.variable} scroll-smooth`} suppressHydrationWarning>
+    <html lang="en" className={`${fontSans.variable} scroll-smooth`} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -189,7 +188,7 @@ export default function RootLayout({
       <body className={`min-h-screen flex flex-col bg-[var(--bg-page)] text-[var(--text-main)] font-sans antialiased selection:bg-[#C89B3C] selection:text-[#17120D]`}>
         <StoreProvider>
           <ThemeProvider>
-            <AppShell>{children}</AppShell>
+            <AppShell footer={<Footer />}>{children}</AppShell>
           </ThemeProvider>
         </StoreProvider>
       </body>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Check, Compass, MessageCircle } from "lucide-react";
+import { Check, MessageCircle } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config/site";
 import { createWhatsAppUrl, optimizeImageUrl } from "@/lib/utils";
 import ScrollReveal from "@/components/common/ScrollReveal";
@@ -97,12 +97,11 @@ export default function DesertExperience() {
           {/* Description & Value Props */}
           <ScrollReveal delay={150}>
             <div className="flex flex-col items-start">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#C89B3C]/15 border border-[#C89B3C]/30 text-[#C89B3C] dark:text-[#E8C48A] text-xs font-semibold uppercase tracking-wider mb-3">
-                <Compass className="w-3.5 h-3.5 text-[#C89B3C]" />
+              <div className="eyebrow">
                 <span>Authentic Arabian Heritage</span>
               </div>
 
-              <h2 className="font-heading text-2xl sm:text-3xl lg:text-[36px] font-bold tracking-tight text-[#17120D] dark:text-[#FBF7F0] leading-[1.15]">
+              <h2 className="font-heading text-3xl sm:text-4xl lg:text-[44px] font-bold tracking-tight text-[#17120D] dark:text-[#FBF7F0] leading-[1.1]">
                 A Desert Journey Crafted with <span className="gold-text-gradient">Passion & Precision</span>
               </h2>
 

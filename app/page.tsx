@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { preload } from "react-dom";
 import HeroSection from "@/components/home/HeroSection";
 import FeaturedPackages from "@/components/home/FeaturedPackages";
@@ -20,6 +21,12 @@ import {
 } from "@/lib/data/store";
 
 export const revalidate = 3600;
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "/",
+  },
+};
 
 export default async function HomePage() {
   // Hero poster is the first large paint; fetch it with the HTML instead of after hydration

@@ -35,8 +35,7 @@ export type PackageCategory =
   | "atv-quad"
   | "dune-buggy"
   | "overnight"
-  | "special-offer"
-  | "dhow-cruise";
+  | "special-offer";
 
 export interface PackageFAQ {
   question: string;

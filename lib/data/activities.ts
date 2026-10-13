@@ -18,7 +18,7 @@ export const initialActivities: Activity[] = [
     slug: "camel-riding",
     description:
       "Experience the traditional Bedouin way of desert traversal on gentle, majestic camels, offering panoramic elevated views of the golden sand dunes.",
-    image: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=800&auto=format&fit=crop",
+    image: "/images/activities/camel-trekking.webp",
     active: true,
     sort_order: 2,
     highlights: ["Authentic Bedouin tradition", "Sunset photo opportunities", "Suitable for all ages"],

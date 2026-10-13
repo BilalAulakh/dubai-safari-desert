@@ -39,11 +39,13 @@ export async function generateMetadata({ params }: PackagePageProps): Promise<Me
 
   if (!pkg) {
     return {
-      title: "Package Not Found",
+      title: "Package Not Found | Safari Dune Tours",
+      robots: { index: false, follow: false },
     };
   }
 
-  const title = pkg.seo_title || `${pkg.name} | Safari Dune Tours`;
+  const baseTitle = pkg.seo_title || pkg.name;
+  const title = baseTitle.includes(SITE_CONFIG.name) ? baseTitle : `${baseTitle} | ${SITE_CONFIG.name}`;
   const description =
     pkg.seo_description || `${pkg.short_description} Starting from ${formatPrice(pkg.price)} per person.`;
   const canonicalUrl = `${SITE_CONFIG.url}/packages/${pkg.slug}`;
@@ -121,7 +123,7 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(tripJsonLd) }}
       />
       {/* Top Hero Banner */}
-      <section className="relative min-h-[45vh] flex items-end bg-[#17120D] py-16">
+      <section className="relative min-h-[45vh] flex items-end bg-[#17120D] pt-28 sm:pt-32 pb-16">
         <div className="absolute inset-0 z-0">
           <img
             src={optimizeImageUrl(pkg.main_image, 1280)}
@@ -210,12 +212,12 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
             {/* Gallery Thumbnails */}
             {pkg.gallery && pkg.gallery.length > 0 && (
               <div className="space-y-3">
-                <h3 className="text-lg font-bold text-slate-900">Tour Gallery</h3>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-[#FBF7F0]">Tour Gallery</h3>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   {pkg.gallery.map((img, i) => (
                     <div
                       key={i}
-                      className="relative h-28 rounded-xl overflow-hidden shadow-sm bg-slate-900 border border-slate-200"
+                      className="relative h-28 rounded-xl overflow-hidden shadow-sm bg-slate-900 border border-slate-200 dark:border-[#C89B3C]/20"
                     >
                       <img
                         src={optimizeImageUrl(img, 400)}
@@ -233,9 +235,9 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
             )}
 
             {/* Full Overview Description */}
-            <div className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm">
-              <h2 className="text-2xl font-bold text-slate-900 mb-4">Tour Overview</h2>
-              <p className="text-base text-slate-700 leading-relaxed whitespace-pre-line">
+            <div className="bg-white dark:bg-[#241A12] p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-[#C89B3C]/20 shadow-sm">
+              <h2 className="text-2xl font-bold text-slate-900 dark:text-[#FBF7F0] mb-4">Tour Overview</h2>
+              <p className="text-base text-slate-700 dark:text-[#B8ADA2] leading-relaxed whitespace-pre-line">
                 {pkg.description}
               </p>
             </div>
@@ -243,14 +245,14 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
             {/* Inclusions & Exclusions */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Inclusions */}
-              <div className="bg-white p-6 rounded-2xl border border-emerald-900/10 shadow-sm">
-                <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+              <div className="bg-white dark:bg-[#241A12] p-6 rounded-2xl border border-emerald-900/10 dark:border-[#C89B3C]/20 shadow-sm">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-[#FBF7F0] mb-4 flex items-center gap-2">
                   <CheckCircle2 className="w-5 h-5 text-emerald-600" />
                   <span>What is Included</span>
                 </h3>
                 <ul className="space-y-2.5">
                   {pkg.inclusions.map((item, index) => (
-                    <li key={index} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700">
+                    <li key={index} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 dark:text-[#B8ADA2]">
                       <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                       <span>{item}</span>
                     </li>
@@ -259,14 +261,14 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
               </div>
 
               {/* Exclusions */}
-              <div className="bg-white p-6 rounded-2xl border border-rose-900/10 shadow-sm">
-                <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+              <div className="bg-white dark:bg-[#241A12] p-6 rounded-2xl border border-rose-900/10 dark:border-[#C89B3C]/20 shadow-sm">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-[#FBF7F0] mb-4 flex items-center gap-2">
                   <XCircle className="w-5 h-5 text-rose-500" />
                   <span>What is Excluded</span>
                 </h3>
                 <ul className="space-y-2.5">
                   {pkg.exclusions.map((item, index) => (
-                    <li key={index} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700">
+                    <li key={index} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 dark:text-[#B8ADA2]">
                       <XCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
                       <span>{item}</span>
                     </li>
@@ -277,8 +279,8 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
 
             {/* Detailed Itinerary Timeline */}
             {pkg.itinerary && pkg.itinerary.length > 0 && (
-              <div className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm">
-                <h2 className="text-2xl font-bold text-slate-900 mb-6">Detailed Itinerary</h2>
+              <div className="bg-white dark:bg-[#241A12] p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-[#C89B3C]/20 shadow-sm">
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-[#FBF7F0] mb-6">Detailed Itinerary</h2>
                 <div className="relative border-l-2 border-amber-500/30 ml-3 space-y-8 pl-6">
                   {pkg.itinerary.map((step, index) => (
                     <div key={index} className="relative">
@@ -287,8 +289,8 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
                       <span className="text-xs font-bold text-amber-700 uppercase tracking-wider block">
                         {step.time}
                       </span>
-                      <h4 className="text-base font-bold text-slate-900 mt-1">{step.title}</h4>
-                      <p className="mt-1 text-sm text-slate-600 leading-relaxed">
+                      <h4 className="text-base font-bold text-slate-900 dark:text-[#FBF7F0] mt-1">{step.title}</h4>
+                      <p className="mt-1 text-sm text-slate-600 dark:text-[#B8ADA2] leading-relaxed">
                         {step.description}
                       </p>
                     </div>
@@ -298,39 +300,39 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
             )}
 
             {/* Pickup & Cancellation Terms */}
-            <div className="bg-[#F8F5EE] p-6 rounded-2xl border border-amber-900/10 space-y-4">
+            <div className="bg-[#F8F5EE] dark:bg-[#1D150E] p-6 rounded-2xl border border-amber-900/10 dark:border-[#C89B3C]/20 space-y-4">
               <div>
-                <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2 mb-1">
+                <h4 className="text-sm font-bold text-slate-900 dark:text-[#FBF7F0] flex items-center gap-2 mb-1">
                   <MapPin className="w-4 h-4 text-amber-600" />
                   <span>Pickup & Drop-off Information</span>
                 </h4>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-[#B8ADA2] leading-relaxed">
                   {pkg.pickup_info}
                 </p>
               </div>
 
               <div className="pt-3 border-t border-amber-900/10">
-                <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2 mb-1">
+                <h4 className="text-sm font-bold text-slate-900 dark:text-[#FBF7F0] flex items-center gap-2 mb-1">
                   <ShieldCheck className="w-4 h-4 text-amber-600" />
                   <span>Cancellation & Refund Policy</span>
                 </h4>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-[#B8ADA2] leading-relaxed">
                   {pkg.cancellation_policy}
                 </p>
               </div>
             </div>
 
             {/* Package FAQ */}
-            <div className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm">
-              <h2 className="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+            <div className="bg-white dark:bg-[#241A12] p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-[#C89B3C]/20 shadow-sm">
+              <h2 className="text-2xl font-bold text-slate-900 dark:text-[#FBF7F0] mb-4 flex items-center gap-2">
                 <HelpCircle className="w-5 h-5 text-amber-600" />
                 <span>Tour Questions & Answers</span>
               </h2>
               <div className="space-y-4">
                 {packageFaqs.map((faq) => (
                   <div key={faq.id} className="pb-3 border-b border-slate-100 last:border-0">
-                    <h4 className="text-sm font-bold text-slate-900">{faq.question}</h4>
-                    <p className="mt-1 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    <h4 className="text-sm font-bold text-slate-900 dark:text-[#FBF7F0]">{faq.question}</h4>
+                    <p className="mt-1 text-xs sm:text-sm text-slate-600 dark:text-[#B8ADA2] leading-relaxed">
                       {faq.answer}
                     </p>
                   </div>

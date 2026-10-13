@@ -33,10 +33,11 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     };
   }
 
-  const title = post.meta_title || post.seo_title || `${post.title} | Safari Dune Tours`;
+  const baseTitle = post.meta_title || post.seo_title || post.title;
+  const title = baseTitle.includes(SITE_CONFIG.name) ? baseTitle : `${baseTitle} | ${SITE_CONFIG.name}`;
   const description = post.meta_description || post.seo_description || post.excerpt;
   const canonicalUrl = `${SITE_CONFIG.url}/blog/${post.slug}`;
-  const imageUrl = post.featured_image || `${SITE_CONFIG.url}/images/hero-desert.jpg`;
+  const imageUrl = post.featured_image || SITE_CONFIG.ogImage;
 
   return {
     title,
@@ -203,7 +204,7 @@ export default async function SingleBlogPostPage({ params }: BlogPostPageProps) 
         {post.featured_image && (
           <div className="relative h-80 sm:h-[450px] w-full rounded-3xl overflow-hidden shadow-xl mb-12 border border-slate-200 dark:border-slate-800 bg-slate-900">
             <img
-              src={post.featured_image}
+              src={optimizeImageUrl(post.featured_image, 1200)}
               alt={post.featured_image_alt || post.title}
               width={1200}
               height={600}

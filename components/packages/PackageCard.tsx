@@ -57,7 +57,7 @@ export default function PackageCard({ pkg }: PackageCardProps) {
       : null;
 
   return (
-    <div className="group flex flex-col rounded-2xl bg-white dark:bg-[#241A12] border border-[#C89B3C]/20 dark:border-[#C89B3C]/25 shadow-sm hover:shadow-[0_16px_36px_rgba(200,155,60,0.18)] hover:border-[#C89B3C]/60 transition-all duration-300 overflow-hidden hover:-translate-y-1.5 h-full">
+    <div className="group flex flex-col rounded-2xl bg-white dark:bg-[#241A12] border border-[#C89B3C]/20 dark:border-[#C89B3C]/25 shadow-[0_1px_3px_rgba(23,18,13,0.06)] hover:shadow-[0_20px_40px_-12px_rgba(140,98,20,0.28)] hover:border-[#C89B3C]/50 transition-all duration-300 overflow-hidden hover:-translate-y-1.5 h-full">
       {/* Image Container with Badges */}
       <div className="relative h-64 w-full overflow-hidden bg-[#17120D]">
         <Link href={`/packages/${pkg.slug}`} className="block w-full h-full">
@@ -121,7 +121,7 @@ export default function PackageCard({ pkg }: PackageCardProps) {
             <span className="text-[10px] font-bold uppercase tracking-wider text-[#E8C48A] drop-shadow-sm">
               From
             </span>
-            <span className="text-xl sm:text-2xl font-black text-[#E8C48A] tracking-tight drop-shadow-sm">
+            <span className="text-xl sm:text-2xl font-extrabold text-[#E8C48A] tracking-tight tabular-nums drop-shadow-sm">
               AED {pkg.price}
             </span>
           </div>
@@ -134,7 +134,7 @@ export default function PackageCard({ pkg }: PackageCardProps) {
       {/* Card Body */}
       <div className="flex-1 p-5 sm:p-6 flex flex-col justify-between">
         <div>
-          <h3 className="font-heading text-lg sm:text-xl font-bold text-[#17120D] dark:text-[#FBF7F0] group-hover:text-[#C89B3C] transition-colors mb-2 leading-snug">
+          <h3 className="font-heading text-lg sm:text-[20px] font-bold text-[#17120D] dark:text-[#FBF7F0] group-hover:text-[#A67C2A] dark:group-hover:text-[#E8C48A] transition-colors mb-2 leading-snug">
             <Link href={`/packages/${pkg.slug}`}>{pkg.name}</Link>
           </h3>
           <p className="text-xs sm:text-sm text-[#6B6258] dark:text-[#B8ADA2] line-clamp-2 leading-relaxed mb-4">
@@ -164,14 +164,14 @@ export default function PackageCard({ pkg }: PackageCardProps) {
         </div>
 
         {/* Card Actions: WhatsApp Quick Inquiry & Online Booking */}
-        <div className="pt-2.5 border-t border-[#C89B3C]/15 dark:border-white/10 flex flex-col gap-1.5 mt-auto">
-          <div className="grid grid-cols-2 gap-1.5 sm:gap-2 max-w-xs mx-auto w-full">
+        <div className="pt-4 border-t border-[#C89B3C]/15 dark:border-white/10 flex flex-col gap-2.5 mt-auto">
+          <div className="grid grid-cols-2 gap-2.5 w-full">
             {/* WhatsApp Direct Action */}
             <a
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="h-8 sm:h-9 px-2 sm:px-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] sm:text-xs font-bold transition-all shadow-sm shadow-emerald-600/25 flex items-center justify-center gap-1 text-center whitespace-nowrap active:scale-98"
+              className="h-10 sm:h-11 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-semibold transition-all shadow-sm shadow-emerald-600/25 flex items-center justify-center gap-1 text-center whitespace-nowrap active:scale-98"
               title="Chat on WhatsApp"
             >
               <MessageCircle className="w-3.5 h-3.5 fill-white/20 shrink-0" />
@@ -181,7 +181,7 @@ export default function PackageCard({ pkg }: PackageCardProps) {
             {/* Direct Booking */}
             <Link
               href={`/booking?package=${encodeURIComponent(pkg.id)}`}
-              className="h-8 sm:h-9 px-2 sm:px-3 rounded-lg bg-[#C89B3C] hover:bg-[#D6A84F] text-[#17120D] text-[11px] sm:text-xs font-bold uppercase tracking-wider shadow-sm flex items-center justify-center text-center whitespace-nowrap active:scale-98 transition-all duration-200"
+              className="h-10 sm:h-11 px-3 rounded-xl bg-[#C89B3C] hover:bg-[#D6A84F] text-[#17120D] text-xs sm:text-sm font-bold shadow-sm flex items-center justify-center text-center whitespace-nowrap active:scale-98 transition-all duration-200"
             >
               Book Now
             </Link>
@@ -190,10 +190,10 @@ export default function PackageCard({ pkg }: PackageCardProps) {
           {/* Subtle Details link */}
           <Link
             href={`/packages/${pkg.slug}`}
-            className="text-center text-[10px] sm:text-[11px] font-semibold text-[#8C6214] dark:text-[#E8C48A] hover:underline flex items-center justify-center gap-1 pt-0.5"
+            className="text-center text-xs font-semibold text-[#8C6214] dark:text-[#E8C48A] hover:underline underline-offset-4 flex items-center justify-center gap-1"
           >
             <span>View Full Details & Itinerary</span>
-            <ArrowRight className="w-2.5 h-2.5" />
+            <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
       </div>

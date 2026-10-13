@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronDown, HelpCircle, ArrowRight } from "lucide-react";
+import { ChevronDown, ArrowRight } from "lucide-react";
 import { FAQ } from "@/types";
 import ScrollReveal from "@/components/common/ScrollReveal";
 
@@ -23,11 +23,10 @@ export default function HomeFAQ({ faqs }: HomeFAQProps) {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#C89B3C]/15 border border-[#C89B3C]/30 text-[#C89B3C] dark:text-[#E8C48A] text-xs font-semibold uppercase tracking-wider mb-3">
-              <HelpCircle className="w-3.5 h-3.5 text-[#C89B3C]" />
+            <div className="eyebrow">
               <span>Essential Inquiries</span>
             </div>
-            <h2 className="font-heading text-2xl sm:text-3xl lg:text-[36px] font-bold text-[#17120D] dark:text-[#FBF7F0] tracking-tight leading-[1.15]">
+            <h2 className="font-heading text-3xl sm:text-4xl lg:text-[44px] font-bold tracking-tight text-[#17120D] dark:text-[#FBF7F0] leading-[1.1]">
               Frequently Asked Questions
             </h2>
             <p className="mt-2 text-sm sm:text-base text-[#6B6258] dark:text-[#B8ADA2]">

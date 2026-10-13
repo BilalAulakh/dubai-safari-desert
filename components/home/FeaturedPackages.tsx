@@ -65,10 +65,10 @@ export default function FeaturedPackages({ packages }: FeaturedPackagesProps) {
         <ScrollReveal>
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-12 gap-6">
             <div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#C89B3C]/15 border border-[#C89B3C]/30 text-[#8C6214] dark:text-[#E8C48A] text-xs font-bold uppercase tracking-wider mb-3">
+              <div className="eyebrow">
                 <span>Curated Safari Experiences</span>
               </div>
-              <h2 className="font-heading text-2xl sm:text-3xl lg:text-[40px] font-bold text-[#17120D] dark:text-[#FBF7F0] tracking-tight leading-[1.15]">
+              <h2 className="font-heading text-3xl sm:text-4xl lg:text-[44px] font-bold tracking-tight text-[#17120D] dark:text-[#FBF7F0] leading-[1.1]">
                 Signature Dubai Desert Safaris & Tours
               </h2>
               <p className="mt-2 text-sm sm:text-base text-[#6B6258] dark:text-[#B8ADA2] max-w-2xl leading-relaxed">
