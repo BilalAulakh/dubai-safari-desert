@@ -45,19 +45,25 @@ export function isPackageFilterId(value: string | null): value is PackageFilterI
 }
 
 // Homepage package section. Reorder or swap slugs here; no JSX changes needed.
+// `slugs` are shown first; if any are missing or inactive (e.g. deleted in admin),
+// the row is topped up from the `fill` filters so it never shows a gap.
 // A group with `filter` renders one category card linking to /packages?category=<filter>.
+export const HOMEPAGE_GROUP_SIZE = 3;
+
 export type HomepageGroup =
-  | { title: string; slugs: string[] }
+  | { title: string; slugs: string[]; fill?: Exclude<PackageFilterId, "all">[] }
   | { title: string; filter: Exclude<PackageFilterId, "all">; cardTitle: string };
 
 export const HOMEPAGE_PACKAGE_GROUPS: HomepageGroup[] = [
   {
     title: "Classic Desert Safaris",
     slugs: ["evening-desert-safari", "morning-desert-safari", "buy-1-get-1-free-desert-safari"],
+    fill: ["classic", "overnight"],
   },
   {
     title: "Private & VIP",
     slugs: ["vip-desert-safari", "vip-private-desert-safari-dubai"],
+    fill: ["private-vip"],
   },
   {
     title: "Adrenaline",

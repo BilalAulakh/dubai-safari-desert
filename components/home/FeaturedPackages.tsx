@@ -3,7 +3,7 @@ import { ArrowRight, MessageCircle, Users } from "lucide-react";
 import type { Package } from "@/types";
 import PackageCard, { toPackageCardData } from "@/components/packages/PackageCard";
 import ScrollReveal from "@/components/common/ScrollReveal";
-import { HOMEPAGE_PACKAGE_GROUPS, PACKAGE_FILTERS } from "@/lib/config/packageGroups";
+import { HOMEPAGE_GROUP_SIZE, HOMEPAGE_PACKAGE_GROUPS, PACKAGE_FILTERS } from "@/lib/config/packageGroups";
 import { SITE_CONFIG } from "@/lib/config/site";
 import { createWhatsAppUrl } from "@/lib/utils";
 
@@ -14,6 +14,7 @@ interface FeaturedPackagesProps {
 // Homepage shows a short, grouped selection; the full catalogue lives on /packages
 export default function FeaturedPackages({ packages }: FeaturedPackagesProps) {
   const bySlug = new Map(packages.filter((p) => p.active).map((p) => [p.slug, p]));
+  const shown = new Set<string>(); // a package appears in at most one homepage row
   let cardIndex = 0;
   const groupWhatsappUrl = createWhatsAppUrl(
     SITE_CONFIG.contact.whatsapp,
@@ -59,8 +60,20 @@ export default function FeaturedPackages({ packages }: FeaturedPackagesProps) {
 
             const groupPackages = group.slugs
               .map((slug) => bySlug.get(slug))
-              .filter((p): p is Package => Boolean(p));
+              .filter((p): p is Package => Boolean(p) && !shown.has(p!.slug))
+              .slice(0, HOMEPAGE_GROUP_SIZE);
+            for (const filterId of group.fill ?? []) {
+              const filter = PACKAGE_FILTERS.find((f) => f.id === filterId);
+              if (!filter) continue;
+              for (const pkg of bySlug.values()) {
+                if (groupPackages.length >= HOMEPAGE_GROUP_SIZE) break;
+                if (filter.matches(pkg) && !shown.has(pkg.slug) && !groupPackages.includes(pkg)) {
+                  groupPackages.push(pkg);
+                }
+              }
+            }
             if (groupPackages.length === 0) return null;
+            groupPackages.forEach((p) => shown.add(p.slug));
 
             return (
               <div key={group.title}>
