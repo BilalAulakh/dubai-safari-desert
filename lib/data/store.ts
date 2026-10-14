@@ -54,8 +54,10 @@ export async function getAllPackages(): Promise<Package[]> {
         .from("packages")
         .select("id, name, slug, short_description, description, price, duration, featured, active, main_image, gallery, pickup_info, cancellation_policy, seo_title, seo_description");
 
+      // Once the DB has packages it is the source of truth; code data only fills
+      // in fields the DB lacks, so admin deletes aren't resurrected from code
       if (!error && data && data.length > 0) {
-        const supabaseMapped = data.map((pkg: any) => {
+        return data.map((pkg: any) => {
           const fallback = fallbackPackages.find((f) => f.slug === pkg.slug || f.id === pkg.id);
           return {
             ...fallback,
@@ -70,14 +72,22 @@ export async function getAllPackages(): Promise<Package[]> {
             itinerary: fallback?.itinerary || [],
           };
         });
-
-        const existingSlugs = new Set(data.map((p: any) => p.slug));
-        const missingFromDb = fallbackPackages.filter((f) => !existingSlugs.has(f.slug));
-        return [...missingFromDb, ...supabaseMapped];
       }
     }
   } catch {}
   return fallbackPackages;
+}
+
+async function hasDbPackages(supabase: NonNullable<ReturnType<typeof getServerSupabase>>) {
+  const { count, error } = await supabase.from("packages").select("id", { count: "exact", head: true });
+  return !error && (count ?? 0) > 0;
+}
+
+// ids are UUIDs in the DB; code-only packages use ids like "pkg-bogo-safari",
+// which Postgres rejects in a uuid comparison, so match those by slug instead
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+function packageMatch(id: string) {
+  return UUID_RE.test(id) ? `id.eq.${id},slug.eq.${id}` : `slug.eq.${id}`;
 }
 
 export async function getPackageBySlug(slug: string): Promise<Package | null> {
@@ -105,6 +115,8 @@ export async function getPackageBySlug(slug: string): Promise<Package | null> {
           itinerary: fallback?.itinerary || [],
         };
       }
+      // Not in a populated DB means it was deleted; don't serve the code copy
+      if (!error && (await hasDbPackages(supabase))) return null;
     }
   } catch {}
   const pkg = fallbackPackages.find((p) => p.slug === slug);
@@ -152,7 +164,7 @@ export async function updatePackage(id: string, updates: Partial<Package>): Prom
       if (updates.active !== undefined) dbUpdates.active = updates.active;
       if (updates.slug !== undefined) dbUpdates.slug = updates.slug;
 
-      await supabase.from("packages").update(dbUpdates).or(`id.eq.${id},slug.eq.${id}`);
+      await supabase.from("packages").update(dbUpdates).or(packageMatch(id));
     }
   } catch {}
   const index = fallbackPackages.findIndex((p) => p.id === id || p.slug === id);
@@ -168,7 +180,7 @@ export async function deletePackage(id: string): Promise<boolean> {
   try {
     const supabase = getServerSupabase();
     if (supabase) {
-      const { error } = await supabase.from("packages").delete().or(`id.eq.${id},slug.eq.${id}`);
+      const { error } = await supabase.from("packages").delete().or(packageMatch(id));
       if (!error) dbSuccess = true;
     }
   } catch {}
