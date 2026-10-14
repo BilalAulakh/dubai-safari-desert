@@ -1,10 +1,15 @@
 import { NextResponse } from "next/server";
 import { bookingSchema } from "@/lib/validations/booking";
 import { createBooking, getBookings, updateBookingStatus, deleteBooking } from "@/lib/data/store";
+import { requireAdmin } from "@/lib/auth/admin-session";
+import { SITE_CONFIG } from "@/lib/config/site";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const bookings = await getBookings();
     return NextResponse.json({
@@ -57,13 +62,19 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("Booking submission error:", error);
     return NextResponse.json(
-      { success: false, message: "An unexpected error occurred while processing your booking." },
+      {
+        success: false,
+        message: `We could not save your booking right now. Please WhatsApp us on ${SITE_CONFIG.contact.whatsapp} and we will confirm it straight away.`,
+      },
       { status: 500 }
     );
   }
 }
 
 export async function PATCH(request: Request) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const body = await request.json();
     const { id, status, admin_notes } = body;
@@ -97,6 +108,9 @@ export async function PATCH(request: Request) {
 }
 
 export async function DELETE(request: Request) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const { searchParams } = new URL(request.url);
     let id = searchParams.get("id");

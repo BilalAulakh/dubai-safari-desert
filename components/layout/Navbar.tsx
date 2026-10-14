@@ -1,16 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone, ShieldCheck, MessageCircle } from "lucide-react";
+import { Menu, X, Phone, MessageCircle, ShieldCheck } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config/site";
 import ThemeToggle from "@/components/common/ThemeToggle";
+import AdminLoginModal from "@/components/layout/AdminLoginModal";
 import { createWhatsAppUrl, toInternationalPhone } from "@/lib/utils";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [adminLoginOpen, setAdminLoginOpen] = useState(false);
   const pathname = usePathname();
   const isHomePage = pathname === "/";
 
@@ -32,6 +34,8 @@ export default function Navbar() {
   useEffect(() => {
     setIsOpen(false);
   }, [pathname]);
+
+  const closeAdminLogin = useCallback(() => setAdminLoginOpen(false), []);
 
   // When on homepage and unscrolled, navbar is transparent with crisp white text
   const isTransparent = isHomePage && !scrolled;
@@ -132,22 +136,15 @@ export default function Navbar() {
 
             <ThemeToggle />
 
-            <Link
-              href="/admin/login"
-              onClick={() => {
-                if (typeof window !== "undefined") {
-                  sessionStorage.removeItem("admin_auth");
-                  localStorage.removeItem("admin_auth");
-                  document.cookie = "admin_auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-                }
-              }}
+            <button
+              type="button"
+              onClick={() => setAdminLoginOpen(true)}
               className={`p-2 rounded-lg transition-colors cursor-pointer ${tone.icon}`}
-              title="Admin Portal (Requires Login)"
-              aria-label="Admin Portal"
-              id="nav-admin-cta"
+              title="Admin Login"
+              aria-label="Admin Login"
             >
               <ShieldCheck className="w-4 h-4" />
-            </Link>
+            </button>
 
             {/* Prominent Book Now CTA */}
             <Link
@@ -225,25 +222,23 @@ export default function Navbar() {
                 <span>{SITE_CONFIG.contact.phone}</span>
               </a>
 
-              <Link
-                href="/admin/login"
+              <button
+                type="button"
                 onClick={() => {
-                  if (typeof window !== "undefined") {
-                    sessionStorage.removeItem("admin_auth");
-                    localStorage.removeItem("admin_auth");
-                    document.cookie = "admin_auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-                  }
                   setIsOpen(false);
+                  setAdminLoginOpen(true);
                 }}
                 className="flex items-center gap-1 text-[#E8C48A] hover:underline cursor-pointer"
               >
                 <ShieldCheck className="w-3.5 h-3.5 text-[#C89B3C]" />
-                <span>Admin</span>
-              </Link>
+                <span>Admin Login</span>
+              </button>
             </div>
           </div>
         </div>
       )}
+
+      <AdminLoginModal open={adminLoginOpen} onClose={closeAdminLogin} />
     </header>
   );
 }

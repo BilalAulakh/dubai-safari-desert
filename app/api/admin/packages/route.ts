@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { getAllPackages, createPackage, deletePackage } from "@/lib/data/store";
 import { Package } from "@/types";
+import { requireAdmin } from "@/lib/auth/admin-session";
 
 // Homepage slider and package pages are ISR-cached; refresh them after admin edits
 function revalidatePackagePages() {
@@ -14,11 +15,17 @@ function revalidatePackagePages() {
 }
 
 export async function GET() {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   const packages = await getAllPackages();
   return NextResponse.json({ success: true, packages });
 }
 
 export async function POST(request: Request) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const body = await request.json();
     if (!body.name || !body.price) {
@@ -93,6 +100,9 @@ export async function POST(request: Request) {
 }
 
 export async function PATCH(request: Request) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const body = await request.json();
     const { id, ...updates } = body;
@@ -110,6 +120,9 @@ export async function PATCH(request: Request) {
 }
 
 export async function DELETE(request: Request) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");

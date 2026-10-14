@@ -7,6 +7,7 @@ import {
   deleteGalleryItem,
   importDefaultGalleryItems,
 } from "@/lib/data/store";
+import { requireAdmin } from "@/lib/auth/admin-session";
 
 // Homepage and gallery page are ISR-cached; refresh them after admin edits
 function revalidateGalleryPages() {
@@ -23,6 +24,9 @@ function errorResponse(err: unknown, fallback: string) {
 }
 
 export async function GET() {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const items = await getDbGalleryItems();
     return NextResponse.json({ success: true, items });
@@ -32,6 +36,9 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const body = await request.json();
 
@@ -66,6 +73,9 @@ export async function POST(request: Request) {
 }
 
 export async function PATCH(request: Request) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const { id, ...body } = await request.json();
     if (!id) {
@@ -88,6 +98,9 @@ export async function PATCH(request: Request) {
 }
 
 export async function DELETE(request: Request) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const id = new URL(request.url).searchParams.get("id");
     if (!id) {

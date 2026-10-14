@@ -13,48 +13,9 @@ export interface BookingsState {
   statusFilter: BookingStatus | "all";
 }
 
-const fallbackBookings: Booking[] = [
-  {
-    id: "booking-demo-1",
-    booking_reference: "DSD-2026-DXB81",
-    package_id: "pkg-evening-safari",
-    package_name: "Evening Desert Safari with BBQ Dinner",
-    customer_name: "Alexander Wright",
-    phone: "+971 52 987 6543",
-    email: "alex.wright@example.com",
-    booking_date: "2026-09-12",
-    adults: 2,
-    children: 1,
-    pickup_location: "Downtown Dubai (Burj Khalifa area)",
-    hotel_name: "Address Downtown",
-    special_requests: "Vegetarian meal for 1 adult, baby seat for 1 child.",
-    status: "pending",
-    admin_notes:
-      "Followed up on WhatsApp, waiting for customer to confirm pickup time.",
-    created_at: new Date(Date.now() - 3600000 * 4).toISOString(),
-  },
-  {
-    id: "booking-demo-2",
-    booking_reference: "DSD-2026-VIP44",
-    package_id: "pkg-private-safari",
-    package_name: "VIP Private Desert Safari Experience",
-    customer_name: "Nadia Al-Hassan",
-    phone: "+971 50 888 1234",
-    email: "nadia.hassan@example.com",
-    booking_date: "2026-09-15",
-    adults: 4,
-    children: 0,
-    pickup_location: "Palm Jumeirah & Madinat Jumeirah",
-    hotel_name: "Atlantis The Royal",
-    special_requests: "Anniversary celebration table at camp.",
-    status: "confirmed",
-    admin_notes: "Private Land Cruiser allocated. Driver Rashid assigned.",
-    created_at: new Date(Date.now() - 3600000 * 28).toISOString(),
-  },
-];
 
 const initialState: BookingsState = {
-  items: fallbackBookings,
+  items: [],
   activeBookingDraft: {
     adults: 2,
     children: 0,

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { preload } from "react-dom";
 import HeroSection from "@/components/home/HeroSection";
-import TrustStrip from "@/components/home/TrustStrip";
 import FeaturedPackages from "@/components/home/FeaturedPackages";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 import ActivitiesShowcase from "@/components/home/ActivitiesShowcase";
@@ -43,17 +42,10 @@ export default async function HomePage() {
     getApprovedReviews(),
   ]);
 
-  // Real average from approved reviews only; the strip hides the rating when there are none
-  const rating =
-    reviews.length > 0
-      ? { average: reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length, count: reviews.length }
-      : null;
-
   return (
     <div className="overflow-x-hidden">
-      {/* 1. Hero Section with Trust Badges & Action CTAs */}
+      {/* 1. Hero Section with Action CTAs */}
       <HeroSection />
-      <TrustStrip rating={rating} />
 
       {/* 2. Featured Safari Packages */}
       <FeaturedPackages packages={packages.map(toPackageCardData)} />

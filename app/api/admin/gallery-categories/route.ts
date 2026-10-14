@@ -5,6 +5,7 @@ import {
   createGalleryCategory,
   deleteGalleryCategory,
 } from "@/lib/data/store";
+import { requireAdmin } from "@/lib/auth/admin-session";
 
 function revalidateGalleryPages() {
   try {
@@ -20,6 +21,9 @@ function errorResponse(err: unknown, fallback: string) {
 }
 
 export async function GET() {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const categories = await getDbGalleryCategories();
     return NextResponse.json({ success: true, categories });
@@ -29,6 +33,9 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const body = await request.json();
     const label = String(body.label || "").trim();
@@ -53,6 +60,9 @@ export async function POST(request: Request) {
 }
 
 export async function DELETE(request: Request) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const id = new URL(request.url).searchParams.get("id");
     if (!id) {

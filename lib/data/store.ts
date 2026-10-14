@@ -1,3 +1,4 @@
+import "server-only";
 import {
   Package,
   Activity,
@@ -21,16 +22,10 @@ import { initialGalleryItems, defaultGalleryCategories } from "./gallery";
 import { initialReviews } from "./reviews";
 import { initialBlogPosts } from "./blogPosts";
 import { generateBookingReference } from "../utils";
-import { createClient as createSupabaseClient } from "@supabase/supabase-js";
+import { getServerSupabase } from "@/lib/supabase/admin";
 
-function getPublicSupabase() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!url || !anonKey) return null;
-  return createSupabaseClient(url, anonKey, {
-    auth: { persistSession: false },
-  });
-}
+// Public getters below filter (active / approved / published) explicitly,
+// because the server client is not limited by RLS.
 
 // In-memory fallback stores for local/demo execution
 const fallbackPackages: Package[] = [...initialPackages];
@@ -42,44 +37,7 @@ const fallbackReviews: Review[] = [...initialReviews];
 const deletedReviewIds = new Set<string>();
 const fallbackBlogPosts: BlogPost[] = [...initialBlogPosts];
 const fallbackComments: Comment[] = [];
-const fallbackBookings: Booking[] = [
-  {
-    id: "booking-demo-1",
-    booking_reference: "DSD-2026-DXB81",
-    package_id: "pkg-evening-safari",
-    package_name: "Evening Desert Safari with BBQ Dinner",
-    customer_name: "Alexander Wright",
-    phone: "+971 52 987 6543",
-    email: "alex.wright@example.com",
-    booking_date: "2026-09-12",
-    adults: 2,
-    children: 1,
-    pickup_location: "Downtown Dubai (Burj Khalifa area)",
-    hotel_name: "Address Downtown",
-    special_requests: "Vegetarian meal for 1 adult, baby seat for 1 child.",
-    status: "pending",
-    admin_notes: "Followed up on WhatsApp, waiting for customer to confirm pickup time.",
-    created_at: new Date(Date.now() - 3600000 * 4).toISOString(),
-  },
-  {
-    id: "booking-demo-2",
-    booking_reference: "DSD-2026-VIP44",
-    package_id: "pkg-private-safari",
-    package_name: "VIP Private Desert Safari Experience",
-    customer_name: "Nadia Al-Hassan",
-    phone: "+971 50 888 1234",
-    email: "nadia.hassan@example.com",
-    booking_date: "2026-09-15",
-    adults: 4,
-    children: 0,
-    pickup_location: "Palm Jumeirah & Madinat Jumeirah",
-    hotel_name: "Atlantis The Royal",
-    special_requests: "Anniversary celebration table at camp.",
-    status: "confirmed",
-    admin_notes: "Private Land Cruiser allocated. Driver Rashid assigned.",
-    created_at: new Date(Date.now() - 3600000 * 28).toISOString(),
-  },
-];
+const fallbackBookings: Booking[] = [];
 
 // --- PACKAGES ---
 // Public list mirrors the admin list order exactly, minus inactive packages
@@ -90,7 +48,7 @@ export async function getPackages(): Promise<Package[]> {
 
 export async function getAllPackages(): Promise<Package[]> {
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       const { data, error } = await supabase
         .from("packages")
@@ -124,7 +82,7 @@ export async function getAllPackages(): Promise<Package[]> {
 
 export async function getPackageBySlug(slug: string): Promise<Package | null> {
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       const { data, error } = await supabase
         .from("packages")
@@ -155,7 +113,7 @@ export async function getPackageBySlug(slug: string): Promise<Package | null> {
 
 export async function createPackage(pkg: Package): Promise<Package> {
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       await supabase.from("packages").insert({
         name: pkg.name,
@@ -181,7 +139,7 @@ export async function createPackage(pkg: Package): Promise<Package> {
 
 export async function updatePackage(id: string, updates: Partial<Package>): Promise<Package | null> {
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       const dbUpdates: any = {};
       if (updates.name !== undefined) dbUpdates.name = updates.name;
@@ -208,7 +166,7 @@ export async function updatePackage(id: string, updates: Partial<Package>): Prom
 export async function deletePackage(id: string): Promise<boolean> {
   let dbSuccess = false;
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       const { error } = await supabase.from("packages").delete().or(`id.eq.${id},slug.eq.${id}`);
       if (!error) dbSuccess = true;
@@ -225,7 +183,7 @@ export async function deletePackage(id: string): Promise<boolean> {
 // --- ACTIVITIES ---
 export async function getActivities(): Promise<Activity[]> {
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       const { data, error } = await supabase
         .from("activities")
@@ -245,7 +203,7 @@ export async function getActivities(): Promise<Activity[]> {
 
 export async function getAllActivities(): Promise<Activity[]> {
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       const { data, error } = await supabase
         .from("activities")
@@ -265,7 +223,7 @@ const ACTIVITY_COLUMNS = "id, name, slug, description, image, active, sort_order
 type ActivityInput = Omit<Activity, "id">;
 
 function requireSupabase() {
-  const supabase = getPublicSupabase();
+  const supabase = getServerSupabase();
   if (!supabase) throw new Error("Supabase is not configured.");
   return supabase;
 }
@@ -337,7 +295,7 @@ function parsePickupLocation(item: any): PickupLocation {
 
 export async function getPickupLocations(): Promise<PickupLocation[]> {
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       const { data, error } = await supabase
         .from("pickup_locations")
@@ -358,7 +316,7 @@ export async function getPickupLocations(): Promise<PickupLocation[]> {
 
 export async function getAllPickupLocations(): Promise<PickupLocation[]> {
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       const { data, error } = await supabase
         .from("pickup_locations")
@@ -389,7 +347,7 @@ export async function createPickupLocation(name: string, map_url?: string): Prom
   };
 
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       const { data, error } = await supabase
         .from("pickup_locations")
@@ -418,7 +376,7 @@ export async function updatePickupLocation(
   updates: Partial<PickupLocation>
 ): Promise<PickupLocation | null> {
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       const dbUpdates: any = {};
       if (updates.active !== undefined) dbUpdates.active = updates.active;
@@ -456,7 +414,7 @@ export async function updatePickupLocation(
 export async function deletePickupLocation(id: string): Promise<boolean> {
   let deleted = false;
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       const { error } = await supabase.from("pickup_locations").delete().eq("id", id);
       if (!error) deleted = true;
@@ -476,7 +434,7 @@ export async function deletePickupLocation(id: string): Promise<boolean> {
 // --- FAQS ---
 export async function getFAQs(): Promise<FAQ[]> {
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       const { data, error } = await supabase
         .from("faqs")
@@ -496,7 +454,7 @@ export async function getFAQs(): Promise<FAQ[]> {
 
 export async function getAllFAQs(): Promise<FAQ[]> {
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       const { data, error } = await supabase
         .from("faqs")
@@ -514,7 +472,7 @@ export async function getAllFAQs(): Promise<FAQ[]> {
 // --- GALLERY ---
 export async function getGalleryItems(): Promise<GalleryItem[]> {
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       const { data, error } = await supabase
         .from("gallery")
@@ -534,7 +492,7 @@ export async function getGalleryItems(): Promise<GalleryItem[]> {
 
 export async function getAllGalleryItems(): Promise<GalleryItem[]> {
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       const { data, error } = await supabase
         .from("gallery")
@@ -609,7 +567,7 @@ const CATEGORY_COLUMNS = "id, slug, label, sort_order";
 // Public: falls back to the built-in list until the table exists or has rows
 export async function getGalleryCategories(): Promise<GalleryCategory[]> {
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       const { data, error } = await supabase
         .from("gallery_categories")
@@ -673,7 +631,7 @@ export async function deleteGalleryCategory(id: string): Promise<void> {
 // --- REVIEWS ---
 export async function getApprovedReviews(): Promise<Review[]> {
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       const { data, error } = await supabase
         .from("reviews")
@@ -704,7 +662,7 @@ export async function getApprovedReviews(): Promise<Review[]> {
 
 export async function getAllReviews(): Promise<Review[]> {
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       const { data, error } = await supabase
         .from("reviews")
@@ -741,7 +699,7 @@ export async function createReview(data: Omit<Review, "id" | "created_at" | "sta
   };
 
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       const { data: inserted, error } = await supabase
         .from("reviews")
@@ -775,7 +733,7 @@ export async function updateReviewStatus(
   featured?: boolean
 ): Promise<Review | null> {
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       const updates: any = {};
       if (status !== undefined) updates.status = status;
@@ -798,7 +756,7 @@ export async function updateReviewStatus(
 export async function deleteReview(id: string): Promise<boolean> {
   deletedReviewIds.add(id);
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       const { error } = await supabase.from("reviews").delete().eq("id", id);
       if (error) {
@@ -854,7 +812,7 @@ function mapDbBlogToBlogPost(b: any): BlogPost {
 // --- BLOG POSTS ---
 export async function getBlogPosts(): Promise<BlogPost[]> {
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       const { data, error } = await supabase
         .from("blogs")
@@ -874,7 +832,7 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
 
 export async function getAllBlogPosts(): Promise<BlogPost[]> {
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       const { data, error } = await supabase
         .from("blogs")
@@ -896,7 +854,7 @@ export async function getBlogPostBySlug(
   allowDraft = false
 ): Promise<BlogPost | null> {
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       let query = supabase.from("blogs").select("*").eq("slug", slug);
       if (!allowDraft) {
@@ -920,7 +878,7 @@ export async function getBlogPostBySlug(
 
 export async function getBlogPostById(id: string): Promise<BlogPost | null> {
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       const { data, error } = await supabase
         .from("blogs")
@@ -964,7 +922,7 @@ export async function createBlogPost(
   };
 
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       const insertPayload: any = {
         title: newPost.title,
@@ -1024,7 +982,7 @@ export async function updateBlogPost(
   const now = new Date().toISOString();
 
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       // Only send real columns of the blogs table; derived fields like read_time,
       // published_date and seo_* would make Supabase reject the whole update.
@@ -1072,7 +1030,7 @@ export async function updateBlogPost(
 
 export async function deleteBlogPost(id: string): Promise<boolean> {
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       await supabase.from("blogs").delete().eq("id", id);
     }
@@ -1140,29 +1098,21 @@ export async function deleteComment(id: string): Promise<boolean> {
 
 // --- BOOKINGS ---
 export async function getBookings(): Promise<Booking[]> {
-  try {
-    const supabase = getPublicSupabase();
-    if (supabase) {
-      const { data, error } = await supabase
-        .from("bookings")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      if (!error && data) {
-        const supabaseRefs = new Set(data.map((b: any) => b.booking_reference?.toLowerCase()));
-        const uniqueFallbacks = fallbackBookings.filter(
-          (fb) => !supabaseRefs.has(fb.booking_reference?.toLowerCase())
-        );
-        const combined = [...data, ...uniqueFallbacks].sort(
-          (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-        );
-        return combined as Booking[];
-      }
+  const supabase = getServerSupabase();
+  if (supabase) {
+    // Real data only: demo bookings must never show up in the live admin panel
+    const { data, error } = await supabase
+      .from("bookings")
+      .select("*")
+      .order("created_at", { ascending: false });
+    if (error) {
+      console.error("Supabase getBookings error:", error);
+      throw new Error("Could not load bookings.");
     }
-  } catch (err) {
-    console.error("Supabase getBookings error:", err);
+    return (data ?? []) as Booking[];
   }
 
+  // Local demo mode without Supabase
   return [...fallbackBookings].sort(
     (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   );
@@ -1170,7 +1120,7 @@ export async function getBookings(): Promise<Booking[]> {
 
 export async function getBookingByReference(reference: string): Promise<Booking | null> {
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       const { data, error } = await supabase
         .from("bookings")
@@ -1196,10 +1146,43 @@ export async function createBooking(
   data: Omit<Booking, "id" | "booking_reference" | "status" | "created_at">
 ): Promise<Booking> {
   const booking_reference = generateBookingReference();
-  const pkg = fallbackPackages.find((p) => p.id === data.package_id);
+  // Supabase package ids are UUIDs, so look the name up in the merged list (id or slug)
+  const allPackages = await getAllPackages();
+  const pkg = allPackages.find((p) => p.id === data.package_id || p.slug === data.package_id);
   const packageName = pkg ? pkg.name : "Custom Desert Safari";
 
-  let newBooking: Booking = {
+  const supabase = getServerSupabase();
+  if (supabase) {
+    // A failed insert must reach the customer as an error, never as a fake confirmation
+    const { data: inserted, error } = await supabase
+      .from("bookings")
+      .insert({
+        booking_reference,
+        package_id: data.package_id,
+        package_name: packageName,
+        customer_name: data.customer_name,
+        phone: data.phone,
+        email: data.email || null,
+        booking_date: data.booking_date,
+        adults: data.adults,
+        children: data.children || 0,
+        pickup_location: data.pickup_location,
+        hotel_name: data.hotel_name || null,
+        special_requests: data.special_requests || null,
+        status: "pending",
+      })
+      .select()
+      .single();
+
+    if (error || !inserted) {
+      console.error("Supabase createBooking insert error:", error);
+      throw new Error("Booking could not be saved.");
+    }
+    return { ...inserted, id: inserted.id };
+  }
+
+  // Local demo mode without Supabase
+  const newBooking: Booking = {
     ...data,
     id: `bkg-${Date.now()}`,
     booking_reference,
@@ -1207,42 +1190,6 @@ export async function createBooking(
     status: "pending",
     created_at: new Date().toISOString(),
   };
-
-  try {
-    const supabase = getPublicSupabase();
-    if (supabase) {
-      const { data: inserted, error } = await supabase
-        .from("bookings")
-        .insert({
-          booking_reference,
-          package_id: data.package_id,
-          package_name: packageName,
-          customer_name: data.customer_name,
-          phone: data.phone,
-          email: data.email || null,
-          booking_date: data.booking_date,
-          adults: data.adults,
-          children: data.children || 0,
-          pickup_location: data.pickup_location,
-          hotel_name: data.hotel_name || null,
-          special_requests: data.special_requests || null,
-          status: "pending",
-        })
-        .select()
-        .single();
-
-      if (!error && inserted) {
-        newBooking = {
-          ...inserted,
-          id: inserted.id,
-        };
-      } else if (error) {
-        console.error("Supabase createBooking insert error:", error);
-      }
-    }
-  } catch (err) {
-    console.error("Supabase createBooking exception:", err);
-  }
 
   fallbackBookings.unshift(newBooking);
   return newBooking;
@@ -1254,7 +1201,7 @@ export async function updateBookingStatus(
   adminNotes?: string
 ): Promise<Booking | null> {
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       const updates: any = {
         status,
@@ -1295,7 +1242,7 @@ export async function updateBookingStatus(
 export async function deleteBooking(id: string): Promise<boolean> {
   let deleted = false;
   try {
-    const supabase = getPublicSupabase();
+    const supabase = getServerSupabase();
     if (supabase) {
       const { error } = await supabase.from("bookings").delete().eq("id", id);
       if (!error) {

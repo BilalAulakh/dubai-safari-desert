@@ -2,6 +2,7 @@ import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { getBlogPostById, updateBlogPost, deleteBlogPost, getAllBlogPosts } from "@/lib/data/store";
 import { BlogPost } from "@/types";
+import { requireAdmin } from "@/lib/auth/admin-session";
 
 // Blog pages are ISR-cached; refresh them right after admin edits
 function revalidateBlogPages() {
@@ -17,6 +18,9 @@ export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const { id } = await params;
     const blog = await getBlogPostById(id);
@@ -39,6 +43,9 @@ export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const { id } = await params;
     const existing = await getBlogPostById(id);
@@ -132,6 +139,9 @@ export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const { id } = await params;
     const existing = await getBlogPostById(id);

@@ -7,10 +7,14 @@ import {
   deleteReview,
   updateReviewStatus,
 } from "@/lib/data/store";
+import { requireAdmin } from "@/lib/auth/admin-session";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const reviews = await getAllReviews();
     return NextResponse.json({ success: true, reviews });
@@ -72,6 +76,9 @@ export async function POST(request: Request) {
 }
 
 export async function PATCH(request: Request) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const body = await request.json();
     const { id, status, featured } = body;
@@ -104,6 +111,9 @@ export async function PATCH(request: Request) {
 }
 
 export async function DELETE(request: Request) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const { searchParams } = new URL(request.url);
     let id = searchParams.get("id");

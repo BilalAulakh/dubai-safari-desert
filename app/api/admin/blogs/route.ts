@@ -2,6 +2,7 @@ import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { getAllBlogPosts, createBlogPost } from "@/lib/data/store";
 import { BlogPost } from "@/types";
+import { requireAdmin } from "@/lib/auth/admin-session";
 
 
 // Blog pages are ISR-cached; refresh them right after admin edits
@@ -14,6 +15,9 @@ function revalidateBlogPages() {
   } catch {}
 }
 export async function GET() {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const blogs = await getAllBlogPosts();
     return NextResponse.json({ success: true, blogs });
@@ -27,6 +31,9 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const body = await request.json();
 

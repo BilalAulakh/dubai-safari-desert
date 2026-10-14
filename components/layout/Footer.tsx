@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Phone, Mail, MapPin, Clock, MessageCircle, ShieldCheck } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config/site";
 import { createWhatsAppUrl, toInternationalPhone } from "@/lib/utils";
-import AdminLoginLink from "@/components/layout/AdminLoginLink";
 
 export default function Footer() {
   const whatsappUrl = createWhatsAppUrl(
@@ -201,9 +200,14 @@ export default function Footer() {
           </p>
           <div className="flex items-center gap-6">
             <span>Dubai, United Arab Emirates</span>
-            <AdminLoginLink className="hover:text-[#8C6214] dark:hover:text-[#E8C48A] transition-colors cursor-pointer">
-              Admin Portal
-            </AdminLoginLink>
+            {/* Login is enforced server-side; this is only a shortcut for the team */}
+            <Link
+              href="/admin/login"
+              rel="nofollow"
+              className="hover:text-[#8C6214] dark:hover:text-[#E8C48A] transition-colors"
+            >
+              Admin
+            </Link>
           </div>
         </div>
       </div>

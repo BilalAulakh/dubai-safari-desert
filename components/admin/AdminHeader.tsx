@@ -11,13 +11,13 @@ interface AdminHeaderProps {
 export default function AdminHeader({ onToggleSidebar }: AdminHeaderProps) {
   const router = useRouter();
 
-  const handleLogout = () => {
-    if (typeof window !== "undefined") {
-      sessionStorage.removeItem("admin_auth");
-      localStorage.removeItem("admin_auth");
-      document.cookie = "admin_auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/admin/logout", { method: "POST" });
+    } finally {
+      router.replace("/admin/login");
+      router.refresh();
     }
-    router.push("/admin/login");
   };
 
   return (

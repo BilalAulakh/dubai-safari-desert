@@ -22,7 +22,7 @@ export const SITE_CONFIG = {
   contact: {
     phone: "00971569137131",
     whatsapp: "00971569137131",
-    email: "muhammadakram37131@gmail.com",
+    email: "info@safaridunetours.com",
     address: "Dubai, United Arab Emirates",
     supportHours: "Open Daily: 08:00 AM – 11:00 PM (GST)",
     googleMapsUrl: "https://maps.google.com/?q=Dubai+Desert+Safari",

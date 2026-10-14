@@ -1,7 +1,11 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { getServerSupabase } from "@/lib/supabase/admin";
+import { requireAdmin } from "@/lib/auth/admin-session";
 
 export async function POST(request: Request) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const formData = await request.formData();
     const file = formData.get("file") as File;
@@ -13,7 +17,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const supabase = await createClient();
+    const supabase = getServerSupabase();
     if (!supabase) {
       return NextResponse.json(
         { error: "Supabase client not configured. Check .env.local" },

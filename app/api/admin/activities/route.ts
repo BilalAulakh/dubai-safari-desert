@@ -7,6 +7,7 @@ import {
   deleteActivity,
   importDefaultActivities,
 } from "@/lib/data/store";
+import { requireAdmin } from "@/lib/auth/admin-session";
 
 // Homepage and activities page are ISR-cached; refresh them after admin edits
 function revalidateActivityPages() {
@@ -36,6 +37,9 @@ function errorResponse(err: unknown, fallback: string) {
 }
 
 export async function GET() {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const activities = await getDbActivities();
     return NextResponse.json({ success: true, activities });
@@ -45,6 +49,9 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const body = await request.json();
 
@@ -77,6 +84,9 @@ export async function POST(request: Request) {
 }
 
 export async function PATCH(request: Request) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const { id, ...body } = await request.json();
     if (!id) {
@@ -101,6 +111,9 @@ export async function PATCH(request: Request) {
 }
 
 export async function DELETE(request: Request) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const id = new URL(request.url).searchParams.get("id");
     if (!id) {

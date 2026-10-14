@@ -5,10 +5,14 @@ import {
   updatePickupLocation,
   deletePickupLocation,
 } from "@/lib/data/store";
+import { requireAdmin } from "@/lib/auth/admin-session";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const locations = await getAllPickupLocations();
     return NextResponse.json({
@@ -25,6 +29,9 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const body = await request.json();
     const { name, map_url } = body;
@@ -51,6 +58,9 @@ export async function POST(request: Request) {
 }
 
 export async function PATCH(request: Request) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const body = await request.json();
     const { id, active, name, map_url, sort_order } = body;
@@ -90,6 +100,9 @@ export async function PATCH(request: Request) {
 }
 
 export async function DELETE(request: Request) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const { searchParams } = new URL(request.url);
     let id = searchParams.get("id");

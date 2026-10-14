@@ -14,47 +14,33 @@ export default function AdminLoginPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Admin credentials
-  const DEMO_EMAIL = "admin";
-  const DEMO_PASSWORD = "Akramjutt20@";
-
-  // When reaching the login page, clear any previous auth session
+  // Clear sessions left by the old client-side login
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      sessionStorage.removeItem("admin_auth");
-      localStorage.removeItem("admin_auth");
-      document.cookie = "admin_auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    }
+    sessionStorage.removeItem("admin_auth");
+    localStorage.removeItem("admin_auth");
   }, []);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setLoading(true);
 
-    setTimeout(() => {
-      const cleanEmail = email.trim().toLowerCase();
-      const cleanPassword = password.trim();
-
-      // Accepts "admin" or official admin email addresses
-      const isValidUser =
-        cleanEmail === "admin" ||
-        cleanEmail === "admin@safaridunetours.com" ||
-        cleanEmail === "admin@dubaisafaridesert.com";
-      const isValidPassword = cleanPassword === DEMO_PASSWORD;
-
-      if (isValidUser && isValidPassword) {
-        if (typeof window !== "undefined") {
-          sessionStorage.setItem("admin_auth", "true");
-          localStorage.setItem("admin_auth", "true");
-          document.cookie = "admin_auth=true; path=/; max-age=86400";
-        }
-        router.push("/admin");
-      } else {
-        setError("Invalid username or password. Please use the credentials shown below.");
-        setLoading(false);
+    try {
+      const res = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: email, password }),
+      });
+      if (res.ok) {
+        router.replace("/admin");
+        router.refresh();
+        return;
       }
-    }, 400);
+      setError("Invalid username or password.");
+    } catch {
+      setError("Could not reach the server. Please try again.");
+    }
+    setLoading(false);
   };
 
   return (

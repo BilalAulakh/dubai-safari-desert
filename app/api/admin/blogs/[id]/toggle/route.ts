@@ -1,6 +1,7 @@
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { getBlogPostById, toggleBlogStatus } from "@/lib/data/store";
+import { requireAdmin } from "@/lib/auth/admin-session";
 
 // Blog pages are ISR-cached; refresh them right after admin edits
 function revalidateBlogPages() {
@@ -16,6 +17,9 @@ export async function POST(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const { id } = await params;
     const existing = await getBlogPostById(id);
