@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, Calendar, Users, MapPin, Send, AlertCircle, ShieldCheck } from "lucide-react";
+import { Loader2, Calendar, Users, MapPin, Send, AlertCircle } from "lucide-react";
 import { bookingSchema, BookingFormData } from "@/lib/validations/booking";
 import { Package, PickupLocation } from "@/types";
 import { formatPrice } from "@/lib/utils";
@@ -334,7 +334,7 @@ export default function BookingForm({
             </span>
           </div>
 
-          {groupSavings > 0 ? (
+          {groupSavings > 0 && (
             <div className="mt-1.5 flex flex-wrap items-center gap-2">
               <span className="px-2 py-0.5 rounded-full bg-emerald-600 text-white text-[10px] font-black uppercase tracking-wider">
                 Group Saver ({discountPercent}% OFF)
@@ -343,16 +343,7 @@ export default function BookingForm({
                 You save {formatPrice(groupSavings)}!
               </span>
             </div>
-          ) : (
-            <p className="text-[11px] text-amber-700 dark:text-amber-400 font-medium mt-1">
-              ✨ Tip: Select 3+ guests to unlock 10% to 15% flexible group savings!
-            </p>
           )}
-
-          <p className="text-xs text-[#5E554C] dark:text-[#B8ADA2] mt-2 flex items-center gap-1.5">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#C89B3C]" />
-            <span>No advance card charge. Pay after confirmation with our team.</span>
-          </p>
         </div>
 
         <button
