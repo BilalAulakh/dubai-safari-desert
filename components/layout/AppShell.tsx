@@ -24,6 +24,8 @@ export default function AppShell({
       <Navbar />
       <main className="flex-1">{children}</main>
       {footer}
+      {/* Reserves room for the fixed mobile action bar so it never covers the page end */}
+      <div className="h-[calc(3.75rem+1px+env(safe-area-inset-bottom))] sm:hidden" aria-hidden="true" />
       <FloatingWhatsApp />
     </>
   );

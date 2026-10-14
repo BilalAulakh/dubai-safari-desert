@@ -40,22 +40,22 @@ export default function FloatingWhatsApp() {
       </div>
 
       {/* Mobile Sticky Bottom Conversion Bar */}
-      <div className="sm:hidden fixed bottom-0 inset-x-0 z-50 bg-[#17120D]/95 backdrop-blur-md border-t border-[#C89B3C]/25 px-2.5 py-1.5 shadow-2xl flex items-center justify-center gap-2">
+      <div className="sm:hidden fixed bottom-0 inset-x-0 z-50 flex items-center justify-center gap-2 border-t border-amber-500/25 bg-dune-900/95 px-3 pt-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))] shadow-2xl backdrop-blur-md">
         <a
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 max-w-[160px] h-8 sm:h-9 px-2.5 rounded-lg bg-[#25D366] hover:bg-[#1eb857] text-white text-[11px] font-bold flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-transform whitespace-nowrap"
+          className="flex h-11 flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-whatsapp-700 px-3 text-small font-bold text-white shadow-md transition-transform hover:bg-whatsapp-700/90 active:scale-95"
         >
-          <MessageCircle className="w-3.5 h-3.5 fill-white/20 shrink-0" />
+          <MessageCircle className="h-4 w-4 shrink-0" aria-hidden="true" />
           <span>WhatsApp</span>
         </a>
 
         <Link
           href="/booking"
-          className="flex-1 max-w-[160px] h-8 sm:h-9 px-2.5 rounded-lg bg-[#C89B3C] hover:bg-[#D6A84F] text-[#17120D] text-[11px] font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-transform whitespace-nowrap"
+          className="flex h-11 flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-amber-500 px-3 text-small font-bold text-dune-900 shadow-md transition-transform hover:bg-amber-400 active:scale-95"
         >
-          <CalendarCheck className="w-3.5 h-3.5 shrink-0" />
+          <CalendarCheck className="h-4 w-4 shrink-0" aria-hidden="true" />
           <span>Book Now</span>
         </Link>
       </div>

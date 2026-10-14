@@ -65,12 +65,10 @@ export default function FeaturedPackages({ packages }: FeaturedPackagesProps) {
             return (
               <div key={group.title}>
                 <h3 className="mb-6 text-label font-semibold uppercase text-accent">{group.title}</h3>
-                {/* Snap carousel on mobile/tablet, bleeding to the screen edge; plain grid on desktop */}
-                <div className="-mx-5 flex snap-x snap-mandatory scroll-px-5 gap-5 overflow-x-auto px-5 pb-6 pt-1 no-scrollbar sm:-mx-8 sm:scroll-px-8 sm:px-8 lg:mx-0 lg:grid lg:grid-cols-3 lg:gap-8 lg:overflow-visible lg:p-0">
+                {/* Full-width cards on mobile, two columns on tablet, three on desktop */}
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
                   {groupPackages.map((pkg) => (
-                    <div key={pkg.id} className="w-[85%] max-w-[24rem] shrink-0 snap-start sm:w-[46%] lg:w-auto lg:max-w-none">
-                      <PackageCard pkg={toPackageCardData(pkg)} priority={cardIndex++ < 3} />
-                    </div>
+                    <PackageCard key={pkg.id} pkg={toPackageCardData(pkg)} priority={cardIndex++ < 3} />
                   ))}
                 </div>
               </div>
