@@ -20,12 +20,30 @@ export const SITE_CONFIG = {
   
   // Centralized Business Contact
   contact: {
-    phone: "+971 56 913 7131",
-    whatsapp: "+971 56 913 7131",
+    phone: "00971569137131",
+    whatsapp: "00971569137131",
     email: "muhammadakram37131@gmail.com",
     address: "Dubai, United Arab Emirates",
     supportHours: "Open Daily: 08:00 AM – 11:00 PM (GST)",
     googleMapsUrl: "https://maps.google.com/?q=Dubai+Desert+Safari",
+  },
+
+  // Trust strip under the homepage hero. Items left as null are hidden on the site,
+  // so placeholders never show to visitors. Fill these with real, verifiable values.
+  trust: {
+    licenseNumber: null as string | null, // TODO: DTCM / DED tour operator license number
+    guestsServed: null as string | null, // TODO: real number of guests served, e.g. "12,000+"
+    freeCancellationHours: 24,
+  },
+
+  // Only these packages show a discount badge and strikethrough price; every other
+  // card shows a single clean price. Keep this to 2-3 slugs.
+  promotions: {
+    discountBadgeSlugs: [
+      "buy-1-get-1-free-desert-safari",
+      "evening-desert-safari",
+      "vip-desert-safari",
+    ],
   },
 
   social: {

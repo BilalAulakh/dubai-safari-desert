@@ -30,10 +30,10 @@ export default function AboutPage() {
         <div className="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#C89B3C] via-transparent to-transparent" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#C89B3C]/15 border border-[#C89B3C]/30 text-[#E8C48A] text-xs font-semibold uppercase tracking-wider mb-4">
-            <Compass className="w-3.5 h-3.5 text-[#C89B3C]" />
+            <Compass className="w-3.5 h-3.5 text-[#8C6214] dark:text-[#E8C48A]" />
             <span>Discover Our Story</span>
           </div>
-          <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-[1.08]">
+          <h1 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-[1.08]">
             About <span className="gold-text-gradient">Safari Dune Tours</span>
           </h1>
           <p className="mt-4 text-base sm:text-lg text-[#B8ADA2] max-w-2xl mx-auto leading-relaxed">
@@ -46,16 +46,16 @@ export default function AboutPage() {
       <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div className="space-y-6">
-            <span className="text-xs font-bold uppercase tracking-widest text-[#C89B3C]">
+            <span className="eyebrow">
               Our Heritage & Vision
             </span>
-            <h2 className="font-heading text-3xl sm:text-4xl font-bold text-[#17120D] dark:text-[#FBF7F0] tracking-tight leading-tight">
+            <h2 className="font-heading text-2xl sm:text-3xl font-bold text-[#17120D] dark:text-[#FBF7F0] tracking-tight leading-tight">
               Dedicated to Genuine Desert Adventures
             </h2>
-            <p className="text-base text-[#6B6258] dark:text-[#B8ADA2] leading-relaxed">
+            <p className="text-base text-[#5E554C] dark:text-[#B8ADA2] leading-relaxed">
               Dubai is internationally renowned for ultra-modern skyscrapers and architectural marvels. Yet just beyond the city skyline lies a mesmerizing wilderness that has inspired travelers and Bedouin nomads for centuries.
             </p>
-            <p className="text-base text-[#6B6258] dark:text-[#B8ADA2] leading-relaxed">
+            <p className="text-base text-[#5E554C] dark:text-[#B8ADA2] leading-relaxed">
               At <strong>Safari Dune Tours</strong>, our vision is to provide travelers with an experience that honors this rich natural heritage. From thrilling drives over the Lahbab red dunes to traditional open-air BBQ camps and Sufi Tanoura dance performances, every element of our tours is carefully organized.
             </p>
 
@@ -94,44 +94,44 @@ export default function AboutPage() {
       </section>
 
       {/* Core Values */}
-      <section className="py-20 bg-[#F2E8D5] dark:bg-[#1D150E] border-y border-[#C89B3C]/15 transition-colors duration-200">
+      <section className="py-20 bg-[#F5EEE3] dark:bg-[#1D150E] border-y border-[#C89B3C]/15 transition-colors duration-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-14">
-            <span className="text-xs font-bold uppercase tracking-widest text-[#C89B3C]">
+            <span className="eyebrow">
               Our Guiding Principles
             </span>
-            <h2 className="font-heading mt-2 text-3xl sm:text-4xl font-bold text-[#17120D] dark:text-[#FBF7F0]">
+            <h2 className="font-heading mt-2 text-2xl sm:text-3xl font-bold text-[#17120D] dark:text-[#FBF7F0]">
               What Guides Safari Dune Tours
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="p-8 rounded-2xl bg-white dark:bg-[#241A12] border border-[#C89B3C]/20 shadow-sm hover:border-[#C89B3C]/50 transition-all duration-300">
-              <div className="w-12 h-12 rounded-xl bg-[#C89B3C]/15 text-[#C89B3C] flex items-center justify-center mb-5">
+              <div className="w-12 h-12 rounded-xl bg-[#C89B3C]/15 text-[#8C6214] dark:text-[#E8C48A] flex items-center justify-center mb-5">
                 <ShieldCheck className="w-6 h-6" />
               </div>
               <h3 className="font-heading text-xl font-bold text-[#17120D] dark:text-[#FBF7F0] mb-2">Safety Above All</h3>
-              <p className="text-sm text-[#6B6258] dark:text-[#B8ADA2] leading-relaxed">
+              <p className="text-sm text-[#5E554C] dark:text-[#B8ADA2] leading-relaxed">
                 We enforce rigorous vehicle maintenance, install certified internal roll-cages, and employ licensed safari drivers who undergo regular desert driving certifications.
               </p>
             </div>
 
             <div className="p-8 rounded-2xl bg-white dark:bg-[#241A12] border border-[#C89B3C]/20 shadow-sm hover:border-[#C89B3C]/50 transition-all duration-300">
-              <div className="w-12 h-12 rounded-xl bg-[#C89B3C]/15 text-[#C89B3C] flex items-center justify-center mb-5">
+              <div className="w-12 h-12 rounded-xl bg-[#C89B3C]/15 text-[#8C6214] dark:text-[#E8C48A] flex items-center justify-center mb-5">
                 <HeartHandshake className="w-6 h-6" />
               </div>
               <h3 className="font-heading text-xl font-bold text-[#17120D] dark:text-[#FBF7F0] mb-2">Warm Arabian Hospitality</h3>
-              <p className="text-sm text-[#6B6258] dark:text-[#B8ADA2] leading-relaxed">
+              <p className="text-sm text-[#5E554C] dark:text-[#B8ADA2] leading-relaxed">
                 From the moment our marshal arrives at your hotel lobby to the steaming cups of traditional Gahwa and fresh dates served at our camp, you are treated as an honored guest.
               </p>
             </div>
 
             <div className="p-8 rounded-2xl bg-white dark:bg-[#241A12] border border-[#C89B3C]/20 shadow-sm hover:border-[#C89B3C]/50 transition-all duration-300">
-              <div className="w-12 h-12 rounded-xl bg-[#C89B3C]/15 text-[#C89B3C] flex items-center justify-center mb-5">
+              <div className="w-12 h-12 rounded-xl bg-[#C89B3C]/15 text-[#8C6214] dark:text-[#E8C48A] flex items-center justify-center mb-5">
                 <Award className="w-6 h-6" />
               </div>
               <h3 className="font-heading text-xl font-bold text-[#17120D] dark:text-[#FBF7F0] mb-2">Quality Experiences</h3>
-              <p className="text-sm text-[#6B6258] dark:text-[#B8ADA2] leading-relaxed">
+              <p className="text-sm text-[#5E554C] dark:text-[#B8ADA2] leading-relaxed">
                 We believe in delivering genuine value. That means freshly prepared buffet meals, clean camp washroom facilities, and unhurried sunset photo stops.
               </p>
             </div>

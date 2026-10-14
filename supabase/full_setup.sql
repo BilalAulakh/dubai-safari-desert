@@ -142,8 +142,8 @@ CREATE TABLE IF NOT EXISTS public.gallery (
 CREATE TABLE IF NOT EXISTS public.site_settings (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   business_name TEXT NOT NULL DEFAULT 'Safari Dune',
-  phone TEXT NOT NULL DEFAULT '+971 50 123 4567',
-  whatsapp TEXT NOT NULL DEFAULT '+971 50 123 4567',
+  phone TEXT NOT NULL DEFAULT '00971569137131',
+  whatsapp TEXT NOT NULL DEFAULT '00971569137131',
   email TEXT NOT NULL DEFAULT '',
   address TEXT NOT NULL DEFAULT 'Downtown Dubai, United Arab Emirates',
   support_hours TEXT DEFAULT 'Open Daily: 08:00 AM – 11:00 PM (GST)',

@@ -34,8 +34,14 @@ export function generateBookingReference(): string {
   return `DSD-${year}-${randomChars}`;
 }
 
+/** Converts a display number like "00971569137131" to international "+971569137131". */
+export function toInternationalPhone(phone: string): string {
+  const digits = phone.replace(/[^0-9]/g, "").replace(/^00/, "");
+  return `+${digits}`;
+}
+
 export function createWhatsAppUrl(phone: string, text: string): string {
-  const cleanPhone = phone.replace(/[^0-9]/g, "");
+  const cleanPhone = toInternationalPhone(phone).slice(1);
   const encodedText = encodeURIComponent(text);
   return `https://wa.me/${cleanPhone}?text=${encodedText}`;
 }

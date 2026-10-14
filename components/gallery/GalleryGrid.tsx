@@ -61,7 +61,7 @@ export default function GalleryGrid({ items, categories: allCategories }: Galler
             className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 ${
               selectedCategory === cat.id
                 ? "bg-[#C89B3C] text-[#17120D] shadow-md font-bold"
-                : "bg-white dark:bg-[#241A12] text-[#6B6258] dark:text-[#B8ADA2] hover:text-[#C89B3C] border border-[#C89B3C]/25"
+                : "bg-white dark:bg-[#241A12] text-[#5E554C] dark:text-[#B8ADA2] hover:text-[#C89B3C] border border-[#C89B3C]/25"
             }`}
           >
             {cat.label}

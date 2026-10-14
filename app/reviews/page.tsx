@@ -38,7 +38,7 @@ export default async function ReviewsPage() {
             <Star className="w-3.5 h-3.5 fill-[#C89B3C] text-[#C89B3C]" />
             <span>Traveler Experiences</span>
           </div>
-          <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-[1.08]">
+          <h1 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-[1.08]">
             Safari Dune <span className="gold-text-gradient">Guest Reviews</span>
           </h1>
           <p className="mt-4 text-base sm:text-lg text-[#B8ADA2] max-w-2xl mx-auto leading-relaxed">
@@ -48,7 +48,7 @@ export default async function ReviewsPage() {
           <div className="mt-8 flex justify-center">
             <Link
               href="/review"
-              className="btn-gold px-7 py-3 text-xs sm:text-sm font-bold uppercase tracking-wider shadow-lg inline-flex items-center gap-2"
+              className="btn-gold"
             >
               <Star className="w-4 h-4 fill-[#17120D]" />
               <span>Write a Review</span>
@@ -104,9 +104,9 @@ export default async function ReviewsPage() {
                 <div className="pt-4 border-t border-[#C89B3C]/15 dark:border-white/10 flex items-center justify-between text-xs">
                   <div>
                     <h4 className="font-heading font-bold text-[#17120D] dark:text-[#FBF7F0]">{rev.customer_name}</h4>
-                    <p className="text-[#6B6258] dark:text-[#B8ADA2]">{rev.country}</p>
+                    <p className="text-[#5E554C] dark:text-[#B8ADA2]">{rev.country}</p>
                   </div>
-                  <span className="text-[#6B6258] dark:text-[#B8ADA2]">{formatDate(rev.created_at)}</span>
+                  <span className="text-[#5E554C] dark:text-[#B8ADA2]">{formatDate(rev.created_at)}</span>
                 </div>
               </div>
             ))}
@@ -121,12 +121,12 @@ export default async function ReviewsPage() {
             <h3 className="font-heading text-2xl font-bold text-[#17120D] dark:text-[#FBF7F0]">
               Be The First Guest Reviewer!
             </h3>
-            <p className="text-sm text-[#6B6258] dark:text-[#B8ADA2] max-w-md mx-auto">
+            <p className="text-sm text-[#5E554C] dark:text-[#B8ADA2] max-w-md mx-auto">
               Share your genuine feedback on our Dubai desert safari experience and help future travelers plan their trip.
             </p>
             <Link
               href="/review"
-              className="btn-gold inline-flex items-center gap-2 px-7 py-3 text-xs uppercase font-bold tracking-wider"
+              className="btn-gold"
             >
               <span>Write Your Review Now</span>
             </Link>

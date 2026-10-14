@@ -56,7 +56,7 @@ export default function HomeGallery({ items, categories }: HomeGalleryProps) {
     categories.find((cat) => cat.slug === category)?.label || "Desert Safari";
 
   return (
-    <section className="relative py-20 sm:py-28 bg-[#F2E8D5] dark:bg-[#1D150E] transition-colors duration-200 overflow-hidden border-t border-[#C89B3C]/15">
+    <section className="relative section bg-[#F5EEE3] dark:bg-[#1D150E] transition-colors duration-200 overflow-hidden">
       {/* Ambient Luxury Desert Glow */}
       <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#C89B3C]/10 blur-[140px] rounded-full" />
 
@@ -65,10 +65,10 @@ export default function HomeGallery({ items, categories }: HomeGalleryProps) {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14">
           <div>
             <div className="eyebrow">Visual Desert Portfolio</div>
-            <h2 className="font-heading text-3xl sm:text-4xl lg:text-[44px] font-bold tracking-tight text-[#17120D] dark:text-[#FBF7F0] leading-[1.1]">
+            <h2 className="section-title">
               Glimpses of the <span className="gold-text-gradient">Arabian Dunes</span>
             </h2>
-            <p className="mt-2 text-sm sm:text-base text-[#6B6258] dark:text-[#B8ADA2] max-w-2xl leading-relaxed">
+            <p className="section-lead">
               Real captured moments from thrilling red dune bashings to romantic starlit Bedouin nights.
             </p>
           </div>

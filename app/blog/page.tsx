@@ -44,7 +44,7 @@ export default async function BlogPage() {
             <BookOpen className="w-3.5 h-3.5 text-[#C89B3C]" />
             <span>Guides & Travel Advice</span>
           </div>
-          <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-[1.08]">
+          <h1 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-[1.08]">
             Dubai Desert Safari <span className="gold-text-gradient">Travel Blog</span>
           </h1>
           <p className="mt-4 text-base sm:text-lg text-[#B8ADA2] max-w-2xl mx-auto leading-relaxed">
@@ -56,7 +56,7 @@ export default async function BlogPage() {
       {/* Blog Posts Grid */}
       <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {posts.length === 0 ? (
-          <div className="py-20 text-center text-[#6B6258] dark:text-[#B8ADA2]">
+          <div className="py-20 text-center text-[#5E554C] dark:text-[#B8ADA2]">
             <p className="text-lg font-semibold">No published blog articles yet.</p>
             <p className="text-sm mt-1">Check back soon for upcoming desert safari travel advice!</p>
           </div>
@@ -86,7 +86,7 @@ export default async function BlogPage() {
                   </div>
 
                   <div className="p-6 sm:p-8">
-                    <div className="flex items-center gap-4 text-xs text-[#6B6258] dark:text-[#B8ADA2] mb-3">
+                    <div className="flex items-center gap-4 text-xs text-[#5E554C] dark:text-[#B8ADA2] mb-3">
                       <span className="flex items-center gap-1">
                         <Calendar className="w-3.5 h-3.5 text-[#C89B3C]" />
                         {formatDate(post.published_at || post.published_date || "")}
@@ -101,19 +101,19 @@ export default async function BlogPage() {
                       <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                     </h2>
 
-                    <p className="text-sm text-[#6B6258] dark:text-[#B8ADA2] leading-relaxed mb-4 line-clamp-3">
+                    <p className="text-sm text-[#5E554C] dark:text-[#B8ADA2] leading-relaxed mb-4 line-clamp-3">
                       {post.excerpt}
                     </p>
                   </div>
                 </div>
 
                 <div className="px-6 sm:px-8 pb-6 sm:pb-8 pt-2 border-t border-[#C89B3C]/15 dark:border-white/10 flex items-center justify-between">
-                  <span className="text-xs text-[#6B6258] dark:text-[#B8ADA2] font-medium">
+                  <span className="text-xs text-[#5E554C] dark:text-[#B8ADA2] font-medium">
                     By {post.author}
                   </span>
                   <Link
                     href={`/blog/${post.slug}`}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#C89B3C] hover:text-[#E8C48A]"
+                    className="link-arrow text-[13px]"
                   >
                     <span>Read Article</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />

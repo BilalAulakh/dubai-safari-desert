@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { Clock, CheckCircle2, ArrowRight, MessageCircle } from "lucide-react";
+import { Clock, Check } from "lucide-react";
 import { Package } from "@/types";
-import { formatPrice, optimizeImageUrl, createWhatsAppUrl } from "@/lib/utils";
+import { optimizeImageUrl } from "@/lib/utils";
 import { SITE_CONFIG } from "@/lib/config/site";
 
 // Only the fields the card renders, so pages can avoid shipping full package records to the client
@@ -36,167 +36,92 @@ export function toPackageCardData(pkg: Package): PackageCardData {
     featured: pkg.featured,
     active: pkg.active,
     main_image: pkg.main_image,
-    inclusions: pkg.inclusions.slice(0, 4),
+    inclusions: pkg.inclusions.slice(0, 3),
   };
 }
 
 interface PackageCardProps {
   pkg: PackageCardData;
+  /** Set on the first visible cards only, so they don't wait for lazy loading */
+  priority?: boolean;
 }
 
-export default function PackageCard({ pkg }: PackageCardProps) {
-  // Pre-filled WhatsApp inquiry URL with flexible negotiation prompt
-  const whatsappUrl = createWhatsAppUrl(
-    SITE_CONFIG.contact.whatsapp,
-    `Hello Safari Dune Tours! I am interested in your *${pkg.name}* (Starting at *AED ${pkg.price}*). We are a group and would like to ask about your best flexible / group discount rate and today's availability. Thank you!`
-  );
-
-  const discountPercent =
-    pkg.original_price && pkg.original_price > pkg.price
-      ? Math.round(((pkg.original_price - pkg.price) / pkg.original_price) * 100)
-      : null;
+export default function PackageCard({ pkg, priority = false }: PackageCardProps) {
+  // Discounts are reserved for a few promoted packages; everything else shows one clean price
+  const isPromoted = SITE_CONFIG.promotions.discountBadgeSlugs.includes(pkg.slug);
+  const hasDiscount = isPromoted && !!pkg.original_price && pkg.original_price > pkg.price;
+  const discountPercent = hasDiscount
+    ? Math.round(((pkg.original_price! - pkg.price) / pkg.original_price!) * 100)
+    : null;
 
   return (
-    <div className="group flex flex-col rounded-2xl bg-white dark:bg-[#241A12] border border-[#C89B3C]/20 dark:border-[#C89B3C]/25 shadow-[0_1px_3px_rgba(23,18,13,0.06)] hover:shadow-[0_20px_40px_-12px_rgba(140,98,20,0.28)] hover:border-[#C89B3C]/50 transition-all duration-300 overflow-hidden hover:-translate-y-1.5 h-full">
-      {/* Image Container with Badges */}
-      <div className="relative h-64 w-full overflow-hidden bg-[#17120D]">
-        <Link href={`/packages/${pkg.slug}`} className="block w-full h-full">
-          <img
-            src={optimizeImageUrl(pkg.main_image, 600)}
-            alt={pkg.name}
-            width={600}
-            height={400}
-            decoding="async"
-            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#17120D]/95 via-[#17120D]/35 to-transparent group-hover:via-[#17120D]/20 transition-colors duration-300" />
-        </Link>
+    <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-surface ring-1 ring-line transition-[box-shadow,transform] duration-500 ease-[var(--ease-out-soft)] hover:shadow-lift motion-safe:hover:-translate-y-1">
+      {/* Image: fixed 4:3 box so nothing shifts while it loads */}
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-dune-900">
+        <img
+          src={optimizeImageUrl(pkg.main_image, 800)}
+          alt={pkg.name}
+          width={800}
+          height={600}
+          loading={priority ? "eager" : "lazy"}
+          decoding="async"
+          className="h-full w-full object-cover transition-transform duration-[1200ms] ease-[var(--ease-out-soft)] motion-safe:group-hover:scale-[1.03]"
+        />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-dune-950/80 to-transparent" />
 
-        {/* Badges Stack (Top Left) */}
-        <div className="absolute top-3.5 left-3.5 flex flex-wrap gap-1.5 z-10 max-w-[75%]">
-          {pkg.badges && pkg.badges.length > 0 ? (
-            pkg.badges.map((badge, idx) => (
-              <span
-                key={idx}
-                className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-sm backdrop-blur-md ${
-                  idx === 0
-                    ? "bg-[#C89B3C] text-[#17120D] border border-[#C89B3C]"
-                    : "bg-[#17120D]/90 text-[#E8C48A] border border-[#C89B3C]/40"
-                }`}
-              >
-                {badge}
-              </span>
-            ))
-          ) : pkg.featured ? (
-            <span className="px-2.5 py-1 rounded-full bg-[#C89B3C] text-[#17120D] text-[10px] font-bold uppercase tracking-wider shadow-sm">
-              Signature Tour
-            </span>
-          ) : null}
-        </div>
-
-        {/* Discount Savings Tag (Top Right) */}
-        {discountPercent && discountPercent > 0 && (
-          <div className="absolute top-3.5 right-3.5 z-10">
-            <span className="px-2.5 py-1 rounded-full bg-[#17120D]/90 text-[#E8C48A] border border-[#C89B3C]/50 text-[10px] font-bold tracking-wide shadow-sm uppercase backdrop-blur-md">
-              {discountPercent}% OFF
-            </span>
-          </div>
+        {discountPercent && (
+          <span className="absolute left-4 top-4 rounded-full bg-sand-50 px-3 py-1 text-label font-semibold uppercase text-dune-900">
+            Save {discountPercent}%
+          </span>
         )}
 
-        {/* Duration Chip (Bottom Left) */}
-        <div className="absolute bottom-3.5 left-3.5 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#17120D]/85 backdrop-blur-md text-white text-xs font-medium border border-white/15">
-          <Clock className="w-3.5 h-3.5 text-[#E8C48A]" />
-          <span>{pkg.duration}</span>
-        </div>
-
-        {/* Pricing Display (Bottom Right) with "From" prefix */}
-        <div className="absolute bottom-3 right-3.5 text-right z-10">
-          {pkg.original_price && pkg.original_price > pkg.price && (
-            <span className="text-[11px] text-gray-300 line-through font-semibold block mr-0.5">
-              AED {pkg.original_price}
-            </span>
-          )}
-          <div className="flex items-baseline justify-end gap-1.5">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#E8C48A] drop-shadow-sm">
-              From
-            </span>
-            <span className="text-xl sm:text-2xl font-extrabold text-[#E8C48A] tracking-tight tabular-nums drop-shadow-sm">
-              AED {pkg.price}
-            </span>
-          </div>
-          <span className="text-[10px] text-white/85 font-medium block">
-            {pkg.per_unit || "per person"}
-          </span>
-        </div>
+        <span className="absolute bottom-4 left-4 inline-flex items-center gap-1.5 text-small font-medium text-sand-50">
+          <Clock className="h-4 w-4 text-gold-300" aria-hidden="true" />
+          {pkg.duration}
+        </span>
       </div>
 
-      {/* Card Body */}
-      <div className="flex-1 p-5 sm:p-6 flex flex-col justify-between">
-        <div>
-          <h3 className="font-heading text-lg sm:text-[20px] font-bold text-[#17120D] dark:text-[#FBF7F0] group-hover:text-[#A67C2A] dark:group-hover:text-[#E8C48A] transition-colors mb-2 leading-snug">
-            <Link href={`/packages/${pkg.slug}`}>{pkg.name}</Link>
-          </h3>
-          <p className="text-xs sm:text-sm text-[#6B6258] dark:text-[#B8ADA2] line-clamp-2 leading-relaxed mb-4">
-            {pkg.short_description}
-          </p>
-
-          {/* Highlights List */}
-          <div className="space-y-1.5 mb-5">
-            {pkg.inclusions.slice(0, 4).map((inc, index) => (
-              <div
-                key={index}
-                className="flex items-start gap-2 text-xs text-[#17120D]/90 dark:text-[#FBF7F0]/90 font-medium"
-              >
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
-                <span className="truncate">{inc}</span>
-              </div>
-            ))}
-          </div>
-
-          {/* Flexible Pricing Hint Banner */}
-          <div className="flex items-center justify-between gap-1 py-1.5 px-2.5 rounded-lg bg-[#C89B3C]/10 dark:bg-[#C89B3C]/15 border border-[#C89B3C]/25 text-[#8C6214] dark:text-[#E8C48A] text-[11px] font-semibold mb-3">
-            <div className="flex items-center gap-1.5">
-              <span>Flexible Group Rates</span>
-            </div>
-            <span className="text-[10px] uppercase font-bold text-emerald-700 dark:text-emerald-400">Save up to 15%</span>
-          </div>
-        </div>
-
-        {/* Card Actions: WhatsApp Quick Inquiry & Online Booking */}
-        <div className="pt-4 border-t border-[#C89B3C]/15 dark:border-white/10 flex flex-col gap-2.5 mt-auto">
-          <div className="grid grid-cols-2 gap-2.5 w-full">
-            {/* WhatsApp Direct Action */}
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="h-10 sm:h-11 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-semibold transition-all shadow-sm shadow-emerald-600/25 flex items-center justify-center gap-1 text-center whitespace-nowrap active:scale-98"
-              title="Chat on WhatsApp"
-            >
-              <MessageCircle className="w-3.5 h-3.5 fill-white/20 shrink-0" />
-              <span>WhatsApp</span>
-            </a>
-
-            {/* Direct Booking */}
-            <Link
-              href={`/booking?package=${encodeURIComponent(pkg.id)}`}
-              className="h-10 sm:h-11 px-3 rounded-xl bg-[#C89B3C] hover:bg-[#D6A84F] text-[#17120D] text-xs sm:text-sm font-bold shadow-sm flex items-center justify-center text-center whitespace-nowrap active:scale-98 transition-all duration-200"
-            >
-              Book Now
-            </Link>
-          </div>
-
-          {/* Subtle Details link */}
+      <div className="flex flex-1 flex-col p-6 sm:p-7">
+        <h3 className="font-display text-h3 font-semibold text-ink">
+          {/* Stretched link: the whole card opens the package page */}
           <Link
             href={`/packages/${pkg.slug}`}
-            className="text-center text-xs font-semibold text-[#8C6214] dark:text-[#E8C48A] hover:underline underline-offset-4 flex items-center justify-center gap-1"
+            className="after:absolute after:inset-0 after:content-[''] focus-visible:outline-none focus-visible:after:rounded-2xl focus-visible:after:ring-2 focus-visible:after:ring-gold-500"
           >
-            <span>View Full Details & Itinerary</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            {pkg.name}
+          </Link>
+        </h3>
+
+        {pkg.inclusions.length > 0 && (
+          <ul className="mb-6 mt-4 space-y-2">
+            {pkg.inclusions.slice(0, 3).map((inc) => (
+              <li key={inc} className="flex items-start gap-2.5 text-small text-muted">
+                <Check className="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
+                <span>{inc}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        <div className="mt-auto flex items-end justify-between gap-4 border-t border-line pt-5">
+          <div className="min-w-0">
+            <p className="text-label uppercase text-muted">
+              From
+              {hasDiscount && (
+                <span className="ml-2 normal-case tracking-normal line-through">AED {pkg.original_price}</span>
+              )}
+            </p>
+            <p className="font-display text-h3 font-semibold lining-nums tabular-nums text-ink">AED {pkg.price}</p>
+            <p className="truncate text-small text-muted">{pkg.per_unit || "per person"}</p>
+          </div>
+          <Link
+            href={`/booking?package=${encodeURIComponent(pkg.id)}`}
+            className="btn-gold relative z-10 shrink-0"
+          >
+            Book Now
           </Link>
         </div>
       </div>
-    </div>
+    </article>
   );
 }

@@ -16,6 +16,7 @@ interface BookingFormProps {
   pickupLocations: PickupLocation[];
   defaultPackageId?: string;
   defaultAdults?: number;
+  defaultDate?: string;
 }
 
 export default function BookingForm({
@@ -23,6 +24,7 @@ export default function BookingForm({
   pickupLocations,
   defaultPackageId,
   defaultAdults,
+  defaultDate,
 }: BookingFormProps) {
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -44,7 +46,7 @@ export default function BookingForm({
     resolver: zodResolver(bookingSchema),
     defaultValues: {
       package_id: defaultPackageId || packages[0]?.id || "",
-      booking_date: minDateString,
+      booking_date: defaultDate && defaultDate >= minDateString ? defaultDate : minDateString,
       adults: defaultAdults && defaultAdults > 0 ? defaultAdults : 2,
       children: 0,
       pickup_location: pickupLocations[0]?.name || "Downtown Dubai (Burj Khalifa area)",
@@ -122,7 +124,7 @@ export default function BookingForm({
         </h3>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-[#6B6258] dark:text-[#B8ADA2] mb-2">
+          <label className="block text-xs font-semibold uppercase tracking-wider text-[#5E554C] dark:text-[#B8ADA2] mb-2">
             Selected Safari Experience *
           </label>
           <select
@@ -152,7 +154,7 @@ export default function BookingForm({
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-[#6B6258] dark:text-[#B8ADA2] mb-2">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-[#5E554C] dark:text-[#B8ADA2] mb-2">
               Safari Date *
             </label>
             <input
@@ -167,7 +169,7 @@ export default function BookingForm({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-[#6B6258] dark:text-[#B8ADA2] mb-2">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-[#5E554C] dark:text-[#B8ADA2] mb-2">
               Adults (Age 10+) *
             </label>
             <input
@@ -183,7 +185,7 @@ export default function BookingForm({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-[#6B6258] dark:text-[#B8ADA2] mb-2">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-[#5E554C] dark:text-[#B8ADA2] mb-2">
               Children (Age 3-9)
             </label>
             <input
@@ -211,7 +213,7 @@ export default function BookingForm({
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-[#6B6258] dark:text-[#B8ADA2] mb-2">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-[#5E554C] dark:text-[#B8ADA2] mb-2">
               Full Name *
             </label>
             <input
@@ -226,7 +228,7 @@ export default function BookingForm({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-[#6B6258] dark:text-[#B8ADA2] mb-2">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-[#5E554C] dark:text-[#B8ADA2] mb-2">
               WhatsApp / Phone Number *
             </label>
             <input
@@ -241,7 +243,7 @@ export default function BookingForm({
           </div>
 
           <div className="sm:col-span-2">
-            <label className="block text-xs font-semibold uppercase tracking-wider text-[#6B6258] dark:text-[#B8ADA2] mb-2">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-[#5E554C] dark:text-[#B8ADA2] mb-2">
               Email Address (Optional)
             </label>
             <input
@@ -268,7 +270,7 @@ export default function BookingForm({
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-[#6B6258] dark:text-[#B8ADA2] mb-2">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-[#5E554C] dark:text-[#B8ADA2] mb-2">
               Pickup Area in Dubai *
             </label>
             <select
@@ -287,7 +289,7 @@ export default function BookingForm({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-[#6B6258] dark:text-[#B8ADA2] mb-2">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-[#5E554C] dark:text-[#B8ADA2] mb-2">
               Hotel Name or Apartment Building
             </label>
             <input
@@ -299,7 +301,7 @@ export default function BookingForm({
           </div>
 
           <div className="sm:col-span-2">
-            <label className="block text-xs font-semibold uppercase tracking-wider text-[#6B6258] dark:text-[#B8ADA2] mb-2">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-[#5E554C] dark:text-[#B8ADA2] mb-2">
               Special Requests / Dietary Preferences (Optional)
             </label>
             <textarea
@@ -313,9 +315,9 @@ export default function BookingForm({
       </div>
 
       {/* Summary Box & Submit Button */}
-      <div className="p-7 rounded-2xl bg-[#F2E8D5] dark:bg-[#1D150E] border border-[#C89B3C]/25 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div className="p-7 rounded-2xl bg-[#F5EEE3] dark:bg-[#1D150E] border border-[#C89B3C]/25 flex flex-col sm:flex-row items-center justify-between gap-6">
         <div>
-          <span className="text-xs font-semibold uppercase tracking-wider text-[#6B6258] dark:text-[#B8ADA2]">
+          <span className="text-xs font-semibold uppercase tracking-wider text-[#5E554C] dark:text-[#B8ADA2]">
             Estimated Safari Total (Flexible Group Pricing)
           </span>
           <div className="flex items-baseline gap-2.5 mt-1">
@@ -324,10 +326,10 @@ export default function BookingForm({
                 {formatPrice(standardTotalAED)}
               </span>
             )}
-            <span className="font-heading text-3xl sm:text-4xl font-bold text-[#17120D] dark:text-[#FBF7F0]">
+            <span className="font-heading text-2xl sm:text-3xl font-bold text-[#17120D] dark:text-[#FBF7F0]">
               {formatPrice(estimatedTotalAED)}
             </span>
-            <span className="text-xs text-[#6B6258] dark:text-[#B8ADA2]">
+            <span className="text-xs text-[#5E554C] dark:text-[#B8ADA2]">
               ({adultsCount} Adult{adultsCount > 1 ? "s" : ""}{childrenCount > 0 ? `, ${childrenCount} Child${childrenCount > 1 ? "ren" : ""}` : ""})
             </span>
           </div>
@@ -347,7 +349,7 @@ export default function BookingForm({
             </p>
           )}
 
-          <p className="text-xs text-[#6B6258] dark:text-[#B8ADA2] mt-2 flex items-center gap-1.5">
+          <p className="text-xs text-[#5E554C] dark:text-[#B8ADA2] mt-2 flex items-center gap-1.5">
             <ShieldCheck className="w-3.5 h-3.5 text-[#C89B3C]" />
             <span>No advance card charge. Pay after confirmation with our team.</span>
           </p>
@@ -356,7 +358,7 @@ export default function BookingForm({
         <button
           type="submit"
           disabled={isSubmitting}
-          className="btn-gold w-full sm:w-auto px-9 py-4 text-sm font-bold uppercase tracking-wider shadow-xl flex items-center justify-center gap-2.5 disabled:opacity-50 disabled:cursor-not-allowed shrink-0"
+          className="btn-gold w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed shrink-0"
           id="submit-booking-request-btn"
         >
           {isSubmitting ? (

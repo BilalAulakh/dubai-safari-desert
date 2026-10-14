@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Phone, Mail, MapPin, Clock, MessageCircle, ShieldCheck } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config/site";
-import { createWhatsAppUrl } from "@/lib/utils";
+import { createWhatsAppUrl, toInternationalPhone } from "@/lib/utils";
 import AdminLoginLink from "@/components/layout/AdminLoginLink";
 
 export default function Footer() {
@@ -150,7 +150,7 @@ export default function Footer() {
               <li className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-[#C89B3C] shrink-0" />
                 <a
-                  href={`tel:${SITE_CONFIG.contact.phone.replace(/[^0-9+]/g, "")}`}
+                  href={`tel:${toInternationalPhone(SITE_CONFIG.contact.phone)}`}
                   className="hover:text-white transition-colors"
                 >
                   {SITE_CONFIG.contact.phone}

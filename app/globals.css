@@ -2,12 +2,42 @@
 
 @variant dark (&:where(.dark, .dark *));
 
+/* ==========================================================================
+   DESIGN TOKENS
+   Use these in components (bg-surface, text-muted, text-h2, font-display...)
+   instead of raw hex values or one-off font sizes.
+   ========================================================================== */
 @theme {
+  /* Fonts: display serif for headings and prices, neutral sans for everything else */
   --font-sans: var(--font-jakarta), "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-cormorant), "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --font-heading: var(--font-sans);
   --font-body: var(--font-sans);
-  --font-serif: var(--font-sans);
+  --font-serif: var(--font-display);
 
+  /* Dunes: warm near-blacks and deep browns (dark surfaces) */
+  --color-dune-950: #0E0A07;
+  --color-dune-900: #17120D;
+  --color-dune-850: #1D150E;
+  --color-dune-800: #241A12;
+  --color-dune-700: #33261A;
+  --color-dune-600: #4A3826;
+
+  /* Sand: light surfaces and secondary text on dark */
+  --color-sand-50: #FBF7F0;
+  --color-sand-100: #F5EEE3;
+  --color-sand-200: #EADFCB;
+  --color-sand-300: #D9C7A7;
+  --color-sand-400: #B8ADA2;
+  --color-sand-600: #5E554C;
+
+  /* Gold: the single accent. CTAs, active states and small details only */
+  --color-gold-300: #E8C48A;
+  --color-gold-400: #D6A84F;
+  --color-gold-500: #C89B3C;
+  --color-gold-700: #8C6214;
+
+  /* Legacy names still used by sections not yet redesigned */
   --color-primary-dark: #17120D;
   --color-dark-brown: #241A12;
   --color-desert-sand: #E8C48A;
@@ -16,18 +46,66 @@
   --color-cream: #FBF7F0;
   --color-soft-beige: #F2E8D5;
   --color-muted-text: #6B6258;
+
+  /* Type scale. Display/H1/H2 are fluid; body never goes below 16px.
+     display  36 -> 60px   hero headline
+     h1       36 -> 56px   page titles
+     h2       30 -> 44px   section titles
+     h3       24px         card and block titles
+     h4       20px         sub-blocks
+     body-lg  18px         lead paragraphs
+     body     16px         default copy
+     small    14px         meta, captions
+     label    13px         uppercase labels and badges only */
+  --text-display: clamp(2.25rem, 1.5rem + 3vw, 3.75rem);
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.015em;
+  --text-h1: clamp(2.25rem, 1.6rem + 2.6vw, 3.5rem);
+  --text-h1--line-height: 1.08;
+  --text-h1--letter-spacing: -0.015em;
+  --text-h2: clamp(1.875rem, 1.45rem + 1.7vw, 2.75rem);
+  --text-h2--line-height: 1.12;
+  --text-h2--letter-spacing: -0.01em;
+  --text-h3: 1.5rem;
+  --text-h3--line-height: 1.25;
+  --text-h4: 1.25rem;
+  --text-h4--line-height: 1.35;
+  --text-body-lg: 1.125rem;
+  --text-body-lg--line-height: 1.6;
+  --text-body: 1rem;
+  --text-body--line-height: 1.6;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.5;
+  --text-label: 0.8125rem;
+  --text-label--line-height: 1.4;
+  --text-label--letter-spacing: 0.08em;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow-lift: 0 24px 48px -24px rgba(14, 10, 7, 0.45);
+}
+
+/* Semantic colors that follow the light/dark theme */
+@theme inline {
+  --color-page: var(--bg-page);
+  --color-surface: var(--bg-surface);
+  --color-surface-alt: var(--bg-surface-alt);
+  --color-ink: var(--text-main);
+  --color-muted: var(--text-muted);
+  --color-line: var(--border-subtle);
+  --color-accent: var(--accent-text);
 }
 
 @layer base {
   :root {
     --bg-page: #FBF7F0;
     --bg-surface: #FFFFFF;
-    --bg-surface-alt: #F2E8D5;
+    --bg-surface-alt: #F5EEE3;
     --text-main: #17120D;
-    --text-muted: #6B6258;
-    --border-subtle: rgba(200, 155, 60, 0.2);
+    --text-muted: #5E554C;
+    --border-subtle: rgba(140, 98, 20, 0.14);
     --gold-accent: #C89B3C;
     --sand-accent: #E8C48A;
+    --accent-text: #8C6214; /* gold that passes AA on cream */
     color-scheme: light;
   }
 
@@ -36,10 +114,11 @@
     --bg-surface: #241A12;
     --bg-surface-alt: #1D150E;
     --text-main: #FBF7F0;
-    --text-muted: #B8ADA2;
-    --border-subtle: rgba(200, 155, 60, 0.22);
+    --text-muted: #BDB2A6;
+    --border-subtle: rgba(232, 196, 138, 0.14);
     --gold-accent: #D6A84F;
     --sand-accent: #E8C48A;
+    --accent-text: #E8C48A;
     color-scheme: dark;
   }
 
@@ -51,18 +130,12 @@
     background-color: var(--bg-page);
     color: var(--text-main);
     font-family: var(--font-body);
-    font-size: 15px;
-    line-height: 1.65;
+    font-size: 16px;
+    line-height: 1.6;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     transition: background-color 0.25s ease, color 0.25s ease;
-  }
-
-  @media (min-width: 640px) {
-    body {
-      font-size: 16px;
-    }
   }
 
   h1, h2, h3, h4, h5, h6, .font-heading {
@@ -79,9 +152,15 @@
     text-wrap: pretty;
   }
 
+  /* Cormorant defaults to old-style figures ("1" reads as "ı"); prices and titles need lining figures */
+  .font-display {
+    font-variant-numeric: lining-nums;
+  }
+
   :focus-visible {
-    outline: 2px solid #C89B3C;
-    outline-offset: 2px;
+    outline: 2px solid var(--color-gold-500);
+    outline-offset: 3px;
+    border-radius: 4px;
   }
 
   ::selection {
@@ -103,111 +182,247 @@
   -webkit-text-fill-color: transparent;
 }
 
-/* Section eyebrow label shown above section headings */
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.625rem;
-  margin-bottom: 0.875rem;
-  color: #8C6214;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-.eyebrow::before {
-  content: "";
-  width: 1.75rem;
-  height: 2px;
-  border-radius: 2px;
-  background: currentColor;
-  opacity: 0.7;
-}
-.text-center .eyebrow::after {
-  content: "";
-  width: 1.75rem;
-  height: 2px;
-  border-radius: 2px;
-  background: currentColor;
-  opacity: 0.7;
-}
-.dark .eyebrow {
-  color: #E8C48A;
-}
+@layer components {
+  /* Layout primitives: one container width and one vertical rhythm for every page */
+  .container-page {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .container-page {
+      padding-inline: 2rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .container-page {
+      padding-inline: 3rem;
+    }
+  }
 
-/* Button utility classes */
-.btn-gold {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #C89B3C;
-  color: #17120D;
-  font-weight: 700;
-  font-size: 0.875rem; /* 14px */
-  letter-spacing: 0.01em;
-  border-radius: 0.75rem;
-  padding: 0.625rem 1.25rem;
-  transition: transform 200ms ease, filter 200ms ease, box-shadow 200ms ease, background-color 200ms ease;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.35) inset, 0 4px 14px rgba(200, 155, 60, 0.25);
-  text-decoration: none;
-}
-.btn-gold:hover {
-  background-color: #D6A84F;
-  filter: brightness(1.05);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(200, 155, 60, 0.38);
-}
-.btn-gold:active {
-  transform: translateY(0);
-}
+  .section-y {
+    padding-block: 5rem;
+  }
+  @media (min-width: 768px) {
+    .section-y {
+      padding-block: 7rem;
+    }
+  }
+  @media (min-width: 1280px) {
+    .section-y {
+      padding-block: 8rem;
+    }
+  }
 
-.btn-luxury-outline {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(255, 255, 255, 0.05);
-  color: #FFFFFF;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  font-weight: 600;
-  font-size: 0.875rem;
-  border-radius: 0.75rem;
-  padding: 0.625rem 1.25rem;
-  backdrop-filter: blur(8px);
-  transition: transform 200ms ease, background-color 200ms ease, border-color 200ms ease;
-  text-decoration: none;
-}
-.btn-luxury-outline:hover {
-  background-color: rgba(255, 255, 255, 0.12);
-  border-color: #C89B3C;
-  color: #FBF7F0;
-  transform: translateY(-1px);
-}
-.btn-luxury-outline:active {
-  transform: translateY(0);
-}
+  /* Small uppercase label above section headings */
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: var(--text-label);
+    line-height: var(--text-label--line-height);
+    letter-spacing: 0.16em;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--accent-text);
+  }
+  .kicker::before {
+    content: "";
+    width: 2rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.7;
+  }
 
-.btn-whatsapp {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  background-color: #25D366;
-  color: #FFFFFF;
-  font-weight: 600;
-  font-size: 0.875rem;
-  border-radius: 0.75rem;
-  padding: 0.625rem 1.25rem;
-  transition: transform 200ms ease, filter 200ms ease, box-shadow 200ms ease;
-  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.25);
-  text-decoration: none;
-}
-.btn-whatsapp:hover {
-  filter: brightness(1.05);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(37, 211, 102, 0.35);
-}
-.btn-whatsapp:active {
-  transform: translateY(0);
+  /* Section eyebrow label shown above section headings */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    margin-bottom: 0.75rem;
+    color: #8C6214;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 1.5rem;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    opacity: 0.6;
+  }
+  .text-center .eyebrow::after {
+    content: "";
+    width: 1.5rem;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    opacity: 0.6;
+  }
+  .dark .eyebrow {
+    color: #E8C48A;
+  }
+
+  /* Section rhythm: one vertical spacing scale and one heading scale for every section */
+  .section {
+    padding-block: 4rem;
+  }
+  @media (min-width: 640px) {
+    .section {
+      padding-block: 6rem;
+    }
+  }
+
+  .section-title {
+    font-family: var(--font-heading);
+    font-size: 1.625rem;
+    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--text-main);
+  }
+  @media (min-width: 640px) {
+    .section-title {
+      font-size: 2rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .section-title {
+      font-size: 2.25rem;
+    }
+  }
+
+  .section-lead {
+    margin-top: 0.75rem;
+    max-width: 40rem;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+  @media (min-width: 640px) {
+    .section-lead {
+      font-size: 1.0625rem;
+    }
+  }
+  .text-center .section-lead {
+    margin-inline: auto;
+  }
+
+  /* Text link with arrow, readable gold on both themes (gold #C89B3C fails contrast on cream) */
+  .link-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: var(--text-small);
+    font-weight: 600;
+    color: var(--accent-text);
+    transition: color 200ms ease, gap 200ms ease;
+  }
+  .link-arrow:hover {
+    gap: 0.625rem;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  /* Base surface card */
+  .card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 1rem;
+    box-shadow: 0 1px 2px rgba(23, 18, 13, 0.04);
+    transition: border-color 250ms ease, box-shadow 250ms ease, transform 250ms ease;
+  }
+  .card-hover:hover {
+    border-color: rgba(200, 155, 60, 0.45);
+    box-shadow: 0 18px 36px -16px rgba(90, 62, 12, 0.25);
+    transform: translateY(-2px);
+  }
+
+  /* Buttons: one size, sentence case, 44px touch target */
+  .btn-gold,
+  .btn-outline,
+  .btn-luxury-outline,
+  .btn-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0.625rem 1.375rem;
+    border-radius: 9999px;
+    font-size: var(--text-small);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    line-height: 1.25;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: transform 200ms ease, background-color 200ms ease, border-color 200ms ease, box-shadow 200ms ease, color 200ms ease;
+  }
+  .btn-gold:active,
+  .btn-outline:active,
+  .btn-luxury-outline:active,
+  .btn-whatsapp:active {
+    transform: translateY(0);
+  }
+
+  .btn-gold {
+    background-color: var(--color-gold-500);
+    color: var(--color-dune-900);
+    font-weight: 700;
+  }
+  .btn-gold:hover {
+    background-color: var(--color-gold-400);
+  }
+
+  .btn-lg {
+    min-height: 3.25rem;
+    padding: 0.875rem 1.875rem;
+    font-size: var(--text-body);
+  }
+  .btn-sm {
+    min-height: 2.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.8125rem;
+  }
+
+  /* Secondary button for light surfaces */
+  .btn-outline {
+    background-color: var(--bg-surface);
+    color: var(--text-main);
+    border: 1px solid rgba(140, 98, 20, 0.3);
+  }
+  .btn-outline:hover {
+    border-color: #C89B3C;
+    background-color: rgba(200, 155, 60, 0.08);
+    transform: translateY(-1px);
+  }
+
+  /* Secondary button for dark or image backgrounds */
+  .btn-luxury-outline {
+    background-color: rgba(255, 255, 255, 0.04);
+    color: var(--color-sand-50);
+    border: 1px solid rgba(251, 247, 240, 0.35);
+    backdrop-filter: blur(8px);
+  }
+  .btn-luxury-outline:hover {
+    background-color: rgba(251, 247, 240, 0.1);
+    border-color: var(--color-gold-300);
+  }
+
+  .btn-whatsapp {
+    background-color: #1FAF55;
+    color: #FFFFFF;
+    box-shadow: 0 4px 14px rgba(31, 175, 85, 0.22);
+  }
+  .btn-whatsapp:hover {
+    background-color: #1A9A4A;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(31, 175, 85, 0.3);
+  }
 }
 
 /* Subtle luxury section transition line */
@@ -259,26 +474,17 @@
   display: none;
 }
 
-/* Scroll-driven reveal (components/common/ScrollReveal.tsx).
-   Visible by default; only animates where scroll timelines are supported. */
-@keyframes revealUp {
-  from {
+/* One-shot reveal (components/common/ScrollReveal.tsx).
+   Content is only hidden once JS has marked the page (html.js), so it never
+   stays invisible without JS; it animates once and is skipped for reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .js .scroll-reveal:not([data-revealed]) {
     opacity: 0;
     transform: translateY(24px);
   }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .scroll-reveal {
-      animation: revealUp linear both;
-      animation-timeline: view();
-      animation-range: entry var(--reveal-offset, 0%) cover 22%;
-    }
+  .scroll-reveal {
+    transition: opacity 800ms var(--ease-out-soft), transform 800ms var(--ease-out-soft);
+    transition-delay: var(--reveal-delay, 0ms);
   }
 }
 

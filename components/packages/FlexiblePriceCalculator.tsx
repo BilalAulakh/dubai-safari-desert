@@ -102,7 +102,7 @@ Can you confirm your best flexible rate and today's availability? Thank you!`;
               <Users className="w-3.5 h-3.5 text-[#C89B3C]" />
               <span>{isPerVehicle ? "Number of Vehicles" : "Number of Guests / Persons"}</span>
             </label>
-            <span className="text-xs font-bold text-[#C89B3C]">
+            <span className="text-xs font-bold text-[#8C6214] dark:text-[#E8C48A]">
               {guests} {isPerVehicle ? (guests > 1 ? "Vehicles" : "Vehicle") : (guests > 1 ? "Guests" : "Guest")}
             </span>
           </div>

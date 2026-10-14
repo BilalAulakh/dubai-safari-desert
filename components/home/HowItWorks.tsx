@@ -30,17 +30,17 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section className="py-20 sm:py-28 bg-[#F2E8D5] dark:bg-[#1D150E] border-y border-[#C89B3C]/15 transition-colors duration-200">
+    <section className="section bg-[#F5EEE3] dark:bg-[#1D150E] transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
-          <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
             <span className="eyebrow">
               Seamless & Card-Free
             </span>
-            <h2 className="font-heading text-3xl sm:text-4xl lg:text-[44px] font-bold tracking-tight text-[#17120D] dark:text-[#FBF7F0] leading-[1.1]">
+            <h2 className="section-title">
               How Your Desert Safari Works
             </h2>
-            <p className="mt-2.5 text-sm sm:text-base text-[#6B6258] dark:text-[#B8ADA2] leading-relaxed">
+            <p className="section-lead">
               Reserve your Dubai desert adventure smoothly in 4 simple steps with zero upfront payment friction.
             </p>
           </div>
@@ -63,15 +63,15 @@ export default function HowItWorks() {
                     </div>
 
                     {/* Step Card */}
-                    <div className="w-full bg-white dark:bg-[#241A12] p-6 rounded-2xl border border-[#C89B3C]/20 shadow-sm hover:border-[#C89B3C]/50 hover:shadow-[0_12px_28px_rgba(23,18,13,0.12)] transition-all duration-300 flex flex-col items-center text-center hover:-translate-y-1">
-                      <div className="w-12 h-12 rounded-xl bg-[#C89B3C]/10 border border-[#C89B3C]/25 text-[#C89B3C] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-200">
+                    <div className="w-full card card-hover p-6 flex flex-col items-center text-center">
+                      <div className="w-12 h-12 rounded-xl bg-[#C89B3C]/12 text-[#8C6214] dark:text-[#E8C48A] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-200">
                         <Icon className="w-6 h-6" />
                       </div>
 
                       <h3 className="font-heading text-base font-bold text-[#17120D] dark:text-[#FBF7F0] mb-2 leading-snug">
                         {item.title}
                       </h3>
-                      <p className="text-xs sm:text-sm text-[#6B6258] dark:text-[#B8ADA2] leading-relaxed">
+                      <p className="text-sm text-[#5E554C] dark:text-[#B8ADA2] leading-relaxed">
                         {item.description}
                       </p>
                     </div>
@@ -102,16 +102,16 @@ export default function HowItWorks() {
                     </div>
 
                     {/* Step Card Content */}
-                    <div className="flex-1 bg-white dark:bg-[#241A12] p-4 sm:p-5 rounded-2xl border border-[#C89B3C]/20 shadow-sm hover:border-[#C89B3C]/50 transition-all duration-300 mb-2">
+                    <div className="card flex-1 p-4 sm:p-5 mb-2">
                       <div className="flex items-center gap-2.5 sm:gap-3 mb-2">
-                        <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#C89B3C]/10 border border-[#C89B3C]/25 text-[#C89B3C] flex items-center justify-center shrink-0">
+                        <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#C89B3C]/12 text-[#8C6214] dark:text-[#E8C48A] flex items-center justify-center shrink-0">
                           <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
                         </div>
                         <h3 className="font-heading text-sm sm:text-base font-bold text-[#17120D] dark:text-[#FBF7F0]">
                           {item.title}
                         </h3>
                       </div>
-                      <p className="text-xs sm:text-sm text-[#6B6258] dark:text-[#B8ADA2] leading-relaxed">
+                      <p className="text-sm text-[#5E554C] dark:text-[#B8ADA2] leading-relaxed">
                         {item.description}
                       </p>
                     </div>

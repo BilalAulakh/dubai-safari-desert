@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { Menu, X, Phone, ShieldCheck, MessageCircle } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config/site";
 import ThemeToggle from "@/components/common/ThemeToggle";
-import { createWhatsAppUrl } from "@/lib/utils";
+import { createWhatsAppUrl, toInternationalPhone } from "@/lib/utils";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,12 +36,29 @@ export default function Navbar() {
   // When on homepage and unscrolled, navbar is transparent with crisp white text
   const isTransparent = isHomePage && !scrolled;
 
+  // Over the hero video everything is white; on the solid bar text follows the theme
+  const tone = isTransparent
+    ? {
+        text: "text-white",
+        sub: "text-[#E8C48A]",
+        link: "text-white/90 hover:text-white hover:bg-white/10",
+        active: "text-[#F3D7A4] bg-white/12",
+        icon: "text-white/80 hover:text-white hover:bg-white/10",
+      }
+    : {
+        text: "text-[#17120D] dark:text-white",
+        sub: "text-[#8C6214] dark:text-[#E8C48A]",
+        link: "text-[#3D342B] hover:text-[#17120D] hover:bg-[#17120D]/5 dark:text-white/80 dark:hover:text-white dark:hover:bg-white/10",
+        active: "text-[#8C6214] bg-[#C89B3C]/12 dark:text-[#F3D7A4] dark:bg-white/10",
+        icon: "text-[#5E554C] hover:text-[#17120D] hover:bg-[#17120D]/5 dark:text-white/75 dark:hover:text-white dark:hover:bg-white/10",
+      };
+
   return (
     <header
       className={`fixed top-0 inset-x-0 z-40 transition-all duration-300 ${
         isTransparent
           ? "bg-transparent py-4 sm:py-5 border-b border-transparent"
-          : "bg-[#17120D]/95 backdrop-blur-md border-b border-[#C89B3C]/20 shadow-lg py-3 sm:py-3.5"
+          : "bg-white/90 dark:bg-[#17120D]/90 backdrop-blur-xl border-b border-[#17120D]/8 dark:border-white/10 shadow-[0_1px_12px_rgba(23,18,13,0.06)] py-2.5 sm:py-3"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -53,36 +70,44 @@ export default function Navbar() {
             id="nav-brand-logo"
             aria-label="Safari Dune Tours Homepage"
           >
+            {!isTransparent && (
+              <img
+                src="/images/logo-emblem-96.webp"
+                alt=""
+                width={48}
+                height={48}
+                className="w-10 h-10 sm:w-11 sm:h-11 object-contain group-hover:scale-105 transition-transform duration-300 dark:hidden"
+              />
+            )}
             <img
               src="/images/logo-emblem-dark-96.webp"
               srcSet="/images/logo-emblem-dark-96.webp 1x, /images/logo-emblem-dark-192.webp 2x"
               alt=""
               width={48}
               height={48}
-              className="w-11 h-11 sm:w-12 sm:h-12 object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] group-hover:scale-105 transition-transform duration-300"
+              className={`w-10 h-10 sm:w-11 sm:h-11 object-contain group-hover:scale-105 transition-transform duration-300 ${isTransparent ? "drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]" : "hidden dark:block"}`}
             />
-            <div className="flex flex-col drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
-              <span className="font-heading text-[17px] sm:text-xl font-extrabold tracking-tight text-white group-hover:text-[#E8C48A] transition-colors leading-none">
+            <div className={`flex flex-col ${isTransparent ? "drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]" : ""}`}>
+              <span className={`font-heading text-[17px] sm:text-lg font-extrabold tracking-tight leading-none transition-colors ${tone.text}`}>
                 Safari Dune <span className="text-[#C89B3C]">Tours</span>
               </span>
-              <span className="mt-1 text-[9px] sm:text-[10px] tracking-[0.22em] text-[#E8C48A] uppercase font-semibold">
+              <span className={`mt-1 text-[9px] sm:text-[10px] tracking-[0.2em] uppercase font-semibold ${tone.sub}`}>
                 Dubai Desert Safaris
               </span>
             </div>
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5">
+          <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1">
             {SITE_CONFIG.navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`whitespace-nowrap px-3 py-1.5 text-xs xl:text-[13px] font-medium rounded-lg transition-all duration-200 ${
-                    isActive
-                      ? "text-[#FDE68A] bg-white/15 font-semibold backdrop-blur-md shadow-sm border border-white/20"
-                      : "text-white hover:text-[#E8C48A] hover:bg-white/10 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]"
+                  aria-current={isActive ? "page" : undefined}
+                  className={`whitespace-nowrap px-2.5 xl:px-3 py-2 text-[13px] xl:text-sm font-medium rounded-lg transition-colors duration-200 ${
+                    isActive ? `${tone.active} font-semibold` : tone.link
                   }`}
                 >
                   {link.label}
@@ -92,13 +117,13 @@ export default function Navbar() {
           </nav>
 
           {/* Right Action CTAs */}
-          <div className="hidden md:flex items-center gap-2 xl:gap-2.5 shrink-0">
+          <div className="hidden md:flex items-center gap-1.5 xl:gap-2 shrink-0">
             {/* Quick WhatsApp Link */}
             <a
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-lg text-white/85 hover:text-emerald-400 hover:bg-white/10 transition-colors"
+              className={`p-2 rounded-lg transition-colors ${tone.icon}`}
               title="Chat on WhatsApp"
               aria-label="Chat on WhatsApp"
             >
@@ -116,18 +141,18 @@ export default function Navbar() {
                   document.cookie = "admin_auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
                 }
               }}
-              className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold rounded-lg border border-[#C89B3C]/35 text-[#E8C48A] hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+              className={`p-2 rounded-lg transition-colors cursor-pointer ${tone.icon}`}
               title="Admin Portal (Requires Login)"
+              aria-label="Admin Portal"
               id="nav-admin-cta"
             >
-              <ShieldCheck className="w-3 h-3 text-[#C89B3C]" />
-              <span>Admin</span>
+              <ShieldCheck className="w-4 h-4" />
             </Link>
 
             {/* Prominent Book Now CTA */}
             <Link
               href="/booking"
-              className="btn-gold text-[11px] sm:text-xs uppercase tracking-wider py-2 px-3.5 sm:px-4 font-bold rounded-lg shadow-sm whitespace-nowrap"
+              className="btn-gold btn-sm"
               id="nav-book-now-cta"
             >
               Book Now
@@ -141,11 +166,11 @@ export default function Navbar() {
             <button
               type="button"
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-lg text-white hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-[#C89B3C]"
+              className={`p-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-[#C89B3C] ${tone.icon}`}
               aria-expanded={isOpen}
               aria-label="Toggle navigation menu"
             >
-              {isOpen ? <X className="w-6 h-6 text-[#C89B3C]" /> : <Menu className="w-6 h-6" />}
+              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
@@ -163,7 +188,7 @@ export default function Navbar() {
                   href={link.href}
                   className={`px-4 py-2.5 rounded-lg text-base font-medium transition-colors ${
                     isActive
-                      ? "text-[#E8C48A] bg-white/10 font-semibold border-l-2 border-[#C89B3C]"
+                      ? "text-[#F3D7A4] bg-white/10 font-semibold"
                       : "text-white/85 hover:text-white hover:bg-white/5"
                   }`}
                 >
@@ -176,24 +201,24 @@ export default function Navbar() {
           <div className="mt-5 pt-4 border-t border-white/10 flex flex-col gap-3">
             <Link
               href="/booking"
-              className="btn-gold w-full text-center py-3 text-sm font-bold uppercase tracking-wider justify-center"
+              className="btn-gold w-full text-center"
             >
-              Book Your Safari Today
+              Book Your Safari
             </Link>
 
             <a
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-whatsapp w-full text-center py-2.5 text-xs uppercase tracking-wider font-semibold justify-center"
+              className="btn-whatsapp w-full text-center"
             >
               <MessageCircle className="w-4 h-4" />
-              <span>WhatsApp Us Now</span>
+              <span>Chat on WhatsApp</span>
             </a>
 
-            <div className="flex items-center justify-between pt-2 text-xs text-white/60">
+            <div className="flex items-center justify-between pt-2 text-sm text-white/70">
               <a
-                href={`tel:${SITE_CONFIG.contact.phone.replace(/[^0-9+]/g, "")}`}
+                href={`tel:${toInternationalPhone(SITE_CONFIG.contact.phone)}`}
                 className="flex items-center gap-1.5 hover:text-[#E8C48A] transition-colors"
               >
                 <Phone className="w-3.5 h-3.5 text-[#C89B3C]" />

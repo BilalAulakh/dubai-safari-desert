@@ -167,7 +167,7 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
                 </div>
               )}
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight">
               {pkg.name}
             </h1>
             <p className="mt-3 text-base sm:text-lg text-slate-300 leading-relaxed">

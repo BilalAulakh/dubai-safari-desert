@@ -132,7 +132,7 @@ export default function PackagesCatalogFilter({
               className={`px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm whitespace-nowrap transition-all duration-200 flex items-center gap-2 cursor-pointer shadow-sm ${
                 isSelected
                   ? "bg-gradient-to-r from-[#C89B3C] to-[#E8C48A] text-[#17120D] shadow-md shadow-[#C89B3C]/20 scale-102"
-                  : "bg-white dark:bg-[#241A12] text-[#6B6258] dark:text-[#B8ADA2] hover:text-[#17120D] dark:hover:text-white border border-[#C89B3C]/20"
+                  : "bg-white dark:bg-[#241A12] text-[#5E554C] dark:text-[#B8ADA2] hover:text-[#17120D] dark:hover:text-white border border-[#C89B3C]/20"
               }`}
             >
               <span className="text-base">{tab.icon}</span>
@@ -141,7 +141,7 @@ export default function PackagesCatalogFilter({
                 className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
                   isSelected
                     ? "bg-[#17120D] text-[#E8C48A]"
-                    : "bg-[#F2E8D5] dark:bg-[#17120D] text-[#8C6214] dark:text-[#B8ADA2]"
+                    : "bg-[#F5EEE3] dark:bg-[#17120D] text-[#8C6214] dark:text-[#B8ADA2]"
                 }`}
               >
                 {count}
@@ -176,7 +176,7 @@ export default function PackagesCatalogFilter({
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
                   selectedDuration === dur
                     ? "bg-[#C89B3C] text-[#17120D] font-bold shadow-sm"
-                    : "bg-[#F2E8D5] dark:bg-[#17120D] text-[#6B6258] dark:text-[#B8ADA2] hover:text-[#17120D] dark:hover:text-white"
+                    : "bg-[#F5EEE3] dark:bg-[#17120D] text-[#5E554C] dark:text-[#B8ADA2] hover:text-[#17120D] dark:hover:text-white"
                 }`}
               >
                 {dur === "all" ? "All Durations" : dur}
@@ -190,7 +190,7 @@ export default function PackagesCatalogFilter({
             <select
               value={sortBy}
               onChange={(e) => dispatch(setSortBy(e.target.value as any))}
-              className="text-xs font-semibold bg-[#F2E8D5] dark:bg-[#17120D] text-[#17120D] dark:text-[#FBF7F0] border border-[#C89B3C]/20 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-[#C89B3C] cursor-pointer"
+              className="text-xs font-semibold bg-[#F5EEE3] dark:bg-[#17120D] text-[#17120D] dark:text-[#FBF7F0] border border-[#C89B3C]/20 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-[#C89B3C] cursor-pointer"
             >
               <option value="featured">Featured First</option>
               <option value="price-asc">Price: Low to High</option>
@@ -201,12 +201,12 @@ export default function PackagesCatalogFilter({
       </div>
 
       {/* 3. Results Count Bar */}
-      <div className="flex items-center justify-between text-xs text-[#6B6258] dark:text-[#B8ADA2] px-1">
+      <div className="flex items-center justify-between text-xs text-[#5E554C] dark:text-[#B8ADA2] px-1">
         <span>
           Showing <strong>{filteredPackages.length}</strong> desert tour
           {filteredPackages.length !== 1 ? "s" : ""}
           {selectedCategory !== "all" && (
-            <span> in <strong className="capitalize text-[#C89B3C]">{selectedCategory.replace("-", " ")}</strong></span>
+            <span> in <strong className="capitalize text-[#8C6214] dark:text-[#E8C48A]">{selectedCategory.replace("-", " ")}</strong></span>
           )}
         </span>
         {(searchQuery || selectedDuration !== "all" || selectedCategory !== "all") && (
@@ -216,7 +216,7 @@ export default function PackagesCatalogFilter({
               dispatch(setSelectedDuration("all"));
               setSelectedCategory("all");
             }}
-            className="text-[#C89B3C] hover:underline font-semibold cursor-pointer"
+            className="text-[#8C6214] dark:text-[#E8C48A] hover:underline font-semibold cursor-pointer"
           >
             Reset all filters
           </button>
@@ -235,7 +235,7 @@ export default function PackagesCatalogFilter({
           <p className="font-heading text-xl font-bold text-[#17120D] dark:text-[#FBF7F0]">
             No safari packages match your current search.
           </p>
-          <p className="text-xs text-[#6B6258] dark:text-[#B8ADA2] mt-2">
+          <p className="text-xs text-[#5E554C] dark:text-[#B8ADA2] mt-2">
             Try choosing a different category or clearing search terms.
           </p>
           <button
@@ -244,7 +244,7 @@ export default function PackagesCatalogFilter({
               dispatch(setSelectedDuration("all"));
               setSelectedCategory("all");
             }}
-            className="btn-gold mt-6 px-6 py-2.5 text-xs uppercase tracking-wider font-bold cursor-pointer"
+            className="btn-gold mt-6 cursor-pointer"
           >
             Show All Safari Tours
           </button>

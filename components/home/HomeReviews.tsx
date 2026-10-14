@@ -11,17 +11,17 @@ export default function HomeReviews({ reviews }: HomeReviewsProps) {
   const displayReviews = (reviews || []).slice(0, 3);
 
   return (
-    <section className="py-20 sm:py-28 bg-[#FBF7F0] dark:bg-[#17120D] transition-colors duration-200">
+    <section className="section bg-[#FBF7F0] dark:bg-[#17120D] transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-12 gap-6">
           <div>
             <div className="eyebrow">
               <span>Guest Experiences</span>
             </div>
-            <h2 className="font-heading text-3xl sm:text-4xl lg:text-[44px] font-bold tracking-tight text-[#17120D] dark:text-[#FBF7F0] leading-[1.1]">
+            <h2 className="section-title">
               Authentic Guest Experiences
             </h2>
-            <div className="mt-2.5 flex items-center gap-2 text-xs text-[#6B6258] dark:text-[#B8ADA2]">
+            <div className="mt-3 flex items-center gap-2 text-sm text-[#5E554C] dark:text-[#B8ADA2]">
               <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
               <span>Genuine traveler feedback directly from our desert safari guests</span>
             </div>
@@ -30,20 +30,20 @@ export default function HomeReviews({ reviews }: HomeReviewsProps) {
           <div className="flex items-center gap-3 shrink-0">
             <Link
               href="/review"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white dark:bg-[#241A12] border border-[#C89B3C]/30 text-[#17120D] dark:text-[#FBF7F0] hover:border-[#C89B3C] hover:bg-[#C89B3C]/10 text-xs font-bold uppercase tracking-wider transition-all shadow-sm"
+              className="btn-outline"
             >
-              <MessageSquarePlus className="w-4 h-4 text-[#C89B3C]" />
+              <MessageSquarePlus className="w-4 h-4 text-[#8C6214] dark:text-[#E8C48A]" />
               <span>Leave a Review</span>
             </Link>
           </div>
         </div>
 
         {displayReviews.length > 0 ? (
-          <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
+          <div className="flex flex-wrap justify-center gap-6">
             {displayReviews.map((rev) => (
               <div
                 key={rev.id}
-                className="w-full md:w-[calc(33.333%-1.334rem)] p-7 sm:p-8 rounded-2xl bg-white dark:bg-[#241A12] border border-[#C89B3C]/20 shadow-sm hover:border-[#C89B3C]/50 hover:shadow-xl transition-all duration-300 flex flex-col justify-between hover:-translate-y-1"
+                className="card card-hover w-full md:w-[calc(33.333%-1rem)] p-6 sm:p-7 flex flex-col justify-between"
               >
                 <div>
                   {/* Rating Stars */}
@@ -54,7 +54,7 @@ export default function HomeReviews({ reviews }: HomeReviewsProps) {
                           key={i}
                           className={`w-4 h-4 ${
                             i < rev.rating
-                              ? "text-[#C89B3C] fill-[#C89B3C]"
+                              ? "text-[#D69E2E] fill-[#D69E2E]"
                               : "text-slate-200 dark:text-white/10"
                           }`}
                         />
@@ -66,19 +66,19 @@ export default function HomeReviews({ reviews }: HomeReviewsProps) {
                     </span>
                   </div>
 
-                  <p className="text-sm sm:text-base text-[#17120D]/85 dark:text-[#FBF7F0]/85 italic leading-relaxed mb-6">
+                  <p className="text-[15px] text-[#17120D]/85 dark:text-[#FBF7F0]/85 leading-relaxed mb-6">
                     &ldquo;{rev.comment}&rdquo;
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-[#C89B3C]/15 dark:border-white/10 flex items-center justify-between">
+                <div className="pt-4 border-t border-[var(--border-subtle)] flex items-center justify-between">
                   <div>
                     <h4 className="font-heading text-base font-bold text-[#17120D] dark:text-[#FBF7F0]">
                       {rev.customer_name}
                     </h4>
-                    <p className="text-xs text-[#6B6258] dark:text-[#B8ADA2]">{rev.country}</p>
+                    <p className="text-xs text-[#5E554C] dark:text-[#B8ADA2]">{rev.country}</p>
                   </div>
-                  <span className="text-[11px] text-[#6B6258] dark:text-[#B8ADA2]">
+                  <span className="text-xs text-[#5E554C] dark:text-[#B8ADA2]">
                     {formatDate(rev.created_at)}
                   </span>
                 </div>
@@ -95,12 +95,12 @@ export default function HomeReviews({ reviews }: HomeReviewsProps) {
             <h3 className="text-xl font-bold text-[#17120D] dark:text-[#FBF7F0]">
               Be Our Next Featured Reviewer!
             </h3>
-            <p className="text-sm text-[#6B6258] dark:text-[#B8ADA2]">
+            <p className="text-sm text-[#5E554C] dark:text-[#B8ADA2]">
               Have you experienced our Dubai Desert Safari? We would love to hear your authentic feedback.
             </p>
             <Link
               href="/review"
-              className="btn-gold inline-flex items-center gap-2 px-6 py-3 text-xs uppercase font-extrabold tracking-wider"
+              className="btn-gold"
             >
               <span>Write Your 5-Star Review</span>
               <ArrowRight className="w-4 h-4" />
@@ -112,10 +112,10 @@ export default function HomeReviews({ reviews }: HomeReviewsProps) {
           <div className="mt-12 text-center">
             <Link
               href="/reviews"
-              className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#C89B3C] hover:text-[#E8C48A] uppercase tracking-wider transition-colors group"
+              className="link-arrow"
             >
               <span>Read All Verified Guest Reviews</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         )}

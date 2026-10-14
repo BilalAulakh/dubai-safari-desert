@@ -32,7 +32,7 @@ export default function BogoPromoBanner() {
                   </span>
                 </div>
 
-                <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white leading-tight">
                   Buy 1 Get 1 Free <br />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF9800] via-[#FFC107] to-[#E8C48A]">
                     Dubai Desert Safari
@@ -74,7 +74,7 @@ export default function BogoPromoBanner() {
 
                   <Link
                     href="/booking?package=pkg-bogo-safari"
-                    className="btn-gold px-6 py-3.5 rounded-xl font-bold text-sm transition-all shadow-lg hover:-translate-y-0.5"
+                    className="btn-gold"
                   >
                     Book Online Now
                   </Link>
@@ -102,7 +102,7 @@ export default function BogoPromoBanner() {
                     <span className="text-gray-400 line-through text-lg font-bold">
                       AED 150
                     </span>
-                    <span className="text-5xl font-black text-white tracking-tight drop-shadow-md">
+                    <span className="text-4xl font-black text-white tracking-tight drop-shadow-md">
                       AED 79
                     </span>
                   </div>

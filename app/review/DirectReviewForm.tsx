@@ -150,7 +150,7 @@ export default function DirectReviewForm({ tourOptions }: DirectReviewFormProps)
             ))}
           </div>
           {selectedTour && (
-            <span className="text-[10px] font-bold uppercase text-[#C89B3C] block">
+            <span className="text-[10px] font-bold uppercase text-[#8C6214] dark:text-[#E8C48A] block">
               {selectedTour}
             </span>
           )}
@@ -167,7 +167,7 @@ export default function DirectReviewForm({ tourOptions }: DirectReviewFormProps)
         <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-2">
           <Link
             href="/reviews"
-            className="btn-gold w-full sm:w-auto px-5 py-2.5 text-xs font-bold uppercase tracking-wider shadow flex items-center justify-center gap-1.5"
+            className="btn-gold w-full sm:w-auto"
           >
             <span>View All Reviews</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -340,7 +340,7 @@ export default function DirectReviewForm({ tourOptions }: DirectReviewFormProps)
           <button
             type="submit"
             disabled={submitting}
-            className="btn-gold w-full py-2.5 px-4 text-xs font-bold uppercase tracking-wider shadow flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="btn-gold w-full disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {submitting ? (
               <>

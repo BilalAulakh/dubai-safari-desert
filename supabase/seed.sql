@@ -8,8 +8,8 @@ INSERT INTO public.site_settings (
   instagram_url, facebook_url, support_hours, footer_description
 ) VALUES (
   'Safari Dune',
-  '+971 50 123 4567',
-  '+971 50 123 4567',
+  '00971569137131',
+  '00971569137131',
   '',
   'Sheikh Mohammed bin Rashid Blvd, Downtown Dubai, UAE',
   'https://maps.google.com/?q=Dubai+Desert+Safari',

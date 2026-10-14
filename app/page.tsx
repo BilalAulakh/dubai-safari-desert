@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { preload } from "react-dom";
 import HeroSection from "@/components/home/HeroSection";
+import TrustStrip from "@/components/home/TrustStrip";
 import FeaturedPackages from "@/components/home/FeaturedPackages";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 import ActivitiesShowcase from "@/components/home/ActivitiesShowcase";
@@ -42,29 +43,26 @@ export default async function HomePage() {
     getApprovedReviews(),
   ]);
 
+  // Real average from approved reviews only; the strip hides the rating when there are none
+  const rating =
+    reviews.length > 0
+      ? { average: reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length, count: reviews.length }
+      : null;
+
   return (
     <div className="overflow-x-hidden">
       {/* 1. Hero Section with Trust Badges & Action CTAs */}
       <HeroSection />
+      <TrustStrip rating={rating} />
 
       {/* 2. Featured Safari Packages */}
       <FeaturedPackages packages={packages.map(toPackageCardData)} />
-
-      {/* Subtle Luxury Gold Section Transition */}
-      <div className="w-full flex justify-center py-2 bg-[#FBF7F0] dark:bg-[#17120D]">
-        <div className="section-divider-gold" />
-      </div>
 
       {/* 3. Why Choose Safari Dune Tours */}
       <WhyChooseUs />
 
       {/* 4. Safari Activities */}
       <ActivitiesShowcase activities={activities} />
-
-      {/* Subtle Luxury Gold Section Transition */}
-      <div className="w-full flex justify-center py-2 bg-[#FBF7F0] dark:bg-[#17120D]">
-        <div className="section-divider-gold" />
-      </div>
 
       {/* 5. How It Works (4-Step Booking Process) */}
       <HowItWorks />

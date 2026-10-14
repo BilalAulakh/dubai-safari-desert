@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { Phone, Mail, MapPin, Clock, MessageCircle } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config/site";
-import { createWhatsAppUrl } from "@/lib/utils";
+import { createWhatsAppUrl, toInternationalPhone } from "@/lib/utils";
 import ContactForm from "@/components/contact/ContactForm";
 
 export const revalidate = 86400; // 1 day; admin saves refresh pages on demand
@@ -35,10 +35,10 @@ export default function ContactPage() {
         <div className="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#C89B3C] via-transparent to-transparent" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#C89B3C]/15 border border-[#C89B3C]/30 text-[#E8C48A] text-xs font-semibold uppercase tracking-wider mb-4">
-            <Phone className="w-3.5 h-3.5 text-[#C89B3C]" />
+            <Phone className="w-3.5 h-3.5 text-[#8C6214] dark:text-[#E8C48A]" />
             <span>Reservations & Support</span>
           </div>
-          <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-[1.08]">
+          <h1 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-[1.08]">
             Contact <span className="gold-text-gradient">Safari Dune Tours</span>
           </h1>
           <p className="mt-4 text-base sm:text-lg text-[#B8ADA2] max-w-2xl mx-auto leading-relaxed">
@@ -53,13 +53,13 @@ export default function ContactPage() {
           {/* Contact Information & Channels */}
           <div className="space-y-8">
             <div>
-              <span className="text-xs font-bold uppercase tracking-widest text-[#C89B3C]">
+              <span className="eyebrow">
                 Direct Channels
               </span>
-              <h2 className="font-heading text-3xl font-bold text-[#17120D] dark:text-[#FBF7F0] mt-1">
+              <h2 className="font-heading text-2xl sm:text-[28px] font-bold text-[#17120D] dark:text-[#FBF7F0] mt-1">
                 Reach Out Directly
               </h2>
-              <p className="mt-2 text-sm text-[#6B6258] dark:text-[#B8ADA2]">
+              <p className="mt-2 text-sm text-[#5E554C] dark:text-[#B8ADA2]">
                 For the fastest response, message us on WhatsApp where our reservation agents respond promptly.
               </p>
             </div>
@@ -82,7 +82,7 @@ export default function ContactPage() {
                   <p className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
                     {SITE_CONFIG.contact.whatsapp}
                   </p>
-                  <p className="text-xs text-[#6B6258] dark:text-[#B8ADA2] mt-1">
+                  <p className="text-xs text-[#5E554C] dark:text-[#B8ADA2] mt-1">
                     Instant availability check & direct booking confirmation
                   </p>
                 </div>
@@ -90,18 +90,18 @@ export default function ContactPage() {
 
               {/* Phone Card */}
               <div className="p-5 rounded-2xl bg-white dark:bg-[#241A12] border border-[#C89B3C]/20 shadow-sm flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-[#C89B3C]/15 text-[#C89B3C] flex items-center justify-center shrink-0 border border-[#C89B3C]/30">
+                <div className="w-12 h-12 rounded-xl bg-[#C89B3C]/15 text-[#8C6214] dark:text-[#E8C48A] flex items-center justify-center shrink-0 border border-[#C89B3C]/30">
                   <Phone className="w-6 h-6" />
                 </div>
                 <div>
                   <h4 className="font-heading text-base font-bold text-[#17120D] dark:text-[#FBF7F0]">Telephone Call</h4>
                   <a
-                    href={`tel:${SITE_CONFIG.contact.phone.replace(/[^0-9+]/g, "")}`}
-                    className="text-sm font-semibold text-[#C89B3C] hover:underline"
+                    href={`tel:${toInternationalPhone(SITE_CONFIG.contact.phone)}`}
+                    className="text-sm font-semibold text-[#8C6214] dark:text-[#E8C48A] hover:underline"
                   >
                     {SITE_CONFIG.contact.phone}
                   </a>
-                  <p className="text-xs text-[#6B6258] dark:text-[#B8ADA2] mt-1">
+                  <p className="text-xs text-[#5E554C] dark:text-[#B8ADA2] mt-1">
                     Direct line for reservations & safari pickups
                   </p>
                 </div>
@@ -109,7 +109,7 @@ export default function ContactPage() {
 
               {/* Email / Online Inquiries Card */}
               <div className="p-5 rounded-2xl bg-white dark:bg-[#241A12] border border-[#C89B3C]/20 shadow-sm flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-[#C89B3C]/15 text-[#C89B3C] flex items-center justify-center shrink-0 border border-[#C89B3C]/30">
+                <div className="w-12 h-12 rounded-xl bg-[#C89B3C]/15 text-[#8C6214] dark:text-[#E8C48A] flex items-center justify-center shrink-0 border border-[#C89B3C]/30">
                   <Mail className="w-6 h-6" />
                 </div>
                 <div>
@@ -117,7 +117,7 @@ export default function ContactPage() {
                   {SITE_CONFIG.contact.email ? (
                     <a
                       href={`mailto:${SITE_CONFIG.contact.email}`}
-                      className="text-sm font-semibold text-[#C89B3C] hover:underline"
+                      className="text-sm font-semibold text-[#8C6214] dark:text-[#E8C48A] hover:underline"
                     >
                       {SITE_CONFIG.contact.email}
                     </a>
@@ -126,7 +126,7 @@ export default function ContactPage() {
                       Direct online booking & quote inquiries
                     </p>
                   )}
-                  <p className="text-xs text-[#6B6258] dark:text-[#B8ADA2] mt-1">
+                  <p className="text-xs text-[#5E554C] dark:text-[#B8ADA2] mt-1">
                     Corporate bookings, private charters, and invoice requests
                   </p>
                 </div>
@@ -134,14 +134,14 @@ export default function ContactPage() {
 
               {/* Address & Hours */}
               <div className="p-5 rounded-2xl bg-white dark:bg-[#241A12] border border-[#C89B3C]/20 shadow-sm flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-[#C89B3C]/15 text-[#C89B3C] flex items-center justify-center shrink-0 border border-[#C89B3C]/30">
+                <div className="w-12 h-12 rounded-xl bg-[#C89B3C]/15 text-[#8C6214] dark:text-[#E8C48A] flex items-center justify-center shrink-0 border border-[#C89B3C]/30">
                   <MapPin className="w-6 h-6" />
                 </div>
                 <div>
                   <h4 className="font-heading text-base font-bold text-[#17120D] dark:text-[#FBF7F0]">Office Location</h4>
                   <p className="text-sm text-[#17120D]/90 dark:text-[#FBF7F0]/90">{SITE_CONFIG.contact.address}</p>
-                  <p className="text-xs text-[#6B6258] dark:text-[#B8ADA2] mt-1 flex items-center gap-1.5">
-                    <Clock className="w-3.5 h-3.5 text-[#C89B3C]" />
+                  <p className="text-xs text-[#5E554C] dark:text-[#B8ADA2] mt-1 flex items-center gap-1.5">
+                    <Clock className="w-3.5 h-3.5 text-[#8C6214] dark:text-[#E8C48A]" />
                     <span>{SITE_CONFIG.contact.supportHours}</span>
                   </p>
                 </div>
@@ -157,7 +157,7 @@ export default function ContactPage() {
             <div className="rounded-2xl overflow-hidden border border-[#C89B3C]/30 shadow-md relative bg-[#17120D] text-white p-7 flex flex-col justify-between">
               <div className="space-y-2 relative z-10">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#C89B3C]/20 border border-[#C89B3C]/40 text-[#E8C48A] text-xs font-semibold uppercase tracking-wider">
-                  <MapPin className="w-3.5 h-3.5 text-[#C89B3C]" />
+                  <MapPin className="w-3.5 h-3.5 text-[#8C6214] dark:text-[#E8C48A]" />
                   <span>Google Maps Location</span>
                 </div>
                 <h4 className="font-heading font-bold text-lg text-white pt-1">
@@ -173,7 +173,7 @@ export default function ContactPage() {
                   href={SITE_CONFIG.contact.googleMapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-gold inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider"
+                  className="btn-gold"
                 >
                   <span>Open in Google Maps</span>
                   <span>&rarr;</span>

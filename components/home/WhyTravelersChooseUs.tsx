@@ -49,10 +49,10 @@ export default function WhyTravelersChooseUs() {
             <div className="eyebrow">
               <span>Reliable & Transparent Service</span>
             </div>
-            <h2 className="font-heading text-3xl sm:text-4xl lg:text-[44px] font-bold tracking-tight text-[#17120D] dark:text-[#FBF7F0] leading-[1.1]">
+            <h2 className="section-title">
               Why Travelers Choose Us
             </h2>
-            <p className="mt-2.5 text-sm sm:text-base text-[#6B6258] dark:text-[#B8ADA2] leading-relaxed">
+            <p className="section-lead">
               We focus on genuine hospitality, straightforward bookings, and uncompromising passenger safety across every Arabian desert excursion.
             </p>
           </div>
@@ -69,13 +69,13 @@ export default function WhyTravelersChooseUs() {
                     <div className="w-12 h-12 rounded-xl bg-[#C89B3C]/15 text-[#8C6214] dark:text-[#E8C48A] flex items-center justify-center mb-4 border border-[#C89B3C]/30 shadow-inner">
                       <Icon className="w-6 h-6" />
                     </div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#C89B3C] block mb-1">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#8C6214] dark:text-[#E8C48A] block mb-1">
                       {item.tagline}
                     </span>
                     <h3 className="font-heading text-lg font-bold text-[#17120D] dark:text-[#FBF7F0] mb-2">
                       {item.title}
                     </h3>
-                    <p className="text-xs sm:text-sm text-[#6B6258] dark:text-[#B8ADA2] leading-relaxed">
+                    <p className="text-xs sm:text-sm text-[#5E554C] dark:text-[#B8ADA2] leading-relaxed">
                       {item.description}
                     </p>
                   </div>
@@ -87,19 +87,19 @@ export default function WhyTravelersChooseUs() {
 
         {/* Action Conversion Bar */}
         <ScrollReveal delay={180}>
-          <div className="mt-12 p-6 rounded-2xl bg-[#F2E8D5] dark:bg-[#1D150E] border border-[#C89B3C]/25 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+          <div className="mt-12 p-6 rounded-2xl bg-[#F5EEE3] dark:bg-[#1D150E] border border-[#C89B3C]/25 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
             <div>
               <h4 className="font-heading text-base sm:text-lg font-bold text-[#17120D] dark:text-[#FBF7F0]">
                 Planning Your Safari Adventure?
               </h4>
-              <p className="text-xs sm:text-sm text-[#6B6258] dark:text-[#B8ADA2]">
+              <p className="text-xs sm:text-sm text-[#5E554C] dark:text-[#B8ADA2]">
                 Connect directly with our desert specialists for instant quotes and custom tour plans.
               </p>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-3 shrink-0">
               <Link
                 href="/booking"
-                className="btn-gold px-6 py-2.5 text-xs font-bold uppercase tracking-wider rounded-xl shadow-md"
+                className="btn-gold"
               >
                 Book Your Safari Today
               </Link>
@@ -107,7 +107,7 @@ export default function WhyTravelersChooseUs() {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-whatsapp px-5 py-2.5 text-xs font-bold uppercase tracking-wider rounded-xl shadow-md flex items-center gap-1.5"
+                className="btn-whatsapp"
               >
                 <MessageCircle className="w-3.5 h-3.5" />
                 <span>Get a Free Quote</span>

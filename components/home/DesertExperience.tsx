@@ -47,7 +47,7 @@ export default function DesertExperience() {
   );
 
   return (
-    <section className="py-20 sm:py-28 bg-[#FBF7F0] dark:bg-[#17120D] text-[#17120D] dark:text-[#FBF7F0] overflow-hidden border-t border-[#C89B3C]/15 transition-colors duration-200">
+    <section className="section bg-[#FBF7F0] dark:bg-[#17120D] text-[#17120D] dark:text-[#FBF7F0] overflow-hidden transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Editorial Luxury Image Composition */}
@@ -101,11 +101,11 @@ export default function DesertExperience() {
                 <span>Authentic Arabian Heritage</span>
               </div>
 
-              <h2 className="font-heading text-3xl sm:text-4xl lg:text-[44px] font-bold tracking-tight text-[#17120D] dark:text-[#FBF7F0] leading-[1.1]">
+              <h2 className="section-title">
                 A Desert Journey Crafted with <span className="gold-text-gradient">Passion & Precision</span>
               </h2>
 
-              <p className="mt-3 text-sm sm:text-base text-[#6B6258] dark:text-[#B8ADA2] leading-relaxed max-w-xl">
+              <p className="section-lead">
                 At Safari Dune Tours, we believe the desert is far more than vast golden sands—it is a timeless sanctuary of ancient Bedouin culture, serene sunset horizons, and exhilarating natural terrain.
               </p>
 
@@ -117,7 +117,7 @@ export default function DesertExperience() {
                   "Dedicated family-friendly vehicles and private VIP luxury charters",
                 ].map((perk, i) => (
                   <div key={i} className="flex items-center gap-3">
-                    <div className="w-5 h-5 rounded-full bg-[#C89B3C]/15 text-[#C89B3C] flex items-center justify-center shrink-0">
+                    <div className="w-5 h-5 rounded-full bg-[#C89B3C]/15 text-[#8C6214] dark:text-[#E8C48A] flex items-center justify-center shrink-0">
                       <Check className="w-3.5 h-3.5" />
                     </div>
                     <span className="text-sm text-[#17120D]/90 dark:text-[#FBF7F0]/90 font-medium">
@@ -131,7 +131,7 @@ export default function DesertExperience() {
               <div className="mt-7 flex flex-wrap items-center gap-3">
                 <Link
                   href="/booking"
-                  className="btn-gold px-6 py-2.5 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-xl shadow-md"
+                  className="btn-gold"
                 >
                   Book Your Experience
                 </Link>
@@ -139,9 +139,9 @@ export default function DesertExperience() {
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-luxury-outline px-5 py-2.5 text-xs sm:text-sm font-semibold rounded-xl !text-[#17120D] dark:!text-white border-[#C89B3C]/40 hover:border-[#C89B3C]"
+                  className="btn-outline"
                 >
-                  <MessageCircle className="w-4 h-4 text-emerald-500 mr-2" />
+                  <MessageCircle className="w-4 h-4 text-emerald-600" />
                   <span>Custom Group Inquiries</span>
                 </a>
               </div>

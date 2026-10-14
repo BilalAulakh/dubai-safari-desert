@@ -1,16 +1,25 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import AppShell from "@/components/layout/AppShell";
 import Footer from "@/components/layout/Footer";
 import { ThemeProvider } from "@/components/common/ThemeProvider";
 import StoreProvider from "@/lib/redux/StoreProvider";
 import { SITE_CONFIG } from "@/lib/config/site";
+import { toInternationalPhone } from "@/lib/utils";
 
 // One typeface across the whole site; headings differ only by weight and tracking
 const fontSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-jakarta",
+  display: "swap",
+});
+
+// Display serif for headlines and prices only
+const fontDisplay = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  variable: "--font-cormorant",
   display: "swap",
 });
 
@@ -106,7 +115,7 @@ export default function RootLayout({
         description: SITE_CONFIG.description,
         contactPoint: {
           "@type": "ContactPoint",
-          telephone: SITE_CONFIG.contact.phone,
+          telephone: toInternationalPhone(SITE_CONFIG.contact.phone),
           contactType: "customer service",
           areaServed: "AE",
           availableLanguage: ["English", "Arabic"],
@@ -134,7 +143,7 @@ export default function RootLayout({
         url: SITE_CONFIG.url,
         logo: `${SITE_CONFIG.url}${SITE_CONFIG.logo}`,
         image: SITE_CONFIG.ogImage,
-        telephone: SITE_CONFIG.contact.phone,
+        telephone: toInternationalPhone(SITE_CONFIG.contact.phone),
         email: SITE_CONFIG.contact.email,
         priceRange: "AED 130 - AED 950",
         currenciesAccepted: "AED, USD, EUR, GBP",
@@ -173,11 +182,11 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={`${fontSans.variable} scroll-smooth`} suppressHydrationWarning>
+    <html lang="en" className={`${fontSans.variable} ${fontDisplay.variable} scroll-smooth`} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem("dsd_theme")||"dark";if(t==="dark"){document.documentElement.classList.add("dark")}else{document.documentElement.classList.remove("dark")}}catch(e){}})()`,
+            __html: `(function(){document.documentElement.classList.add("js");try{var t=localStorage.getItem("dsd_theme")||"dark";if(t==="dark"){document.documentElement.classList.add("dark")}else{document.documentElement.classList.remove("dark")}}catch(e){}})()`,
           }}
         />
         <script

@@ -36,7 +36,7 @@ export default async function ActivitiesPage() {
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#C89B3C]/15 border border-[#C89B3C]/30 text-[#E8C48A] text-xs font-semibold uppercase tracking-wider mb-4">
             <span>Adventures & Heritage</span>
           </div>
-          <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-[1.08]">
+          <h1 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-[1.08]">
             Dubai Desert Safari <span className="gold-text-gradient">Activities</span>
           </h1>
           <p className="mt-4 text-base sm:text-lg text-[#B8ADA2] max-w-2xl mx-auto leading-relaxed">
@@ -71,7 +71,7 @@ export default async function ActivitiesPage() {
                   <h3 className="font-heading text-xl font-bold text-[#17120D] dark:text-[#FBF7F0] group-hover:text-[#C89B3C] transition-colors mb-2">
                     {activity.name}
                   </h3>
-                  <p className="text-sm text-[#6B6258] dark:text-[#B8ADA2] leading-relaxed mb-4">
+                  <p className="text-sm text-[#5E554C] dark:text-[#B8ADA2] leading-relaxed mb-4">
                     {activity.description}
                   </p>
 
@@ -89,7 +89,7 @@ export default async function ActivitiesPage() {
 
                 <Link
                   href="/booking"
-                  className="btn-gold w-full py-2.5 px-4 text-xs font-bold uppercase tracking-wider text-center flex items-center justify-center gap-1.5"
+                  className="btn-gold w-full text-center"
                 >
                   <span>Book This Experience</span>
                   <ArrowRight className="w-3.5 h-3.5" />
