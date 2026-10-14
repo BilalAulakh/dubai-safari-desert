@@ -5,7 +5,7 @@ import Link from "next/link";
 import { initialPackages } from "@/lib/data/packages";
 import { Package } from "@/types";
 import { formatPrice } from "@/lib/utils";
-import { Plus, Edit2, Trash2, Eye, X, Check } from "lucide-react";
+import { Plus, Edit2, Trash2, Eye, X, Check, Loader2 } from "lucide-react";
 import ImageUpload from "@/components/admin/ImageUpload";
 import DeleteConfirmModal from "@/components/admin/DeleteConfirmModal";
 
@@ -16,6 +16,7 @@ export default function AdminPackagesPage() {
   const [editingPackage, setEditingPackage] = useState<Package | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<{ id: string; name: string } | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   // Fetch live packages from database on mount
   const loadPackages = async () => {
@@ -103,7 +104,17 @@ export default function AdminPackagesPage() {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim()) return;
+    if (!name.trim() || isSaving) return;
+    setIsSaving(true);
+    try {
+      await savePackage();
+      setIsModalOpen(false);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const savePackage = async () => {
 
     const inclusionsArray = inclusionsText
       .split("\n")
@@ -217,8 +228,6 @@ export default function AdminPackagesPage() {
         console.error("Failed to create package in DB:", err);
       }
     }
-
-    setIsModalOpen(false);
   };
 
   const toggleActive = async (id: string) => {
@@ -573,16 +582,20 @@ export default function AdminPackagesPage() {
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  disabled={isSaving}
+                  className="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Cancel
                 </button>
 
                 <button
                   type="submit"
-                  className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold text-xs uppercase tracking-wider shadow hover:from-amber-400 hover:to-amber-500"
+                  disabled={isSaving}
+                  aria-busy={isSaving}
+                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold text-xs uppercase tracking-wider shadow hover:from-amber-400 hover:to-amber-500 disabled:opacity-70 disabled:cursor-wait"
                 >
-                  {editingPackage ? "Save Changes" : "Create Package"}
+                  {isSaving && <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />}
+                  {isSaving ? "Saving..." : editingPackage ? "Save Changes" : "Create Package"}
                 </button>
               </div>
             </form>
