@@ -70,7 +70,7 @@ export default function PackageCard({ pkg, priority = false }: PackageCardProps)
   );
 
   return (
-    <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-surface ring-1 ring-line transition-[box-shadow,transform] duration-500 ease-[var(--ease-out-soft)] hover:shadow-lift motion-safe:hover:-translate-y-1">
+    <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-surface ring-1 ring-line transition-[box-shadow,transform] duration-500 ease-[var(--ease-out-soft)] hover:shadow-glow-amber hover:ring-transparent motion-safe:hover:-translate-y-1">
       {/* Image: fixed 4:3 box so nothing shifts while it loads */}
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-dune-900">
         <img
@@ -91,7 +91,7 @@ export default function PackageCard({ pkg, priority = false }: PackageCardProps)
         )}
 
         <span className="absolute bottom-4 left-4 inline-flex items-center gap-1.5 text-small font-medium text-sand-50">
-          <Clock className="h-4 w-4 text-gold-300" aria-hidden="true" />
+          <Clock className="h-4 w-4 text-amber-300" aria-hidden="true" />
           {pkg.duration}
         </span>
       </div>
@@ -101,44 +101,44 @@ export default function PackageCard({ pkg, priority = false }: PackageCardProps)
           {/* Stretched link: the whole card opens the package page; buttons below sit above it */}
           <Link
             href={`/packages/${pkg.slug}`}
-            className="after:absolute after:inset-0 after:content-[''] focus-visible:outline-none focus-visible:after:rounded-2xl focus-visible:after:ring-2 focus-visible:after:ring-gold-500"
+            className="after:absolute after:inset-0 after:content-[''] focus-visible:outline-none focus-visible:after:rounded-2xl focus-visible:after:ring-2 focus-visible:after:ring-amber-600"
           >
             {pkg.name}
           </Link>
         </h3>
 
         {pkg.short_description && (
-          <p className="mt-3 line-clamp-2 text-small text-muted">{pkg.short_description}</p>
+          <p className="mt-3 line-clamp-2 text-body text-muted">{pkg.short_description}</p>
         )}
 
         {pkg.inclusions.length > 0 && (
           <ul className="mb-6 mt-4 space-y-2">
             {pkg.inclusions.slice(0, 3).map((inc) => (
-              <li key={inc} className="flex items-start gap-2.5 text-small text-muted">
-                <Check className="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
+              <li key={inc} className="flex items-start gap-2.5 text-body text-muted">
+                <Check className="mt-1 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
                 <span>{inc}</span>
               </li>
             ))}
           </ul>
         )}
 
-        <div className="mt-auto flex items-end justify-between gap-4 border-t border-line pt-5">
-          <div className="min-w-0">
-            <p className="text-label uppercase text-muted">
+        <div className="mt-auto flex flex-wrap items-end justify-between gap-x-4 gap-y-4 border-t border-line pt-5">
+          <div>
+            <p className="whitespace-nowrap text-label uppercase text-muted">
               From
               {showDiscount && (
                 <span className="ml-2 normal-case tracking-normal line-through">AED {pkg.original_price}</span>
               )}
             </p>
-            <p className="font-display text-h3 font-semibold lining-nums tabular-nums text-ink">AED {pkg.price}</p>
-            <p className="truncate text-small text-muted">{pkg.per_unit || "per person"}</p>
+            <p className="whitespace-nowrap font-display text-h3 font-semibold lining-nums tabular-nums text-ink">AED {pkg.price}</p>
+            <p className="text-small text-muted">{pkg.per_unit || "per person"}</p>
           </div>
-          <div className="relative z-10 flex shrink-0 items-center gap-2">
+          <div className="relative z-10 ml-auto flex shrink-0 items-center gap-2">
             <a
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex h-11 w-11 items-center justify-center rounded-full bg-[#25D366]/12 text-[#128C4B] ring-1 ring-[#25D366]/30 transition-colors hover:bg-[#25D366] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] dark:text-[#4ADE80]"
+              className="flex h-11 w-11 items-center justify-center rounded-full bg-whatsapp-500/12 text-whatsapp-700 ring-1 ring-whatsapp-500/35 transition-colors hover:bg-whatsapp-700 hover:text-white dark:text-whatsapp-500 dark:hover:text-white"
               aria-label={`WhatsApp us about ${pkg.name}`}
               title="WhatsApp us"
             >

@@ -9,7 +9,7 @@
    ========================================================================== */
 @theme {
   /* Fonts: display serif for headings and prices, neutral sans for everything else */
-  --font-sans: var(--font-jakarta), "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sans: var(--font-dm-sans), "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-display: var(--font-cormorant), "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --font-heading: var(--font-sans);
   --font-body: var(--font-sans);
@@ -22,6 +22,7 @@
   --color-dune-800: #241A12;
   --color-dune-700: #33261A;
   --color-dune-600: #4A3826;
+  --color-dune-500: #6B5440;
 
   /* Sand: light surfaces and secondary text on dark */
   --color-sand-50: #FBF7F0;
@@ -31,7 +32,21 @@
   --color-sand-400: #B8ADA2;
   --color-sand-600: #5E554C;
 
-  /* Gold: the single accent. CTAs, active states and small details only */
+  /* Amber: the single accent (redesign). CTAs, active states and small highlights only,
+     never a large background. Pairings that pass WCAG AA:
+       dune-900 text on amber-500 6.2:1 · amber-300 on dune-950 10.2:1 · amber-700 on sand-50 5.5:1 */
+  --color-amber-200: #F0D3AE;
+  --color-amber-300: #E3B279;
+  --color-amber-400: #D69A55;
+  --color-amber-500: #C8873E;
+  --color-amber-600: #A86E2C;
+  --color-amber-700: #8A5A22;
+
+  /* WhatsApp brand colour for WhatsApp actions only */
+  --color-whatsapp-500: #25D366;
+  --color-whatsapp-700: #0E7A3F;
+
+  /* Gold: previous accent, still used by sections not yet redesigned */
   --color-gold-300: #E8C48A;
   --color-gold-400: #D6A84F;
   --color-gold-500: #C89B3C;
@@ -82,6 +97,8 @@
 
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
   --shadow-lift: 0 24px 48px -24px rgba(14, 10, 7, 0.45);
+  /* Card hover: warm amber glow (box-shadow only, so no layout shift) */
+  --shadow-glow-amber: 0 22px 44px -22px rgb(200 135 62 / 0.55), 0 0 0 1px rgb(200 135 62 / 0.45);
 }
 
 /* Semantic colors that follow the light/dark theme */
@@ -105,7 +122,8 @@
     --border-subtle: rgba(140, 98, 20, 0.14);
     --gold-accent: #C89B3C;
     --sand-accent: #E8C48A;
-    --accent-text: #8C6214; /* gold that passes AA on cream */
+    --accent-text: #8A5A22; /* amber-700, passes AA on cream and white */
+    --focus-ring: #8A5A22;
     color-scheme: light;
   }
 
@@ -118,7 +136,8 @@
     --border-subtle: rgba(232, 196, 138, 0.14);
     --gold-accent: #D6A84F;
     --sand-accent: #E8C48A;
-    --accent-text: #E8C48A;
+    --accent-text: #E3B279; /* amber-300 */
+    --focus-ring: #E3B279;
     color-scheme: dark;
   }
 
@@ -157,15 +176,16 @@
     font-variant-numeric: lining-nums;
   }
 
+  /* Theme-aware focus ring: 3:1+ against both cream and dune surfaces */
   :focus-visible {
-    outline: 2px solid var(--color-gold-500);
+    outline: 2px solid var(--focus-ring);
     outline-offset: 3px;
     border-radius: 4px;
   }
 
   ::selection {
-    background-color: #C89B3C;
-    color: #17120D;
+    background-color: var(--color-amber-300);
+    color: var(--color-dune-900);
   }
 }
 
@@ -369,18 +389,16 @@
     transform: translateY(0);
   }
 
-  /* Bronze-gold so white text passes AA (≈4.6:1 mid-button) */
+  /* Primary CTA: amber with dark text (6.2:1, AA) */
   .btn-gold {
-    background-color: #946A18;
-    background-image: linear-gradient(135deg, #A8791F 0%, #8C6214 100%);
-    color: #FFFFFF;
+    background-color: var(--color-amber-500);
+    color: var(--color-dune-900);
     font-weight: 700;
-    box-shadow: 0 6px 16px -8px rgba(140, 98, 20, 0.6);
+    box-shadow: 0 6px 16px -8px rgb(200 135 62 / 0.6);
   }
   .btn-gold:hover {
-    background-color: #7A5410;
-    background-image: linear-gradient(135deg, #946A18 0%, #7A5410 100%);
-    color: #FFFFFF;
+    background-color: var(--color-amber-400);
+    color: var(--color-dune-900);
   }
 
   .btn-lg {
@@ -415,18 +433,19 @@
   }
   .btn-luxury-outline:hover {
     background-color: rgba(251, 247, 240, 0.1);
-    border-color: var(--color-gold-300);
+    border-color: var(--color-amber-300);
   }
 
+  /* Deep WhatsApp green so white text passes AA (5.4:1) */
   .btn-whatsapp {
-    background-color: #1FAF55;
+    background-color: var(--color-whatsapp-700);
     color: #FFFFFF;
-    box-shadow: 0 4px 14px rgba(31, 175, 85, 0.22);
+    box-shadow: 0 4px 14px rgb(14 122 63 / 0.25);
   }
   .btn-whatsapp:hover {
-    background-color: #1A9A4A;
+    background-color: #0B6634;
     transform: translateY(-1px);
-    box-shadow: 0 8px 20px rgba(31, 175, 85, 0.3);
+    box-shadow: 0 8px 20px rgb(14 122 63 / 0.32);
   }
 }
 
@@ -469,6 +488,27 @@
 
 .animate-hero-fade-up {
   animation: heroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Hero parallax: the background drifts ~5% while the page scrolls past the hero.
+   Pure CSS scroll-driven animation; browsers without support and reduced-motion
+   users simply get a still background. Scaled slightly so edges never show. */
+@keyframes heroParallax {
+  from {
+    transform: translateY(0) scale(1.08);
+  }
+  to {
+    transform: translateY(5%) scale(1.08);
+  }
+}
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-parallax {
+      animation: heroParallax linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 100vh;
+    }
+  }
 }
 
 /* Hide scrollbars on horizontal carousels while keeping them scrollable */

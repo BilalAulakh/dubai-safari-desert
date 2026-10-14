@@ -65,9 +65,12 @@ export default function FeaturedPackages({ packages }: FeaturedPackagesProps) {
             return (
               <div key={group.title}>
                 <h3 className="mb-6 text-label font-semibold uppercase text-accent">{group.title}</h3>
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+                {/* Snap carousel on mobile/tablet, bleeding to the screen edge; plain grid on desktop */}
+                <div className="-mx-5 flex snap-x snap-mandatory scroll-px-5 gap-5 overflow-x-auto px-5 pb-6 pt-1 no-scrollbar sm:-mx-8 sm:scroll-px-8 sm:px-8 lg:mx-0 lg:grid lg:grid-cols-3 lg:gap-8 lg:overflow-visible lg:p-0">
                   {groupPackages.map((pkg) => (
-                    <PackageCard key={pkg.id} pkg={toPackageCardData(pkg)} priority={cardIndex++ < 3} />
+                    <div key={pkg.id} className="w-[85%] max-w-[24rem] shrink-0 snap-start sm:w-[46%] lg:w-auto lg:max-w-none">
+                      <PackageCard pkg={toPackageCardData(pkg)} priority={cardIndex++ < 3} />
+                    </div>
                   ))}
                 </div>
               </div>
@@ -78,7 +81,7 @@ export default function FeaturedPackages({ packages }: FeaturedPackagesProps) {
         {/* Group pricing lives here once, instead of repeating on every card */}
         <div className="mt-14 flex flex-col items-start gap-4 rounded-2xl bg-surface-alt p-6 ring-1 ring-line sm:flex-row sm:items-center sm:justify-between sm:p-8 lg:mt-20">
           <div className="flex items-center gap-4">
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gold-500/15 text-accent">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-amber-500/15 text-accent">
               <Users className="h-5 w-5" aria-hidden="true" />
             </span>
             <p className="text-body-lg text-ink">
@@ -109,7 +112,7 @@ function CategoryCard({
   return (
     <Link
       href={href}
-      className="group relative flex min-h-[18rem] items-end overflow-hidden rounded-2xl bg-dune-900 ring-1 ring-line focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 sm:min-h-[20rem]"
+      className="group relative flex min-h-[18rem] items-end overflow-hidden rounded-2xl bg-dune-900 ring-1 ring-line transition-shadow duration-500 hover:shadow-glow-amber sm:min-h-[20rem]"
     >
       <img
         src={image}

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
+import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import "./globals.css";
 import AppShell from "@/components/layout/AppShell";
 import Footer from "@/components/layout/Footer";
@@ -8,10 +8,10 @@ import StoreProvider from "@/lib/redux/StoreProvider";
 import { SITE_CONFIG } from "@/lib/config/site";
 import { toInternationalPhone } from "@/lib/utils";
 
-// One typeface across the whole site; headings differ only by weight and tracking
-const fontSans = Plus_Jakarta_Sans({
+// Neutral sans for body copy and UI
+const fontSans = DM_Sans({
   subsets: ["latin"],
-  variable: "--font-jakarta",
+  variable: "--font-dm-sans",
   display: "swap",
 });
 
