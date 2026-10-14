@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { preload } from "react-dom";
 import HeroSection from "@/components/home/HeroSection";
@@ -10,6 +11,7 @@ import HomeGallery from "@/components/home/HomeGallery";
 import HomeReviews from "@/components/home/HomeReviews";
 import HomeFAQ from "@/components/home/HomeFAQ";
 import CTASection from "@/components/home/CTASection";
+import { SectionSkeleton } from "@/components/common/Skeletons";
 import { toPackageCardData } from "@/components/packages/PackageCard";
 
 import {
@@ -29,18 +31,33 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function HomePage() {
+// Each data-backed section fetches its own data, so static sections render
+// immediately and the rest stream in behind their own skeleton.
+async function PackagesBlock() {
+  const packages = await getPackages();
+  return <FeaturedPackages packages={packages.map(toPackageCardData)} />;
+}
+
+async function ActivitiesBlock() {
+  return <ActivitiesShowcase activities={await getActivities()} />;
+}
+
+async function GalleryBlock() {
+  const [items, categories] = await Promise.all([getGalleryItems(), getGalleryCategories()]);
+  return <HomeGallery items={items} categories={categories} />;
+}
+
+async function ReviewsBlock() {
+  return <HomeReviews reviews={await getApprovedReviews()} />;
+}
+
+async function FAQBlock() {
+  return <HomeFAQ faqs={await getFAQs()} />;
+}
+
+export default function HomePage() {
   // Hero poster is the first large paint; fetch it with the HTML instead of after hydration
   preload("/images/hero-poster.webp", { as: "image", fetchPriority: "high" });
-
-  const [packages, activities, galleryItems, galleryCategories, faqs, reviews] = await Promise.all([
-    getPackages(),
-    getActivities(),
-    getGalleryItems(),
-    getGalleryCategories(),
-    getFAQs(),
-    getApprovedReviews(),
-  ]);
 
   return (
     <div className="overflow-x-hidden">
@@ -48,13 +65,17 @@ export default async function HomePage() {
       <HeroSection />
 
       {/* 2. Featured Safari Packages */}
-      <FeaturedPackages packages={packages.map(toPackageCardData)} />
+      <Suspense fallback={<SectionSkeleton />}>
+        <PackagesBlock />
+      </Suspense>
 
       {/* 3. Why Choose Safari Dune Tours */}
       <WhyChooseUs />
 
       {/* 4. Safari Activities */}
-      <ActivitiesShowcase activities={activities} />
+      <Suspense fallback={<SectionSkeleton />}>
+        <ActivitiesBlock />
+      </Suspense>
 
       {/* 5. How It Works (4-Step Booking Process) */}
       <HowItWorks />
@@ -63,15 +84,21 @@ export default async function HomePage() {
       <DesertExperience />
 
       {/* 7. Gallery Highlights */}
-      <HomeGallery items={galleryItems} categories={galleryCategories} />
+      <Suspense fallback={<SectionSkeleton cards={6} />}>
+        <GalleryBlock />
+      </Suspense>
 
-      {/* 9. Guest Testimonials & Reviews */}
-      <HomeReviews reviews={reviews} />
+      {/* 8. Guest Testimonials & Reviews */}
+      <Suspense fallback={<SectionSkeleton />}>
+        <ReviewsBlock />
+      </Suspense>
 
-      {/* 10. Frequently Asked Questions */}
-      <HomeFAQ faqs={faqs} />
+      {/* 9. Frequently Asked Questions */}
+      <Suspense fallback={<SectionSkeleton cards={0} />}>
+        <FAQBlock />
+      </Suspense>
 
-      {/* 11. High-converting Booking & WhatsApp CTA Banner */}
+      {/* 10. High-converting Booking & WhatsApp CTA Banner */}
       <CTASection />
     </div>
   );

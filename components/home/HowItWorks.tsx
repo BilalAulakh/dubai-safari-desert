@@ -46,81 +46,54 @@ export default function HowItWorks() {
           </div>
         </ScrollReveal>
 
-        {/* Desktop View: 01 ───── 02 ───── 03 ───── 04 */}
-        <div className="hidden lg:block relative">
-          {/* Subtle Continuous Gold Connecting Line */}
-          <div className="absolute top-[22px] left-[12%] right-[12%] h-[1.5px] bg-gradient-to-r from-[#C89B3C]/30 via-[#C89B3C]/70 to-[#C89B3C]/30 z-0 pointer-events-none" />
+        {/* One list for every screen: vertical timeline on mobile/tablet, four columns on desktop */}
+        <ol className="relative grid gap-4 sm:gap-6 lg:grid-cols-4">
+          {/* Desktop connecting line behind the numbered circles */}
+          <div
+            className="absolute top-[22px] left-[12%] right-[12%] hidden h-[1.5px] bg-gradient-to-r from-[#C89B3C]/30 via-[#C89B3C]/70 to-[#C89B3C]/30 pointer-events-none lg:block"
+            aria-hidden="true"
+          />
 
-          <div className="grid grid-cols-4 gap-6 relative z-10">
-            {steps.map((item, index) => {
-              const Icon = item.icon;
-              return (
-                <ScrollReveal key={index} delay={index * 100}>
-                  <div className="group flex flex-col items-center text-center">
-                    {/* Gold Numbered Circle */}
-                    <div className="w-11 h-11 rounded-full bg-[#17120D] text-[#E8C48A] border-2 border-[#C89B3C] font-bold text-sm flex items-center justify-center shadow-lg relative z-10 mb-6 group-hover:scale-110 group-hover:border-[#E8C48A] group-hover:shadow-[0_0_15px_rgba(200,155,60,0.4)] transition-all duration-300">
-                      {item.step}
-                    </div>
-
-                    {/* Step Card */}
-                    <div className="w-full card card-hover p-6 flex flex-col items-center text-center">
-                      <div className="w-12 h-12 rounded-xl bg-[#C89B3C]/12 text-[#8C6214] dark:text-[#E8C48A] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-200">
-                        <Icon className="w-6 h-6" />
-                      </div>
-
-                      <h3 className="font-heading text-base font-bold text-[#17120D] dark:text-[#FBF7F0] mb-2 leading-snug">
-                        {item.title}
-                      </h3>
-                      <p className="text-sm text-[#5E554C] dark:text-[#B8ADA2] leading-relaxed">
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
-                </ScrollReveal>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Mobile & Tablet View: 01 │ 02 │ 03 │ 04 Vertical Connected Timeline */}
-        <div className="lg:hidden relative">
-          <div className="space-y-4 sm:space-y-6">
-            {steps.map((item, index) => {
-              const Icon = item.icon;
-              const isLast = index === steps.length - 1;
-              return (
-                <ScrollReveal key={index} delay={index * 80}>
-                  <div className="relative flex items-stretch gap-3 sm:gap-4">
-                    {/* Left Column: Gold Circle & Connecting Line */}
-                    <div className="flex flex-col items-center shrink-0">
-                      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#17120D] text-[#E8C48A] border-2 border-[#C89B3C] font-bold text-xs sm:text-sm flex items-center justify-center shadow-md relative z-10 shrink-0">
+          {steps.map((item, index) => {
+            const Icon = item.icon;
+            const isLast = index === steps.length - 1;
+            return (
+              <li key={item.step} className="relative">
+                <ScrollReveal delay={index * 100}>
+                  <div className="group flex items-stretch gap-3 sm:gap-4 lg:flex-col lg:items-center lg:gap-0 lg:text-center">
+                    {/* Numbered circle, with a vertical connector below it on small screens */}
+                    <div className="flex shrink-0 flex-col items-center lg:mb-6">
+                      <div className="relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-[#C89B3C] bg-[#17120D] text-xs font-bold text-[#E8C48A] shadow-md transition-all duration-300 sm:h-10 sm:w-10 sm:text-sm lg:h-11 lg:w-11 lg:shadow-lg lg:group-hover:scale-110 lg:group-hover:border-[#E8C48A] lg:group-hover:shadow-[0_0_15px_rgba(200,155,60,0.4)]">
                         {item.step}
                       </div>
                       {!isLast && (
-                        <div className="w-[2px] grow min-h-[36px] sm:min-h-[44px] bg-gradient-to-b from-[#C89B3C]/70 via-[#C89B3C]/40 to-[#C89B3C]/10 my-1" />
+                        <div
+                          className="my-1 min-h-[36px] w-[2px] grow bg-gradient-to-b from-[#C89B3C]/70 via-[#C89B3C]/40 to-[#C89B3C]/10 sm:min-h-[44px] lg:hidden"
+                          aria-hidden="true"
+                        />
                       )}
                     </div>
 
-                    {/* Step Card Content */}
-                    <div className="card flex-1 p-4 sm:p-5 mb-2">
-                      <div className="flex items-center gap-2.5 sm:gap-3 mb-2">
-                        <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#C89B3C]/12 text-[#8C6214] dark:text-[#E8C48A] flex items-center justify-center shrink-0">
-                          <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
+                    {/* Step card */}
+                    <div className="card card-hover mb-2 flex-1 p-4 sm:p-5 lg:mb-0 lg:flex lg:w-full lg:flex-col lg:items-center lg:p-6">
+                      <div className="mb-2 flex items-center gap-2.5 sm:gap-3 lg:mb-0 lg:flex-col lg:gap-0">
+                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#C89B3C]/12 text-[#8C6214] transition-transform duration-200 sm:h-9 sm:w-9 lg:mb-4 lg:h-12 lg:w-12 lg:rounded-xl lg:group-hover:scale-105 dark:text-[#E8C48A]">
+                          <Icon className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" aria-hidden="true" />
                         </div>
-                        <h3 className="font-heading text-sm sm:text-base font-bold text-[#17120D] dark:text-[#FBF7F0]">
+                        <h3 className="font-heading text-sm font-bold leading-snug text-[#17120D] sm:text-base lg:mb-2 dark:text-[#FBF7F0]">
                           {item.title}
                         </h3>
                       </div>
-                      <p className="text-sm text-[#5E554C] dark:text-[#B8ADA2] leading-relaxed">
+                      <p className="text-sm leading-relaxed text-[#5E554C] dark:text-[#B8ADA2]">
                         {item.description}
                       </p>
                     </div>
                   </div>
                 </ScrollReveal>
-              );
-            })}
-          </div>
-        </div>
+              </li>
+            );
+          })}
+        </ol>
       </div>
     </section>
   );

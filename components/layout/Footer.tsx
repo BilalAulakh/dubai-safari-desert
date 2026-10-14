@@ -200,14 +200,6 @@ export default function Footer() {
           </p>
           <div className="flex items-center gap-6">
             <span>Dubai, United Arab Emirates</span>
-            {/* Login is enforced server-side; this is only a shortcut for the team */}
-            <Link
-              href="/admin/login"
-              rel="nofollow"
-              className="hover:text-[#8C6214] dark:hover:text-[#E8C48A] transition-colors"
-            >
-              Admin
-            </Link>
           </div>
         </div>
       </div>
