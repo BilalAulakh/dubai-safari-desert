@@ -44,15 +44,18 @@ export function isPackageFilterId(value: string | null): value is PackageFilterI
   return value === "all" || PACKAGE_FILTERS.some((f) => f.id === value);
 }
 
-// Homepage package section. Reorder or swap slugs here; no JSX changes needed.
-// `slugs` are shown first; if any are missing or inactive (e.g. deleted in admin),
-// the row is topped up from the `fill` filters so it never shows a gap.
-// A group with `filter` renders one category card linking to /packages?category=<filter>.
+// Homepage package section: one continuous grid, groups shown in this order.
+// Reorder or swap slugs here; no JSX changes needed. `slugs` come first; if any are
+// missing or inactive (e.g. deleted in admin), the group is topped up from its `fill`
+// filters up to `max` cards so the grid never shows a gap.
 export const HOMEPAGE_GROUP_SIZE = 3;
 
-export type HomepageGroup =
-  | { title: string; slugs: string[]; fill?: Exclude<PackageFilterId, "all">[] }
-  | { title: string; filter: Exclude<PackageFilterId, "all">; cardTitle: string };
+export interface HomepageGroup {
+  title: string;
+  slugs: string[];
+  fill?: Exclude<PackageFilterId, "all">[];
+  max?: number; // defaults to HOMEPAGE_GROUP_SIZE
+}
 
 export const HOMEPAGE_PACKAGE_GROUPS: HomepageGroup[] = [
   {
@@ -66,8 +69,9 @@ export const HOMEPAGE_PACKAGE_GROUPS: HomepageGroup[] = [
     fill: ["private-vip"],
   },
   {
-    title: "Adrenaline",
-    filter: "adrenaline",
-    cardTitle: "Quad Bikes & Dune Buggies",
+    title: "Quad Bikes & Dune Buggies",
+    slugs: [],
+    fill: ["adrenaline"],
+    max: 9,
   },
 ];
