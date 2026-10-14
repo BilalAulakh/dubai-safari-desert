@@ -10,7 +10,7 @@ import {
   setSelectedDuration,
   setSortBy,
 } from "@/lib/redux/slices/packagesSlice";
-import PackageCard from "./PackageCard";
+import PackageCard, { toPackageCardData } from "./PackageCard";
 
 interface PackagesCatalogFilterProps {
   initialPackages: Package[];
@@ -222,7 +222,7 @@ export default function PackagesCatalogFilter({
       {filteredPackages.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {filteredPackages.map((pkg) => (
-            <PackageCard key={pkg.id} pkg={pkg} />
+            <PackageCard key={pkg.id} pkg={toPackageCardData(pkg)} />
           ))}
         </div>
       ) : (

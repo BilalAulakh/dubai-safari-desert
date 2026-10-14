@@ -39,11 +39,9 @@ export const SITE_CONFIG = {
   // Only these packages show a discount badge and strikethrough price; every other
   // card shows a single clean price. Keep this to 2-3 slugs.
   promotions: {
-    discountBadgeSlugs: [
-      "buy-1-get-1-free-desert-safari",
-      "evening-desert-safari",
-      "vip-desert-safari",
-    ],
+    // Show a "Save X%" badge and the crossed-out price only from this discount upward;
+    // smaller discounts read as cheap, so those cards show one clean price.
+    discountBadgeMinPercent: 30,
   },
 
   social: {

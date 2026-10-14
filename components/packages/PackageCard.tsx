@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { Clock, Check } from "lucide-react";
+import { Clock, Check, MessageCircle } from "lucide-react";
 import { Package } from "@/types";
-import { optimizeImageUrl } from "@/lib/utils";
+import { createWhatsAppUrl, optimizeImageUrl } from "@/lib/utils";
 import { SITE_CONFIG } from "@/lib/config/site";
+import { CARD_HIGHLIGHTS } from "@/lib/config/cardHighlights";
 
 // Only the fields the card renders, so pages can avoid shipping full package records to the client
 export type PackageCardData = Pick<
@@ -36,8 +37,15 @@ export function toPackageCardData(pkg: Package): PackageCardData {
     featured: pkg.featured,
     active: pkg.active,
     main_image: pkg.main_image,
-    inclusions: pkg.inclusions.slice(0, 3),
+    inclusions: cardHighlights(pkg),
   };
+}
+
+// Curated distinctive bullets when they still match the package, else the first three inclusions
+function cardHighlights(pkg: Package): string[] {
+  const curated = CARD_HIGHLIGHTS[pkg.slug];
+  if (curated && curated.every((item) => pkg.inclusions.includes(item))) return [...curated];
+  return pkg.inclusions.slice(0, 3);
 }
 
 interface PackageCardProps {
@@ -47,12 +55,19 @@ interface PackageCardProps {
 }
 
 export default function PackageCard({ pkg, priority = false }: PackageCardProps) {
-  // Discounts are reserved for a few promoted packages; everything else shows one clean price
-  const isPromoted = SITE_CONFIG.promotions.discountBadgeSlugs.includes(pkg.slug);
-  const hasDiscount = isPromoted && !!pkg.original_price && pkg.original_price > pkg.price;
-  const discountPercent = hasDiscount
-    ? Math.round(((pkg.original_price! - pkg.price) / pkg.original_price!) * 100)
-    : null;
+  // Only meaningful discounts get a badge and a crossed-out price (threshold in site config)
+  const discountPercent =
+    pkg.original_price && pkg.original_price > pkg.price
+      ? Math.round(((pkg.original_price - pkg.price) / pkg.original_price) * 100)
+      : 0;
+  const showDiscount = discountPercent >= SITE_CONFIG.promotions.discountBadgeMinPercent;
+  // One badge at most: the discount when it qualifies, otherwise the package's lead badge
+  const badge = showDiscount ? `Save ${discountPercent}%` : pkg.badges?.[0];
+
+  const whatsappUrl = createWhatsAppUrl(
+    SITE_CONFIG.contact.whatsapp,
+    SITE_CONFIG.whatsappTemplates.packageInquiry(pkg.name)
+  );
 
   return (
     <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-surface ring-1 ring-line transition-[box-shadow,transform] duration-500 ease-[var(--ease-out-soft)] hover:shadow-lift motion-safe:hover:-translate-y-1">
@@ -69,9 +84,9 @@ export default function PackageCard({ pkg, priority = false }: PackageCardProps)
         />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-dune-950/80 to-transparent" />
 
-        {discountPercent && (
+        {badge && (
           <span className="absolute left-4 top-4 rounded-full bg-sand-50 px-3 py-1 text-label font-semibold uppercase text-dune-900">
-            Save {discountPercent}%
+            {badge}
           </span>
         )}
 
@@ -83,7 +98,7 @@ export default function PackageCard({ pkg, priority = false }: PackageCardProps)
 
       <div className="flex flex-1 flex-col p-6 sm:p-7">
         <h3 className="font-display text-h3 font-semibold text-ink">
-          {/* Stretched link: the whole card opens the package page */}
+          {/* Stretched link: the whole card opens the package page; buttons below sit above it */}
           <Link
             href={`/packages/${pkg.slug}`}
             className="after:absolute after:inset-0 after:content-[''] focus-visible:outline-none focus-visible:after:rounded-2xl focus-visible:after:ring-2 focus-visible:after:ring-gold-500"
@@ -91,6 +106,10 @@ export default function PackageCard({ pkg, priority = false }: PackageCardProps)
             {pkg.name}
           </Link>
         </h3>
+
+        {pkg.short_description && (
+          <p className="mt-3 line-clamp-2 text-small text-muted">{pkg.short_description}</p>
+        )}
 
         {pkg.inclusions.length > 0 && (
           <ul className="mb-6 mt-4 space-y-2">
@@ -107,19 +126,28 @@ export default function PackageCard({ pkg, priority = false }: PackageCardProps)
           <div className="min-w-0">
             <p className="text-label uppercase text-muted">
               From
-              {hasDiscount && (
+              {showDiscount && (
                 <span className="ml-2 normal-case tracking-normal line-through">AED {pkg.original_price}</span>
               )}
             </p>
             <p className="font-display text-h3 font-semibold lining-nums tabular-nums text-ink">AED {pkg.price}</p>
             <p className="truncate text-small text-muted">{pkg.per_unit || "per person"}</p>
           </div>
-          <Link
-            href={`/booking?package=${encodeURIComponent(pkg.id)}`}
-            className="btn-gold relative z-10 shrink-0"
-          >
-            Book Now
-          </Link>
+          <div className="relative z-10 flex shrink-0 items-center gap-2">
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex h-11 w-11 items-center justify-center rounded-full bg-[#25D366]/12 text-[#128C4B] ring-1 ring-[#25D366]/30 transition-colors hover:bg-[#25D366] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] dark:text-[#4ADE80]"
+              aria-label={`WhatsApp us about ${pkg.name}`}
+              title="WhatsApp us"
+            >
+              <MessageCircle className="h-5 w-5" aria-hidden="true" />
+            </a>
+            <Link href={`/booking?package=${encodeURIComponent(pkg.id)}`} className="btn-gold">
+              Book Now
+            </Link>
+          </div>
         </div>
       </div>
     </article>

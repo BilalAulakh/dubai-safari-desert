@@ -1,9 +1,11 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, MessageCircle, Users } from "lucide-react";
 import type { Package } from "@/types";
 import PackageCard, { toPackageCardData } from "@/components/packages/PackageCard";
 import ScrollReveal from "@/components/common/ScrollReveal";
 import { HOMEPAGE_PACKAGE_GROUPS, PACKAGE_FILTERS } from "@/lib/config/packageGroups";
+import { SITE_CONFIG } from "@/lib/config/site";
+import { createWhatsAppUrl } from "@/lib/utils";
 
 interface FeaturedPackagesProps {
   packages: Package[];
@@ -13,6 +15,10 @@ interface FeaturedPackagesProps {
 export default function FeaturedPackages({ packages }: FeaturedPackagesProps) {
   const bySlug = new Map(packages.filter((p) => p.active).map((p) => [p.slug, p]));
   let cardIndex = 0;
+  const groupWhatsappUrl = createWhatsAppUrl(
+    SITE_CONFIG.contact.whatsapp,
+    "Hello Safari Dune Tours, we are a group of 4 or more. Could you share your group rates?"
+  );
 
   return (
     <section className="section-y overflow-hidden bg-page">
@@ -67,6 +73,22 @@ export default function FeaturedPackages({ packages }: FeaturedPackagesProps) {
               </div>
             );
           })}
+        </div>
+
+        {/* Group pricing lives here once, instead of repeating on every card */}
+        <div className="mt-14 flex flex-col items-start gap-4 rounded-2xl bg-surface-alt p-6 ring-1 ring-line sm:flex-row sm:items-center sm:justify-between sm:p-8 lg:mt-20">
+          <div className="flex items-center gap-4">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gold-500/15 text-accent">
+              <Users className="h-5 w-5" aria-hidden="true" />
+            </span>
+            <p className="text-body-lg text-ink">
+              Travelling as a group of 4 or more? WhatsApp us for special rates.
+            </p>
+          </div>
+          <a href={groupWhatsappUrl} target="_blank" rel="noopener noreferrer" className="btn-whatsapp shrink-0">
+            <MessageCircle className="h-4 w-4" aria-hidden="true" />
+            <span>WhatsApp Us</span>
+          </a>
         </div>
       </div>
     </section>
