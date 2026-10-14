@@ -369,13 +369,18 @@
     transform: translateY(0);
   }
 
+  /* Bronze-gold so white text passes AA (≈4.6:1 mid-button) */
   .btn-gold {
-    background-color: var(--color-gold-500);
-    color: var(--color-dune-900);
+    background-color: #946A18;
+    background-image: linear-gradient(135deg, #A8791F 0%, #8C6214 100%);
+    color: #FFFFFF;
     font-weight: 700;
+    box-shadow: 0 6px 16px -8px rgba(140, 98, 20, 0.6);
   }
   .btn-gold:hover {
-    background-color: var(--color-gold-400);
+    background-color: #7A5410;
+    background-image: linear-gradient(135deg, #946A18 0%, #7A5410 100%);
+    color: #FFFFFF;
   }
 
   .btn-lg {

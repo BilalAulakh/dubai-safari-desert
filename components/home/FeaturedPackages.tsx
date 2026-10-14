@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import Link from "next/link";
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import PackageCard, { type PackageCardData } from "@/components/packages/PackageCard";
 import ScrollReveal from "@/components/common/ScrollReveal";
 
@@ -14,7 +13,6 @@ export default function FeaturedPackages({ packages }: FeaturedPackagesProps) {
   const sliderRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
-  const [activeIndex, setActiveIndex] = useState(0);
 
   // Use all active packages
   const displayPackages = packages.filter((p) => p.active);
@@ -24,13 +22,6 @@ export default function FeaturedPackages({ packages }: FeaturedPackagesProps) {
     const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current;
     setCanScrollLeft(scrollLeft > 15);
     setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 15);
-
-    const firstCard = sliderRef.current.firstElementChild as HTMLElement | null;
-    if (firstCard) {
-      const cardWidth = firstCard.offsetWidth + 24;
-      const index = Math.round(scrollLeft / cardWidth);
-      setActiveIndex(Math.min(Math.max(0, index), displayPackages.length - 1));
-    }
   };
 
   useEffect(() => {
@@ -95,10 +86,6 @@ export default function FeaturedPackages({ packages }: FeaturedPackagesProps) {
               >
                 <ChevronRight className="h-5 w-5" aria-hidden="true" />
               </button>
-              <Link href="/packages" className="link-arrow ml-3 hidden sm:inline-flex">
-                <span>View All ({packages.length})</span>
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
             </div>
           </div>
         </ScrollReveal>
@@ -117,15 +104,6 @@ export default function FeaturedPackages({ packages }: FeaturedPackagesProps) {
           </div>
         </div>
 
-        <div className="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 sm:justify-end">
-          <span className="text-small text-muted" aria-live="polite">
-            Showing {activeIndex + 1} of {displayPackages.length} packages
-          </span>
-          <Link href="/packages" className="link-arrow">
-            <span>Explore All Packages ({packages.length})</span>
-            <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </Link>
-        </div>
       </div>
     </section>
   );
