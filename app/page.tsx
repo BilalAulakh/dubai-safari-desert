@@ -12,7 +12,6 @@ import HomeReviews from "@/components/home/HomeReviews";
 import HomeFAQ from "@/components/home/HomeFAQ";
 import CTASection from "@/components/home/CTASection";
 import { SectionSkeleton } from "@/components/common/Skeletons";
-import { toPackageCardData } from "@/components/packages/PackageCard";
 
 import {
   getPackages,
@@ -34,8 +33,7 @@ export const metadata: Metadata = {
 // Each data-backed section fetches its own data, so static sections render
 // immediately and the rest stream in behind their own skeleton.
 async function PackagesBlock() {
-  const packages = await getPackages();
-  return <FeaturedPackages packages={packages.map(toPackageCardData)} />;
+  return <FeaturedPackages packages={await getPackages()} />;
 }
 
 async function ActivitiesBlock() {

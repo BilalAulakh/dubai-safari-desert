@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Search, ArrowUpDown, Compass, Flame, ShieldAlert } from "lucide-react";
-import { Package, PackageCategory } from "@/types";
+import { Package } from "@/types";
+import { PACKAGE_FILTERS, isPackageFilterId, type PackageFilterId } from "@/lib/config/packageGroups";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import {
   setSearchQuery,
@@ -15,21 +16,23 @@ interface PackagesCatalogFilterProps {
   initialPackages: Package[];
 }
 
-type FilterCategory = "all" | PackageCategory;
-
 interface CategoryTab {
-  id: FilterCategory;
+  id: PackageFilterId;
   label: string;
   icon: string;
 }
 
+const TAB_ICONS: Record<PackageFilterId, string> = {
+  all: "✨",
+  classic: "🐪",
+  "private-vip": "🚙",
+  adrenaline: "🏍️",
+  overnight: "🏕️",
+};
+
 const CATEGORY_TABS: CategoryTab[] = [
-  { id: "all", label: "All Tours", icon: "✨" },
-  { id: "desert-safari", label: "Desert Safari", icon: "🐪" },
-  { id: "atv-quad", label: "ATV Quad Bikes", icon: "🏍️" },
-  { id: "dune-buggy", label: "Dune Buggies", icon: "🏎️" },
-  { id: "overnight", label: "Overnight Camping", icon: "🏕️" },
-  { id: "special-offer", label: "Deals & BOGO", icon: "🎁" },
+  { id: "all", label: "All Tours", icon: TAB_ICONS.all },
+  ...PACKAGE_FILTERS.map((f) => ({ id: f.id, label: f.label, icon: TAB_ICONS[f.id] })),
 ];
 
 export default function PackagesCatalogFilter({
@@ -40,33 +43,31 @@ export default function PackagesCatalogFilter({
     (state) => state.packages
   );
 
-  const [selectedCategory, setSelectedCategory] = useState<FilterCategory>("all");
+  const [selectedCategory, setSelectedCategory] = useState<PackageFilterId>("all");
+
+  // Deep links like /packages?category=adrenaline. Read after mount so the page stays statically rendered.
+  useEffect(() => {
+    const fromUrl = new URLSearchParams(window.location.search).get("category");
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time sync from the URL
+    if (isPackageFilterId(fromUrl)) setSelectedCategory(fromUrl);
+  }, []);
+
+  const selectCategory = (id: PackageFilterId) => {
+    setSelectedCategory(id);
+    const url = new URL(window.location.href);
+    if (id === "all") url.searchParams.delete("category");
+    else url.searchParams.set("category", id);
+    window.history.replaceState(null, "", url);
+  };
 
   // Use either store packages if hydrated or initialPackages
   const allPackages = items.length > 0 ? items : initialPackages;
 
   // Compute category counts
   const categoryCounts = useMemo(() => {
-    const counts: Record<FilterCategory, number> = {
-      all: allPackages.filter((p) => p.active).length,
-      "desert-safari": 0,
-      "atv-quad": 0,
-      "dune-buggy": 0,
-      overnight: 0,
-      "special-offer": 0,
-    };
-
-    allPackages.forEach((pkg) => {
-      if (!pkg.active) return;
-      if (pkg.category && counts[pkg.category] !== undefined) {
-        counts[pkg.category]++;
-      }
-      // Also tag special offers if discounted
-      if (pkg.category === "special-offer" || (pkg.badges && pkg.badges.some((b) => b.includes("Free")))) {
-        if (pkg.category !== "special-offer") counts["special-offer"]++;
-      }
-    });
-
+    const active = allPackages.filter((p) => p.active);
+    const counts = { all: active.length } as Record<PackageFilterId, number>;
+    for (const f of PACKAGE_FILTERS) counts[f.id] = active.filter(f.matches).length;
     return counts;
   }, [allPackages]);
 
@@ -84,14 +85,8 @@ export default function PackagesCatalogFilter({
 
         // Category filter
         if (selectedCategory !== "all") {
-          if (selectedCategory === "special-offer") {
-            const isOffer =
-              pkg.category === "special-offer" ||
-              (pkg.badges && pkg.badges.some((b) => b.toLowerCase().includes("free")));
-            if (!isOffer) return false;
-          } else if (pkg.category !== selectedCategory) {
-            return false;
-          }
+          const filter = PACKAGE_FILTERS.find((f) => f.id === selectedCategory);
+          if (filter && !filter.matches(pkg)) return false;
         }
 
         // Search filter
@@ -128,7 +123,7 @@ export default function PackagesCatalogFilter({
           return (
             <button
               key={tab.id}
-              onClick={() => setSelectedCategory(tab.id)}
+              onClick={() => selectCategory(tab.id)}
               className={`px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm whitespace-nowrap transition-all duration-200 flex items-center gap-2 cursor-pointer shadow-sm ${
                 isSelected
                   ? "bg-gradient-to-r from-[#C89B3C] to-[#E8C48A] text-[#17120D] shadow-md shadow-[#C89B3C]/20 scale-102"
@@ -206,7 +201,7 @@ export default function PackagesCatalogFilter({
           Showing <strong>{filteredPackages.length}</strong> desert tour
           {filteredPackages.length !== 1 ? "s" : ""}
           {selectedCategory !== "all" && (
-            <span> in <strong className="capitalize text-[#8C6214] dark:text-[#E8C48A]">{selectedCategory.replace("-", " ")}</strong></span>
+            <span> in <strong className="text-[#8C6214] dark:text-[#E8C48A]">{CATEGORY_TABS.find((t) => t.id === selectedCategory)?.label}</strong></span>
           )}
         </span>
         {(searchQuery || selectedDuration !== "all" || selectedCategory !== "all") && (
@@ -214,7 +209,7 @@ export default function PackagesCatalogFilter({
             onClick={() => {
               dispatch(setSearchQuery(""));
               dispatch(setSelectedDuration("all"));
-              setSelectedCategory("all");
+              selectCategory("all");
             }}
             className="text-[#8C6214] dark:text-[#E8C48A] hover:underline font-semibold cursor-pointer"
           >
@@ -242,7 +237,7 @@ export default function PackagesCatalogFilter({
             onClick={() => {
               dispatch(setSearchQuery(""));
               dispatch(setSelectedDuration("all"));
-              setSelectedCategory("all");
+              selectCategory("all");
             }}
             className="btn-gold mt-6 cursor-pointer"
           >
