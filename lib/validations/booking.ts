@@ -11,9 +11,9 @@ export const bookingSchema = z.object({
     .regex(/^[+0-9\s\-()]+$/, "Phone number can only contain digits, +, spaces, and dashes"),
   email: z
     .string()
-    .email("Please provide a valid email address")
-    .optional()
-    .or(z.literal("")),
+    .trim()
+    .min(1, "Email address is required")
+    .email("Please provide a valid email address"),
   package_id: z.string().min(1, "Please select a safari package"),
   booking_date: z
     .string()

@@ -244,7 +244,7 @@ export default function BookingForm({
 
           <div className="sm:col-span-2">
             <label className="block text-xs font-semibold uppercase tracking-wider text-[#5E554C] dark:text-[#B8ADA2] mb-2">
-              Email Address (Optional)
+              Email Address *
             </label>
             <input
               type="email"
