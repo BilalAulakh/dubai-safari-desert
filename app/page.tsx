@@ -23,7 +23,7 @@ export const revalidate = 86400; // 1 day; admin saves refresh pages on demand
 export async function generateMetadata(): Promise<Metadata> {
   const startingPrice = await getStartingPrice();
   const fromPrice = startingPrice !== null ? ` from ${formatPrice(startingPrice)}` : "";
-  const description = `Book a Dubai desert safari${fromPrice} with free hotel pickup, 4x4 dune bashing, camel rides, BBQ dinner and live shows. Pay on the day with ${SITE_CONFIG.name}.`;
+  const description = `Book a Dubai desert safari${fromPrice} with hotel pickup, 4x4 dune bashing, camel rides, BBQ dinner and live shows. Pay on the day with ${SITE_CONFIG.name}.`;
   return {
     description,
     alternates: { canonical: "/" },

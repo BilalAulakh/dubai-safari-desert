@@ -14,7 +14,7 @@ export const initialFAQs: FAQ[] = [
     id: "faq-2",
     question: "Is hotel pickup available?",
     answer:
-      "Yes! Complimentary doorstep pickup and drop-off in a climate-controlled 4x4 Land Cruiser is included with all our safari packages. We pick up directly from hotels, private residences, vacation rentals, and cruise terminals across Dubai, Sharjah, and Ajman.",
+      "Yes! Doorstep pickup and drop-off in a climate-controlled 4x4 Land Cruiser is available with all our safari packages. We pick up directly from hotels, private residences, vacation rentals, and cruise terminals across Dubai, Sharjah, and Ajman.",
     category: "Pickup",
     active: true,
     sort_order: 2,

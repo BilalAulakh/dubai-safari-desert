@@ -66,7 +66,7 @@ export default function AboutPage() {
               </div>
               <div className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-                <span>Complimentary Hotel Pickup</span>
+                <span>Hotel Pickup Available</span>
               </div>
               <div className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-emerald-500 shrink-0" />

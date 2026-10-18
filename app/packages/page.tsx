@@ -46,7 +46,7 @@ export default async function PackagesPage() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-[#E8C48A]">
             <div className="flex items-center gap-2">
               <MapPin className="w-4 h-4 text-[#C89B3C]" />
-              <span>Complimentary Hotel Pickup</span>
+              <span>Hotel Pickup Available</span>
             </div>
             <div className="flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-[#C89B3C]" />

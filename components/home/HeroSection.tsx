@@ -1,12 +1,9 @@
-import { Fragment } from "react";
 import Link from "next/link";
 import { ArrowRight, MessageCircle } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config/site";
 import { createWhatsAppUrl, formatPrice } from "@/lib/utils";
 import HeroVideo from "@/components/home/HeroVideo";
 import { warnIfStartingPriceDrifts } from "@/lib/data/pricing";
-
-const HERO_POINTS = ["Free hotel pickup", "BBQ dinner & 7 live shows", "Pay on the day, no card needed"];
 
 interface HeroSectionProps {
   // From getStartingPrice(): the cheapest active package. Never pass a literal.
@@ -48,22 +45,6 @@ export default async function HeroSection({ startingPrice }: HeroSectionProps) {
             )}
           </h1>
 
-          <p className="animate-hero-fade-up mt-6 max-w-[44rem] text-body-lg text-sand-50 opacity-0 [text-shadow:0_1px_12px_rgb(14_10_7/0.6)] [animation-delay:150ms]">
-            {/* Each phrase stays whole; lines only break at the separators. The dot is real
-                text (no hidden commas), so copy, crawlers and screen readers all get
-                "Free hotel pickup · BBQ dinner & 7 live shows · Pay on the day, no card needed" */}
-            {HERO_POINTS.map((point, i) => (
-              <Fragment key={point}>
-                {i > 0 && (
-                  <>
-                    {" "}
-                    <span className="mx-1 text-amber-300">·</span>{" "}
-                  </>
-                )}
-                <span className="whitespace-nowrap">{point}</span>
-              </Fragment>
-            ))}
-          </p>
 
           <div className="animate-hero-fade-up mt-10 flex flex-col gap-3 opacity-0 [animation-delay:300ms] sm:flex-row sm:gap-4">
             <Link href="/booking" className="btn-gold btn-lg group" id="hero-book-now-cta">
