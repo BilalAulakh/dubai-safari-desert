@@ -37,6 +37,8 @@ export const bookingSchema = z.object({
   pickup_location: z.string().min(2, "Please select a pickup area"),
   hotel_name: z.string().max(120).optional(),
   special_requests: z.string().max(600).optional(),
+  // Hidden field: real visitors never see or fill it, bots usually do
+  company_website: z.string().max(200).optional(),
 });
 
 export type BookingFormData = z.infer<typeof bookingSchema>;

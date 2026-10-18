@@ -46,6 +46,10 @@ export default function BookingForm({
     resolver: zodResolver(bookingSchema),
     defaultValues: {
       package_id: defaultPackageId || packages[0]?.id || "",
+      customer_name: "",
+      phone: "",
+      email: "",
+      company_website: "",
       booking_date: defaultDate && defaultDate >= minDateString ? defaultDate : minDateString,
       adults: defaultAdults && defaultAdults > 0 ? defaultAdults : 2,
       children: 0,
@@ -95,8 +99,10 @@ export default function BookingForm({
         setSubmitError(actionResult.payload || "Failed to submit booking request. Please try again.");
         setIsSubmitting(false);
       }
-    } catch (err: any) {
-      setSubmitError(err.message || "An unexpected error occurred. Please try again.");
+    } catch (err) {
+      setSubmitError(
+        (err instanceof Error && err.message) || "An unexpected error occurred. Please try again."
+      );
       setIsSubmitting(false);
     }
   };
@@ -113,6 +119,14 @@ export default function BookingForm({
           <span>{submitError}</span>
         </div>
       )}
+
+      {/* Honeypot for spam bots: hidden from people and screen readers */}
+      <div aria-hidden="true" style={{ position: "absolute", left: "-10000px", width: 1, height: 1, overflow: "hidden" }}>
+        <label>
+          Company website
+          <input type="text" tabIndex={-1} autoComplete="off" {...register("company_website")} />
+        </label>
+      </div>
 
       {/* 1. Safari Selection */}
       <div className="space-y-4">

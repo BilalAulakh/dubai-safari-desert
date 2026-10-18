@@ -1130,6 +1130,19 @@ export async function getBookings(): Promise<Booking[]> {
   );
 }
 
+export async function getBookingById(id: string): Promise<Booking | null> {
+  try {
+    const supabase = getServerSupabase();
+    if (supabase) {
+      const { data, error } = await supabase.from("bookings").select("*").eq("id", id).maybeSingle();
+      if (!error && data) return data as Booking;
+    }
+  } catch (err) {
+    console.error("Supabase getBookingById error:", err);
+  }
+  return fallbackBookings.find((b) => b.id === id) || null;
+}
+
 export async function getBookingByReference(reference: string): Promise<Booking | null> {
   try {
     const supabase = getServerSupabase();
