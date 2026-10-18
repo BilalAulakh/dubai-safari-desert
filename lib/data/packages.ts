@@ -11,7 +11,7 @@ export const initialPackages: Package[] = [
     "per_unit": "per 02 person",
     "duration": "6 - 7 Hours",
     "featured": true,
-    "active": true,
+    "active": false,
     "badges": [
       "Buy 1 Get 1 Free",
       "Most Selling",
