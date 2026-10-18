@@ -1,8 +1,9 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { bookingSchema } from "@/lib/validations/booking";
 import { createBooking, getBookings, updateBookingStatus, deleteBooking } from "@/lib/data/store";
 import { requireAdmin } from "@/lib/auth/admin-session";
 import { SITE_CONFIG } from "@/lib/config/site";
+import { sendBookingEmails } from "@/lib/email/bookingEmails";
 
 export const dynamic = "force-dynamic";
 
@@ -53,6 +54,9 @@ export async function POST(request: Request) {
       hotel_name: data.hotel_name || undefined,
       special_requests: data.special_requests || undefined,
     });
+
+    // Emails go out after the response so the customer isn't kept waiting on Brevo
+    after(() => sendBookingEmails(booking));
 
     return NextResponse.json({
       success: true,
