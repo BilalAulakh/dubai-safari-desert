@@ -39,7 +39,7 @@ export default function PackagesCatalogFilter({
   initialPackages,
 }: PackagesCatalogFilterProps) {
   const dispatch = useAppDispatch();
-  const { searchQuery, selectedDuration, sortBy, items } = useAppSelector(
+  const { searchQuery, selectedDuration, sortBy } = useAppSelector(
     (state) => state.packages
   );
 
@@ -60,8 +60,9 @@ export default function PackagesCatalogFilter({
     window.history.replaceState(null, "", url);
   };
 
-  // Use either store packages if hydrated or initialPackages
-  const allPackages = items.length > 0 ? items : initialPackages;
+  // Always the server's packages (Supabase). The Redux store starts out holding the
+  // hardcoded list from lib/data/packages.ts, which once showed retired packages here.
+  const allPackages = initialPackages;
 
   // Compute category counts
   const categoryCounts = useMemo(() => {

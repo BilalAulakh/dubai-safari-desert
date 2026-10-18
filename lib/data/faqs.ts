@@ -97,7 +97,7 @@ export const initialFAQs: FAQ[] = [
     answer:
       "Our signature Buy 1 Get 1 Free promotion allows 2 persons to experience the complete evening desert safari for just AED 79 total! Both guests receive the full experience including 4x4 dune bashing, camel riding, sandboarding, BBQ dinner buffet, and 7 live stage shows. Spots for sunset departures are limited daily, so we advise reserving in advance.",
     category: "Packages",
-    active: true,
+    active: false, // Buy 1 Get 1 offer retired; its AED 79 price must not be advertised
     sort_order: 11,
   },
   {

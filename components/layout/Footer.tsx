@@ -83,7 +83,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/packages/private-desert-safari"
+                  href="/packages/vip-private-desert-safari-dubai"
                   className="hover:text-[#8C6214] dark:hover:text-[#E8C48A] transition-colors"
                 >
                   VIP Private Safari Experience
@@ -91,7 +91,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/packages/quad-bike-desert-safari"
+                  href="/packages?category=adrenaline"
                   className="hover:text-[#8C6214] dark:hover:text-[#E8C48A] transition-colors"
                 >
                   Quad Bike & Dune Buggy Tour

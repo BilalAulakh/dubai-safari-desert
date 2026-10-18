@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: PackagePageProps): Promise<Me
   const { slug } = await params;
   const pkg = await getPackageBySlug(slug);
 
-  if (!pkg) {
+  if (!pkg || !pkg.active) {
     return {
       title: "Package Not Found | Safari Dune Tours",
       robots: { index: false, follow: false },
@@ -83,7 +83,8 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
   const { slug } = await params;
   const pkg = await getPackageBySlug(slug);
 
-  if (!pkg) {
+  // Inactive (hidden in admin) packages have no public page
+  if (!pkg || !pkg.active) {
     notFound();
   }
 

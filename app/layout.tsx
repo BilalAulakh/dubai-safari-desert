@@ -5,6 +5,7 @@ import AppShell from "@/components/layout/AppShell";
 import Footer from "@/components/layout/Footer";
 import { ThemeProvider } from "@/components/common/ThemeProvider";
 import StoreProvider from "@/lib/redux/StoreProvider";
+import { getPriceRangeLabel } from "@/lib/data/pricing";
 import { SITE_CONFIG } from "@/lib/config/site";
 import { toInternationalPhone } from "@/lib/utils";
 
@@ -96,11 +97,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const priceRange = await getPriceRangeLabel();
+
   // Structured Data (JSON-LD) for Organization, WebSite, TravelAgency & TouristAttraction
   const jsonLd = {
     "@context": "https://schema.org",
@@ -145,7 +148,7 @@ export default function RootLayout({
         image: SITE_CONFIG.ogImage,
         telephone: toInternationalPhone(SITE_CONFIG.contact.phone),
         email: SITE_CONFIG.contact.email,
-        priceRange: "AED 130 - AED 950",
+        ...(priceRange ? { priceRange } : {}), // derived from active packages
         currenciesAccepted: "AED, USD, EUR, GBP",
         paymentAccepted: "Cash, Credit Card, Debit Card, Online Payment Link",
         address: {

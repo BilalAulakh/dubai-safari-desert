@@ -14,14 +14,35 @@ import {
   getFAQs,
   getApprovedReviews,
 } from "@/lib/data/store";
+import { getStartingPrice } from "@/lib/data/pricing";
+import { SITE_CONFIG } from "@/lib/config/site";
+import { formatPrice } from "@/lib/utils";
 
 export const revalidate = 86400; // 1 day; admin saves refresh pages on demand
 
-export const metadata: Metadata = {
-  alternates: {
-    canonical: "/",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const startingPrice = await getStartingPrice();
+  const fromPrice = startingPrice !== null ? ` from ${formatPrice(startingPrice)}` : "";
+  const description = `Book a Dubai desert safari${fromPrice} with free hotel pickup, 4x4 dune bashing, camel rides, BBQ dinner and live shows. Pay on the day with ${SITE_CONFIG.name}.`;
+  return {
+    description,
+    alternates: { canonical: "/" },
+    openGraph: {
+      type: "website",
+      url: SITE_CONFIG.url,
+      siteName: SITE_CONFIG.name,
+      title: SITE_CONFIG.title,
+      description,
+      images: [{ url: SITE_CONFIG.ogImage, width: 1200, height: 630, alt: "Dubai Desert Safari Adventures" }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: SITE_CONFIG.title,
+      description,
+      images: [SITE_CONFIG.ogImage],
+    },
+  };
+}
 
 // Each data-backed section fetches its own data, so static sections render
 // immediately and the rest stream in behind their own skeleton.
@@ -37,14 +58,16 @@ async function FAQBlock() {
   return <HomeFAQ faqs={await getFAQs()} />;
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const startingPrice = await getStartingPrice();
+
   // Hero poster is the first large paint; fetch it with the HTML instead of after hydration
   preload("/images/hero-poster.webp", { as: "image", fetchPriority: "high" });
 
   return (
     <div className="overflow-x-hidden">
       {/* Kept to what helps a visitor decide and book: offer, packages, process, proof, answers */}
-      <HeroSection />
+      <HeroSection startingPrice={startingPrice} />
 
       <Suspense fallback={<SectionSkeleton />}>
         <PackagesBlock />

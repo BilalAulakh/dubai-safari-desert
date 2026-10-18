@@ -1,10 +1,19 @@
 import Link from "next/link";
 import { ArrowRight, MessageCircle } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config/site";
-import { createWhatsAppUrl } from "@/lib/utils";
+import { createWhatsAppUrl, formatPrice } from "@/lib/utils";
 import HeroVideo from "@/components/home/HeroVideo";
+import { warnIfStartingPriceDrifts } from "@/lib/data/pricing";
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  // From getStartingPrice(): the cheapest active package. Never pass a literal.
+  startingPrice: number | null;
+}
+
+export default async function HeroSection({ startingPrice }: HeroSectionProps) {
+  // Dev-only: warns if the price we're about to render isn't the cheapest active package
+  await warnIfStartingPriceDrifts(startingPrice, "HeroSection");
+
   const whatsappUrl = createWhatsAppUrl(
     SITE_CONFIG.contact.whatsapp,
     SITE_CONFIG.whatsappTemplates.general
@@ -27,7 +36,13 @@ export default function HeroSection() {
       <div className="container-page pb-24 pt-40 sm:pb-28 lg:pb-32">
         <div className="max-w-3xl">
           <h1 className="animate-hero-fade-up font-display text-display font-semibold text-sand-50 opacity-0 [text-shadow:0_2px_18px_rgb(14_10_7/0.55)]">
-            Dubai Desert Safari <span className="text-amber-300">from AED 79</span>
+            Dubai Desert Safari
+            {startingPrice !== null && (
+              <>
+                {" "}
+                <span className="text-amber-300">from {formatPrice(startingPrice)}</span>
+              </>
+            )}
           </h1>
 
           <p className="animate-hero-fade-up mt-6 max-w-[44rem] text-body-lg text-sand-50 opacity-0 [text-shadow:0_1px_12px_rgb(14_10_7/0.6)] [animation-delay:150ms]">
