@@ -85,7 +85,7 @@ The desert temperature drops noticeably once the sun dips below the horizon. If 
 
 ### 5. Cultural Modesty Guidelines
 Dubai is welcoming and cosmopolitan. While casual holiday attire is completely fine on the dunes, respect local traditions by avoiding excessively revealing swimwear or micro-shorts at the family camp.',
-  'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1700124708071-4af4867eeaf3?q=80&w=1200&auto=format&fit=crop',
   'Visitor walking across golden Dubai desert dunes wearing light linen clothing',
   'What to Wear for Dubai Desert Safari | Dress Code & Packing Guide',
   'Comprehensive guide on what to wear for a Dubai desert safari. Discover footwear tips, breathable fabrics, sun protection, evening layers, and cultural guidelines.',
@@ -117,7 +117,7 @@ The evening safari is the quintessential Dubai tourism experience, blending thri
 ### Summary: How to Choose
 - If your schedule is tight and you want adventure: **Book Morning Safari**.
 - If you want the complete Dubai experience with dinner and live shows: **Book Evening Safari**.',
-  'https://images.unsplash.com/photo-1547234935-80c7145ec969?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1565081189012-7f02978bc81c?q=80&w=1200&auto=format&fit=crop',
   'Golden sunset over Dubai desert safari camp with traditional Arabian lanterns',
   'Morning vs Evening Desert Safari Dubai | Comparison Guide',
   'Deciding between a morning vs evening desert safari in Dubai? Read our detailed head-to-head comparison of timings, activities, entertainment, and BBQ dinners.',
@@ -145,7 +145,7 @@ The evening safari is the quintessential Dubai tourism experience, blending thri
 
 ### Kid-Friendly Dining at Camp
 Our evening buffet includes universally loved choices such as grilled chicken skewers, crispy potato wedges, pasta, flatbreads, and fresh fruit platters.',
-  'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1549944850-84e00be4203b?q=80&w=1200&auto=format&fit=crop',
   'Family enjoying a camel ride together across Dubai desert dunes during sunset',
   'Best Desert Safari in Dubai for Families | Kids Guide & Safety',
   'Explore the best desert safari in Dubai for families with children and seniors. Learn about gentle dune drives, kid-friendly camp activities, and private car options.',
@@ -191,7 +191,7 @@ Watch the hypnotic spinning of Sufi Tanoura dancers in LED costumes, followed by
 
 ### 10. Overnight Stargazing Under Quiet Desert Skies
 Extend your evening safari into an overnight campout with private tents, campfire stargazing, and a fresh sunrise breakfast.',
-  'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1494674557684-c26be0f88950?q=80&w=1200&auto=format&fit=crop',
   'Adventure seekers quad biking on red desert dunes in Dubai during morning safari',
   '10 Best Things to Do in Dubai Desert | Safari Adventure Guide',
   'From thrilling 4x4 red dune bashing and quad biking to camel trekking and stargazing BBQ camps, discover the top 10 things to do in the Dubai desert.',

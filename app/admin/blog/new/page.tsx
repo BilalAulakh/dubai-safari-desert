@@ -33,7 +33,7 @@ export default function CreateBlogPage() {
   const [excerpt, setExcerpt] = useState("");
   const [content, setContent] = useState("");
   const [featuredImage, setFeaturedImage] = useState(
-    "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1200&auto=format&fit=crop"
+    "/images/hero-dune-bashing.webp"
   );
   const [featuredImageAlt, setFeaturedImageAlt] = useState("");
 

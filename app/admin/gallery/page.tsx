@@ -8,7 +8,7 @@ import ImageUpload from "@/components/admin/ImageUpload";
 import DeleteConfirmModal from "@/components/admin/DeleteConfirmModal";
 
 const DEFAULT_IMAGE =
-  "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop";
+  "/images/hero-dune-bashing.webp";
 
 async function callApi(path: string, method: string, body?: unknown, query = "") {
   const res = await fetch(`/api/admin/${path}${query}`, {

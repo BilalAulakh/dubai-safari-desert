@@ -89,7 +89,7 @@ export async function POST(request: Request) {
       slug,
       excerpt: body.excerpt ? String(body.excerpt).trim() : "",
       content: body.content ? String(body.content).trim() : "",
-      featured_image: body.featured_image || "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1200&auto=format&fit=crop",
+      featured_image: body.featured_image || "/images/hero-dune-bashing.webp",
       featured_image_alt: body.featured_image_alt ? String(body.featured_image_alt).trim() : body.title.trim(),
       category: body.category ? String(body.category).trim() : "Travel Guide",
       author: body.author ? String(body.author).trim() : "Safari Dune Tours",

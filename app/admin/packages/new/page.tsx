@@ -25,7 +25,7 @@ export default function CreatePackagePage() {
   const [shortDesc, setShortDesc] = useState("");
   const [desc, setDesc] = useState("");
   const [mainImage, setMainImage] = useState(
-    "https://images.unsplash.com/photo-1547234935-80c7145ec969?q=80&w=1200&auto=format&fit=crop"
+    "/images/hero-dune-bashing.webp"
   );
   const [inclusionsText, setInclusionsText] = useState(
     "Hotel Pickup & Drop-off in 4x4 Land Cruiser\n30-40 mins Dune Bashing on Lahbab red sands\nCamel Trekking & Sandboarding\nAuthentic Arabic Welcome with Gahwa & Dates\n5-Star International BBQ Buffet Dinner\nLive Sufi Tanoura & Fire Show Entertainment"

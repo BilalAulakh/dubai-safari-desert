@@ -20,8 +20,7 @@ export const initialPackages: Package[] = [
     "main_image": "/images/tours/buy-1-get-1-free-safari.webp",
     "gallery": [
       "/images/tours/evening-desert-safari-dubai.webp",
-      "/images/tours/vip-evening-desert-safari-dubai.webp",
-      "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1000&auto=format&fit=crop"
+      "/images/tours/vip-evening-desert-safari-dubai.webp"
     ],
     "short_description": "Dubai's most famous Buy 1 Get 1 Free desert safari offer! 2 Persons for only AED 79 with 4x4 dune bashing, camel rides, BBQ dinner, and 7 live stage shows.",
     "description": "Experience Dubai's #1 desert safari deal! Book for 2 persons at the unbeatable price of AED 79. Enjoy high-octane 4x4 Land Cruiser dune bashing across the red sands of Lahbab, sandboarding, repeated camel rides, henna body art, falcon photography, and a lavish open-air BBQ dinner buffet with vegetarian, non-vegetarian, and Jain dining options. The night comes alive with 7 sensational stage performances including world-class belly dancing, fiery fire shows, and Egyptian Tanoura folk dance.",
@@ -105,8 +104,7 @@ export const initialPackages: Package[] = [
     "main_image": "/images/tours/evening-desert-safari-dubai.webp",
     "gallery": [
       "/images/tours/buy-1-get-1-free-safari.webp",
-      "/images/tours/vip-evening-desert-safari-dubai.webp",
-      "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1000&auto=format&fit=crop"
+      "/images/tours/vip-evening-desert-safari-dubai.webp"
     ],
     "short_description": "Dubai's classic evening desert adventure with 4x4 red dune bashing, camel riding, sunset views, international BBQ dinner buffet, and thrilling live entertainment.",
     "description": "The quintessential Dubai desert safari. Pick up directly from your doorstep and journey into the crimson Lahbab dunes. Experience exhilarating dune bashing with expert drivers, ride camels across pristine sands, try sandboarding, and unwind at our atmospheric desert camp with live belly dancing, fire shows, Tanoura dance, and an expansive BBQ dinner buffet.",
@@ -188,8 +186,7 @@ export const initialPackages: Package[] = [
     "main_image": "/images/tours/vip-evening-desert-safari-dubai.webp",
     "gallery": [
       "/images/tours/vip-desert-safari-dubai-with-quad-bike.webp",
-      "/images/tours/vip-private-evening-desert-safari.webp",
-      "https://images.unsplash.com/photo-1547234935-80c7145ec969?q=80&w=1000&auto=format&fit=crop"
+      "/images/tours/vip-private-evening-desert-safari.webp"
     ],
     "short_description": "Indulge in royal treatment with VIP sofa seating, dedicated waiter table service, premium VIP BBQ buffet, 4x4 dune bashing, camel ride, and front-row stage shows.",
     "description": "Elevate your desert experience with luxury VIP treatment. Skip the buffet queues with dedicated waiter service delivering hot gourmet BBQ and Arabic dishes directly to your cushioned VIP sofa table with front-row views of the center stage. Includes high-red dune bashing in a 4x4 Land Cruiser, camel riding, sandboarding, and all traditional camp amenities.",
@@ -272,8 +269,7 @@ export const initialPackages: Package[] = [
     "main_image": "/images/tours/evening-desert-safari-with-quad-bike.webp",
     "gallery": [
       "/images/tours/atv-quad-bike-ride-dubai-1-person.webp",
-      "/images/tours/vip-desert-safari-dubai-with-quad-bike.webp",
-      "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1000&auto=format&fit=crop"
+      "/images/tours/vip-desert-safari-dubai-with-quad-bike.webp"
     ],
     "short_description": "The ultimate adventure combo! Enjoy 30 minutes of self-drive ATV Quad Biking in the open desert, followed by 4x4 dune bashing, camel ride, BBQ dinner, and live shows.",
     "description": "Combine high-octane self-drive quad biking with Dubai's complete evening desert safari. Take control of a powerful all-terrain quad bike for 30-45 minutes on dedicated desert circuits and open dunes with expert supervision and full safety gear. Afterward, experience heart-racing 4x4 Land Cruiser dune bashing, sandboarding, camel rides, and an evening of dinner and entertainment at the camp.",
@@ -354,8 +350,7 @@ export const initialPackages: Package[] = [
     "main_image": "/images/tours/vip-desert-safari-dubai-with-quad-bike.webp",
     "gallery": [
       "/images/tours/vip-evening-desert-safari-dubai.webp",
-      "/images/tours/atv-quad-bike-ride-dubai-1-person.webp",
-      "https://images.unsplash.com/photo-1547234935-80c7145ec969?q=80&w=1000&auto=format&fit=crop"
+      "/images/tours/atv-quad-bike-ride-dubai-1-person.webp"
     ],
     "short_description": "The ultimate VIP adrenaline safari! Includes 30-45 minutes self-drive ATV Quad Biking, 4x4 red dune bashing, VIP sofa seating, and dedicated waiter table service with BBQ dinner.",
     "description": "Enjoy supreme comfort coupled with pure adrenaline. Start with a thrilling 30-45 minute self-drive quad bike adventure over shifting desert terrain, followed by expert 4x4 dune bashing and sandboarding. At the camp, relax in your reserved VIP sofa section with dedicated waiter service catering directly to your table while you enjoy 7 live performances and a lavish VIP BBQ buffet.",
@@ -513,8 +508,7 @@ export const initialPackages: Package[] = [
     "main_image": "/images/tours/vip-private-evening-desert-safari.webp",
     "gallery": [
       "/images/tours/vip-evening-desert-safari-dubai.webp",
-      "/images/tours/private-evening-desert-safari-dubai.webp",
-      "https://images.unsplash.com/photo-1547234935-80c7145ec969?q=80&w=1000&auto=format&fit=crop"
+      "/images/tours/private-evening-desert-safari-dubai.webp"
     ],
     "short_description": "The gold standard of desert luxury. Private 4x4 Land Cruiser for up to 7 guests, VIP sofa table seating at the camp, dedicated waiter service, and gourmet BBQ dining.",
     "description": "The premier luxury desert package. You receive a dedicated private 4x4 Land Cruiser for your party, customized dune bashing across Dubai's iconic red dunes, plus reserved VIP sofa seating at the desert camp with personal waiter service delivering exquisite multi-course BBQ dishes directly to your table while enjoying spectacular live entertainment.",
@@ -592,8 +586,7 @@ export const initialPackages: Package[] = [
     ],
     "main_image": "/images/tours/morning-desert-safari-dubai.webp",
     "gallery": [
-      "/images/tours/private-morning-desert-safari-dubai.webp",
-      "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1000&auto=format&fit=crop"
+      "/images/tours/private-morning-desert-safari-dubai.webp"
     ],
     "short_description": "Experience the cool serenity of the Arabian desert at dawn. Includes early morning pickup, 4x4 dune bashing, sunrise photography, camel trekking, and sandboarding.",
     "description": "Ideal for travelers with tight afternoon schedules or early risers who want to experience the tranquil beauty of the desert in cool morning temperatures. Witness the sun rising over pristine red dunes, feel the thrill of 4x4 dune bashing, surf silky dunes on a sandboard, and enjoy gentle camel rides before returning to the city by midday.",
@@ -660,8 +653,7 @@ export const initialPackages: Package[] = [
     ],
     "main_image": "/images/tours/private-morning-desert-safari-dubai.webp",
     "gallery": [
-      "/images/tours/morning-desert-safari-dubai.webp",
-      "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1000&auto=format&fit=crop"
+      "/images/tours/morning-desert-safari-dubai.webp"
     ],
     "short_description": "Private 4x4 Land Cruiser exclusively for your family or friends at dawn. Early 05:00 AM pickup, private sunrise dune bashing, camel rides, and sandboarding.",
     "description": "Enjoy peaceful desert sunrises with your own private vehicle and safari marshal. Perfect for photographers, families with young children, or couples seeking privacy. Experience high-octane red dune bashing, camel trekking, sandboarding, and sunrise photography at your own pace.",
@@ -729,8 +721,7 @@ export const initialPackages: Package[] = [
     ],
     "main_image": "/images/tours/half-day-desert-safari-dubai.webp",
     "gallery": [
-      "/images/tours/evening-desert-safari-dubai.webp",
-      "https://images.unsplash.com/photo-1547234935-80c7145ec969?q=80&w=1000&auto=format&fit=crop"
+      "/images/tours/evening-desert-safari-dubai.webp"
     ],
     "short_description": "A fast, high-impact desert adventure in a private 4x4 Land Cruiser. Features intense dune bashing, daylight camel rides, sandboarding, and winter bonfire.",
     "description": "Designed for travelers on a schedule who want the pure desert driving thrill without camp shows. A dedicated private 4x4 Land Cruiser takes you into the open dunes for thrilling roller-coaster dune bashing, sandboarding, camel rides, and mineral water refreshments before returning directly to the city.",
@@ -879,8 +870,7 @@ export const initialPackages: Package[] = [
     "main_image": "/images/tours/atv-quad-bike-ride-dubai-1-person.webp",
     "gallery": [
       "/images/tours/atv-quad-bike-ride-dubai-2-persons.webp",
-      "/images/tours/evening-desert-safari-with-quad-bike.webp",
-      "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1000&auto=format&fit=crop"
+      "/images/tours/evening-desert-safari-with-quad-bike.webp"
     ],
     "short_description": "Take command of a powerful automatic ATV quad bike across open desert sand dunes. 30-45 minutes of pure self-drive excitement with safety gear and expert guides.",
     "description": "Feel the rush of adrenaline as you pilot a 250cc-400cc automatic ATV quad bike over natural sand hills and desert tracks. No prior riding experience or driving license is required. Our professional guides provide full safety briefing, helmets, and protective goggles to ensure a fun, safe, and exhilarating self-drive ride.",
@@ -939,8 +929,7 @@ export const initialPackages: Package[] = [
     "main_image": "/images/tours/atv-quad-bike-ride-dubai-2-persons.webp",
     "gallery": [
       "/images/tours/atv-quad-bike-ride-dubai-1-person.webp",
-      "/images/tours/evening-desert-safari-with-quad-bike.webp",
-      "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1000&auto=format&fit=crop"
+      "/images/tours/evening-desert-safari-with-quad-bike.webp"
     ],
     "short_description": "Double the fun! Share a high-torque 2-seater quad bike with a friend or partner across scenic Dubai desert tracks. 30-45 minutes self-drive with guide and gear.",
     "description": "Designed for couples or friends who want to share the adventure together on one high-performance double quad bike. Navigate the desert terrain together under the supervision of experienced guides with full safety gear and helmets provided.",
@@ -1000,8 +989,7 @@ export const initialPackages: Package[] = [
     "main_image": "/images/tours/rzr-1000cc-1-seater-buggy.webp",
     "gallery": [
       "/images/tours/2-seater-buggy.webp",
-      "/images/tours/rzr-1000cc-2-seater-buggy.webp",
-      "https://images.unsplash.com/photo-1547234935-80c7145ec969?q=80&w=1000&auto=format&fit=crop"
+      "/images/tours/rzr-1000cc-2-seater-buggy.webp"
     ],
     "short_description": "Take the wheel of an authentic 1000cc Polaris RZR Dune Buggy! 45 minutes of intense solo dune driving with roll cage, safety harness, and sandboarding.",
     "description": "Experience the pinnacle of desert motorsport. Drive an aggressive single-seater Polaris RZR 1000cc off-road buggy engineered to conquer towering red sand dunes. Equipped with full competition roll cage, 4-point safety harness, race suspension, and automatic transmission. Led by a pace guide to ensure maximum fun and total safety.",
@@ -1061,8 +1049,7 @@ export const initialPackages: Package[] = [
     "main_image": "/images/tours/2-seater-buggy.webp",
     "gallery": [
       "/images/tours/rzr-1000cc-1-seater-buggy.webp",
-      "/images/tours/rzr-1000cc-2-seater-buggy.webp",
-      "https://images.unsplash.com/photo-1547234935-80c7145ec969?q=80&w=1000&auto=format&fit=crop"
+      "/images/tours/rzr-1000cc-2-seater-buggy.webp"
     ],
     "short_description": "Share the ultimate off-road adrenaline in a 2-seater Polaris RZR 1000cc Buggy. 45 minutes of extreme dune driving across Dubai's deepest red sands.",
     "description": "Dubai's most popular dune buggy experience for couples and pairs of friends. Pilot a championship-proven 2-seater Polaris RZR 1000cc with automatic transmission, race-tuned long-travel suspension, and high-strength roll cage. Swap drivers halfway through if desired, and capture stunning desert action photos.",
@@ -1122,8 +1109,7 @@ export const initialPackages: Package[] = [
     "main_image": "/images/tours/rzr-1000cc-2-seater-buggy.webp",
     "gallery": [
       "/images/tours/2-seater-buggy.webp",
-      "/images/tours/can-am-3x-marvick-4-seater-buggy.webp",
-      "https://images.unsplash.com/photo-1547234935-80c7145ec969?q=80&w=1000&auto=format&fit=crop"
+      "/images/tours/can-am-3x-marvick-4-seater-buggy.webp"
     ],
     "short_description": "Bring the whole family or friend group! 4-Seater Polaris RZR 1000cc Buggy self-drive for 45 minutes across Dubai's massive red dunes.",
     "description": "The premier off-road thrill for families and groups of friends. Seat up to 4 passengers comfortably in bucket seats with multi-point harnesses and full overhead roll protection. Power across untouched desert dunes with 1000cc performance under the guidance of our professional desert marshals.",
@@ -1183,8 +1169,7 @@ export const initialPackages: Package[] = [
     "main_image": "/images/tours/can-am-3x-marvick-2-seater-buggy.webp",
     "gallery": [
       "/images/tours/can-am-3x-marvick-4-seater-buggy.webp",
-      "/images/tours/2-seater-buggy.webp",
-      "https://images.unsplash.com/photo-1547234935-80c7145ec969?q=80&w=1000&auto=format&fit=crop"
+      "/images/tours/2-seater-buggy.webp"
     ],
     "short_description": "Unleash 195 horsepower with the legendary Can-Am Maverick X3 Turbo! 45 minutes of extreme high-speed desert mastery with unmatched suspension travel.",
     "description": "The ultimate supercar of the sand dunes. The Can-Am Maverick X3 Turbo delivers breathtaking acceleration, incredible Fox racing shocks suspension, and unstoppable power across Dubai's tallest red dunes. For adrenaline junkies who want nothing less than the absolute fastest, most capable dune buggy in existence.",
@@ -1245,8 +1230,7 @@ export const initialPackages: Package[] = [
     "main_image": "/images/tours/can-am-3x-marvick-4-seater-buggy.webp",
     "gallery": [
       "/images/tours/can-am-3x-marvick-2-seater-buggy.webp",
-      "/images/tours/rzr-1000cc-2-seater-buggy.webp",
-      "https://images.unsplash.com/photo-1547234935-80c7145ec969?q=80&w=1000&auto=format&fit=crop"
+      "/images/tours/rzr-1000cc-2-seater-buggy.webp"
     ],
     "short_description": "The undisputed king of 4-seater off-road buggies! Drive the Can-Am Maverick X3 Turbo with 4 passengers for 45 minutes across Dubai's grandest red dunes.",
     "description": "Share the ultimate off-road rush with 4 guests in the monstrous Can-Am Maverick X3 Turbo Max. Boasting extreme horsepower, industry-leading suspension travel, and aerospace-grade chassis strength, it effortlessly glides across razor-sharp dune crests and steep sand drops in supreme safety and comfort.",

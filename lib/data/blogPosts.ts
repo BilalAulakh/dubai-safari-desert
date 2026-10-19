@@ -16,7 +16,7 @@ export const initialBlogPosts: BlogPost[] = [
     read_time: "5 min read",
     status: "published",
     featured_image:
-      "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1700124708071-4af4867eeaf3?q=80&w=1200&auto=format&fit=crop",
     featured_image_alt: "Visitor walking across golden Dubai desert dunes wearing light linen clothing",
     meta_title: "What to Wear for Dubai Desert Safari | Dress Code & Packing Guide",
     meta_description:
@@ -58,7 +58,7 @@ Dubai is welcoming and cosmopolitan. While casual holiday attire is completely f
     read_time: "6 min read",
     status: "published",
     featured_image:
-      "https://images.unsplash.com/photo-1547234935-80c7145ec969?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1565081189012-7f02978bc81c?q=80&w=1200&auto=format&fit=crop",
     featured_image_alt: "Golden sunset over Dubai desert safari camp with traditional Arabian lanterns",
     meta_title: "Morning vs Evening Desert Safari Dubai | Comparison Guide",
     meta_description:
@@ -99,7 +99,7 @@ The evening safari is the quintessential Dubai tourism experience, blending thri
     read_time: "5 min read",
     status: "published",
     featured_image:
-      "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1549944850-84e00be4203b?q=80&w=1200&auto=format&fit=crop",
     featured_image_alt: "Family enjoying a camel ride together across Dubai desert dunes during sunset",
     meta_title: "Best Desert Safari in Dubai for Families | Kids Guide & Safety",
     meta_description:
@@ -136,7 +136,7 @@ Our evening buffet includes universally loved choices such as grilled chicken sk
     read_time: "7 min read",
     status: "published",
     featured_image:
-      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1494674557684-c26be0f88950?q=80&w=1200&auto=format&fit=crop",
     featured_image_alt: "Adventure seekers quad biking on red desert dunes in Dubai during morning safari",
     meta_title: "10 Best Things to Do in Dubai Desert | Safari Adventure Guide",
     meta_description:

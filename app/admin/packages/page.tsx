@@ -46,7 +46,7 @@ export default function AdminPackagesPage() {
   const [shortDesc, setShortDesc] = useState("");
   const [desc, setDesc] = useState("");
   const [mainImage, setMainImage] = useState(
-    "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop"
+    "/images/hero-dune-bashing.webp"
   );
   const [inclusionsText, setInclusionsText] = useState(
     "Hotel Pickup & Drop-off in 4x4 Land Cruiser\n30-40 mins dune bashing\nCamel ride & Sandboarding\nBBQ Dinner buffet with live shows"
@@ -65,7 +65,7 @@ export default function AdminPackagesPage() {
     setShortDesc("");
     setDesc("");
     setMainImage(
-      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop"
+      "/images/hero-dune-bashing.webp"
     );
     setInclusionsText(
       "Hotel Pickup & Drop-off in 4x4 Land Cruiser\n30-40 mins dune bashing\nCamel ride & Sandboarding\nBBQ Dinner buffet with live shows"
@@ -184,7 +184,7 @@ export default function AdminPackagesPage() {
         main_image: mainImage.trim(),
         gallery: [
           mainImage.trim(),
-          "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1000&auto=format&fit=crop",
+          "/images/hero-dune-bashing.webp",
         ],
         inclusions:
           inclusionsArray.length > 0

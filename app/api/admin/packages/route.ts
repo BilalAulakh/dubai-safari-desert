@@ -52,10 +52,10 @@ export async function POST(request: Request) {
       description: body.description || "",
       main_image:
         body.main_image ||
-        "https://images.unsplash.com/photo-1547234935-80c7145ec969?q=80&w=1200&auto=format&fit=crop",
+        "/images/hero-dune-bashing.webp",
       gallery: body.gallery || [
         body.main_image ||
-          "https://images.unsplash.com/photo-1547234935-80c7145ec969?q=80&w=1200&auto=format&fit=crop",
+          "/images/hero-dune-bashing.webp",
       ],
       featured: Boolean(body.featured),
       active: body.active !== undefined ? Boolean(body.active) : true,

@@ -7,7 +7,7 @@ export const initialActivities: Activity[] = [
     slug: "dune-bashing",
     description:
       "Hold on tight as skilled safari drivers slide, drift, and power up massive 300-foot red dunes in specially equipped 4x4 Land Cruisers with reinforced roll cages.",
-    image: "https://images.unsplash.com/photo-1547234935-80c7145ec969?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1588310558566-b983c7d257e4?q=80&w=1200&auto=format&fit=crop",
     active: true,
     sort_order: 1,
     highlights: ["Lahbab Red Dunes", "Professional Licensed Marshals", "Air-conditioned 4x4 Land Cruisers"],
@@ -29,7 +29,7 @@ export const initialActivities: Activity[] = [
     slug: "sandboarding",
     description:
       "Strap on a custom sandboard and surf down silky crimson desert dunes like a pro. An exhilarating sport perfect for adventure seekers and photography enthusiasts.",
-    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1553796661-17b7fa359f49?q=80&w=1200&auto=format&fit=crop",
     active: true,
     sort_order: 3,
     highlights: ["No prior experience required", "Boards provided", "Multiple dune slopes"],
@@ -40,7 +40,7 @@ export const initialActivities: Activity[] = [
     slug: "quad-biking",
     description:
       "Take control of high-torque all-terrain quad bikes across rugged desert tracks. Feel the thrill of self-driving under the supervision of expert guides.",
-    image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1494674557684-c26be0f88950?q=80&w=1200&auto=format&fit=crop",
     active: true,
     sort_order: 4,
     highlights: ["Automatic 250cc - 400cc ATVs", "Safety helmets & goggles included", "Dedicated circuit tracks"],
@@ -51,7 +51,7 @@ export const initialActivities: Activity[] = [
     slug: "bbq-dinner",
     description:
       "Savor a feast of grilled meats, Arabic mezze, freshly baked flatbreads, fresh salads, vegetarian specialties, and delectable oriental sweets in an open-air desert camp.",
-    image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=800&auto=format&fit=crop",
+    image: "/images/tours/vip-evening-desert-safari-dubai.webp",
     active: true,
     sort_order: 5,
     highlights: ["5-Star Buffet Selection", "Vegetarian & Jain options", "Unlimited soft drinks & Arabic coffee"],
@@ -62,7 +62,7 @@ export const initialActivities: Activity[] = [
     slug: "tanoura-dance",
     description:
       "Marvel at the hypnotic Sufi Tanoura dancer spinning continuously in illuminated kaleidoscope costumes without losing balance, creating a spellbinding visual spectacle.",
-    image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1565081189012-7f02978bc81c?q=80&w=1200&auto=format&fit=crop",
     active: true,
     sort_order: 6,
     highlights: ["Traditional Egyptian folklore", "LED illuminated skirt show", "Center-stage performance"],
@@ -73,7 +73,7 @@ export const initialActivities: Activity[] = [
     slug: "fire-show",
     description:
       "Watch fearless performers breathe fire, juggle flaming torches, and dance with fiery sparks illuminating the night desert sky.",
-    image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1619611048223-fc8569ab767a?q=80&w=1200&auto=format&fit=crop",
     active: true,
     sort_order: 7,
     highlights: ["Dramatic pyrotechnics", "High-energy choreography", "Night-sky illumination"],
@@ -84,7 +84,7 @@ export const initialActivities: Activity[] = [
     slug: "belly-dance",
     description:
       "Enjoy enchanting classical oriental belly dancing set to rhythmic Arabic melodies on the illuminated center stage of the desert fortress.",
-    image: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=800&auto=format&fit=crop",
+    image: "/images/tours/over-night-desert-safari-dubai.webp",
     active: true,
     sort_order: 8,
     highlights: ["Authentic Arabic music", "Graceful oriental choreography", "Traditional costume"],
@@ -95,7 +95,7 @@ export const initialActivities: Activity[] = [
     slug: "desert-camping",
     description:
       "Sleep in authentic carpeted Bedouin tents equipped with cozy bedding, gaze at pristine constellations, and wake up to desert silence and fresh morning coffee.",
-    image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=800&auto=format&fit=crop",
+    image: "/images/tours/over-night-desert-safari-dubai.webp",
     active: true,
     sort_order: 9,
     highlights: ["Stargazing away from city lights", "Warm midnight campfire", "Sunrise over untouched dunes"],
@@ -106,7 +106,7 @@ export const initialActivities: Activity[] = [
     slug: "falcon-photography",
     description:
       "Hold the revered national bird of the UAE on a leather glove and take iconic Arabic keepsake photos in traditional Kandora or Abaya attire.",
-    image: "https://images.unsplash.com/photo-1610878180933-123728745d22?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1700124708071-4af4867eeaf3?q=80&w=1200&auto=format&fit=crop",
     active: true,
     sort_order: 10,
     highlights: ["UAE heritage symbol", "Traditional Emirati costumes", "Personal photo opportunities"],
@@ -117,7 +117,7 @@ export const initialActivities: Activity[] = [
     slug: "sunset-photography",
     description:
       "Capture once-in-a-lifetime golden hour portraits as the sun dips beneath endless shifting dunes, painting the Arabian sky in crimson and amber.",
-    image: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1506645728556-ac574e628eca?q=80&w=1200&auto=format&fit=crop",
     active: true,
     sort_order: 11,
     highlights: ["Golden hour lighting", "Undisturbed ripple textures", "360-degree desert vistas"],

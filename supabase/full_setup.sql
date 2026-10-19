@@ -273,7 +273,7 @@ VALUES
   '6 - 7 Hours',
   true,
   true,
-  'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop'
+  '/images/hero-dune-bashing.webp'
 ),
 (
   'Morning Desert Safari & Sunrise Dune Bashing',
@@ -284,7 +284,7 @@ VALUES
   '4 Hours',
   false,
   true,
-  'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1200&auto=format&fit=crop'
+  '/images/hero-dune-bashing.webp'
 ),
 (
   'VIP Private Desert Safari Experience',
@@ -306,7 +306,7 @@ VALUES
   '5 Hours',
   true,
   true,
-  'https://images.unsplash.com/photo-1547234935-80c7145ec969?q=80&w=1200&auto=format&fit=crop'
+  '/images/hero-dune-bashing.webp'
 ),
 (
   'Overnight Desert Safari & Stargazing Camp',
@@ -317,7 +317,7 @@ VALUES
   '18 Hours (Overnight)',
   false,
   true,
-  'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200&auto=format&fit=crop'
+  '/images/hero-dune-bashing.webp'
 )
 ON CONFLICT (slug) DO NOTHING;
 
