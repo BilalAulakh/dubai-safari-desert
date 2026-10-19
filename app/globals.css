@@ -9,38 +9,45 @@
    ========================================================================== */
 @theme {
   /* Fonts: display serif for headings and prices, neutral sans for everything else */
-  --font-sans: var(--font-dm-sans), "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-display: var(--font-cormorant), "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-jakarta), "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-playfair), "Playfair Display", Georgia, "Times New Roman", serif;
   --font-heading: var(--font-sans);
   --font-body: var(--font-sans);
   --font-serif: var(--font-display);
 
-  /* Dunes: warm near-blacks and deep browns (dark surfaces) */
-  --color-dune-950: #0E0A07;
-  --color-dune-900: #17120D;
-  --color-dune-850: #1D150E;
-  --color-dune-800: #241A12;
-  --color-dune-700: #33261A;
-  --color-dune-600: #4A3826;
-  --color-dune-500: #6B5440;
+  /* "Night navy + dune gold" palette. Token names (dune/sand/amber) are kept from
+     the previous palette so every component using them picks up the new look. */
 
-  /* Sand: light surfaces and secondary text on dark */
-  --color-sand-50: #FBF7F0;
-  --color-sand-100: #F5EEE3;
-  --color-sand-200: #EADFCB;
-  --color-sand-300: #D9C7A7;
-  --color-sand-400: #B8ADA2;
-  --color-sand-600: #5E554C;
+  /* Dune = night navy: dark surfaces (the desert night sky) */
+  --color-dune-950: #0A0F24;
+  --color-dune-900: #101633;
+  --color-dune-850: #141B3D;
+  --color-dune-800: #1A2349;
+  --color-dune-700: #243058;
+  --color-dune-600: #34406B;
+  --color-dune-500: #545B78;
 
-  /* Amber: the single accent (redesign). CTAs, active states and small highlights only,
-     never a large background. Pairings that pass WCAG AA:
-       dune-900 text on amber-500 6.2:1 · amber-300 on dune-950 10.2:1 · amber-700 on sand-50 5.5:1 */
-  --color-amber-200: #F0D3AE;
-  --color-amber-300: #E3B279;
-  --color-amber-400: #D69A55;
-  --color-amber-500: #C8873E;
-  --color-amber-600: #A86E2C;
-  --color-amber-700: #8A5A22;
+  /* Sand = warm ivory: text on navy and light surfaces */
+  --color-sand-50: #F8F6F1;
+  --color-sand-100: #F1EEE6;
+  --color-sand-200: #E4DFD2;
+  --color-sand-300: #CFC8B5;
+  --color-sand-400: #A9AFC4; /* secondary text on navy */
+  --color-sand-600: #545B78;
+
+  /* Amber = dune gold: brand accent for highlights, prices, icons and hairlines.
+     Pairings that pass WCAG AA:
+       amber-300 on dune-900 · dune-900 on amber-500 · amber-700 on white */
+  --color-amber-200: #EBDDBF;
+  --color-amber-300: #DCC08E;
+  --color-amber-400: #D2B07A;
+  --color-amber-500: #C9A46C;
+  --color-amber-600: #A8834A;
+  --color-amber-700: #7E5F2B;
+
+  /* Ember = sunset orange: the primary booking CTA only (white text passes AA) */
+  --color-ember-500: #C2410C;
+  --color-ember-600: #9A3412;
 
   /* WhatsApp brand colour for WhatsApp actions only */
   --color-whatsapp-500: #25D366;
@@ -96,9 +103,10 @@
   --text-label--letter-spacing: 0.08em;
 
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
-  --shadow-lift: 0 24px 48px -24px rgba(14, 10, 7, 0.45);
-  /* Card hover: warm amber glow (box-shadow only, so no layout shift) */
-  --shadow-glow-amber: 0 22px 44px -22px rgb(200 135 62 / 0.55), 0 0 0 1px rgb(200 135 62 / 0.45);
+  --shadow-lift: 0 24px 48px -24px rgba(10, 15, 36, 0.45);
+  --shadow-card: 0 1px 2px rgba(16, 22, 51, 0.05), 0 14px 34px -20px rgba(16, 22, 51, 0.25);
+  /* Card hover: lift plus a gold hairline (box-shadow only, so no layout shift) */
+  --shadow-glow-amber: 0 28px 50px -26px rgb(16 22 51 / 0.45), 0 0 0 1px rgb(201 164 108 / 0.6);
 }
 
 /* Semantic colors that follow the light/dark theme */
@@ -114,30 +122,30 @@
 
 @layer base {
   :root {
-    --bg-page: #FBF7F0;
+    --bg-page: #FFFFFF;
     --bg-surface: #FFFFFF;
-    --bg-surface-alt: #F5EEE3;
-    --text-main: #17120D;
-    --text-muted: #5E554C;
-    --border-subtle: rgba(140, 98, 20, 0.14);
-    --gold-accent: #C89B3C;
-    --sand-accent: #E8C48A;
-    --accent-text: #8A5A22; /* amber-700, passes AA on cream and white */
-    --focus-ring: #8A5A22;
+    --bg-surface-alt: #F5F6F9;
+    --text-main: #101633;
+    --text-muted: #545B78;
+    --border-subtle: rgba(16, 22, 51, 0.1);
+    --gold-accent: #C9A46C;
+    --sand-accent: #DCC08E;
+    --accent-text: #7E5F2B; /* amber-700, passes AA on white and soft gray */
+    --focus-ring: #7E5F2B;
     color-scheme: light;
   }
 
   .dark {
-    --bg-page: #17120D;
-    --bg-surface: #241A12;
-    --bg-surface-alt: #1D150E;
-    --text-main: #FBF7F0;
-    --text-muted: #BDB2A6;
-    --border-subtle: rgba(232, 196, 138, 0.14);
-    --gold-accent: #D6A84F;
-    --sand-accent: #E8C48A;
-    --accent-text: #E3B279; /* amber-300 */
-    --focus-ring: #E3B279;
+    --bg-page: #101633;
+    --bg-surface: #1A2349;
+    --bg-surface-alt: #141B3D;
+    --text-main: #F8F6F1;
+    --text-muted: #A9AFC4;
+    --border-subtle: rgba(255, 255, 255, 0.12);
+    --gold-accent: #C9A46C;
+    --sand-accent: #DCC08E;
+    --accent-text: #DCC08E; /* amber-300 */
+    --focus-ring: #DCC08E;
     color-scheme: dark;
   }
 
@@ -191,13 +199,13 @@
 
 /* Custom Gradients */
 .gold-text-gradient {
-  background: linear-gradient(135deg, #B58428 0%, #C89B3C 50%, #8C6214 100%);
+  background: linear-gradient(135deg, #A8834A 0%, #C9A46C 50%, #7E5F2B 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .dark .gold-text-gradient {
-  background: linear-gradient(135deg, #E8C48A 0%, #D6A84F 60%, #C89B3C 100%);
+  background: linear-gradient(135deg, #EBDDBF 0%, #DCC08E 60%, #C9A46C 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -261,7 +269,7 @@
     align-items: center;
     gap: 0.625rem;
     margin-bottom: 0.75rem;
-    color: #8C6214;
+    color: var(--accent-text);
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.14em;
@@ -282,9 +290,6 @@
     border-radius: 2px;
     background: currentColor;
     opacity: 0.6;
-  }
-  .dark .eyebrow {
-    color: #E8C48A;
   }
 
   /* Section rhythm: one vertical spacing scale and one heading scale for every section */
@@ -353,12 +358,12 @@
     background-color: var(--bg-surface);
     border: 1px solid var(--border-subtle);
     border-radius: 1rem;
-    box-shadow: 0 1px 2px rgba(23, 18, 13, 0.04);
+    box-shadow: var(--shadow-card);
     transition: border-color 250ms ease, box-shadow 250ms ease, transform 250ms ease;
   }
   .card-hover:hover {
-    border-color: rgba(200, 155, 60, 0.45);
-    box-shadow: 0 18px 36px -16px rgba(90, 62, 12, 0.25);
+    border-color: rgb(201 164 108 / 0.55);
+    box-shadow: var(--shadow-glow-amber);
     transform: translateY(-2px);
   }
 
@@ -389,16 +394,18 @@
     transform: translateY(0);
   }
 
-  /* Primary CTA: amber with dark text (6.2:1, AA) */
+  /* Primary booking CTA. Class name kept for existing markup; it is now sunset
+     ember with white text (AA) so "Book" stands out against navy and gold. */
   .btn-gold {
-    background-color: var(--color-amber-500);
-    color: var(--color-dune-900);
+    background-color: var(--color-ember-500);
+    color: #FFFFFF;
     font-weight: 700;
-    box-shadow: 0 6px 16px -8px rgb(200 135 62 / 0.6);
+    box-shadow: 0 10px 24px -12px rgb(194 65 12 / 0.7);
   }
   .btn-gold:hover {
-    background-color: var(--color-amber-400);
-    color: var(--color-dune-900);
+    background-color: var(--color-ember-600);
+    color: #FFFFFF;
+    transform: translateY(-1px);
   }
 
   .btn-lg {
@@ -416,11 +423,11 @@
   .btn-outline {
     background-color: var(--bg-surface);
     color: var(--text-main);
-    border: 1px solid rgba(140, 98, 20, 0.3);
+    border: 1px solid var(--border-subtle);
   }
   .btn-outline:hover {
-    border-color: #C89B3C;
-    background-color: rgba(200, 155, 60, 0.08);
+    border-color: var(--color-amber-500);
+    background-color: rgb(201 164 108 / 0.08);
     transform: translateY(-1px);
   }
 
@@ -455,7 +462,7 @@
   max-width: 140px;
   height: 1.5px;
   margin: 0 auto;
-  background: linear-gradient(90deg, transparent, rgba(200, 155, 60, 0.5), transparent);
+  background: linear-gradient(90deg, transparent, rgba(201, 164, 108, 0.6), transparent);
 }
 
 /* Subtle mouse/scroll indicator bounce */

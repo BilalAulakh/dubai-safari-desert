@@ -1,18 +1,20 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone, MessageCircle, ShieldCheck } from "lucide-react";
+import { Menu, X, Phone, MessageCircle } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config/site";
 import ThemeToggle from "@/components/common/ThemeToggle";
-import AdminLoginModal from "@/components/layout/AdminLoginModal";
 import { createWhatsAppUrl, toInternationalPhone } from "@/lib/utils";
+
+// Desktop bar keeps to the pages that help someone choose and book;
+// the drawer and footer carry the full list (FAQ, Blog, Home)
+const PRIMARY_HREFS = ["/packages", "/activities", "/gallery", "/reviews", "/about", "/contact"];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [adminLoginOpen, setAdminLoginOpen] = useState(false);
   const pathname = usePathname();
   const isHomePage = pathname === "/";
 
@@ -20,11 +22,11 @@ export default function Navbar() {
     SITE_CONFIG.contact.whatsapp,
     SITE_CONFIG.whatsappTemplates.general
   );
+  const phoneHref = `tel:${toInternationalPhone(SITE_CONFIG.contact.phone)}`;
+  const primaryLinks = SITE_CONFIG.navLinks.filter((l) => PRIMARY_HREFS.includes(l.href));
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 30);
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
@@ -32,86 +34,56 @@ export default function Navbar() {
 
   // Close mobile drawer on route change
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- reset UI on navigation
     setIsOpen(false);
   }, [pathname]);
 
-  const closeAdminLogin = useCallback(() => setAdminLoginOpen(false), []);
-
-  // When on homepage and unscrolled, navbar is transparent with crisp white text
-  const isTransparent = isHomePage && !scrolled;
-
-  // Over the hero video everything is white; on the solid bar text follows the theme
-  const tone = isTransparent
-    ? {
-        text: "text-white",
-        sub: "text-[#E8C48A]",
-        link: "text-white/90 hover:text-white hover:bg-white/10",
-        active: "text-[#F3D7A4] bg-white/12",
-        icon: "text-white/80 hover:text-white hover:bg-white/10",
-      }
-    : {
-        text: "text-[#17120D] dark:text-white",
-        sub: "text-[#8C6214] dark:text-[#E8C48A]",
-        link: "text-[#3D342B] hover:text-[#17120D] hover:bg-[#17120D]/5 dark:text-white/80 dark:hover:text-white dark:hover:bg-white/10",
-        active: "text-[#8C6214] bg-[#C89B3C]/12 dark:text-[#F3D7A4] dark:bg-white/10",
-        icon: "text-[#5E554C] hover:text-[#17120D] hover:bg-[#17120D]/5 dark:text-white/75 dark:hover:text-white dark:hover:bg-white/10",
-      };
+  // Transparent over the homepage hero; a solid night-navy bar everywhere else
+  const isTransparent = isHomePage && !scrolled && !isOpen;
 
   return (
     <header
       className={`fixed top-0 inset-x-0 z-40 transition-all duration-300 ${
         isTransparent
-          ? "bg-transparent py-4 sm:py-5 border-b border-transparent"
-          : "bg-white/90 dark:bg-[#17120D]/90 backdrop-blur-xl border-b border-[#17120D]/8 dark:border-white/10 shadow-[0_1px_12px_rgba(23,18,13,0.06)] py-2.5 sm:py-3"
+          ? "bg-transparent py-4 sm:py-5"
+          : "bg-dune-900/95 backdrop-blur-xl border-b border-white/10 shadow-[0_8px_30px_-12px_rgba(10,15,36,0.6)] py-2.5 sm:py-3"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
-          {/* Brand Logo */}
-          <Link
-            href="/"
-            className="flex items-center gap-2.5 group shrink-0"
-            id="nav-brand-logo"
-            aria-label="Safari Dune Tours Homepage"
-          >
-            {!isTransparent && (
-              <img
-                src="/images/logo-emblem-96.webp"
-                alt=""
-                width={48}
-                height={48}
-                className="w-10 h-10 sm:w-11 sm:h-11 object-contain group-hover:scale-105 transition-transform duration-300 dark:hidden"
-              />
-            )}
+      <div className="container-page">
+        <div className="flex items-center justify-between gap-4">
+          {/* Brand */}
+          <Link href="/" className="group flex shrink-0 items-center gap-2.5" id="nav-brand-logo" aria-label="Safari Dune Tours Homepage">
             <img
               src="/images/logo-emblem-dark-96.webp"
               srcSet="/images/logo-emblem-dark-96.webp 1x, /images/logo-emblem-dark-192.webp 2x"
               alt=""
               width={48}
               height={48}
-              className={`w-10 h-10 sm:w-11 sm:h-11 object-contain group-hover:scale-105 transition-transform duration-300 ${isTransparent ? "drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]" : "hidden dark:block"}`}
+              className="h-10 w-10 object-contain transition-transform duration-300 group-hover:scale-105 sm:h-11 sm:w-11"
             />
-            <div className={`flex flex-col ${isTransparent ? "drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]" : ""}`}>
-              <span className={`font-heading text-[17px] sm:text-lg font-extrabold tracking-tight leading-none transition-colors ${tone.text}`}>
-                Safari Dune <span className="text-[#C89B3C]">Tours</span>
+            <div className="flex flex-col">
+              <span className="font-display text-[19px] font-semibold leading-none tracking-tight text-sand-50 sm:text-xl">
+                Safari Dune <span className="text-amber-300">Tours</span>
               </span>
-              <span className={`mt-1 text-[9px] sm:text-[10px] tracking-[0.2em] uppercase font-semibold ${tone.sub}`}>
+              <span className="mt-1.5 text-[9px] font-semibold uppercase tracking-[0.28em] text-amber-300/80 sm:text-[10px]">
                 Dubai Desert Safaris
               </span>
             </div>
           </Link>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1">
-            {SITE_CONFIG.navLinks.map((link) => {
-              const isActive = pathname === link.href;
+          {/* Desktop links */}
+          <nav className="hidden items-center gap-1 lg:flex" aria-label="Main">
+            {primaryLinks.map((link) => {
+              const isActive = pathname === link.href || pathname.startsWith(`${link.href}/`);
               return (
                 <Link
                   key={link.href}
                   href={link.href}
                   aria-current={isActive ? "page" : undefined}
-                  className={`whitespace-nowrap px-2.5 xl:px-3 py-2 text-[13px] xl:text-sm font-medium rounded-lg transition-colors duration-200 ${
-                    isActive ? `${tone.active} font-semibold` : tone.link
+                  className={`relative whitespace-nowrap px-3 py-2 text-sm font-medium transition-colors duration-200 after:absolute after:inset-x-3 after:-bottom-0.5 after:h-px after:origin-left after:bg-amber-300 after:transition-transform after:duration-300 ${
+                    isActive
+                      ? "text-amber-300 after:scale-x-100"
+                      : "text-sand-50/85 hover:text-sand-50 after:scale-x-0 hover:after:scale-x-100"
                   }`}
                 >
                   {link.label}
@@ -120,73 +92,59 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* Right Action CTAs */}
-          <div className="hidden md:flex items-center gap-1.5 xl:gap-2 shrink-0">
-            {/* Quick WhatsApp Link */}
+          {/* Desktop actions */}
+          <div className="hidden shrink-0 items-center gap-2 md:flex">
+            <a
+              href={phoneHref}
+              className="hidden items-center gap-2 rounded-full px-3 py-2 text-sm font-semibold text-sand-50/90 transition-colors hover:text-amber-300 xl:inline-flex"
+            >
+              <Phone className="h-4 w-4 text-amber-300" aria-hidden="true" />
+              <span>{toInternationalPhone(SITE_CONFIG.contact.phone)}</span>
+            </a>
             <a
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className={`p-2 rounded-lg transition-colors ${tone.icon}`}
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-sand-50/85 transition-colors hover:border-amber-300/60 hover:text-amber-300"
               title="Chat on WhatsApp"
               aria-label="Chat on WhatsApp"
             >
-              <MessageCircle className="w-4 h-4" />
+              <MessageCircle className="h-4 w-4" />
             </a>
-
-            <ThemeToggle />
-
-            <button
-              type="button"
-              onClick={() => setAdminLoginOpen(true)}
-              className={`p-2 rounded-lg transition-colors cursor-pointer ${tone.icon}`}
-              title="Admin Login"
-              aria-label="Admin Login"
-            >
-              <ShieldCheck className="w-4 h-4" />
-            </button>
-
-            {/* Prominent Book Now CTA */}
-            <Link
-              href="/booking"
-              className="btn-gold btn-sm"
-              id="nav-book-now-cta"
-            >
+            <ThemeToggle variant="onDark" />
+            <Link href="/booking" className="btn-gold btn-sm ml-1" id="nav-book-now-cta">
               Book Now
             </Link>
           </div>
 
-          {/* Mobile Actions & Hamburger */}
-          <div className="flex lg:hidden items-center gap-2">
-            <ThemeToggle />
-
+          {/* Mobile actions */}
+          <div className="flex items-center gap-2 lg:hidden">
+            <ThemeToggle variant="onDark" />
             <button
               type="button"
               onClick={() => setIsOpen(!isOpen)}
-              className={`p-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-[#C89B3C] ${tone.icon}`}
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-sand-50 transition-colors hover:border-amber-300/60"
               aria-expanded={isOpen}
               aria-label="Toggle navigation menu"
             >
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Navigation Drawer */}
+      {/* Mobile drawer: full link list */}
       {isOpen && (
-        <div className="lg:hidden fixed inset-x-0 top-[62px] sm:top-[68px] bg-[#17120D]/98 border-b border-[#C89B3C]/25 px-5 pt-4 pb-7 shadow-2xl backdrop-blur-2xl animate-in slide-in-from-top-2 duration-200 max-h-[85vh] overflow-y-auto">
-          <nav className="flex flex-col space-y-1">
+        <div className="fixed inset-x-0 top-[64px] max-h-[85vh] overflow-y-auto border-b border-amber-500/20 bg-dune-900 px-5 pb-7 pt-3 shadow-2xl sm:top-[70px] lg:hidden">
+          <nav className="flex flex-col" aria-label="Mobile">
             {SITE_CONFIG.navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`px-4 py-2.5 rounded-lg text-base font-medium transition-colors ${
-                    isActive
-                      ? "text-[#F3D7A4] bg-white/10 font-semibold"
-                      : "text-white/85 hover:text-white hover:bg-white/5"
+                  className={`border-b border-white/5 py-3.5 font-display text-xl transition-colors ${
+                    isActive ? "text-amber-300" : "text-sand-50/90 hover:text-amber-300"
                   }`}
                 >
                   {link.label}
@@ -195,50 +153,21 @@ export default function Navbar() {
             })}
           </nav>
 
-          <div className="mt-5 pt-4 border-t border-white/10 flex flex-col gap-3">
-            <Link
-              href="/booking"
-              className="btn-gold w-full text-center"
-            >
+          <div className="mt-6 flex flex-col gap-3">
+            <Link href="/booking" className="btn-gold btn-lg w-full">
               Book Your Safari
             </Link>
-
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-whatsapp w-full text-center"
-            >
-              <MessageCircle className="w-4 h-4" />
+            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn-whatsapp btn-lg w-full">
+              <MessageCircle className="h-4 w-4" />
               <span>Chat on WhatsApp</span>
             </a>
-
-            <div className="flex items-center justify-between pt-2 text-sm text-white/70">
-              <a
-                href={`tel:${toInternationalPhone(SITE_CONFIG.contact.phone)}`}
-                className="flex items-center gap-1.5 hover:text-[#E8C48A] transition-colors"
-              >
-                <Phone className="w-3.5 h-3.5 text-[#C89B3C]" />
-                <span>{SITE_CONFIG.contact.phone}</span>
-              </a>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setIsOpen(false);
-                  setAdminLoginOpen(true);
-                }}
-                className="flex items-center gap-1 text-[#E8C48A] hover:underline cursor-pointer"
-              >
-                <ShieldCheck className="w-3.5 h-3.5 text-[#C89B3C]" />
-                <span>Admin Login</span>
-              </button>
-            </div>
+            <a href={phoneHref} className="mt-1 flex items-center justify-center gap-2 text-sm text-sand-400 hover:text-amber-300">
+              <Phone className="h-4 w-4 text-amber-300" aria-hidden="true" />
+              <span>{toInternationalPhone(SITE_CONFIG.contact.phone)}</span>
+            </a>
           </div>
         </div>
       )}
-
-      <AdminLoginModal open={adminLoginOpen} onClose={closeAdminLogin} />
     </header>
   );
 }

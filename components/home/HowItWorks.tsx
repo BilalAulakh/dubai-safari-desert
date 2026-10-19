@@ -1,6 +1,9 @@
 import { Compass, Send, Sun, CheckCircle2 } from "lucide-react";
 import ScrollReveal from "@/components/common/ScrollReveal";
 
+// Step accents run from afternoon gold to dusk, like the evening in the dunes
+const STEP_COLORS = ["#E9A64B", "#E3833A", "#D9542A", "#B35A6B"];
+
 export default function HowItWorks() {
   const steps = [
     {
@@ -30,64 +33,50 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section className="section bg-[#F5EEE3] dark:bg-[#1D150E] transition-colors duration-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    // Always night navy: the dark band between the light package and review sections
+    <section className="section-y relative overflow-hidden bg-dune-900 text-sand-50 dark:bg-dune-950">
+      {/* Soft dune-gold glow, decorative only */}
+      <div
+        className="pointer-events-none absolute -top-40 left-1/2 h-80 w-240 -translate-x-1/2 rounded-full bg-amber-500/10 blur-3xl"
+        aria-hidden="true"
+      />
+
+      <div className="container-page relative">
         <ScrollReveal>
-          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
-            <span className="eyebrow">
-              Seamless & Card-Free
-            </span>
-            <h2 className="section-title">
-              How Your Desert Safari Works
+          <div className="mx-auto mb-14 max-w-2xl text-center">
+            <p className="kicker justify-center text-amber-300 after:h-px after:w-8 after:bg-current after:opacity-70 after:content-['']">
+              Seamless &amp; Card-Free
+            </p>
+            <h2 className="mt-5 font-display text-h2 font-semibold">
+              How your desert safari <span className="italic text-amber-300">works</span>
             </h2>
-            <p className="section-lead">
-              Reserve your Dubai desert adventure smoothly in 4 simple steps with zero upfront payment friction.
+            <p className="mt-5 text-body-lg text-sand-400">
+              Reserve your Dubai desert adventure in 4 simple steps, with no upfront payment.
             </p>
           </div>
         </ScrollReveal>
 
-        {/* One list for every screen: vertical timeline on mobile/tablet, four columns on desktop */}
-        <ol className="relative grid gap-4 sm:gap-6 lg:grid-cols-4">
-          {/* Desktop connecting line behind the numbered circles */}
-          <div
-            className="absolute top-[22px] left-[12%] right-[12%] hidden h-[1.5px] bg-gradient-to-r from-[#C89B3C]/30 via-[#C89B3C]/70 to-[#C89B3C]/30 pointer-events-none lg:block"
-            aria-hidden="true"
-          />
-
+        <ol className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
           {steps.map((item, index) => {
             const Icon = item.icon;
-            const isLast = index === steps.length - 1;
+            const color = STEP_COLORS[index];
             return (
-              <li key={item.step} className="relative">
+              <li key={item.step}>
                 <ScrollReveal delay={index * 100}>
-                  <div className="group flex items-stretch gap-3 sm:gap-4 lg:flex-col lg:items-center lg:gap-0 lg:text-center">
-                    {/* Numbered circle, with a vertical connector below it on small screens */}
-                    <div className="flex shrink-0 flex-col items-center lg:mb-6">
-                      <div className="relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-[#C89B3C] bg-[#17120D] text-xs font-bold text-[#E8C48A] shadow-md transition-all duration-300 sm:h-10 sm:w-10 sm:text-sm lg:h-11 lg:w-11 lg:shadow-lg lg:group-hover:scale-110 lg:group-hover:border-[#E8C48A] lg:group-hover:shadow-[0_0_15px_rgba(200,155,60,0.4)]">
-                        {item.step}
-                      </div>
-                      {!isLast && (
-                        <div
-                          className="my-1 min-h-[36px] w-[2px] grow bg-gradient-to-b from-[#C89B3C]/70 via-[#C89B3C]/40 to-[#C89B3C]/10 sm:min-h-[44px] lg:hidden"
-                          aria-hidden="true"
-                        />
-                      )}
+                  <div className="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-white/3 p-6 transition-colors duration-300 hover:border-white/20 hover:bg-white/6 lg:p-7">
+                    {/* Colour bar along the top edge */}
+                    <span className="absolute inset-x-0 top-0 h-0.75" style={{ backgroundColor: color }} aria-hidden="true" />
+                    <div className="flex items-center justify-between">
+                      <span
+                        className="flex h-11 w-11 items-center justify-center rounded-xl"
+                        style={{ backgroundColor: `${color}22`, color }}
+                      >
+                        <Icon className="h-5 w-5" aria-hidden="true" />
+                      </span>
+                      <span className="font-display text-4xl font-semibold leading-none text-white/10">{item.step}</span>
                     </div>
-
-                    {/* Step card */}
-                    <div className="card card-hover mb-2 flex-1 p-4 sm:p-5 lg:mb-0 lg:flex lg:w-full lg:flex-col lg:items-center lg:p-6">
-                      <div className="mb-2 flex items-center gap-2.5 sm:gap-3 lg:mb-0 lg:flex-col lg:gap-0">
-                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#C89B3C]/12 text-[#8C6214] transition-transform duration-200 sm:h-9 sm:w-9 lg:mb-4 lg:h-12 lg:w-12 lg:rounded-xl lg:group-hover:scale-105 dark:text-[#E8C48A]">
-                          <Icon className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" aria-hidden="true" />
-                        </div>
-                        <h3 className="font-heading text-sm font-bold leading-snug text-[#17120D] sm:text-base lg:mb-2 dark:text-[#FBF7F0]">
-                          {item.title}
-                        </h3>
-                      </div>
-                      <p className="text-sm leading-relaxed text-[#5E554C] dark:text-[#B8ADA2]">
-                        {item.description}
-                      </p>
-                    </div>
+                    <h3 className="mt-6 font-display text-[1.375rem] font-semibold leading-snug">{item.title}</h3>
+                    <p className="mt-2.5 text-small leading-relaxed text-sand-400">{item.description}</p>
                   </div>
                 </ScrollReveal>
               </li>

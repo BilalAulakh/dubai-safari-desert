@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MessageCircle, CalendarCheck } from "lucide-react";
+import { MessageCircle, ArrowRight } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config/site";
 import { createWhatsAppUrl } from "@/lib/utils";
 import ScrollReveal from "@/components/common/ScrollReveal";
@@ -11,50 +11,45 @@ export default function CTASection() {
   );
 
   return (
-    <section className="section bg-page transition-colors duration-300">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Light: warm sand panel. Dark: deep dune panel with gold glow */}
-        <div className="relative overflow-hidden rounded-3xl border border-[#C89B3C]/30 bg-gradient-to-br from-[#F7E9CC] via-[#F2E0BC] to-[#E8CFA0] px-5 py-14 sm:px-10 sm:py-16 text-center shadow-[0_24px_48px_-28px_rgba(140,98,20,0.45)] dark:from-[#241A12] dark:via-[#1D150E] dark:to-[#17120D] dark:shadow-none">
-          <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/50 via-transparent to-transparent dark:from-[#C89B3C]/15" />
+    <section className="section-y bg-page">
+      <div className="container-page">
+        {/* Night-navy panel over a desert photo; looks the same in both themes */}
+        <div className="relative isolate overflow-hidden rounded-3xl bg-dune-900 px-6 py-16 text-center sm:px-12 sm:py-20">
+          <img
+            src="/images/tours/evening-desert-safari-dubai.webp"
+            alt=""
+            width={1200}
+            height={800}
+            loading="lazy"
+            decoding="async"
+            className="absolute inset-0 -z-10 h-full w-full object-cover opacity-35"
+          />
+          <div className="absolute inset-0 -z-10 bg-gradient-to-b from-dune-900/60 via-dune-900/80 to-dune-900" aria-hidden="true" />
 
-          <div className="relative z-10 max-w-3xl mx-auto">
-            <ScrollReveal>
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/60 border border-[#C89B3C]/40 text-[#8C6214] dark:bg-[#C89B3C]/15 dark:border-[#C89B3C]/35 dark:text-[#E8C48A] text-xs font-semibold uppercase tracking-wider mb-5">
-                <CalendarCheck className="w-3.5 h-3.5 text-[#C89B3C]" />
-                <span>Instant Availability & Free 24h Cancellation</span>
-              </div>
-
-              <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#17120D] dark:text-white max-w-3xl mx-auto leading-[1.1]">
-                Ready for Your Dubai <span className="gold-text-gradient">Desert Adventure?</span>
+          <ScrollReveal>
+            <div className="mx-auto max-w-2xl">
+              <p className="kicker justify-center text-amber-300 after:h-px after:w-8 after:bg-current after:opacity-70 after:content-['']">
+                No Advance Payment
+              </p>
+              <h2 className="mt-5 font-display text-h2 font-semibold text-sand-50">
+                Ready for your Dubai <span className="italic text-amber-300">desert adventure?</span>
               </h2>
-
-              <p className="mt-4 text-[15px] sm:text-lg text-[#5E554C] dark:text-[#FBF7F0]/80 max-w-2xl mx-auto leading-relaxed">
-                Reserve your safari today with zero advance payment requirements. Experience red dune bashing, breathtaking sunsets, and genuine Arabian hospitality.
+              <p className="mt-5 text-body-lg text-sand-400">
+                Reserve today and pay on the day. Red dunes, a desert sunset and an evening of Arabian hospitality.
               </p>
 
-              <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
-                {/* Primary CTA: Book Your Safari Today */}
-                <Link
-                  href="/booking"
-                  className="btn-gold btn-lg w-full sm:w-auto"
-                  id="cta-book-safari-now"
-                >
-                  Book Your Safari Today
+              <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <Link href="/booking" className="btn-gold btn-lg group w-full sm:w-auto" id="cta-book-safari-now">
+                  <span>Book Your Safari</span>
+                  <ArrowRight className="h-4 w-4 transition-transform motion-safe:group-hover:translate-x-0.5" aria-hidden="true" />
                 </Link>
-
-                {/* Secondary CTA: WhatsApp Us Now */}
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-whatsapp btn-lg w-full sm:w-auto"
-                >
-                  <MessageCircle className="w-4 h-4" />
+                <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn-luxury-outline btn-lg w-full sm:w-auto">
+                  <MessageCircle className="h-4 w-4 text-amber-300" aria-hidden="true" />
                   <span>Chat on WhatsApp</span>
                 </a>
               </div>
-            </ScrollReveal>
-          </div>
+            </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

@@ -17,7 +17,7 @@ export default function FloatingWhatsApp() {
       <div className="hidden sm:flex fixed bottom-5 right-5 z-50 flex-col items-end gap-2 pointer-events-none">
         {/* Sticky WhatsApp Button */}
         <div className="pointer-events-auto flex items-center group">
-          <span className="mr-2.5 px-3 py-1 text-xs font-semibold rounded-full bg-[#17120D]/95 text-[#E8C48A] border border-[#C89B3C]/30 shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap backdrop-blur-md">
+          <span className="mr-2.5 px-3 py-1 text-xs font-semibold rounded-full bg-dune-900/95 text-amber-300 border border-amber-500/30 shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap backdrop-blur-md">
             WhatsApp Us
           </span>
 
@@ -53,7 +53,7 @@ export default function FloatingWhatsApp() {
 
         <Link
           href="/booking"
-          className="flex h-11 flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-amber-500 px-3 text-small font-bold text-dune-900 shadow-md transition-transform hover:bg-amber-400 active:scale-95"
+          className="flex h-11 flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-ember-500 px-3 text-small font-bold text-white shadow-md transition-transform hover:bg-ember-600 active:scale-95"
         >
           <CalendarCheck className="h-4 w-4 shrink-0" aria-hidden="true" />
           <span>Book Now</span>

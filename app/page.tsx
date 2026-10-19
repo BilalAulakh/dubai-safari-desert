@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { preload } from "react-dom";
-import HeroSection from "@/components/home/HeroSection";
+import HeroSection, { HERO_IMAGE, HERO_IMAGE_MOBILE } from "@/components/home/HeroSection";
 import FeaturedPackages from "@/components/home/FeaturedPackages";
 import HowItWorks from "@/components/home/HowItWorks";
 import HomeReviews from "@/components/home/HomeReviews";
@@ -62,7 +62,8 @@ export default async function HomePage() {
   const startingPrice = await getStartingPrice();
 
   // Hero poster is the first large paint; fetch it with the HTML instead of after hydration
-  preload("/images/hero-poster.webp", { as: "image", fetchPriority: "high" });
+  preload(HERO_IMAGE_MOBILE, { as: "image", fetchPriority: "high", media: "(max-width: 767px)" });
+  preload(HERO_IMAGE, { as: "image", fetchPriority: "high", media: "(min-width: 768px)" });
 
   return (
     <div className="overflow-x-hidden">

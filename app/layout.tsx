@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, DM_Sans } from "next/font/google";
+import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import AppShell from "@/components/layout/AppShell";
 import Footer from "@/components/layout/Footer";
@@ -10,22 +10,22 @@ import { SITE_CONFIG } from "@/lib/config/site";
 import { toInternationalPhone } from "@/lib/utils";
 
 // Neutral sans for body copy and UI
-const fontSans = DM_Sans({
+const fontSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-dm-sans",
+  variable: "--font-jakarta",
   display: "swap",
 });
 
 // Display serif for headlines and prices only
-const fontDisplay = Cormorant_Garamond({
+const fontDisplay = Playfair_Display({
   subsets: ["latin"],
-  weight: ["500", "600"],
-  variable: "--font-cormorant",
+  weight: ["500", "600", "700"],
+  variable: "--font-playfair",
   display: "swap",
 });
 
 export const viewport: Viewport = {
-  themeColor: "#17120D",
+  themeColor: "#101633",
   width: "device-width",
   initialScale: 1,
 };
@@ -197,7 +197,7 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`min-h-screen flex flex-col bg-[var(--bg-page)] text-[var(--text-main)] font-sans antialiased selection:bg-[#C89B3C] selection:text-[#17120D]`}>
+      <body className={`min-h-screen flex flex-col bg-[var(--bg-page)] text-[var(--text-main)] font-sans antialiased selection:bg-amber-300 selection:text-dune-900`}>
         <StoreProvider>
           <ThemeProvider>
             <AppShell footer={<Footer />}>{children}</AppShell>

@@ -70,7 +70,7 @@ export default function PackageCard({ pkg, priority = false }: PackageCardProps)
   );
 
   return (
-    <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-surface ring-1 ring-line transition-[box-shadow,transform] duration-500 ease-[var(--ease-out-soft)] hover:shadow-glow-amber hover:ring-transparent motion-safe:hover:-translate-y-1">
+    <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-surface shadow-card ring-1 ring-line transition-[box-shadow,transform] duration-500 ease-[var(--ease-out-soft)] hover:shadow-glow-amber hover:ring-transparent motion-safe:hover:-translate-y-1">
       {/* Image: fixed 4:3 box so nothing shifts while it loads */}
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-dune-900">
         <img
@@ -85,7 +85,7 @@ export default function PackageCard({ pkg, priority = false }: PackageCardProps)
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-dune-950/80 to-transparent" />
 
         {badge && (
-          <span className="absolute left-4 top-4 rounded-full bg-sand-50 px-3 py-1 text-label font-semibold uppercase text-dune-900">
+          <span className="absolute left-4 top-4 rounded-full border border-amber-300/40 bg-dune-900/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-amber-300 backdrop-blur-md">
             {badge}
           </span>
         )}
@@ -96,8 +96,8 @@ export default function PackageCard({ pkg, priority = false }: PackageCardProps)
         </span>
       </div>
 
-      <div className="flex flex-1 flex-col p-6 sm:p-7">
-        <h3 className="font-display text-h3 font-semibold text-ink">
+      <div className="flex flex-1 flex-col p-6">
+        <h3 className="font-display text-[1.375rem] font-semibold leading-snug text-ink">
           {/* Stretched link: the whole card opens the package page; buttons below sit above it */}
           <Link
             href={`/packages/${pkg.slug}`}
@@ -108,14 +108,14 @@ export default function PackageCard({ pkg, priority = false }: PackageCardProps)
         </h3>
 
         {pkg.short_description && (
-          <p className="mt-3 line-clamp-2 text-body text-muted">{pkg.short_description}</p>
+          <p className="mt-2.5 line-clamp-2 text-small text-muted">{pkg.short_description}</p>
         )}
 
         {pkg.inclusions.length > 0 && (
-          <ul className="mb-6 mt-4 space-y-2">
+          <ul className="mb-6 mt-4 space-y-1.5">
             {pkg.inclusions.slice(0, 3).map((inc) => (
-              <li key={inc} className="flex items-start gap-2.5 text-body text-muted">
-                <Check className="mt-1 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
+              <li key={inc} className="flex items-start gap-2.5 text-small text-ink/80">
+                <Check className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" aria-hidden="true" />
                 <span>{inc}</span>
               </li>
             ))}
@@ -124,14 +124,14 @@ export default function PackageCard({ pkg, priority = false }: PackageCardProps)
 
         <div className="mt-auto flex flex-wrap items-end justify-between gap-x-4 gap-y-4 border-t border-line pt-5">
           <div>
-            <p className="whitespace-nowrap text-label uppercase text-muted">
+            <p className="whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.16em] text-accent">
               From
               {showDiscount && (
-                <span className="ml-2 normal-case tracking-normal line-through">AED {pkg.original_price}</span>
+                <span className="ml-2 font-normal normal-case tracking-normal text-muted line-through">AED {pkg.original_price}</span>
               )}
             </p>
-            <p className="whitespace-nowrap font-display text-h3 font-semibold lining-nums tabular-nums text-ink">AED {pkg.price}</p>
-            <p className="text-small text-muted">{pkg.per_unit || "per person"}</p>
+            <p className="mt-0.5 whitespace-nowrap font-display text-[1.75rem] font-semibold leading-none lining-nums tabular-nums text-ink">AED {pkg.price}</p>
+            <p className="mt-1 text-small text-muted">{pkg.per_unit || "per person"}</p>
           </div>
           <div className="relative z-10 ml-auto flex shrink-0 items-center gap-2">
             <a
@@ -144,7 +144,7 @@ export default function PackageCard({ pkg, priority = false }: PackageCardProps)
             >
               <MessageCircle className="h-5 w-5" aria-hidden="true" />
             </a>
-            <Link href={`/booking?package=${encodeURIComponent(pkg.id)}`} className="btn-gold">
+            <Link href={`/booking?package=${encodeURIComponent(pkg.id)}`} className="btn-gold btn-sm">
               Book Now
             </Link>
           </div>

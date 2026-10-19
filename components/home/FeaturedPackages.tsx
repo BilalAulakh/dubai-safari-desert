@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import type { Package } from "@/types";
 import PackageCard, { toPackageCardData } from "@/components/packages/PackageCard";
 import ScrollReveal from "@/components/common/ScrollReveal";
@@ -36,16 +38,18 @@ export default function FeaturedPackages({ packages }: FeaturedPackagesProps) {
   }
 
   return (
-    <section className="section-y overflow-hidden bg-page">
+    <section className="section-y overflow-hidden bg-surface-alt" id="packages">
       <div className="container-page">
         <ScrollReveal>
-          <div className="mb-12 max-w-2xl lg:mb-16">
-            <p className="kicker">Curated Safari Experiences</p>
+          <div className="mx-auto mb-12 max-w-2xl text-center lg:mb-16">
+            <p className="kicker justify-center after:h-px after:w-8 after:bg-current after:opacity-70 after:content-['']">
+              Curated Safari Experiences
+            </p>
             <h2 className="mt-5 font-display text-h2 font-semibold text-ink">
-              Signature Dubai Desert Safaris & Tours
+              Choose your evening in the <span className="italic text-accent">dunes</span>
             </h2>
             <p className="mt-5 text-body-lg text-muted">
-              Explore our hand-picked collection of red dune bashes, quad bike adventures, and authentic Bedouin camps.
+              Red dune bashing, quad bikes and buggies, and nights under the stars at a Bedouin camp.
             </p>
           </div>
         </ScrollReveal>
@@ -58,6 +62,13 @@ export default function FeaturedPackages({ packages }: FeaturedPackagesProps) {
             ))}
           </div>
         )}
+
+        <div className="mt-12 text-center lg:mt-16">
+          <Link href="/packages" className="btn-outline btn-lg group">
+            <span>View all packages</span>
+            <ArrowRight className="h-4 w-4 transition-transform motion-safe:group-hover:translate-x-0.5" aria-hidden="true" />
+          </Link>
+        </div>
       </div>
     </section>
   );

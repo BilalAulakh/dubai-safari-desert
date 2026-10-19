@@ -4,18 +4,28 @@ import { useTheme } from "./ThemeProvider";
 import { Sun, Moon } from "lucide-react";
 import { useState, useEffect } from "react";
 
-export default function ThemeToggle() {
+interface ThemeToggleProps {
+  // "onDark" for the always-navy site header; default follows the page theme (admin)
+  variant?: "default" | "onDark";
+}
+
+export default function ThemeToggle({ variant = "default" }: ThemeToggleProps) {
   const { theme, toggleTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- avoid a hydration mismatch on the icon
     setMounted(true);
   }, []);
 
+  const shape = "flex h-9 w-9 items-center justify-center rounded-full border transition-colors duration-200";
+  const look =
+    variant === "onDark"
+      ? "border-white/15 text-sand-50/85 hover:border-amber-300/60 hover:text-amber-300"
+      : "border-line bg-surface text-ink hover:border-amber-500";
+
   if (!mounted) {
-    return (
-      <div className="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/20" />
-    );
+    return <div className={`${shape} ${look}`} aria-hidden="true" />;
   }
 
   const isDark = theme === "dark";
@@ -24,20 +34,12 @@ export default function ThemeToggle() {
     <button
       type="button"
       onClick={toggleTheme}
-      className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl flex items-center justify-center transition-all duration-200 border focus:outline-none focus:ring-2 focus:ring-[#C89B3C] ${
-        isDark
-          ? "bg-[#241A12] border-[#C89B3C]/30 text-[#E8C48A] hover:border-[#C89B3C]"
-          : "bg-white/90 border-[#C89B3C]/30 text-[#17120D] hover:bg-[#FBF7F0] shadow-sm"
-      }`}
+      className={`${shape} ${look}`}
       title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
       aria-label="Toggle Light and Dark Mode"
       id="theme-toggle-btn"
     >
-      {isDark ? (
-        <Sun className="w-4 h-4 text-amber-400 rotate-0 transition-transform duration-300" />
-      ) : (
-        <Moon className="w-4 h-4 text-amber-800 -rotate-12 transition-transform duration-300" />
-      )}
+      {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
     </button>
   );
 }
