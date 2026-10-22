@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { MessageCircle } from "lucide-react";
 import { Package } from "@/types";
-import { formatPrice, createWhatsAppUrl } from "@/lib/utils";
+import { createWhatsAppUrl } from "@/lib/utils";
 import { SITE_CONFIG } from "@/lib/config/site";
 
 interface StickyBookingBarProps {
@@ -16,50 +16,24 @@ export default function StickyBookingBar({ pkg }: StickyBookingBarProps) {
     SITE_CONFIG.whatsappTemplates.packageInquiry(pkg.name)
   );
 
+  // Tablet only: desktop has the sticky calculator beside the content and phones have the
+  // site-wide bottom bar, so showing it there would cover the page or stack two bars
   return (
-    <div className="fixed bottom-0 inset-x-0 z-30 bg-[#17120D]/95 backdrop-blur-md border-t border-[#C89B3C]/25 py-3.5 px-4 sm:px-6 shadow-2xl">
-      <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-        {/* Package info & price */}
-        <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-3 truncate">
-          <span className="font-heading text-sm sm:text-base font-bold text-white truncate max-w-[180px] sm:max-w-xs md:max-w-md">
-            {pkg.name}
-          </span>
-          <div className="flex items-baseline gap-1.5">
-            {pkg.original_price && pkg.original_price > pkg.price && (
-              <span className="text-xs text-gray-400 line-through">
-                AED {pkg.original_price}
-              </span>
-            )}
-            <span className="text-[10px] uppercase font-bold text-amber-300">From</span>
-            <span className="text-lg sm:text-xl font-black text-[#FF6B00] dark:text-[#E8C48A] tracking-tight">
-              AED {pkg.price}
-            </span>
-            <span className="text-[11px] text-[#B8ADA2]">
-              {pkg.per_unit ? `(${pkg.per_unit})` : "/ guest"}
-            </span>
-            <span className="hidden md:inline-block ml-2 px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold uppercase tracking-wider">
-              Flexible Group Rates
-            </span>
-          </div>
+    <div className="fixed inset-x-0 bottom-0 z-30 hidden border-t border-amber-500/20 bg-dune-900/95 px-4 py-3 shadow-2xl backdrop-blur-md sm:block lg:hidden">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
+        <div className="min-w-0">
+          <p className="truncate text-sm font-semibold text-sand-50">{pkg.name}</p>
+          <p className="text-xs text-sand-400">
+            From <span className="font-heading text-lg font-semibold text-amber-300">AED {pkg.price}</span>{" "}
+            {pkg.per_unit || "per person"}
+          </p>
         </div>
-
-        {/* Action Buttons */}
-        <div className="flex items-center gap-2 shrink-0">
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden sm:inline-flex items-center gap-1.5 h-8 sm:h-9 px-3 rounded-lg bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 text-[11px] font-semibold hover:bg-emerald-600/30 transition-colors"
-          >
-            <MessageCircle className="w-3.5 h-3.5" />
+        <div className="flex shrink-0 items-center gap-2">
+          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn-whatsapp btn-sm">
+            <MessageCircle className="h-4 w-4" aria-hidden="true" />
             <span>WhatsApp</span>
           </a>
-
-          <Link
-            href={`/booking?package=${encodeURIComponent(pkg.id)}`}
-            className="h-8 sm:h-9 px-4 sm:px-5 rounded-lg bg-[#C89B3C] hover:bg-[#D6A84F] text-[#17120D] text-[11px] sm:text-xs uppercase tracking-wider font-bold shadow-sm inline-flex items-center justify-center transition-all duration-200"
-            id="sticky-book-now-cta"
-          >
+          <Link href={`/booking?package=${encodeURIComponent(pkg.id)}`} className="btn-gold btn-sm" id="sticky-book-now-cta">
             Book Now
           </Link>
         </div>

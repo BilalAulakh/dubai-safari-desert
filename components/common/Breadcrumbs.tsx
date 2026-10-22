@@ -37,7 +37,7 @@ export default function Breadcrumbs({ items, className = "" }: BreadcrumbsProps)
       />
       <nav
         aria-label="Breadcrumb"
-        className={`flex items-center text-xs text-[#B8ADA2] py-2 overflow-x-auto ${className}`}
+        className={`flex items-center text-xs text-sand-400 py-2 overflow-x-auto ${className}`}
       >
         <ol className="flex items-center space-x-1.5 whitespace-nowrap">
           {allItems.map((item, index) => {
@@ -46,12 +46,12 @@ export default function Breadcrumbs({ items, className = "" }: BreadcrumbsProps)
             return (
               <li key={index} className="flex items-center">
                 {index > 0 && (
-                  <ChevronRight className="w-3.5 h-3.5 text-[#C89B3C]/60 mx-1 shrink-0" />
+                  <ChevronRight className="w-3.5 h-3.5 text-amber-500/60 mx-1 shrink-0" />
                 )}
 
                 {isLast || !item.href ? (
                   <span
-                    className="font-medium text-[#E8C48A] dark:text-[#E8C48A]"
+                    className="font-medium text-amber-300"
                     aria-current="page"
                   >
                     {item.label}
@@ -59,9 +59,9 @@ export default function Breadcrumbs({ items, className = "" }: BreadcrumbsProps)
                 ) : (
                   <Link
                     href={item.href}
-                    className="hover:text-white dark:hover:text-white transition-colors flex items-center gap-1"
+                    className="hover:text-white transition-colors flex items-center gap-1"
                   >
-                    {index === 0 && <Home className="w-3 h-3 text-[#C89B3C] shrink-0" />}
+                    {index === 0 && <Home className="w-3 h-3 text-amber-500 shrink-0" />}
                     <span>{item.label}</span>
                   </Link>
                 )}
