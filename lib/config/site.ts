@@ -28,12 +28,21 @@ export const SITE_CONFIG = {
     googleMapsUrl: "https://maps.google.com/?q=Dubai+Desert+Safari",
   },
 
-  // Trust strip under the homepage hero. Items left as null are hidden on the site,
-  // so placeholders never show to visitors. Fill these with real, verifiable values.
+  // Trust band under the homepage hero. Any value left as null is hidden on the live site
+  // (in development it shows "TODO" so the gap is visible). Fill with real, verifiable figures only.
   trust: {
+    googleRating: null as number | null, // TODO: current Google rating, e.g. 4.9
+    googleReviewCount: null as number | null, // TODO: number of Google reviews
+    tripadvisorReviewCount: null as number | null, // TODO: number of TripAdvisor reviews
+    guestsServed: null as number | null, // TODO: real number of guests served
+    yearsOperating: null as number | null, // TODO: years the business has operated
     licenseNumber: null as string | null, // TODO: DTCM / DED tour operator license number
-    guestsServed: null as string | null, // TODO: real number of guests served, e.g. "12,000+"
     freeCancellationHours: 24,
+    // Logo assets for the trust band, e.g. "/images/logos/google.svg". Empty slots until supplied.
+    logos: {
+      google: null as string | null, // TODO: Google logo asset
+      tripadvisor: null as string | null, // TODO: TripAdvisor logo asset
+    },
   },
 
   // Only these packages show a discount badge and strikethrough price; every other

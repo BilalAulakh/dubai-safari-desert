@@ -45,6 +45,11 @@
   --color-amber-600: #A8834A;
   --color-amber-700: #7E5F2B;
 
+  /* Accent: copper-gold for CTAs, active states and small highlights on navy only.
+     About 5.9:1 on dune-900 (AA for text) but only about 3:1 on white, so never use it
+     for text on light surfaces (use amber-700 there). */
+  --color-accent-500: #C8873E;
+
   /* Ember = sunset orange: the primary booking CTA only (white text passes AA) */
   --color-ember-500: #C2410C;
   --color-ember-600: #9A3412;
@@ -394,17 +399,17 @@
     transform: translateY(0);
   }
 
-  /* Primary booking CTA. Class name kept for existing markup; it is now sunset
-     ember with white text (AA) so "Book" stands out against navy and gold. */
+  /* Primary booking CTA: dune gold to match the logo, navy text for contrast (AA). */
   .btn-gold {
-    background-color: var(--color-ember-500);
-    color: #FFFFFF;
+    background-image: linear-gradient(135deg, var(--color-gold-300), var(--color-gold-500));
+    background-color: var(--color-gold-400);
+    color: var(--color-dune-950);
     font-weight: 700;
-    box-shadow: 0 10px 24px -12px rgb(194 65 12 / 0.7);
+    box-shadow: 0 10px 24px -12px rgb(200 155 60 / 0.75);
   }
   .btn-gold:hover {
-    background-color: var(--color-ember-600);
-    color: #FFFFFF;
+    background-image: linear-gradient(135deg, var(--color-gold-400), var(--color-gold-700));
+    color: var(--color-dune-950);
     transform: translateY(-1px);
   }
 

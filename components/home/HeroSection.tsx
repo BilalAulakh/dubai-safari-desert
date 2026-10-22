@@ -3,10 +3,12 @@ import { SITE_CONFIG } from "@/lib/config/site";
 import { createWhatsAppUrl, formatPrice } from "@/lib/utils";
 import { warnIfStartingPriceDrifts } from "@/lib/data/pricing";
 
-// 4x4 dune bashing in the Dubai dunes (Unsplash, free licence). Desktop crop puts the car
-// right of centre so the headline sits over open sand; mobile is a portrait crop on the car.
-export const HERO_IMAGE = "/images/hero-dune-bashing.webp";
-export const HERO_IMAGE_MOBILE = "/images/hero-dune-bashing-mobile.webp";
+// 4x4 dune bashing under a blue sky (photo supplied by the owner). Mirrored so the car sits
+// right of centre and the headline lands on open sand; mobile is a portrait crop on the car.
+// Public images are cached by browsers for a week (next.config.ts), so a new photo
+// needs a new filename or visitors keep seeing the old one.
+export const HERO_IMAGE = "/images/hero-safari-bluesky.webp";
+export const HERO_IMAGE_MOBILE = "/images/hero-safari-bluesky-mobile.webp";
 
 interface HeroSectionProps {
   // From getStartingPrice(): the cheapest active package. Never pass a literal.
@@ -28,25 +30,26 @@ export default async function HeroSection({ startingPrice }: HeroSectionProps) {
           <img
             src={HERO_IMAGE}
             alt=""
-            width={2048}
-            height={1598}
+            width={2560}
+            height={1440}
             fetchPriority="high"
             decoding="async"
-            className="h-full w-full object-cover object-[center_55%]"
+            className="h-full w-full object-cover object-center"
           />
         </picture>
         {/* Shade only behind the copy (bottom-left) and under the nav; the car and dunes stay clear */}
-        <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-dune-950/85 via-dune-950/30 to-transparent" />
-        <div className="absolute inset-y-0 left-0 w-3/5 bg-gradient-to-r from-dune-950/55 to-transparent" />
-        <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-dune-950/75 via-dune-950/30 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-dune-950/60 via-dune-950/10 to-transparent" />
+        <div className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-dune-950/45 to-transparent" />
+        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-dune-950/55 to-transparent" />
       </div>
 
       <div className="container-page pb-24 pt-40 sm:pb-28 lg:pb-32">
         <div className="max-w-3xl">
-          <h1 className="animate-hero-fade-up font-display text-display font-semibold text-sand-50 opacity-0 [text-shadow:0_2px_24px_rgb(10_15_36/0.6)]">
+          <h1 className="animate-hero-fade-up font-display text-display font-semibold text-sand-50 opacity-0 [text-shadow:0_2px_4px_rgb(10_15_36/0.45),0_4px_28px_rgb(10_15_36/0.7)]">
             Dubai Desert Safari
             {startingPrice !== null && (
-              <span className="mt-1 block italic text-amber-300">from {formatPrice(startingPrice)}</span>
+              // White, not gold: gold text disappears into the sand behind it
+              <span className="mt-1 block italic text-white">from {formatPrice(startingPrice)}</span>
             )}
           </h1>
 
@@ -55,7 +58,7 @@ export default async function HeroSection({ startingPrice }: HeroSectionProps) {
               <span>Book Now</span>
               <ArrowRight className="h-4 w-4 transition-transform motion-safe:group-hover:translate-x-0.5" aria-hidden="true" />
             </a>
-            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn-luxury-outline btn-lg" id="hero-whatsapp-cta">
+            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn-luxury-outline btn-lg border-white/60 bg-dune-950/45" id="hero-whatsapp-cta">
               <MessageCircle className="h-4 w-4 text-amber-300" aria-hidden="true" />
               <span>WhatsApp Us</span>
             </a>

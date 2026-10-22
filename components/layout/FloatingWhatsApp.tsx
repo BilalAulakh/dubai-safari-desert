@@ -53,7 +53,7 @@ export default function FloatingWhatsApp() {
 
         <Link
           href="/booking"
-          className="flex h-11 flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-ember-500 px-3 text-small font-bold text-white shadow-md transition-transform hover:bg-ember-600 active:scale-95"
+          className="flex h-11 flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-gradient-to-br from-gold-300 to-gold-500 px-3 text-small font-bold text-dune-950 shadow-md transition-transform hover:from-gold-400 hover:to-gold-700 active:scale-95"
         >
           <CalendarCheck className="h-4 w-4 shrink-0" aria-hidden="true" />
           <span>Book Now</span>
