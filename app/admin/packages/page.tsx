@@ -55,6 +55,9 @@ export default function AdminPackagesPage() {
     "Alcoholic beverages\nQuad bike rental"
   );
   const [featured, setFeatured] = useState(false);
+  // Extra photos shown on the package page (the main image is the hero)
+  const [gallery, setGallery] = useState<string[]>([]);
+  const [pendingGalleryImage, setPendingGalleryImage] = useState("");
 
   const openCreateModal = () => {
     setEditingPackage(null);
@@ -72,6 +75,8 @@ export default function AdminPackagesPage() {
     );
     setExclusionsText("Alcoholic beverages\nQuad bike rental");
     setFeatured(false);
+    setGallery([]);
+    setPendingGalleryImage("");
     setIsModalOpen(true);
   };
 
@@ -87,6 +92,8 @@ export default function AdminPackagesPage() {
     setInclusionsText((pkg.inclusions || []).join("\n"));
     setExclusionsText((pkg.exclusions || []).join("\n"));
     setFeatured(Boolean(pkg.featured));
+    setGallery(pkg.gallery || []);
+    setPendingGalleryImage("");
     setIsModalOpen(true);
   };
 
@@ -137,6 +144,7 @@ export default function AdminPackagesPage() {
         main_image: mainImage.trim(),
         inclusions: inclusionsArray,
         exclusions: exclusionsArray,
+        gallery,
         featured,
       };
 
@@ -182,10 +190,7 @@ export default function AdminPackagesPage() {
         featured,
         active: true,
         main_image: mainImage.trim(),
-        gallery: [
-          mainImage.trim(),
-          "/images/hero-dune-bashing.webp",
-        ],
+        gallery,
         inclusions:
           inclusionsArray.length > 0
             ? inclusionsArray
@@ -509,6 +514,53 @@ export default function AdminPackagesPage() {
                 label="Main Image (Saved to safari-images)"
                 bucket="safari-images"
               />
+
+              {/* Gallery: extra photos on the package page. Remove a wrong one with its X. */}
+              <div className="space-y-2">
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300">
+                  Gallery Photos ({gallery.length}) <span className="font-normal text-slate-500">shown on the package page</span>
+                </label>
+                {gallery.length > 0 ? (
+                  <div className="grid grid-cols-3 gap-2">
+                    {gallery.map((src, i) => (
+                      <div key={`${src}-${i}`} className="group relative aspect-[4/3] overflow-hidden rounded-xl border border-slate-200 bg-slate-100 dark:border-slate-700 dark:bg-slate-800">
+                        <img src={src} alt={`Gallery photo ${i + 1}`} className="h-full w-full object-cover" />
+                        <button
+                          type="button"
+                          onClick={() => setGallery((g) => g.filter((_, j) => j !== i))}
+                          className="absolute right-1.5 top-1.5 flex h-7 w-7 items-center justify-center rounded-full bg-rose-600 text-white shadow hover:bg-rose-700"
+                          title="Remove this photo"
+                          aria-label={`Remove gallery photo ${i + 1}`}
+                        >
+                          <X className="h-4 w-4" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-xs text-slate-500">No gallery photos yet.</p>
+                )}
+                {/* Upload or paste a URL first, then add it, so typing a URL doesn't add partial links */}
+                <ImageUpload
+                  value={pendingGalleryImage}
+                  onChange={setPendingGalleryImage}
+                  label="Add a gallery photo"
+                  bucket="safari-images"
+                />
+                {pendingGalleryImage.trim() && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setGallery((g) => [...g, pendingGalleryImage.trim()]);
+                      setPendingGalleryImage("");
+                    }}
+                    className="inline-flex items-center gap-1.5 rounded-xl bg-amber-500 px-4 py-2 text-xs font-bold text-slate-950 hover:bg-amber-400"
+                  >
+                    <Plus className="h-3.5 w-3.5" />
+                    Add to gallery
+                  </button>
+                )}
+              </div>
 
               <div>
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">

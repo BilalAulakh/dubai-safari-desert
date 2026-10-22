@@ -160,6 +160,7 @@ export async function updatePackage(id: string, updates: Partial<Package>): Prom
       if (updates.short_description !== undefined) dbUpdates.short_description = updates.short_description;
       if (updates.description !== undefined) dbUpdates.description = updates.description;
       if (updates.main_image !== undefined) dbUpdates.main_image = updates.main_image;
+      if (updates.gallery !== undefined) dbUpdates.gallery = updates.gallery;
       if (updates.featured !== undefined) dbUpdates.featured = updates.featured;
       if (updates.active !== undefined) dbUpdates.active = updates.active;
       if (updates.slug !== undefined) dbUpdates.slug = updates.slug;
