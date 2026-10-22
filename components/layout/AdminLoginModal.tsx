@@ -62,12 +62,12 @@ export default function AdminLoginModal({ open, onClose }: AdminLoginModalProps)
   };
 
   const inputClass =
-    "w-full rounded-xl border border-[#17120D]/15 bg-white px-4 py-3 text-sm text-[#17120D] placeholder:text-[#5E554C]/60 focus:border-[#C89B3C] focus:outline-none focus:ring-2 focus:ring-[#C89B3C]/30 dark:border-white/15 dark:bg-[#17120D] dark:text-white dark:placeholder:text-white/40";
+    "w-full rounded-xl border border-dune-900/15 bg-white px-4 py-3 text-sm text-dune-900 placeholder:text-sand-600/60 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/30 dark:border-white/15 dark:bg-dune-900 dark:text-white dark:placeholder:text-white/40";
 
   // Portal: the header's backdrop-blur would otherwise trap this fixed overlay inside the bar
   return createPortal(
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-[#0E0A07]/70 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-dune-950/70 p-4 backdrop-blur-sm"
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -76,32 +76,32 @@ export default function AdminLoginModal({ open, onClose }: AdminLoginModalProps)
         role="dialog"
         aria-modal="true"
         aria-labelledby="admin-login-title"
-        className="relative w-full max-w-sm rounded-2xl border border-[#C89B3C]/25 bg-[#FBF7F0] p-6 shadow-2xl sm:p-7 dark:bg-[#1D150E]"
+        className="relative w-full max-w-sm rounded-2xl border border-amber-500/25 bg-page p-6 shadow-2xl sm:p-7 dark:bg-dune-850"
       >
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-3 top-3 rounded-lg p-2 text-[#5E554C] transition-colors hover:bg-[#17120D]/5 hover:text-[#17120D] dark:text-white/60 dark:hover:bg-white/10 dark:hover:text-white"
+          className="absolute right-3 top-3 rounded-lg p-2 text-sand-600 transition-colors hover:bg-dune-900/5 hover:text-dune-900 dark:text-white/60 dark:hover:bg-white/10 dark:hover:text-white"
           aria-label="Close"
         >
           <X className="h-4 w-4" />
         </button>
 
         <div className="mb-6 flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#C89B3C]/15 text-[#8C6214] dark:text-[#E8C48A]">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500/15 text-amber-700 dark:text-amber-300">
             <ShieldCheck className="h-5 w-5" />
           </div>
           <div>
-            <h2 id="admin-login-title" className="font-heading text-lg font-bold text-[#17120D] dark:text-white">
+            <h2 id="admin-login-title" className="font-heading text-lg font-bold text-dune-900 dark:text-white">
               Admin Login
             </h2>
-            <p className="text-xs text-[#5E554C] dark:text-white/60">Team access only</p>
+            <p className="text-xs text-sand-600 dark:text-white/60">Team access only</p>
           </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="admin-username" className="mb-1.5 block text-xs font-semibold text-[#5E554C] dark:text-white/70">
+            <label htmlFor="admin-username" className="mb-1.5 block text-xs font-semibold text-sand-600 dark:text-white/70">
               Username
             </label>
             <input
@@ -118,7 +118,7 @@ export default function AdminLoginModal({ open, onClose }: AdminLoginModalProps)
           </div>
 
           <div>
-            <label htmlFor="admin-password" className="mb-1.5 block text-xs font-semibold text-[#5E554C] dark:text-white/70">
+            <label htmlFor="admin-password" className="mb-1.5 block text-xs font-semibold text-sand-600 dark:text-white/70">
               Password
             </label>
             <div className="relative">
@@ -135,7 +135,7 @@ export default function AdminLoginModal({ open, onClose }: AdminLoginModalProps)
               <button
                 type="button"
                 onClick={() => setShowPassword((v) => !v)}
-                className="absolute right-2 top-1/2 -translate-y-1/2 rounded-lg p-2 text-[#5E554C] hover:text-[#17120D] dark:text-white/50 dark:hover:text-white"
+                className="absolute right-2 top-1/2 -translate-y-1/2 rounded-lg p-2 text-sand-600 hover:text-dune-900 dark:text-white/50 dark:hover:text-white"
                 aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}

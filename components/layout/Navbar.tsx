@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone, MessageCircle } from "lucide-react";
+import { Menu, X, Phone, MessageCircle, ShieldCheck } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config/site";
 import ThemeToggle from "@/components/common/ThemeToggle";
+import AdminLoginModal from "@/components/layout/AdminLoginModal";
 import { createWhatsAppUrl, toInternationalPhone } from "@/lib/utils";
 
 // Desktop bar keeps to the pages that help someone choose and book;
@@ -15,6 +16,8 @@ const PRIMARY_HREFS = ["/packages", "/activities", "/gallery", "/reviews", "/abo
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [adminLoginOpen, setAdminLoginOpen] = useState(false);
+  const closeAdminLogin = useCallback(() => setAdminLoginOpen(false), []);
   const pathname = usePathname();
   const isHomePage = pathname === "/";
 
@@ -112,6 +115,15 @@ export default function Navbar() {
               <MessageCircle className="h-4 w-4" />
             </a>
             <ThemeToggle variant="onDark" />
+            <button
+              type="button"
+              onClick={() => setAdminLoginOpen(true)}
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-sand-50/85 transition-colors hover:border-amber-300/60 hover:text-amber-300"
+              title="Admin Login"
+              aria-label="Admin Login"
+            >
+              <ShieldCheck className="h-4 w-4" />
+            </button>
             <Link href="/booking" className="btn-gold btn-sm ml-1" id="nav-book-now-cta">
               Book Now
             </Link>
@@ -165,9 +177,22 @@ export default function Navbar() {
               <Phone className="h-4 w-4 text-amber-300" aria-hidden="true" />
               <span>{toInternationalPhone(SITE_CONFIG.contact.phone)}</span>
             </a>
+            <button
+              type="button"
+              onClick={() => {
+                setIsOpen(false);
+                setAdminLoginOpen(true);
+              }}
+              className="flex items-center justify-center gap-2 text-sm text-amber-300 hover:underline"
+            >
+              <ShieldCheck className="h-4 w-4" aria-hidden="true" />
+              <span>Admin Login</span>
+            </button>
           </div>
         </div>
       )}
+
+      <AdminLoginModal open={adminLoginOpen} onClose={closeAdminLogin} />
     </header>
   );
 }
