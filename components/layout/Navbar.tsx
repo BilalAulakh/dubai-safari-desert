@@ -46,6 +46,7 @@ export default function Navbar() {
 
   return (
     <header
+      style={{ viewTransitionName: "site-header" }}
       className={`fixed top-0 inset-x-0 z-40 transition-all duration-300 ${
         isTransparent
           ? "bg-transparent py-4 sm:py-5"

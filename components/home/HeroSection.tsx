@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ArrowRight, MessageCircle } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config/site";
 import { createWhatsAppUrl, formatPrice } from "@/lib/utils";
@@ -8,7 +9,7 @@ import { warnIfStartingPriceDrifts } from "@/lib/data/pricing";
 // Public images are cached by browsers for a week (next.config.ts), so a new photo
 // needs a new filename or visitors keep seeing the old one.
 export const HERO_IMAGE = "/images/hero-safari-bluesky.webp";
-export const HERO_IMAGE_MOBILE = "/images/hero-safari-bluesky-mobile.webp";
+export const HERO_IMAGE_MOBILE = "/images/hero-safari-bluesky-mobile-v2.webp";
 
 interface HeroSectionProps {
   // From getStartingPrice(): the cheapest active package. Never pass a literal.
@@ -54,10 +55,10 @@ export default async function HeroSection({ startingPrice }: HeroSectionProps) {
           </h1>
 
           <div className="animate-hero-fade-up mt-10 flex flex-col gap-3 opacity-0 [animation-delay:200ms] sm:flex-row sm:gap-4">
-            <a href="/booking" className="btn-gold btn-lg group" id="hero-book-now-cta">
+            <Link href="/booking" className="btn-gold btn-lg group" id="hero-book-now-cta">
               <span>Book Now</span>
               <ArrowRight className="h-4 w-4 transition-transform motion-safe:group-hover:translate-x-0.5" aria-hidden="true" />
-            </a>
+            </Link>
             <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn-luxury-outline btn-lg border-white/60 bg-dune-950/45" id="hero-whatsapp-cta">
               <MessageCircle className="h-4 w-4 text-amber-300" aria-hidden="true" />
               <span>WhatsApp Us</span>

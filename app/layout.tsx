@@ -185,7 +185,7 @@ export default async function RootLayout({
   };
 
   return (
-    <html lang="en" className={`${fontSans.variable} ${fontDisplay.variable} scroll-smooth`} suppressHydrationWarning>
+    <html lang="en" data-scroll-behavior="smooth" className={`${fontSans.variable} ${fontDisplay.variable} scroll-smooth`} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{

@@ -554,3 +554,62 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Page transitions (components/layout/AppShell.tsx). The old page sinks back and blurs out fast,
+   the new one rises into focus a beat later. The header stays put as the anchor,
+   and the rest of the shell swaps instantly. Browsers without View Transitions just navigate. */
+::view-transition {
+  pointer-events: none;
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 100;
+}
+::view-transition-old(site-header) {
+  display: none;
+}
+::view-transition-new(site-header) {
+  animation: none;
+}
+::view-transition-old(.page-exit) {
+  animation: page-out 200ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+::view-transition-new(.page-enter) {
+  animation: page-in 460ms cubic-bezier(0.16, 1, 0.3, 1) 120ms both;
+}
+@keyframes page-out {
+  to {
+    opacity: 0;
+    transform: scale(0.985) translateY(-8px);
+    filter: blur(6px);
+  }
+}
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(.page-exit),
+  ::view-transition-new(.page-enter) {
+    animation: page-fade 150ms ease both;
+  }
+  ::view-transition-old(.page-exit) {
+    animation-direction: reverse;
+  }
+  @keyframes page-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}
