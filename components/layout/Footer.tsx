@@ -36,8 +36,7 @@ export default function Footer() {
           <div className="space-y-5">
             <Link href="/" className="group flex items-center gap-3">
               <img
-                src="/images/logo-emblem-dark-96.webp"
-                srcSet="/images/logo-emblem-dark-96.webp 1x, /images/logo-emblem-dark-192.webp 2x"
+                src="/images/logo-emblem.svg"
                 alt=""
                 width={56}
                 height={56}

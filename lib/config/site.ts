@@ -7,8 +7,8 @@ export const SITE_CONFIG = {
     "Explore Dubai desert safari experiences with Safari Dune Tours. Discover desert adventures, dune bashing, camel rides, sunset experiences and easy booking support.",
   url: "https://safaridunetours.com",
   ogImage: "https://safaridunetours.com/images/og-image.jpg",
-  logo: "/images/logo-transparent.png",
-  logoEmblem: "/images/logo-emblem-96.webp",
+  logo: "/images/logo.png",
+  logoEmblem: "/images/logo-emblem.svg",
   
   // Brand Color Palette
   colors: {

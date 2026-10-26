@@ -57,8 +57,7 @@ export default function Navbar() {
           {/* Brand */}
           <Link href="/" className="group flex shrink-0 items-center gap-2.5" id="nav-brand-logo" aria-label="Safari Dune Tours Homepage">
             <img
-              src="/images/logo-emblem-dark-96.webp"
-              srcSet="/images/logo-emblem-dark-96.webp 1x, /images/logo-emblem-dark-192.webp 2x"
+              src="/images/logo-emblem.svg"
               alt=""
               width={48}
               height={48}

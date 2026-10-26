@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="66 66 268 268" role="img" aria-label="Safari Dune Tours">
+  <defs><clipPath id="sdt-boundary"><circle cx="200" cy="200" r="128"/></clipPath></defs>
+  <circle cx="200" cy="200" r="128" fill="#111833"/>
+  <g clip-path="url(#sdt-boundary)">
+    <circle cx="200" cy="167" r="32" fill="#F2AA3B"/>
+    <path d="M64 248C111 207 157 198 199 215C244 234 271 267 336 263V336H64Z" fill="#F2AA3B"/>
+    <path d="M64 286C111 254 158 248 203 266C249 285 280 305 336 301V336H64Z" fill="#111833"/>
+  </g>
+  <circle cx="200" cy="200" r="128" fill="none" stroke="#F2AA3B" stroke-width="9"/>
+</svg>
