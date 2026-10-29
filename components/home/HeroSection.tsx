@@ -4,12 +4,12 @@ import { SITE_CONFIG } from "@/lib/config/site";
 import { createWhatsAppUrl, formatPrice } from "@/lib/utils";
 import { warnIfStartingPriceDrifts } from "@/lib/data/pricing";
 
-// 4x4 dune bashing under a blue sky (photo supplied by the owner). Mirrored so the car sits
-// right of centre and the headline lands on open sand; mobile is a portrait crop on the car.
+// 4x4 on the dunes at sunset (photo supplied by the owner). The car sits right of centre so
+// the headline lands on open sand; mobile is a portrait crop on the car.
 // Public images are cached by browsers for a week (next.config.ts), so a new photo
 // needs a new filename or visitors keep seeing the old one.
-export const HERO_IMAGE = "/images/hero-safari-bluesky.webp";
-export const HERO_IMAGE_MOBILE = "/images/hero-safari-bluesky-mobile-v2.webp";
+export const HERO_IMAGE = "/images/hero-sunset-dunes.webp";
+export const HERO_IMAGE_MOBILE = "/images/hero-sunset-dunes-mobile.webp";
 
 interface HeroSectionProps {
   // From getStartingPrice(): the cheapest active package. Never pass a literal.
@@ -31,8 +31,8 @@ export default async function HeroSection({ startingPrice }: HeroSectionProps) {
           <img
             src={HERO_IMAGE}
             alt=""
-            width={2560}
-            height={1440}
+            width={1672}
+            height={940}
             fetchPriority="high"
             decoding="async"
             className="h-full w-full object-cover object-center"
