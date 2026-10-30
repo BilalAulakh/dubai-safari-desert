@@ -46,10 +46,11 @@ export default function FeaturedPackages({ packages }: FeaturedPackagesProps) {
               Curated Safari Experiences
             </p>
             <h2 className="mt-5 font-display text-h2 font-bold text-ink">
-              Choose your evening in the <span className="italic text-accent">dunes</span>
+              Dubai Desert Safari <span className="italic text-accent">Experiences</span>
             </h2>
             <p className="mt-5 text-body-lg text-muted">
-              Red dune bashing, quad bikes and buggies, and nights under the stars at a Bedouin camp.
+              Discover Dubai&apos;s golden dunes with thrilling dune bashing, quad biking, dune buggy rides, and unforgettable
+              evenings at a traditional Bedouin desert camp.
             </p>
           </div>
         </ScrollReveal>
