@@ -45,7 +45,7 @@ export default function FeaturedPackages({ packages }: FeaturedPackagesProps) {
             <p className="kicker justify-center after:h-px after:w-8 after:bg-current after:opacity-70 after:content-['']">
               Curated Safari Experiences
             </p>
-            <h2 className="mt-5 font-display text-h2 font-semibold text-ink">
+            <h2 className="mt-5 font-display text-h2 font-bold text-ink">
               Choose your evening in the <span className="italic text-accent">dunes</span>
             </h2>
             <p className="mt-5 text-body-lg text-muted">

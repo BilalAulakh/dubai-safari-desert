@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { MessageCircle, CalendarCheck } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config/site";
 import { createWhatsAppUrl } from "@/lib/utils";
@@ -11,10 +12,16 @@ export default function FloatingWhatsApp() {
     SITE_CONFIG.whatsappTemplates.general
   );
 
+  // On a package page, Book Now opens the form with that package already chosen, and the
+  // round bubble waits for desktop: tablets there have the package's own booking bar.
+  const pathname = usePathname();
+  const packageSlug = pathname?.match(/^\/packages\/([^/]+)$/)?.[1];
+  const bookingHref = packageSlug ? `/booking?package=${encodeURIComponent(packageSlug)}` : "/booking";
+
   return (
     <>
       {/* Desktop Floating Action Stack (Bottom Right) */}
-      <div className="hidden sm:flex fixed bottom-5 right-5 z-50 flex-col items-end gap-2 pointer-events-none">
+      <div className={`${packageSlug ? "hidden lg:flex" : "hidden sm:flex"} fixed bottom-5 right-5 z-50 flex-col items-end gap-2 pointer-events-none`}>
         {/* Sticky WhatsApp Button */}
         <div className="pointer-events-auto flex items-center group">
           <span className="mr-2.5 px-3 py-1 text-xs font-semibold rounded-full bg-dune-900/95 text-amber-300 border border-amber-500/30 shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap backdrop-blur-md">
@@ -52,7 +59,7 @@ export default function FloatingWhatsApp() {
         </a>
 
         <Link
-          href="/booking"
+          href={bookingHref}
           className="flex h-11 flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-gradient-to-br from-gold-300 to-gold-500 px-3 text-small font-bold text-dune-950 shadow-md transition-transform hover:from-gold-400 hover:to-gold-700 active:scale-95"
         >
           <CalendarCheck className="h-4 w-4 shrink-0" aria-hidden="true" />

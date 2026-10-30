@@ -9,9 +9,12 @@ import {
   X,
   ArrowRight,
   MessageCircle,
+  Info,
+  Star,
 } from "lucide-react";
 import { getPackageBySlug, getPackages } from "@/lib/data/store";
-import { formatPrice, createWhatsAppUrl, optimizeImageUrl } from "@/lib/utils";
+import PackageGallery from "@/components/packages/PackageGallery";
+import { formatPrice, createWhatsAppUrl } from "@/lib/utils";
 import { SITE_CONFIG } from "@/lib/config/site";
 import { PACKAGE_FILTERS } from "@/lib/config/packageGroups";
 import StickyBookingBar from "@/components/packages/StickyBookingBar";
@@ -78,13 +81,12 @@ export async function generateMetadata({ params }: PackagePageProps): Promise<Me
   };
 }
 
-// Section heading used down the left column
-function SectionHeading({ kicker, title }: { kicker: string; title: string }) {
+// Plain section title used down the left column
+function SectionTitle({ id, children }: { id: string; children: React.ReactNode }) {
   return (
-    <div className="mb-5">
-      <p className="kicker">{kicker}</p>
-      <h2 className="mt-2 font-heading text-2xl font-semibold text-ink">{title}</h2>
-    </div>
+    <h2 id={id} className="mb-4 font-display text-xl font-bold leading-tight text-ink">
+      {children}
+    </h2>
   );
 }
 
@@ -107,10 +109,12 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
     ...others.filter((p) => !group?.matches(p)),
   ].slice(0, 3);
 
-  // Gallery photos other than the hero photo, as a short strip
-  const photos = Array.from(new Set((pkg.gallery || []).filter((g) => g && g !== pkg.main_image))).slice(0, 3);
-  const hasDiscount = Boolean(pkg.original_price && pkg.original_price > pkg.price);
-  const unitLabel = pkg.per_unit || "per person";
+  // Photos: main photo first, then the gallery, no repeats
+  const allPhotos = Array.from(new Set([pkg.main_image, ...(pkg.gallery || [])].filter(Boolean)));
+
+  // Only claim hotel pickup when the package includes it (buggy and quad pickup is an add-on)
+  const pickupLine = pkg.inclusions.find((i) => /pickup/i.test(i));
+  const includesPickup = Boolean(pickupLine && !/on demand|optional|add-on/i.test(pickupLine));
 
   const whatsappUrl = createWhatsAppUrl(
     SITE_CONFIG.contact.whatsapp,
@@ -138,189 +142,194 @@ export default async function PackageDetailPage({ params }: PackagePageProps) {
     },
   };
 
+  const listItem = "flex items-start gap-3 text-[0.9375rem] leading-relaxed";
+
   return (
     <div className="bg-page text-ink">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(tripJsonLd) }} />
 
-      {/* Hero: the package photo, clear, with shade only behind the copy */}
-      <section className="relative isolate flex min-h-[46vh] items-end overflow-hidden bg-dune-950 pb-10 pt-32 sm:min-h-[52vh] sm:pb-12">
-        <img
-          src={optimizeImageUrl(pkg.main_image, 1600)}
-          alt={pkg.name}
-          width={1600}
-          height={900}
-          loading="eager"
-          fetchPriority="high"
-          decoding="async"
-          className="absolute inset-0 -z-10 h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-dune-950 via-dune-950/45 to-transparent" />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-dune-950/70 via-dune-950/20 to-transparent" />
-        <div className="absolute inset-x-0 top-0 -z-10 h-32 bg-gradient-to-b from-dune-950/60 to-transparent" />
+      <div className="container-page pb-12 pt-24 sm:pb-16 sm:pt-28">
+        {/* ── Header: name and key facts (price lives in the booking panel) ── */}
+        <header className="mb-6">
+          <Breadcrumbs
+            tone="light"
+            items={[{ label: "Safari Packages", href: "/packages" }, { label: pkg.name }]}
+            className="mb-1"
+          />
+          <h1 className="font-display text-[clamp(1.5rem,1.3rem+0.9vw,2.125rem)] font-bold leading-tight tracking-tight text-ink">
+            {pkg.name}
+          </h1>
+          <ul className="mt-2.5 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted">
+            {pkg.rating ? (
+              <li className="inline-flex items-center gap-1.5">
+                <Star className="h-4 w-4 fill-amber-400 text-amber-400" aria-hidden="true" />
+                <span className="font-semibold text-ink">{pkg.rating.toFixed(1)}</span>
+                {pkg.review_count ? <span>({pkg.review_count} reviews)</span> : null}
+              </li>
+            ) : null}
+            <li className="inline-flex items-center gap-1.5">
+              <Clock className="h-4 w-4 text-amber-500" aria-hidden="true" />
+              {pkg.duration}
+            </li>
+            {includesPickup && (
+              <li className="inline-flex items-center gap-1.5">
+                <MapPin className="h-4 w-4 text-amber-500" aria-hidden="true" />
+                Hotel pickup included
+              </li>
+            )}
+            <li className="inline-flex items-center gap-1.5">
+              <ShieldCheck className="h-4 w-4 text-amber-500" aria-hidden="true" />
+              Pay on the day
+            </li>
+          </ul>
+        </header>
 
-        <div className="container-page w-full">
-          <div className="max-w-3xl">
-            <Breadcrumbs items={[{ label: "Safari Packages", href: "/packages" }, { label: pkg.name }]} className="mb-5" />
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_360px] xl:gap-12">
+          {/* Content column: gallery, then plain sections split by thin lines */}
+          <div className="min-w-0">
+            {allPhotos.length > 0 && <PackageGallery all={allPhotos} name={pkg.name} />}
 
-            <span className="inline-flex rounded-full border border-amber-300/40 bg-dune-950/50 px-3.5 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-amber-300 backdrop-blur-md">
-              {pkg.badges?.[0] || "Signature Dubai Tour"}
-            </span>
+            <div className="mt-8 divide-y divide-line [&>*]:py-8 [&>*:first-child]:pt-0 [&>*:last-child]:pb-0">
+              {/* Overview + highlights */}
+              <section aria-labelledby="overview-heading">
+                <SectionTitle id="overview-heading">About this experience</SectionTitle>
+                <p className="whitespace-pre-line text-[0.9375rem] leading-relaxed text-ink/80">{pkg.description}</p>
+                {pkg.highlights && pkg.highlights.length > 0 && (
+                  <ul className="mt-5 grid gap-2.5 sm:grid-cols-2">
+                    {pkg.highlights.map((h) => (
+                      <li key={h} className={`${listItem} text-ink/85`}>
+                        <Star className="mt-1 h-4 w-4 shrink-0 fill-amber-400 text-amber-400" aria-hidden="true" />
+                        <span>{h}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </section>
 
-            <h1 className="mt-4 font-heading text-3xl font-semibold leading-tight text-sand-50 sm:text-4xl lg:text-[2.75rem] [text-shadow:0_2px_20px_rgb(10_15_36/0.6)]">
-              {pkg.name}
-            </h1>
-
-            <div className="mt-6 flex flex-wrap items-end gap-x-6 gap-y-4">
-              <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-amber-300">
-                  From
-                  {hasDiscount && (
-                    <span className="ml-2 font-normal normal-case tracking-normal text-sand-400 line-through">
-                      AED {pkg.original_price}
-                    </span>
+              {/* Included / not included side by side */}
+              <section aria-labelledby="included-heading">
+                <SectionTitle id="included-heading">What&apos;s included</SectionTitle>
+                <div className={`grid gap-8 ${pkg.exclusions.length > 0 ? "sm:grid-cols-2" : ""}`}>
+                  <ul className="space-y-2.5">
+                    {pkg.inclusions.map((item) => (
+                      <li key={item} className={`${listItem} text-ink/85`}>
+                        <Check className="mt-1 h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  {pkg.exclusions.length > 0 && (
+                    <div>
+                      <h3 className="mb-2.5 text-sm font-semibold text-muted">Not included</h3>
+                      <ul className="space-y-2.5">
+                        {pkg.exclusions.map((item) => (
+                          <li key={item} className={`${listItem} text-muted`}>
+                            <X className="mt-1 h-4 w-4 shrink-0 text-muted" aria-hidden="true" />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   )}
-                </p>
-                <p className="mt-1 font-heading text-3xl font-semibold leading-none text-sand-50">
-                  AED {pkg.price}
-                  <span className="ml-2 text-sm font-normal text-sand-400">{unitLabel}</span>
-                </p>
-              </div>
-              <ul className="flex flex-wrap gap-2 text-xs font-medium text-sand-50 sm:text-sm">
-                <li className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 backdrop-blur-md">
-                  <Clock className="h-4 w-4 text-amber-300" aria-hidden="true" />
-                  {pkg.duration}
-                </li>
-                <li className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 backdrop-blur-md">
-                  <MapPin className="h-4 w-4 text-amber-300" aria-hidden="true" />
-                  Hotel pickup
-                </li>
-              </ul>
+                </div>
+              </section>
+
+              {/* Itinerary */}
+              {pkg.itinerary && pkg.itinerary.length > 0 && (
+                <section aria-labelledby="itinerary-heading">
+                  <SectionTitle id="itinerary-heading">Itinerary</SectionTitle>
+                  <ol role="list">
+                    {pkg.itinerary.map((step, index) => (
+                      <li key={index} className="relative flex gap-4 pb-6 last:pb-0">
+                        {/* Line linking this step to the next one (none after the last) */}
+                        {index < pkg.itinerary.length - 1 && (
+                          <span className="absolute bottom-0 left-[15px] top-9 w-0.5 bg-amber-500/25" aria-hidden="true" />
+                        )}
+                        <span
+                          className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-amber-500 text-sm font-bold text-dune-950"
+                          aria-hidden="true"
+                        >
+                          {index + 1}
+                        </span>
+                        <div className="min-w-0 pt-1">
+                          <h3 className="font-heading text-[0.9375rem] font-semibold leading-snug text-ink">{step.title}</h3>
+                          {step.time && (
+                            <p className="mt-0.5 inline-flex items-center gap-1.5 text-[0.8125rem] font-medium text-accent">
+                              <Clock className="h-3.5 w-3.5" aria-hidden="true" />
+                              {step.time}
+                            </p>
+                          )}
+                          {step.description && (
+                            <p className="mt-1 text-[0.9375rem] leading-relaxed text-muted">{step.description}</p>
+                          )}
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                </section>
+              )}
+
+              {/* Good to know: pickup, notes, cancellation */}
+              {(pkg.pickup_info || (pkg.know_before_you_go && pkg.know_before_you_go.length > 0) || pkg.cancellation_policy) && (
+                <section aria-labelledby="info-heading">
+                  <SectionTitle id="info-heading">Good to know</SectionTitle>
+                  <ul className="space-y-3">
+                    {pkg.pickup_info && (
+                      <li className={`${listItem} text-ink/85`}>
+                        <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-amber-500" aria-hidden="true" />
+                        <span>
+                          <span className="font-semibold text-ink">Pickup: </span>
+                          {pkg.pickup_info}
+                        </span>
+                      </li>
+                    )}
+                    {(pkg.know_before_you_go || []).map((note) => (
+                      <li key={note} className={`${listItem} text-ink/85`}>
+                        <Info className="mt-0.5 h-5 w-5 shrink-0 text-amber-500" aria-hidden="true" />
+                        <span>{note}</span>
+                      </li>
+                    ))}
+                    {pkg.cancellation_policy && (
+                      <li className={`${listItem} text-ink/85`}>
+                        <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-amber-500" aria-hidden="true" />
+                        <span>
+                          <span className="font-semibold text-ink">Cancellation: </span>
+                          {pkg.cancellation_policy}
+                        </span>
+                      </li>
+                    )}
+                  </ul>
+                  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="link-arrow mt-5 min-h-11">
+                    <MessageCircle className="h-4 w-4" aria-hidden="true" />
+                    <span>Question about this tour? Ask us on WhatsApp</span>
+                  </a>
+                </section>
+              )}
+
             </div>
           </div>
-        </div>
-      </section>
 
-      <div className="container-page py-12 sm:py-16">
-        {/* Photo mosaic: one large photo and up to four smaller ones */}
-        {photos.length > 0 && (
-          <div className={`mb-12 grid gap-3 ${photos.length === 1 ? "grid-cols-1" : photos.length === 2 ? "grid-cols-2" : "grid-cols-3"}`}>
-            {photos.map((src, i) => (
-              <div key={src} className="relative h-36 overflow-hidden rounded-2xl bg-dune-900 sm:h-48">
-                <img
-                  src={optimizeImageUrl(src, 600)}
-                  alt={`${pkg.name} photo ${i + 1}`}
-                  width={600}
-                  height={400}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.03]"
-                />
-              </div>
-            ))}
-          </div>
-        )}
-
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-14">
-          {/* Left column */}
-          <div className="space-y-12">
-            {/* Overview */}
-            <section>
-              <SectionHeading kicker="Overview" title="About this experience" />
-              <p className="whitespace-pre-line text-body leading-relaxed text-muted">{pkg.description}</p>
-            </section>
-
-            {/* Included / not included */}
-            <section>
-              <SectionHeading kicker="What you get" title="Included in your safari" />
-              <ul className="grid gap-x-6 gap-y-2.5 sm:grid-cols-2">
-                {pkg.inclusions.map((item) => (
-                  <li key={item} className="flex items-start gap-2.5 text-sm text-ink/85">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" aria-hidden="true" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <dl className="mt-6 space-y-2.5 border-t border-line pt-5 text-sm">
-                {pkg.exclusions.length > 0 && (
-                  <div className="flex items-start gap-2.5">
-                    <X className="mt-0.5 h-4 w-4 shrink-0 text-muted" aria-hidden="true" />
-                    <div>
-                      <dt className="inline font-semibold text-ink">Not included: </dt>
-                      <dd className="inline text-muted">{pkg.exclusions.join(" · ")}</dd>
-                    </div>
-                  </div>
-                )}
-                <div className="flex items-start gap-2.5">
-                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" aria-hidden="true" />
-                  <div>
-                    <dt className="inline font-semibold text-ink">Pickup: </dt>
-                    <dd className="inline text-muted">{pkg.pickup_info}</dd>
-                  </div>
-                </div>
-                <div className="flex items-start gap-2.5">
-                  <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" aria-hidden="true" />
-                  <div>
-                    <dt className="inline font-semibold text-ink">Cancellation: </dt>
-                    <dd className="inline text-muted">{pkg.cancellation_policy}</dd>
-                  </div>
-                </div>
-              </dl>
-            </section>
-
-            {/* Itinerary */}
-            {pkg.itinerary && pkg.itinerary.length > 0 && (
-              <section>
-                <SectionHeading kicker="Your day" title="Itinerary" />
-                <ol className="relative space-y-5 border-l border-amber-500/40 pl-8">
-                  {pkg.itinerary.map((step, index) => (
-                    <li key={index} className="relative">
-                      <span
-                        className="absolute -left-10.25 top-0 flex h-6 w-6 items-center justify-center rounded-full bg-dune-900 text-[11px] font-semibold text-amber-300 ring-4 ring-page"
-                        aria-hidden="true"
-                      >
-                        {index + 1}
-                      </span>
-                      <h3 className="text-sm font-semibold text-ink">
-                        {step.title}
-                        <span className="ml-2 text-xs font-medium text-accent">{step.time}</span>
-                      </h3>
-                      <p className="mt-0.5 text-sm text-muted">{step.description}</p>
-                    </li>
-                  ))}
-                </ol>
-              </section>
-            )}
-
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-accent hover:underline"
-            >
-              <MessageCircle className="h-4 w-4" aria-hidden="true" />
-              Have a question about this tour? Ask us on WhatsApp
-            </a>
-          </div>
-
-          {/* Right column: booking calculator */}
-          <aside>
-            <div className="lg:sticky lg:top-28">
+          {/* ── Booking panel ────────────────────────────────────────── */}
+          <aside aria-label="Book this tour" className="min-w-0">
+            <div className="lg:sticky lg:top-24">
               <FlexiblePriceCalculator pkg={pkg} />
             </div>
           </aside>
         </div>
       </div>
 
-      {/* You may also like */}
+      {/* ── Related packages ─────────────────────────────────────── */}
       {related.length > 0 && (
-        <section className="bg-surface-alt py-14 sm:py-16">
+        <section aria-labelledby="related-heading" className="bg-surface-alt py-14 sm:py-16">
           <div className="container-page">
-            <div className="mb-8 flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
+            <div className="mb-10 flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
               <div>
                 <p className="kicker">Keep exploring</p>
-                <h2 className="mt-2 font-heading text-2xl font-semibold text-ink">You may also like</h2>
+                <h2 id="related-heading" className="mt-2 font-display text-[clamp(1.5rem,1.35rem+0.6vw,1.875rem)] font-bold text-ink">
+                  You may also like
+                </h2>
               </div>
-              <Link href="/packages" className="link-arrow shrink-0">
+              <Link href="/packages" className="link-arrow min-h-11 shrink-0">
                 <span>View all packages</span>
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>

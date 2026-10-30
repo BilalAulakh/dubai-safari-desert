@@ -39,6 +39,17 @@ const nextConfig: NextConfig = {
         destination: "/review",
         permanent: true,
       },
+      // Tour pages live under /packages; /tours links still land on the right page
+      {
+        source: "/tours",
+        destination: "/packages",
+        permanent: true,
+      },
+      {
+        source: "/tours/:slug",
+        destination: "/packages/:slug",
+        permanent: true,
+      },
     ];
   },
 };

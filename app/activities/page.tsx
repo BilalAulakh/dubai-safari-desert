@@ -36,7 +36,7 @@ export default async function ActivitiesPage() {
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#C89B3C]/15 border border-[#C89B3C]/30 text-[#E8C48A] text-xs font-semibold uppercase tracking-wider mb-4">
             <span>Adventures & Heritage</span>
           </div>
-          <h1 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-[1.08]">
+          <h1 className="font-heading text-h1 font-extrabold text-white max-w-4xl mx-auto">
             Dubai Desert Safari <span className="gold-text-gradient">Activities</span>
           </h1>
           <p className="mt-4 text-base sm:text-lg text-[#B8ADA2] max-w-2xl mx-auto leading-relaxed">

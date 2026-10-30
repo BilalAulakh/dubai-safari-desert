@@ -32,6 +32,11 @@ export default function BookingForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
+  // ?package= may carry a package id or its slug (links from a package page use the slug)
+  const defaultPackage = defaultPackageId
+    ? packages.find((p) => p.id === defaultPackageId || p.slug === defaultPackageId)
+    : undefined;
+
   // Tomorrow's date as default min date
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
@@ -45,7 +50,7 @@ export default function BookingForm({
   } = useForm<BookingFormData>({
     resolver: zodResolver(bookingSchema),
     defaultValues: {
-      package_id: defaultPackageId || packages[0]?.id || "",
+      package_id: defaultPackage?.id || packages[0]?.id || "",
       customer_name: "",
       phone: "",
       email: "",

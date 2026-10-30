@@ -44,7 +44,7 @@ export default async function BlogPage() {
             <BookOpen className="w-3.5 h-3.5 text-[#C89B3C]" />
             <span>Guides & Travel Advice</span>
           </div>
-          <h1 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-[1.08]">
+          <h1 className="font-heading text-h1 font-extrabold text-white max-w-4xl mx-auto">
             Dubai Desert Safari <span className="gold-text-gradient">Travel Blog</span>
           </h1>
           <p className="mt-4 text-base sm:text-lg text-[#B8ADA2] max-w-2xl mx-auto leading-relaxed">
@@ -97,7 +97,7 @@ export default async function BlogPage() {
                       </span>
                     </div>
 
-                    <h2 className="text-xl sm:text-2xl font-bold text-[#17120D] dark:text-[#FBF7F0] group-hover:text-[#C89B3C] transition-colors mb-3 leading-snug font-heading">
+                    <h2 className="text-h3 font-bold text-[#17120D] dark:text-[#FBF7F0] group-hover:text-[#C89B3C] transition-colors mb-3 font-heading">
                       <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                     </h2>
 

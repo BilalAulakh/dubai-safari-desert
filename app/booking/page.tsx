@@ -51,7 +51,7 @@ export default async function BookingPage({ searchParams }: BookingPageProps) {
             <Clock className="w-3.5 h-3.5 text-[#C89B3C]" />
             <span>Fast 2-Minute Request</span>
           </div>
-          <h1 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#17120D] dark:text-[#FBF7F0] leading-[1.08]">
+          <h1 className="font-heading text-h1 font-extrabold text-[#17120D] dark:text-[#FBF7F0]">
             Book Your Desert Safari
           </h1>
           <p className="mt-4 text-base sm:text-lg text-[#5E554C] dark:text-[#B8ADA2] leading-relaxed">

@@ -13,7 +13,7 @@ export default function NotFound() {
           Error 404
         </span>
 
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+        <h1 className="text-h1 font-extrabold text-slate-900">
           Desert Trail Not Found
         </h1>
 

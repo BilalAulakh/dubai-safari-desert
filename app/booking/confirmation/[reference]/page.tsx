@@ -52,7 +52,7 @@ export default async function BookingConfirmationPage({ params }: ConfirmationPa
             Status: Request Received (Pending Review)
           </span>
 
-          <h1 className="font-heading text-2xl sm:text-4xl font-bold text-[#17120D] dark:text-[#FBF7F0] tracking-tight">
+          <h1 className="font-heading text-h1 font-extrabold text-[#17120D] dark:text-[#FBF7F0] tracking-tight">
             Booking Request Received
           </h1>
 

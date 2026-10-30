@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import Link from "next/link";
-import { Users, Car, Calculator, MessageCircle, ShieldCheck, ArrowRight, Minus, Plus } from "lucide-react";
+import { Users, Car, MessageCircle, ShieldCheck, ArrowRight, Minus, Plus, Sparkles } from "lucide-react";
 import { Package } from "@/types";
 import { createWhatsAppUrl } from "@/lib/utils";
 import { SITE_CONFIG } from "@/lib/config/site";
@@ -11,17 +11,21 @@ interface FlexiblePriceCalculatorProps {
   pkg: Package;
 }
 
+const MIN_GUESTS = 1;
+const MAX_GUESTS = 25;
+
 export default function FlexiblePriceCalculator({ pkg }: FlexiblePriceCalculatorProps) {
   const [guests, setGuests] = useState<number>(2);
   const [vehicleType, setVehicleType] = useState<"sharing" | "private">("sharing");
+  const guestsLabelId = useId();
+  const vehicleLabelId = useId();
 
-  // Determine pricing logic
+  // Pricing rules (unchanged): group discounts on shared tours, private cars priced per car,
+  // buggies and quads priced per vehicle
   const basePricePerPerson = pkg.price;
   const isPerVehicle = pkg.per_unit && (pkg.per_unit.toLowerCase().includes("buggy") || pkg.per_unit.toLowerCase().includes("quad") || pkg.per_unit.toLowerCase().includes("bike"));
 
-  // Calculate discount tier for sharing tour
   let discountPercent = 0;
-
   if (!isPerVehicle) {
     if (guests >= 6) {
       discountPercent = 15;
@@ -30,37 +34,37 @@ export default function FlexiblePriceCalculator({ pkg }: FlexiblePriceCalculator
     }
   }
 
-  // Calculate prices
   let perPersonPrice = basePricePerPerson;
   let totalPrice = 0;
   let originalTotal = 0;
+  let vehiclesNeeded = 0;
+  let privateRatePerCar = 0;
 
   if (isPerVehicle) {
-    // For ATV / Buggies (charged per vehicle/hour)
     totalPrice = basePricePerPerson * guests;
     originalTotal = (pkg.original_price || basePricePerPerson) * guests;
     if (guests >= 3) {
       discountPercent = 10;
       totalPrice = Math.round(totalPrice * 0.9);
     }
+  } else if (vehicleType === "private") {
+    // Private 4x4 Land Cruiser fits up to 6-7 people
+    vehiclesNeeded = Math.ceil(guests / 6);
+    privateRatePerCar = Math.round(basePricePerPerson * 4.8);
+    totalPrice = privateRatePerCar * vehiclesNeeded;
   } else {
-    // For Safari Tours (Sharing vs Private)
-    if (vehicleType === "private") {
-      // Private 4x4 Land Cruiser fits up to 7 people
-      const vehiclesNeeded = Math.ceil(guests / 6);
-      const privateRatePerCar = Math.round(basePricePerPerson * 4.8);
-      totalPrice = privateRatePerCar * vehiclesNeeded;
-      originalTotal = basePricePerPerson * guests * 1.25;
-    } else {
-      perPersonPrice = Math.round(basePricePerPerson * (1 - discountPercent / 100));
-      totalPrice = perPersonPrice * guests;
-      originalTotal = (pkg.original_price || basePricePerPerson) * guests;
-    }
+    perPersonPrice = Math.round(basePricePerPerson * (1 - discountPercent / 100));
+    totalPrice = perPersonPrice * guests;
+    originalTotal = (pkg.original_price || basePricePerPerson) * guests;
   }
 
-  const totalSavings = Math.max(0, originalTotal - totalPrice);
+  const isPrivate = !isPerVehicle && vehicleType === "private";
+  // Savings only against the package's real list price; a private car has no list price to compare
+  const totalSavings = isPrivate ? 0 : Math.max(0, originalTotal - totalPrice);
+  const subtotal = basePricePerPerson * guests;
+  const groupDiscount = isPrivate ? 0 : Math.max(0, subtotal - totalPrice);
+  const unitWord = isPerVehicle ? (guests > 1 ? "vehicles" : "vehicle") : guests > 1 ? "guests" : "guest";
 
-  // WhatsApp negotiation link
   const inquiryMessage = `Hello Safari Dune Tours! I am looking for a flexible price for *${pkg.name}*.
 • Group Size: *${guests} Guests*
 • Tour Mode: *${vehicleType === "private" ? "VIP Private 4x4 Car" : "Sharing 4x4"}*
@@ -69,65 +73,75 @@ Can you confirm your best flexible rate and today's availability? Thank you!`;
 
   const whatsappInquiryUrl = createWhatsAppUrl(SITE_CONFIG.contact.whatsapp, inquiryMessage);
 
+  const stepperClass =
+    "flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line text-ink transition-all duration-200 hover:border-amber-500 hover:bg-amber-500/8 hover:text-accent active:scale-95 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-line disabled:hover:bg-transparent disabled:hover:text-ink";
+  const labelClass = "flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-muted";
+
   return (
-    <div className="overflow-hidden rounded-3xl border border-line bg-surface shadow-card">
-      {/* Header */}
-      <div className="bg-dune-900 px-6 py-5 text-sand-50">
-        <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-amber-300">
-          <Calculator className="h-4 w-4" aria-hidden="true" />
-          <span>Plan your booking</span>
-        </div>
-        <p className="mt-3 text-xs text-sand-400">From</p>
-        <p className="font-heading text-3xl font-semibold leading-none">
+    <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-card">
+      {/* Price header */}
+      <div className="border-b border-line px-5 py-4">
+        <p className="flex items-baseline gap-2 text-sm text-muted">
+          From
+          {pkg.original_price && pkg.original_price > pkg.price && (
+            <span className="line-through">AED {pkg.original_price}</span>
+          )}
+        </p>
+        <p className="mt-0.5 font-heading text-[1.75rem] font-bold leading-tight tracking-tight text-ink">
           AED {pkg.price}
-          <span className="ml-2 text-sm font-normal text-sand-400">{pkg.per_unit || "per person"}</span>
+          <span className="ml-1.5 text-sm font-normal tracking-normal text-muted">{pkg.per_unit || "per person"}</span>
         </p>
       </div>
 
-      <div className="space-y-5 p-6">
-        {/* Guest / quantity selector */}
-        <div>
-          <div className="mb-2.5 flex items-center justify-between">
-            <span className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">
-              <Users className="h-3.5 w-3.5 text-amber-500" aria-hidden="true" />
+      <div className="space-y-4 p-5">
+        {/* Guest / vehicle count */}
+        <div role="group" aria-labelledby={guestsLabelId}>
+          <div className="mb-2 flex items-center justify-between gap-2">
+            <span id={guestsLabelId} className={labelClass}>
+              <Users className="h-4 w-4 text-amber-500" aria-hidden="true" />
               {isPerVehicle ? "Vehicles" : "Guests"}
             </span>
-            <span className="text-xs font-semibold text-accent">
-              {guests >= 6 ? "Super group discount" : guests >= 3 ? "Group discount" : "Standard rate"}
-            </span>
+            {discountPercent > 0 && !isPrivate && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/12 px-2.5 py-0.5 text-xs font-semibold text-accent">
+                <Sparkles className="h-3 w-3" aria-hidden="true" />
+                Group rate −{discountPercent}%
+              </span>
+            )}
           </div>
           <div className="flex items-center gap-3">
             <button
               type="button"
-              onClick={() => setGuests((g) => Math.max(1, g - 1))}
-              disabled={guests <= 1}
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink transition-colors hover:border-amber-500 hover:text-accent disabled:cursor-not-allowed disabled:opacity-40"
-              aria-label="Decrease guests"
+              onClick={() => setGuests((g) => Math.max(MIN_GUESTS, g - 1))}
+              disabled={guests <= MIN_GUESTS}
+              className={stepperClass}
+              aria-label={isPerVehicle ? "Fewer vehicles" : "Fewer guests"}
             >
-              <Minus className="h-4 w-4" />
+              <Minus className="h-4 w-4" aria-hidden="true" />
             </button>
-            <div className="flex-1 rounded-2xl bg-surface-alt py-2 text-center">
-              <span className="font-heading text-2xl font-semibold text-ink">{guests}</span>
-              <span className="ml-1.5 text-xs text-muted">
-                {isPerVehicle ? (guests > 1 ? "vehicles" : "vehicle") : guests > 1 ? "guests" : "guest"}
-              </span>
-            </div>
+            <output
+              aria-live="polite"
+              className="flex h-11 flex-1 items-center justify-center gap-1.5 rounded-xl bg-surface-alt text-center"
+            >
+              <span className="font-heading text-xl font-bold text-ink">{guests}</span>
+              <span className="text-sm text-muted">{unitWord}</span>
+            </output>
             <button
               type="button"
-              onClick={() => setGuests((g) => Math.min(25, g + 1))}
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink transition-colors hover:border-amber-500 hover:text-accent"
-              aria-label="Increase guests"
+              onClick={() => setGuests((g) => Math.min(MAX_GUESTS, g + 1))}
+              disabled={guests >= MAX_GUESTS}
+              className={stepperClass}
+              aria-label={isPerVehicle ? "More vehicles" : "More guests"}
             >
-              <Plus className="h-4 w-4" />
+              <Plus className="h-4 w-4" aria-hidden="true" />
             </button>
           </div>
         </div>
 
         {/* Sharing vs private 4x4 (tours only, not standalone buggies) */}
         {!isPerVehicle && (
-          <div>
-            <span className="mb-2.5 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">
-              <Car className="h-3.5 w-3.5 text-amber-500" aria-hidden="true" />
+          <div role="group" aria-labelledby={vehicleLabelId}>
+            <span id={vehicleLabelId} className={`${labelClass} mb-2`}>
+              <Car className="h-4 w-4 text-amber-500" aria-hidden="true" />
               Vehicle
             </span>
             <div className="grid grid-cols-2 gap-1 rounded-full bg-surface-alt p-1">
@@ -136,7 +150,8 @@ Can you confirm your best flexible rate and today's availability? Thank you!`;
                   key={type}
                   type="button"
                   onClick={() => setVehicleType(type)}
-                  className={`rounded-full px-3 py-2 text-xs font-semibold transition-all ${
+                  aria-pressed={vehicleType === type}
+                  className={`min-h-10 rounded-full px-3 text-sm font-semibold transition-all duration-200 ${
                     vehicleType === type ? "bg-dune-900 text-amber-300 shadow-sm" : "text-muted hover:text-ink"
                   }`}
                 >
@@ -144,48 +159,74 @@ Can you confirm your best flexible rate and today's availability? Thank you!`;
                 </button>
               ))}
             </div>
-            <p className="mt-2 text-xs text-muted">
-              {vehicleType === "private"
+            <p className="mt-2 text-sm text-muted">
+              {isPrivate
                 ? "An exclusive Land Cruiser for your group (up to 6-7 seats per car)."
                 : "Shared 4x4 seating with other travellers."}
             </p>
           </div>
         )}
 
-        {/* Live total */}
-        <div className="rounded-2xl border border-amber-500/30 bg-amber-500/8 p-4">
-          <div className="flex items-end justify-between gap-3">
+        {/* Estimate with its breakdown */}
+        <div className="rounded-xl bg-surface-alt p-4" aria-live="polite">
+          <dl className="space-y-1.5 text-sm">
+            {isPrivate ? (
+              <div className="flex justify-between gap-3">
+                <dt className="text-muted">
+                  Private 4x4 × {vehiclesNeeded} {vehiclesNeeded > 1 ? "cars" : "car"}
+                </dt>
+                <dd className="font-medium text-ink">AED {privateRatePerCar * vehiclesNeeded}</dd>
+              </div>
+            ) : (
+              <>
+                <div className="flex justify-between gap-3">
+                  <dt className="text-muted">
+                    AED {basePricePerPerson} × {guests} {unitWord}
+                  </dt>
+                  <dd className="font-medium text-ink">AED {subtotal}</dd>
+                </div>
+                {groupDiscount > 0 && (
+                  <div className="flex justify-between gap-3">
+                    <dt className="text-muted">Group rate ({discountPercent}%)</dt>
+                    <dd className="font-medium text-emerald-700 dark:text-emerald-400">−AED {groupDiscount}</dd>
+                  </div>
+                )}
+              </>
+            )}
+          </dl>
+
+          <div className="mt-3 flex items-end justify-between gap-3 border-t border-line pt-3">
             <div>
-              <span className="block text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">Estimated total</span>
-              {totalSavings > 0 && <span className="mt-1 block text-sm text-muted line-through">AED {originalTotal}</span>}
-              <span className="block whitespace-nowrap font-heading text-3xl font-semibold leading-tight text-ink">AED {totalPrice}</span>
+              <span className="block text-xs font-semibold uppercase tracking-[0.12em] text-muted">Estimated total</span>
+              {totalSavings > 0 && <span className="mt-0.5 block text-sm text-muted line-through">AED {originalTotal}</span>}
+              <span className="block whitespace-nowrap font-heading text-2xl font-bold leading-tight text-ink">
+                AED {totalPrice}
+              </span>
             </div>
             {totalSavings > 0 && (
-              <span className="shrink-0 rounded-full bg-emerald-600 px-2.5 py-1 text-[11px] font-semibold text-white">
+              <span className="shrink-0 rounded-full bg-emerald-700 px-2.5 py-1 text-xs font-semibold text-white">
                 Save AED {totalSavings}
               </span>
             )}
           </div>
-          <p className="mt-2 text-xs text-muted">
-            {vehicleType === "private" && !isPerVehicle
-              ? `Private car for ${guests} guests`
-              : `About AED ${Math.round(totalPrice / guests)} each`}
+          <p className="mt-1 text-sm text-muted">
+            {isPrivate ? `Private car for ${guests} ${unitWord}` : `About AED ${Math.round(totalPrice / guests)} each`}
           </p>
         </div>
 
         {/* Actions */}
-        <div className="space-y-2.5">
-          <Link href={`/booking?package=${encodeURIComponent(pkg.id)}&adults=${guests}`} className="btn-gold btn-lg group w-full">
+        <div className="space-y-2">
+          <Link href={`/booking?package=${encodeURIComponent(pkg.id)}&adults=${guests}`} className="btn-gold group w-full">
             <span>Book this rate</span>
             <ArrowRight className="h-4 w-4 transition-transform motion-safe:group-hover:translate-x-0.5" aria-hidden="true" />
           </Link>
-          <a href={whatsappInquiryUrl} target="_blank" rel="noopener noreferrer" className="btn-whatsapp btn-lg w-full">
+          <a href={whatsappInquiryUrl} target="_blank" rel="noopener noreferrer" className="btn-whatsapp w-full">
             <MessageCircle className="h-4 w-4" aria-hidden="true" />
             <span>Ask for a group deal</span>
           </a>
         </div>
 
-        <p className="flex items-center justify-center gap-2 text-xs text-muted">
+        <p className="flex items-center justify-center gap-2 text-center text-sm text-muted">
           <ShieldCheck className="h-4 w-4 shrink-0 text-amber-500" aria-hidden="true" />
           No advance payment. Pay on the day.
         </p>

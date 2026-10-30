@@ -134,7 +134,7 @@ export default function DirectReviewForm({ tourOptions }: DirectReviewFormProps)
             <span>Review Published Successfully</span>
           </div>
 
-          <h2 className="font-heading text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+          <h2 className="font-heading text-h2 font-bold text-slate-900 dark:text-white">
             Thank You, {customerName}!
           </h2>
           <p className="mt-1.5 text-xs text-slate-600 dark:text-slate-300 max-w-sm mx-auto leading-relaxed">

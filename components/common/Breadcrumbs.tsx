@@ -10,9 +10,12 @@ export interface BreadcrumbItem {
 interface BreadcrumbsProps {
   items: BreadcrumbItem[];
   className?: string;
+  /** "dark" for text over dark bands (default), "light" for text on the page background */
+  tone?: "dark" | "light";
 }
 
-export default function Breadcrumbs({ items, className = "" }: BreadcrumbsProps) {
+export default function Breadcrumbs({ items, className = "", tone = "dark" }: BreadcrumbsProps) {
+  const light = tone === "light";
   const allItems: BreadcrumbItem[] = [
     { label: "Home", href: "/" },
     ...items,
@@ -37,7 +40,7 @@ export default function Breadcrumbs({ items, className = "" }: BreadcrumbsProps)
       />
       <nav
         aria-label="Breadcrumb"
-        className={`flex items-center text-xs text-sand-400 py-2 overflow-x-auto ${className}`}
+        className={`flex items-center text-xs ${light ? "text-muted" : "text-sand-400"} overflow-x-auto no-scrollbar ${className}`}
       >
         <ol className="flex items-center space-x-1.5 whitespace-nowrap">
           {allItems.map((item, index) => {
@@ -51,7 +54,7 @@ export default function Breadcrumbs({ items, className = "" }: BreadcrumbsProps)
 
                 {isLast || !item.href ? (
                   <span
-                    className="font-medium text-amber-300"
+                    className={`font-medium ${light ? "text-ink" : "text-amber-300"}`}
                     aria-current="page"
                   >
                     {item.label}
@@ -59,7 +62,7 @@ export default function Breadcrumbs({ items, className = "" }: BreadcrumbsProps)
                 ) : (
                   <Link
                     href={item.href}
-                    className="hover:text-white transition-colors flex items-center gap-1"
+                    className={`${light ? "hover:text-ink" : "hover:text-white"} transition-colors flex min-h-11 items-center gap-1`}
                   >
                     {index === 0 && <Home className="w-3 h-3 text-amber-500 shrink-0" />}
                     <span>{item.label}</span>

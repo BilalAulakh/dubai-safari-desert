@@ -44,7 +44,7 @@ export default function Footer() {
                 className="h-14 w-14 object-contain transition-transform duration-300 group-hover:scale-105"
               />
               <div className="flex flex-col">
-                <span className="font-display text-2xl font-semibold leading-none text-sand-50">
+                <span className="font-brand text-2xl font-semibold leading-none text-sand-50">
                   Safari Dune <span className="text-amber-300">Tours</span>
                 </span>
                 <span className="mt-2 text-[9px] font-semibold uppercase tracking-[0.24em] text-amber-300/80">

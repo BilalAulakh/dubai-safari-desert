@@ -65,7 +65,7 @@ export default function Navbar() {
               className="h-10 w-10 object-contain transition-transform duration-300 group-hover:scale-105 sm:h-11 sm:w-11"
             />
             <div className="flex flex-col">
-              <span className="font-display text-[19px] font-semibold leading-none tracking-tight text-sand-50 sm:text-xl">
+              <span className="font-brand text-[19px] font-semibold leading-none tracking-tight text-sand-50 sm:text-xl">
                 Safari Dune <span className="text-amber-300">Tours</span>
               </span>
               <span className="mt-1.5 text-[9px] font-semibold uppercase tracking-[0.28em] text-amber-300/80 sm:text-[10px]">
@@ -155,7 +155,7 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`border-b border-white/5 py-3.5 font-display text-xl transition-colors ${
+                  className={`border-b border-white/5 py-3.5 text-lg font-medium transition-colors ${
                     isActive ? "text-amber-300" : "text-sand-50/90 hover:text-amber-300"
                   }`}
                 >

@@ -66,7 +66,7 @@ export default function BlogContent({ content }: { content: string }) {
         switch (block.type) {
           case "h2":
             return (
-              <h2 key={idx} className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mt-10 mb-4 font-heading">
+              <h2 key={idx} className="text-h2 font-bold text-slate-900 dark:text-white mt-10 mb-4 font-heading">
                 <InlineMarkdown text={block.text} />
               </h2>
             );

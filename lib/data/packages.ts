@@ -577,27 +577,26 @@ export const initialPackages: Package[] = [
     "price": 199,
     "original_price": 250,
     "per_unit": "per person",
-    "duration": "4 - 5 Hours",
+    "duration": "4 Hours",
     "featured": false,
     "active": true,
     "badges": [
       "Morning Tour",
-      "Sunrise Safari"
+      "Early Morning"
     ],
     "main_image": "/images/tours/morning-desert-safari-dubai.webp",
     "gallery": [
       "/images/tours/private-morning-desert-safari-dubai.webp"
     ],
-    "short_description": "Experience the cool serenity of the Arabian desert at dawn. Includes early morning pickup, 4x4 dune bashing, sunrise photography, camel trekking, and sandboarding.",
-    "description": "Ideal for travelers with tight afternoon schedules or early risers who want to experience the tranquil beauty of the desert in cool morning temperatures. Witness the sun rising over pristine red dunes, feel the thrill of 4x4 dune bashing, surf silky dunes on a sandboard, and enjoy gentle camel rides before returning to the city by midday.",
+    "short_description": "Experience the cool calm of the Arabian desert in the early morning. Includes early pickup, 4x4 dune bashing, morning photography, camel trekking, and sandboarding.",
+    "description": "Ideal for travelers with tight afternoon schedules or early risers who want to experience the tranquil beauty of the desert in cool morning temperatures. See the red dunes in the soft morning light, feel the thrill of 4x4 dune bashing, surf silky dunes on a sandboard, and enjoy gentle camel rides before heading back to the city by 9 AM.",
     "inclusions": [
       "Home / Hotel Pickup & Drop-off in 4x4 Land Cruiser",
-      "Early Pickup Time: 05:00 AM (Drop-off 09:00 AM)",
       "Thrilling Dune Bashing in 4x4 Land Cruiser",
       "Camel Ride (Can be repeated)",
       "Sandboarding across red dunes",
       "Arabic Costume for Photography",
-      "Sunrise Photography Stop on High Dunes",
+      "Morning Photography Stop on High Dunes",
       "Play Area for Kids",
       "Unlimited Soft Drinks & Chilled Mineral Water"
     ],
@@ -614,8 +613,8 @@ export const initialPackages: Package[] = [
       },
       {
         "time": "06:00 AM - 06:45 AM",
-        "title": "Sunrise Stop & Dune Bashing",
-        "description": "Watch the desert dawn and conquer the red sand dunes.",
+        "title": "Photo Stop & Dune Bashing",
+        "description": "Take photos in the soft morning light and ride the red sand dunes.",
         "sort_order": 2
       },
       {
@@ -627,14 +626,14 @@ export const initialPackages: Package[] = [
       {
         "time": "08:00 AM - 09:00 AM",
         "title": "Return to Dubai",
-        "description": "Relaxing drive back to your hotel before midday heat.",
+        "description": "Relaxing drive back to your hotel before the day gets hot.",
         "sort_order": 4
       }
     ],
-    "pickup_info": "Pickups available from all hotels in Dubai.",
+    "pickup_info": "Pickup from any hotel or home in Dubai between 05:00 and 05:30 AM.",
     "cancellation_policy": "Free cancellation up to 24 hours prior to departure.",
-    "seo_title": "Morning Desert Safari Dubai | Sunrise Dune Bashing & Camel Ride",
-    "seo_description": "Book Morning Desert Safari in Dubai. 05:00 AM pickup, 4x4 red dune bashing, sunrise photography, camel rides, sandboarding, and hotel transfers."
+    "seo_title": "Morning Desert Safari Dubai | Early Morning Dune Bashing & Camel Ride",
+    "seo_description": "Book Morning Desert Safari in Dubai. 05:00 AM pickup, 4x4 red dune bashing, morning photography, camel rides, sandboarding, and hotel transfers."
   },
   {
     "id": "pkg-private-morning-safari",

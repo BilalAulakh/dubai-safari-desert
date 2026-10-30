@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
+import { Inter, Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import AppShell from "@/components/layout/AppShell";
 import Footer from "@/components/layout/Footer";
@@ -9,17 +9,24 @@ import { getPriceRangeLabel } from "@/lib/data/pricing";
 import { SITE_CONFIG } from "@/lib/config/site";
 import { toInternationalPhone } from "@/lib/utils";
 
-// Neutral sans for body copy and UI
-const fontSans = Plus_Jakarta_Sans({
+// Body copy, navigation and buttons. Variable font: one file covers 400-700.
+const fontSans = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+// Headings and prices. Variable font: one file covers 600-800.
+const fontHeading = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-jakarta",
   display: "swap",
 });
 
-// Display serif for headlines and prices only
-const fontDisplay = Playfair_Display({
+// Logo wordmark only ("Safari Dune Tours"), so a single weight
+const fontBrand = Playfair_Display({
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: "600",
   variable: "--font-playfair",
   display: "swap",
 });
@@ -185,7 +192,7 @@ export default async function RootLayout({
   };
 
   return (
-    <html lang="en" data-scroll-behavior="smooth" className={`${fontSans.variable} ${fontDisplay.variable} scroll-smooth`} suppressHydrationWarning>
+    <html lang="en" data-scroll-behavior="smooth" className={`${fontSans.variable} ${fontHeading.variable} ${fontBrand.variable} scroll-smooth`} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{

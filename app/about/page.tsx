@@ -33,7 +33,7 @@ export default function AboutPage() {
             <Compass className="w-3.5 h-3.5 text-[#8C6214] dark:text-[#E8C48A]" />
             <span>Discover Our Story</span>
           </div>
-          <h1 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-[1.08]">
+          <h1 className="font-heading text-h1 font-extrabold text-white max-w-4xl mx-auto">
             About <span className="gold-text-gradient">Safari Dune Tours</span>
           </h1>
           <p className="mt-4 text-base sm:text-lg text-[#B8ADA2] max-w-2xl mx-auto leading-relaxed">
@@ -49,7 +49,7 @@ export default function AboutPage() {
             <span className="eyebrow">
               Our Heritage & Vision
             </span>
-            <h2 className="font-heading text-2xl sm:text-3xl font-bold text-[#17120D] dark:text-[#FBF7F0] tracking-tight leading-tight">
+            <h2 className="font-heading text-h2 font-bold text-[#17120D] dark:text-[#FBF7F0]">
               Dedicated to Genuine Desert Adventures
             </h2>
             <p className="text-base text-[#5E554C] dark:text-[#B8ADA2] leading-relaxed">
@@ -100,7 +100,7 @@ export default function AboutPage() {
             <span className="eyebrow">
               Our Guiding Principles
             </span>
-            <h2 className="font-heading mt-2 text-2xl sm:text-3xl font-bold text-[#17120D] dark:text-[#FBF7F0]">
+            <h2 className="font-heading mt-2 text-h2 font-bold text-[#17120D] dark:text-[#FBF7F0]">
               What Guides Safari Dune Tours
             </h2>
           </div>

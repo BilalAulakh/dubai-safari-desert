@@ -8,12 +8,13 @@
    instead of raw hex values or one-off font sizes.
    ========================================================================== */
 @theme {
-  /* Fonts: display serif for headings and prices, neutral sans for everything else */
-  --font-sans: var(--font-jakarta), "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-display: var(--font-playfair), "Playfair Display", Georgia, "Times New Roman", serif;
-  --font-heading: var(--font-sans);
+  /* Fonts: Plus Jakarta Sans for headings and prices, Inter for body, nav and buttons.
+     Playfair is kept only for the logo wordmark (font-brand). */
+  --font-sans: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: var(--font-jakarta), "Plus Jakarta Sans", var(--font-sans);
+  --font-display: var(--font-heading);
   --font-body: var(--font-sans);
-  --font-serif: var(--font-display);
+  --font-brand: var(--font-playfair), "Playfair Display", Georgia, serif;
 
   /* "Night navy + dune gold" palette. Token names (dune/sand/amber) are kept from
      the previous palette so every component using them picks up the new look. */
@@ -74,35 +75,36 @@
   --color-soft-beige: #F2E8D5;
   --color-muted-text: #6B6258;
 
-  /* Type scale. Display/H1/H2 are fluid; body never goes below 16px.
-     display  36 -> 60px   hero headline
-     h1       36 -> 56px   page titles
-     h2       30 -> 44px   section titles
-     h3       24px         card and block titles
-     h4       20px         sub-blocks
-     body-lg  18px         lead paragraphs
+  /* Type scale (mobile 390px -> desktop 1440px). Headings are fluid via clamp().
+     display  38 -> 64px   hero headline, weight 800
+     h1       32 -> 48px   page titles, weight 800
+     h2       28 -> 42px   section titles, weight 700
+     h3       19 -> 24px   card and block titles, weight 700
+     h4       16 -> 20px   subheadings, weight 600
+     body-lg  16 -> 18px   lead paragraphs
      body     16px         default copy
      small    14px         meta, captions
      label    13px         uppercase labels and badges only */
-  --text-display: clamp(2.25rem, 1.5rem + 3vw, 3.75rem);
-  --text-display--line-height: 1.05;
-  --text-display--letter-spacing: -0.015em;
-  --text-h1: clamp(2.25rem, 1.6rem + 2.6vw, 3.5rem);
-  --text-h1--line-height: 1.08;
-  --text-h1--letter-spacing: -0.015em;
-  --text-h2: clamp(1.875rem, 1.45rem + 1.7vw, 2.75rem);
-  --text-h2--line-height: 1.12;
-  --text-h2--letter-spacing: -0.01em;
-  --text-h3: 1.5rem;
-  --text-h3--line-height: 1.25;
-  --text-h4: 1.25rem;
-  --text-h4--line-height: 1.35;
-  --text-body-lg: 1.125rem;
-  --text-body-lg--line-height: 1.6;
+  --text-display: clamp(2.375rem, 1.6rem + 3.2vw, 4rem);
+  --text-display--line-height: 1.08;
+  --text-display--letter-spacing: -0.035em;
+  --text-h1: clamp(2rem, 1.55rem + 1.75vw, 3rem);
+  --text-h1--line-height: 1.1;
+  --text-h1--letter-spacing: -0.035em;
+  --text-h2: clamp(1.75rem, 1.3rem + 1.6vw, 2.625rem);
+  --text-h2--line-height: 1.2;
+  --text-h2--letter-spacing: -0.025em;
+  --text-h3: clamp(1.1875rem, 1.05rem + 0.45vw, 1.5rem);
+  --text-h3--line-height: 1.3;
+  --text-h3--letter-spacing: -0.015em;
+  --text-h4: clamp(1rem, 0.93rem + 0.35vw, 1.25rem);
+  --text-h4--line-height: 1.4;
+  --text-body-lg: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-body-lg--line-height: 1.7;
   --text-body: 1rem;
-  --text-body--line-height: 1.6;
+  --text-body--line-height: 1.7;
   --text-small: 0.875rem;
-  --text-small--line-height: 1.5;
+  --text-small--line-height: 1.55;
   --text-label: 0.8125rem;
   --text-label--line-height: 1.4;
   --text-label--letter-spacing: 0.08em;
@@ -163,7 +165,7 @@
     color: var(--text-main);
     font-family: var(--font-body);
     font-size: 16px;
-    line-height: 1.6;
+    line-height: 1.7;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -172,20 +174,25 @@
 
   h1, h2, h3, h4, h5, h6, .font-heading {
     font-family: var(--font-heading);
-    letter-spacing: -0.025em;
+    letter-spacing: -0.015em;
     text-wrap: balance;
   }
 
-  h1, h2 {
+  h1 {
     letter-spacing: -0.035em;
+  }
+
+  h2 {
+    letter-spacing: -0.025em;
   }
 
   p {
     text-wrap: pretty;
   }
 
-  /* Cormorant defaults to old-style figures ("1" reads as "ı"); prices and titles need lining figures */
-  .font-display {
+  /* Logo wordmark keeps the original serif */
+  .font-brand {
+    font-family: var(--font-brand);
     font-variant-numeric: lining-nums;
   }
 
@@ -309,34 +316,19 @@
 
   .section-title {
     font-family: var(--font-heading);
-    font-size: 1.625rem;
-    line-height: 1.15;
+    font-size: var(--text-h2);
+    line-height: var(--text-h2--line-height);
     font-weight: 700;
-    letter-spacing: -0.03em;
+    letter-spacing: var(--text-h2--letter-spacing);
     color: var(--text-main);
-  }
-  @media (min-width: 640px) {
-    .section-title {
-      font-size: 2rem;
-    }
-  }
-  @media (min-width: 1024px) {
-    .section-title {
-      font-size: 2.25rem;
-    }
   }
 
   .section-lead {
     margin-top: 0.75rem;
     max-width: 40rem;
-    font-size: 0.9375rem;
-    line-height: 1.7;
+    font-size: var(--text-body-lg);
+    line-height: var(--text-body-lg--line-height);
     color: var(--text-muted);
-  }
-  @media (min-width: 640px) {
-    .section-lead {
-      font-size: 1.0625rem;
-    }
   }
   .text-center .section-lead {
     margin-inline: auto;

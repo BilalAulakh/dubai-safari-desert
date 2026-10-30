@@ -38,7 +38,7 @@ export default async function ReviewsPage() {
             <Star className="w-3.5 h-3.5 fill-[#C89B3C] text-[#C89B3C]" />
             <span>Traveler Experiences</span>
           </div>
-          <h1 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-[1.08]">
+          <h1 className="font-heading text-h1 font-extrabold text-white max-w-4xl mx-auto">
             Safari Dune <span className="gold-text-gradient">Guest Reviews</span>
           </h1>
           <p className="mt-4 text-base sm:text-lg text-[#B8ADA2] max-w-2xl mx-auto leading-relaxed">

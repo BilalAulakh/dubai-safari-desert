@@ -47,7 +47,7 @@ export default function HowItWorks() {
             <p className="kicker justify-center text-amber-300 after:h-px after:w-8 after:bg-current after:opacity-70 after:content-['']">
               Seamless &amp; Card-Free
             </p>
-            <h2 className="mt-5 font-display text-h2 font-semibold">
+            <h2 className="mt-5 font-display text-h2 font-bold">
               How your desert safari <span className="italic text-amber-300">works</span>
             </h2>
             <p className="mt-5 text-body-lg text-sand-400">
@@ -75,7 +75,7 @@ export default function HowItWorks() {
                       </span>
                       <span className="font-display text-4xl font-semibold leading-none text-white/10">{item.step}</span>
                     </div>
-                    <h3 className="mt-6 font-display text-[1.375rem] font-semibold leading-snug">{item.title}</h3>
+                    <h3 className="mt-6 font-display text-h3 font-bold">{item.title}</h3>
                     <p className="mt-2.5 text-small leading-relaxed text-sand-400">{item.description}</p>
                   </div>
                 </ScrollReveal>

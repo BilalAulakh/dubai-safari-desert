@@ -190,7 +190,7 @@ export default async function SingleBlogPostPage({ params }: BlogPostPageProps) 
             </div>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight font-heading">
+          <h1 className="text-h1 font-extrabold text-slate-900 dark:text-white font-heading">
             {post.title}
           </h1>
 

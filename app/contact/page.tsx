@@ -38,7 +38,7 @@ export default function ContactPage() {
             <Phone className="w-3.5 h-3.5 text-[#8C6214] dark:text-[#E8C48A]" />
             <span>Reservations & Support</span>
           </div>
-          <h1 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-[1.08]">
+          <h1 className="font-heading text-h1 font-extrabold text-white max-w-4xl mx-auto">
             Contact <span className="gold-text-gradient">Safari Dune Tours</span>
           </h1>
           <p className="mt-4 text-base sm:text-lg text-[#B8ADA2] max-w-2xl mx-auto leading-relaxed">
@@ -56,7 +56,7 @@ export default function ContactPage() {
               <span className="eyebrow">
                 Direct Channels
               </span>
-              <h2 className="font-heading text-2xl sm:text-[28px] font-bold text-[#17120D] dark:text-[#FBF7F0] mt-1">
+              <h2 className="font-heading text-h2 font-bold text-[#17120D] dark:text-[#FBF7F0] mt-1">
                 Reach Out Directly
               </h2>
               <p className="mt-2 text-sm text-[#5E554C] dark:text-[#B8ADA2]">

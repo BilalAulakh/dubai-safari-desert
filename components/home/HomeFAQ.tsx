@@ -23,7 +23,7 @@ export default function HomeFAQ({ faqs }: HomeFAQProps) {
         <ScrollReveal>
           <div className="lg:sticky lg:top-28">
             <p className="kicker">Before You Book</p>
-            <h2 className="mt-5 font-display text-h2 font-semibold text-ink">
+            <h2 className="mt-5 font-display text-h2 font-bold text-ink">
               Questions, <span className="italic text-accent">answered</span>
             </h2>
             <p className="mt-5 text-body-lg text-muted">
@@ -31,7 +31,7 @@ export default function HomeFAQ({ faqs }: HomeFAQProps) {
             </p>
 
             <div className="mt-8 rounded-2xl bg-dune-900 p-6 text-sand-50 dark:bg-dune-950 dark:ring-1 dark:ring-white/10">
-              <p className="font-display text-xl font-semibold">Still deciding?</p>
+              <p className="font-display text-xl font-bold">Still deciding?</p>
               <p className="mt-2 text-small text-sand-400">
                 Message us and we will help you pick the right safari for your group.
               </p>
@@ -55,7 +55,7 @@ export default function HomeFAQ({ faqs }: HomeFAQProps) {
                     className="flex w-full items-center justify-between gap-6 py-6 text-left"
                     aria-expanded={isOpen}
                   >
-                    <span className={`font-display text-lg font-semibold transition-colors sm:text-xl ${isOpen ? "text-accent" : "text-ink"}`}>
+                    <span className={`font-display text-h4 font-semibold transition-colors ${isOpen ? "text-accent" : "text-ink"}`}>
                       {faq.question}
                     </span>
                     <span

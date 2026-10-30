@@ -31,7 +31,7 @@ export default function CTASection() {
               <p className="kicker justify-center text-amber-300 after:h-px after:w-8 after:bg-current after:opacity-70 after:content-['']">
                 No Advance Payment
               </p>
-              <h2 className="mt-5 font-display text-h2 font-semibold text-sand-50">
+              <h2 className="mt-5 font-display text-h2 font-bold text-sand-50">
                 Ready for your Dubai <span className="italic text-amber-300">desert adventure?</span>
               </h2>
               <p className="mt-5 text-body-lg text-sand-400">

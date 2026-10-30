@@ -46,11 +46,11 @@ export default async function HeroSection({ startingPrice }: HeroSectionProps) {
 
       <div className="container-page pb-24 pt-40 sm:pb-28 lg:pb-32">
         <div className="max-w-3xl">
-          <h1 className="animate-hero-fade-up font-display text-display font-semibold text-sand-50 opacity-0 [text-shadow:0_2px_4px_rgb(10_15_36/0.45),0_4px_28px_rgb(10_15_36/0.7)]">
+          <h1 className="animate-hero-fade-up font-display text-display font-extrabold text-sand-50 opacity-0 [text-shadow:0_2px_4px_rgb(10_15_36/0.45),0_4px_28px_rgb(10_15_36/0.7)]">
             Dubai Desert Safari
             {startingPrice !== null && (
               // White, not gold: gold text disappears into the sand behind it
-              <span className="mt-1 block italic text-white">from {formatPrice(startingPrice)}</span>
+              <span className="mt-1 block font-bold text-white">from {formatPrice(startingPrice)}</span>
             )}
           </h1>
 

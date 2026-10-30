@@ -32,7 +32,7 @@ export default function HomeReviews({ reviews }: HomeReviewsProps) {
           <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end lg:mb-16">
             <div className="max-w-2xl">
               <p className="kicker">Guest Experiences</p>
-              <h2 className="mt-5 font-display text-h2 font-semibold text-ink">
+              <h2 className="mt-5 font-display text-h2 font-bold text-ink">
                 Stories from the <span className="italic text-accent">dunes</span>
               </h2>
               <p className="mt-4 text-body-lg text-muted">Feedback from guests who rode the dunes with us.</p>
@@ -51,7 +51,7 @@ export default function HomeReviews({ reviews }: HomeReviewsProps) {
                 <figure className="card card-hover relative flex h-full flex-col p-7">
                   <Quote className="absolute right-6 top-6 h-10 w-10 text-amber-500/20" aria-hidden="true" />
                   <Stars rating={rev.rating} />
-                  <blockquote className="mt-5 flex-1 font-display text-[1.125rem] italic leading-relaxed text-ink">
+                  <blockquote className="mt-5 flex-1 text-body-lg text-ink">
                     &ldquo;{rev.comment}&rdquo;
                   </blockquote>
                   <figcaption className="mt-6 flex items-center justify-between gap-3 border-t border-line pt-5">
@@ -75,7 +75,7 @@ export default function HomeReviews({ reviews }: HomeReviewsProps) {
             <div className="flex justify-center">
               <Stars rating={5} size="h-6 w-6" />
             </div>
-            <h3 className="font-display text-2xl font-semibold text-ink">Be our next featured reviewer</h3>
+            <h3 className="font-display text-h3 font-bold text-ink">Be our next featured reviewer</h3>
             <p className="text-sm text-muted">
               Have you experienced our Dubai Desert Safari? We would love to hear your feedback.
             </p>
